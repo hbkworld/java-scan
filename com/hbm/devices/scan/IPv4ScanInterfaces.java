@@ -17,8 +17,8 @@ public class IPv4ScanInterfaces {
 
 	public IPv4ScanInterfaces() throws SocketException {
 		interfaces = new LinkedList<NetworkInterface>();
-		Enumeration<NetworkInterface> ifs =
-			NetworkInterface.getNetworkInterfaces();
+		Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
+
 		while (ifs.hasMoreElements()) {
 			NetworkInterface iface = ifs.nextElement();
 			if (willScan(iface)) {
