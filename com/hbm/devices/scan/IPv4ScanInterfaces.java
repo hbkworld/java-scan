@@ -31,20 +31,6 @@ public class IPv4ScanInterfaces {
 		return interfaces;
 	}
 	
-	private static boolean hasConfiguredIPv4Address(NetworkInterface iface) {
-		Enumeration<InetAddress> addrs = iface.getInetAddresses();
-		while (addrs.hasMoreElements()) {
-			InetAddress addr = addrs.nextElement();
-			if (addr instanceof Inet4Address) {
-				Inet4Address addr4 = (Inet4Address)addr;
-				if (!addr4.isAnyLocalAddress()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	private static boolean willScan(NetworkInterface iface) throws SocketException {
 		if (iface.isLoopback()) {
 			return false;
@@ -57,6 +43,20 @@ public class IPv4ScanInterfaces {
 		}
 		if (iface.supportsMulticast()) {
 			return true;
+		}
+		return false;
+	}
+
+	private static boolean hasConfiguredIPv4Address(NetworkInterface iface) {
+		Enumeration<InetAddress> addrs = iface.getInetAddresses();
+		while (addrs.hasMoreElements()) {
+			InetAddress addr = addrs.nextElement();
+			if (addr instanceof Inet4Address) {
+				Inet4Address addr4 = (Inet4Address)addr;
+				if (!addr4.isAnyLocalAddress()) {
+					return true;
+				}
+			}
 		}
 		return false;
 	}
