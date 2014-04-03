@@ -1,25 +1,16 @@
 package com.hbm.devices.scan;
 
-import java.nio.channels.MembershipKey;
-import java.util.Iterator;
-import java.util.Collection;
-import java.net.NetworkInterface;
-import java.net.StandardProtocolFamily;
-import java.net.StandardSocketOptions;
-import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
-import java.net.SocketAddress;
-import java.nio.ByteBuffer;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
+import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
-import java.nio.channels.DatagramChannel;
-import java.net.InetAddress;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Observable;
-
-
-import java.net.MulticastSocket;
-import java.net.DatagramPacket;
 
 public class StringMessageMulticastReceiver extends Observable {
 
