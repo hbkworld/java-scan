@@ -17,12 +17,16 @@ import java.nio.channels.DatagramChannel;
 import java.net.InetAddress;
 import java.util.Observable;
 
+
+import java.net.MulticastSocket;
+import java.net.DatagramPacket;
+
 public class StringMessageMulticastReceiver extends Observable {
 
 	private InetAddress multicastIP;
 	private int port;
 	private boolean shallRun = true;
-	private DatagramChannel channel;
+	private MulticastSocket socket;
 
 	public StringMessageMulticastReceiver(String multicastIP, int port) throws UnknownHostException, SocketException, IOException {
 		this(InetAddress.getByName(multicastIP), port);
@@ -31,45 +35,60 @@ public class StringMessageMulticastReceiver extends Observable {
 	public StringMessageMulticastReceiver(InetAddress multicastIP, int port) throws SocketException, IOException {
 		this.multicastIP = multicastIP;
 		this.port = port;
-		this.channel = setupMulticastSocket();
+		this.socket = setupMulticastSocket();
 	}
 
 	public void start() throws IOException {
 		System.out.println("in start");
+		byte[] buffer = new byte[65536];
+		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		while (shallRun) {
-			ByteBuffer buffer = ByteBuffer.allocate(10000);
-			SocketAddress addr = channel.receive(buffer);
-			buffer.flip();
-			System.out.println(Charset.defaultCharset().decode(buffer));
-			buffer.rewind();
-        	buffer.limit(buffer.capacity());
+			socket.receive(packet);
+			String s = new String(buffer, 0, packet.getLength());
+			System.out.println(s);
 		}
 	}
 
 	public void stop() throws IOException {
 		shallRun = false;
-		channel.close();
+		leaveOnAllInterfaces(socket);
+		socket.close();
 	}
 
-	private DatagramChannel setupMulticastSocket() throws SocketException, IOException {
+	private MulticastSocket setupMulticastSocket() throws SocketException, IOException {
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
-		DatagramChannel dc = DatagramChannel.open(StandardProtocolFamily.INET)
-			.setOption(StandardSocketOptions.SO_REUSEADDR, true)
-			.bind(sa);
-		
-		joinOnAllInterfaces(dc);
+		MulticastSocket s = new MulticastSocket(sa);
+		s.setReuseAddress(true);
+		joinOnAllInterfaces(s);
 		System.out.println("after join");
-		dc.configureBlocking(true);
-		return dc;
+		return s;
 	}
 
-	private void joinOnAllInterfaces(DatagramChannel dc) throws SocketException, IOException {
+	private void joinOnAllInterfaces(MulticastSocket s) throws SocketException, IOException {
 		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
 		Iterator<NetworkInterface> niIterator = interfaces.iterator();
+		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 		while (niIterator.hasNext()) {
 			NetworkInterface ni = niIterator.next();
-			System.out.println("join: " + multicastIP + " " + ni);
-			MembershipKey mkey = dc.join(multicastIP, ni);
+			System.out.println("join: " + sa + " " + ni);
+			s.joinGroup(sa, ni);
+		}
+	}
+
+	private void leaveOnAllInterfaces(MulticastSocket s) {
+		try {
+			Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
+			Iterator<NetworkInterface> niIterator = interfaces.iterator();
+			InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
+			while (niIterator.hasNext()) {
+				NetworkInterface ni = niIterator.next();
+				System.out.println("leave: " + sa + " " + ni);
+				try {
+					s.leaveGroup(sa, ni);
+				} catch (IOException e) {
+				}
+			}
+		} catch (SocketException e) {
 		}
 	}
 }
