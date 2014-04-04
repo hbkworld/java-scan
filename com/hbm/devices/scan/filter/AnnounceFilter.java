@@ -17,7 +17,7 @@ public class AnnounceFilter extends Observable implements Observer {
 	private Timer timer;
 
 	public AnnounceFilter() {
-		deviceMap = new HashMap<AnnouncePath, AnnounceTimerTask>();
+		deviceMap = new HashMap<AnnouncePath, AnnounceTimerTask>(100);
 		timer = new Timer();
 	}
 
@@ -25,19 +25,21 @@ public class AnnounceFilter extends Observable implements Observer {
 	public void update(Observable o, Object arg) {
 		AnnouncePath ap = (AnnouncePath)arg;
 		Announce announce = ap.getAnnounce();
+		String uuid = announce.getParams().getDevice().getUuid();
+
 		synchronized(deviceMap) {
 			if (deviceMap.containsKey(ap)) {
 				AnnounceTimerTask task = deviceMap.get(ap);
 				task.cancel();
+				deviceMap.remove(ap);
 				Announce oldAnnounce = task.getAnnouncePath().getAnnounce();
-				if (oldAnnounce.equals(announce)) {
-					deviceMap.remove(ap);
-					task.changeAnnouncePath(ap);
-					deviceMap.put(ap, task);
+				if (!oldAnnounce.equals(announce)) {
 					setChanged();
 					notifyObservers(new RegisterDeviceEvent(ap));
 				}
-				timer.schedule(task, getExpiration(announce));
+				AnnounceTimerTask newTask = new AnnounceTimerTask(ap);
+				deviceMap.put(ap, newTask);
+				timer.schedule(newTask, getExpiration(announce));
 			} else {
 				int expriationMs = getExpiration(announce);
 				AnnounceTimerTask task =  new AnnounceTimerTask(ap);
@@ -66,16 +68,11 @@ public class AnnounceFilter extends Observable implements Observer {
 
 		@Override
 		public void run() {
-			this.cancel();
 			synchronized(deviceMap) {
 				deviceMap.remove(announcePath);
 			}
 			setChanged();
 			notifyObservers(new UnregisterDeviceEvent(announcePath));
-		}
-	
-		void changeAnnouncePath(AnnouncePath ap) {
-			announcePath = ap;
 		}
 	
 		AnnouncePath getAnnouncePath() {
