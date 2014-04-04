@@ -22,6 +22,11 @@ public class AnnouncePath {
 	public int hashCode() {
 		return hash;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		return hash == o.hashCode();
+	}
 	
 	public Announce getAnnounce() {
 		return announce;
