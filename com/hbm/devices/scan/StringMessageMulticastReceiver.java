@@ -36,7 +36,8 @@ public class StringMessageMulticastReceiver extends Observable {
 		while (shallRun) {
 			socket.receive(packet);
 			String s = new String(buffer, 0, packet.getLength());
-			System.out.println(s);
+			setChanged();
+			notifyObservers(s);
 		}
 	}
 

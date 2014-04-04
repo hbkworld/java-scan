@@ -23,11 +23,16 @@ public class AnnounceParams {
 	public Iterable<ServiceEntry> getServices() {
 		return services;
 	}
+	
+	public int getExpiration() {
+		return expiration;
+	}
 
 	private Device device;
  	private NetSettings netSettings;
  	private Router router;
 	private LinkedList<ServiceEntry> services;
+	private int expiration;
 
 	@Override
 	public String toString() {
@@ -46,6 +51,7 @@ public class AnnounceParams {
 				sb.append("\n\t" + se);
 			}
 		}
+		sb.append("\nexpiration: " + expiration + "\n");
 		sb.append("\n");
 		
 		return sb.toString();

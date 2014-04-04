@@ -10,6 +10,10 @@ public class NetSettings {
 	public DefaultGateway getDefaultGateway() {
 		return defaultGateway;
 	}
+	
+	public Interface getInterface() {
+		return iface;
+	}
 
 	@Override
 	public String toString() {
