@@ -5,12 +5,13 @@ import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.JsonFilter;
 import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.IPv4ScanInterfaces;
-import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.RegisterDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Iterator;
 import java.io.IOException;
 
 public class Receiver implements Observer {
@@ -52,6 +53,17 @@ public class Receiver implements Observer {
 		}
 
 		Announce a = ap.getAnnounce();
-		System.out.println(a.getParams().getDevice().getUuid() + " " + a.getParams().getDevice().getFamilyType());
+		System.out.print(a.getParams().getDevice().getUuid());
+		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
+		Iterator<IPv4Entry> iterator = ipv4.iterator();
+		while (iterator.hasNext()) {
+			System.out.print(" " + iterator.next());
+		}
+		Iterable<ServiceEntry> sentries = a.getParams().getServices();
+		Iterator<ServiceEntry> siterator = sentries.iterator();
+		while (siterator.hasNext()) {
+			System.out.print(" " + siterator.next());
+		}
+		System.out.println();
 	}
 }
