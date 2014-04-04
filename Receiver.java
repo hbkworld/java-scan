@@ -1,5 +1,7 @@
 import com.hbm.devices.scan.AnnounceReceiver;
 import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.filter.Filter;
+import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.JsonFilter;
 import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.IPv4ScanInterfaces;
@@ -17,8 +19,12 @@ public class Receiver implements Observer {
 			AnnounceReceiver ar = new AnnounceReceiver();
 			JsonFilter jf = new JsonFilter();
 			ar.addObserver(jf);
+
+			Filter ftFilter = new Filter(new FamilytypeMatch("QuantumX"));
+			jf.addObserver(ftFilter);
+			
 			AnnounceFilter af = new AnnounceFilter();
-			jf.addObserver(af);
+			ftFilter.addObserver(af);
 			
 			Receiver r = new Receiver();
 			af.addObserver(r);
@@ -46,6 +52,6 @@ public class Receiver implements Observer {
 		}
 
 		Announce a = ap.getAnnounce();
-		System.out.println(a.getParams().getDevice().getUuid());
+		System.out.println(a.getParams().getDevice().getUuid() + " " + a.getParams().getDevice().getFamilyType());
 	}
 }
