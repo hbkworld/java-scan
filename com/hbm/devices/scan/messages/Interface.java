@@ -24,6 +24,14 @@ public class Interface {
 		return configurationMethod;
 	}
 
+	public Iterable<IPv4Entry> getIPv4() {
+		return ipv4;
+	}
+
+	public Iterable<IPv6Entry> getIPv6() {
+		return ipv6;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
