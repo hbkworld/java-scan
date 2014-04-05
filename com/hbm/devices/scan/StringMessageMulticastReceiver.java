@@ -30,7 +30,6 @@ public class StringMessageMulticastReceiver extends Observable {
 	}
 
 	public void start() throws IOException {
-		System.out.println("in start");
 		byte[] buffer = new byte[65536];
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		while (shallRun) {
@@ -52,7 +51,6 @@ public class StringMessageMulticastReceiver extends Observable {
 		MulticastSocket s = new MulticastSocket(sa);
 		s.setReuseAddress(true);
 		joinOnAllInterfaces(s);
-		System.out.println("after join");
 		return s;
 	}
 
@@ -62,7 +60,6 @@ public class StringMessageMulticastReceiver extends Observable {
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 		while (niIterator.hasNext()) {
 			NetworkInterface ni = niIterator.next();
-			System.out.println("join: " + sa + " " + ni);
 			s.joinGroup(sa, ni);
 		}
 	}
@@ -74,7 +71,6 @@ public class StringMessageMulticastReceiver extends Observable {
 			InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 			while (niIterator.hasNext()) {
 				NetworkInterface ni = niIterator.next();
-				System.out.println("leave: " + sa + " " + ni);
 				try {
 					s.leaveGroup(sa, ni);
 				} catch (IOException e) {
