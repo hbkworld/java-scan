@@ -4,7 +4,7 @@ import java.util.Observable;
 
 public class FakeStringMessageMulticastReceiver extends Observable {
 
-	private String correctMessage =
+	public static final String correctMessage =
 	"{" +
 		"\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{" +
 			"\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\"," + 

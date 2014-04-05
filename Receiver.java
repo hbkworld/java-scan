@@ -1,4 +1,5 @@
 import com.hbm.devices.scan.AnnounceReceiver;
+import com.hbm.devices.scan.FakeStringMessageMulticastReceiver;
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
@@ -16,6 +17,8 @@ import java.io.IOException;
 
 public class Receiver implements Observer {
 	public static void main(String[] args) {
+		FakeStringMessageMulticastReceiver fsmr = new FakeStringMessageMulticastReceiver();
+		System.out.println(fsmr.correctMessage);
 		try {
 			AnnounceReceiver ar = new AnnounceReceiver();
 			JsonFilter jf = new JsonFilter();
