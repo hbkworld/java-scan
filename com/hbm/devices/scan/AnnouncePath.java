@@ -9,7 +9,8 @@ public class AnnouncePath {
 
 	public AnnouncePath(Announce announce) {
 		this.announce = announce;
-		StringBuilder sb = new StringBuilder(announce.getParams().getDevice().getUuid());
+		StringBuilder sb = new StringBuilder(100);
+		sb.append(announce.getParams().getDevice().getUuid());
 		Router router = announce.getParams().getRouter();
 		if (router != null) {
 			sb.append(router.getUuid());
