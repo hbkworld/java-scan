@@ -8,17 +8,20 @@ import com.hbm.devices.scan.UnregisterDeviceEvent;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public class AnnounceFilter extends Observable implements Observer {
 
-	private HashMap<AnnouncePath, AnnounceTimerTask> deviceMap;
-	private Timer timer;
+	private HashMap<AnnouncePath, ScheduledFuture> deviceMap;
+	private HashMap<ScheduledFuture, AnnounceTimerTask> futureMap;
+	private ScheduledThreadPoolExecutor executor;
 
 	public AnnounceFilter() {
-		deviceMap = new HashMap<AnnouncePath, AnnounceTimerTask>(100);
-		timer = new Timer();
+		deviceMap = new HashMap<AnnouncePath, ScheduledFuture>(100);
+		futureMap = new HashMap<ScheduledFuture, AnnounceTimerTask>(100);
+		executor = new ScheduledThreadPoolExecutor(1);
 	}
 
 	@Override
@@ -29,24 +32,26 @@ public class AnnounceFilter extends Observable implements Observer {
 
 		synchronized(deviceMap) {
 			if (deviceMap.containsKey(ap)) {
-				AnnounceTimerTask task = deviceMap.get(ap);
-				task.cancel();
+				ScheduledFuture sf = deviceMap.get(ap);
+				sf.cancel(false);
 				deviceMap.remove(ap);
+				AnnounceTimerTask task = futureMap.remove(sf);
 				Announce oldAnnounce = task.getAnnouncePath().getAnnounce();
 				if (!oldAnnounce.equals(announce)) {
 					setChanged();
 					notifyObservers(new RegisterDeviceEvent(ap));
 				}
-				AnnounceTimerTask newTask = new AnnounceTimerTask(ap);
-				deviceMap.put(ap, newTask);
-				timer.schedule(newTask, getExpiration(announce));
+				sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+				deviceMap.put(ap, sf);
+				futureMap.put(sf, task);
 			} else {
 				int expriationMs = getExpiration(announce);
-				AnnounceTimerTask task =  new AnnounceTimerTask(ap);
-				deviceMap.put(ap, task);
+				AnnounceTimerTask task = new AnnounceTimerTask(ap);
+				ScheduledFuture sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+				deviceMap.put(ap, sf);
+				futureMap.put(sf, task);
 				setChanged();
 				notifyObservers(new RegisterDeviceEvent(ap));
-				timer.schedule(task, getExpiration(announce));
 			}
 		}
 	}
@@ -59,7 +64,7 @@ public class AnnounceFilter extends Observable implements Observer {
 		return expiration * 1000;
 	}
 
-	class AnnounceTimerTask extends TimerTask {
+	class AnnounceTimerTask implements Runnable {
 		private AnnouncePath announcePath;
 	
 		AnnounceTimerTask(AnnouncePath ap) {
