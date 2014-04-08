@@ -8,12 +8,26 @@
   <property name="dist" location="dist"/>
   <property name="build" location="build"/>
   <property name="gson_library" value="gson-2.2.4.jar"/>
-  <property name="jar.class.path" value="${gson_library}" />
+  <property name="test.class.path" value="/usr/share/java/junit.jar" />
 
   <path id="project.class.path">
     <pathelement location="build"/>
   	<fileset dir="lib">
       <include name="${gson_library}"/>
+  	</fileset>
+  </path>
+
+  <path id="project.test.class.path">
+    <pathelement location="build"/>
+  	<fileset dir=".">
+      <include name="lib/${gson_library}"/>
+      <include name="${jarname}.jar"/>
+  	</fileset>
+  	<fileset dir="/usr/share/java/">
+      <include name="junit.jar"/>
+  	</fileset>
+  	<fileset dir="/usr/share/java/apache-ant/">
+      <include name="ant-junit.jar"/>
   	</fileset>
   </path>
 
@@ -43,26 +57,16 @@
   </target>
 
 
-  <target name="test" depends="compiletest" description="run the tests " >
-    <junit printsummary="yes" fork="yes" haltonfailure="yes">
+  <target name="test" depends="compile" description="run the tests " >
+    <junit printsummary="yes" fork="yes" haltonfailure="no">
       <formatter type="plain"/>
       <batchtest fork="true">
-        <fileset dir="${test}">
+        <fileset dir="test">
           <include name="**/*Test*.java"/>
         </fileset>
       </batchtest>
-      <classpath refid="${project.class.path}" />
+      <classpath refid="project.test.class.path" />
     </junit>
-  </target>
-
-
-  <target name="compiletest"
-          depends="compile"
-          description="compile the tests " >
-    <javac debug="true"
-           srcdir="${test}"
-           destdir="${build}"
-           classpathref="project.class.path" />
   </target>
 
   <target name="dist" depends="compile" description="generate the distribution" >
@@ -81,7 +85,6 @@
         <attribute name="Implementation-Title" value="Device Scan Tools"/>
         <attribute name="Implementation-Version" value="0.99.alpha"/>
         <attribute name="Main-Class" value="Receiver"/>
-        <attribute name="Class-Path" value="${jar.class.path}"/>
       </manifest>
     </jar>
 
@@ -89,13 +92,17 @@
 
   </target>
 
-
   <target name="clean"
           description="clean up" >
     <!-- Delete the ${build} directory-->
     <delete dir="${build}"/>
     <delete dir="${dist}"/>
-    <delete dir="${test}"/>
 	<delete file="devscan.jar"/>
+	<delete file="devscan-test.jar"/>
+	<delete>
+		<fileset dir=".">
+			<include name="TEST-*.*"/>
+		</fileset>
+	</delete>
   </target>
 </project>
