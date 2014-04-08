@@ -29,21 +29,36 @@ public class StringMessageMulticastReceiver extends Observable {
 		this.socket = setupMulticastSocket();
 	}
 
-	public void start() throws IOException {
+	public void start() {
 		byte[] buffer = new byte[65536];
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		while (shallRun) {
-			socket.receive(packet);
-			String s = new String(buffer, 0, packet.getLength());
-			setChanged();
-			notifyObservers(s);
+			try {
+				socket.receive(packet);
+				String s = new String(buffer, 0, packet.getLength());
+				setChanged();
+				notifyObservers(s);
+			} catch (IOException e) {
+				/* No error handling by intention. Receiving announce
+				 * datagrams is a best effort service. so don't bother
+				 * users of the class with error handling.
+				 *
+				 * Just try receiving the next datagram.
+				 */
+			}
 		}
 	}
 
-	public void stop() throws IOException {
+	public void stop() {
 		shallRun = false;
-		leaveOnAllInterfaces(socket);
-		socket.close();
+		try {
+			leaveOnAllInterfaces(socket);
+			socket.close();
+		} catch (IOException e) {
+			/* No error handling by intention. Stopping to receive
+			 * datagrams is best effort.
+			 */ 
+		}
 	}
 
 	private MulticastSocket setupMulticastSocket() throws SocketException, IOException {
@@ -64,19 +79,13 @@ public class StringMessageMulticastReceiver extends Observable {
 		}
 	}
 
-	private void leaveOnAllInterfaces(MulticastSocket s) {
-		try {
-			Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
-			Iterator<NetworkInterface> niIterator = interfaces.iterator();
-			InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
-			while (niIterator.hasNext()) {
-				NetworkInterface ni = niIterator.next();
-				try {
-					s.leaveGroup(sa, ni);
-				} catch (IOException e) {
-				}
-			}
-		} catch (SocketException e) {
+	private void leaveOnAllInterfaces(MulticastSocket s) throws IOException {
+		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
+		Iterator<NetworkInterface> niIterator = interfaces.iterator();
+		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
+		while (niIterator.hasNext()) {
+			NetworkInterface ni = niIterator.next();
+			s.leaveGroup(sa, ni);
 		}
 	}
 }
