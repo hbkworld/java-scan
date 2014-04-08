@@ -12,7 +12,7 @@
 
   <path id="project.class.path">
     <pathelement location="build"/>
-  	<fileset dir=".">
+  	<fileset dir="lib">
       <include name="gson-2.2.4.jar"/>
   	</fileset>
   </path>
@@ -73,6 +73,7 @@
          basedir="${build}"
          includes="com/hbm/devices/scan/**,*.class"
          excludes="**/Test.class">
+	  <zipgroupfileset dir="lib" includes="gson-2.2.4.jar" />
       <manifest>
         <attribute name="Built-By" value="${user.name}"/>
         <!-- Information about the program itself -->
