@@ -8,7 +8,6 @@
   <property name="dist" location="dist"/>
   <property name="build" location="build"/>
   <property name="gson_library" value="gson-2.2.4.jar"/>
-  <property name="test.class.path" value="/usr/share/java/junit.jar" />
 
   <path id="project.class.path">
     <pathelement location="build"/>
