@@ -14,7 +14,6 @@
     <pathelement location="build"/>
   	<fileset dir=".">
       <include name="gson-2.2.4.jar"/>
-  	  <include name="devscan.jar"/>
   	</fileset>
   </path>
 
