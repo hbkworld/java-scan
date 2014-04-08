@@ -33,5 +33,18 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 	public FakeStringMessageMulticastReceiver() {
 	}
 
+	public void start() {
+		for (int i = 0; i < 1; i++) {
+			setChanged();
+			notifyObservers(correctMessage);
+			try {
+				synchronized(this) {
+					this.wait(6000);
+				}
+			} catch (InterruptedException e) {
+			}
+		}
+	}
+
 }
 
