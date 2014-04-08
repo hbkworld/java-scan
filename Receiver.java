@@ -15,12 +15,19 @@ import java.util.Observer;
 import java.util.Iterator;
 import java.io.IOException;
 
+import java.net.InetAddress;
+
 public class Receiver implements Observer {
 	public static void main(String[] args) {
-		FakeStringMessageMulticastReceiver fsmr = new FakeStringMessageMulticastReceiver();
-		System.out.println(fsmr.correctMessage);
 		try {
-			AnnounceReceiver ar = new AnnounceReceiver();
+			/*
+			InetAddress v4 = InetAddress.getByName("85.214.228.118");
+			System.out.println("v4: " + v4.getCanonicalHostName());
+			InetAddress v6 = InetAddress.getByName("2a01:238:43f7:d600:42ba:27f8:ca8b:96ed");
+			System.out.println("v6: " + v6.getCanonicalHostName());
+			*/
+			//AnnounceReceiver ar = new AnnounceReceiver();
+			FakeStringMessageMulticastReceiver ar = new FakeStringMessageMulticastReceiver();
 			JsonFilter jf = new JsonFilter();
 			ar.addObserver(jf);
 
