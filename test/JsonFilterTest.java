@@ -10,67 +10,43 @@ import java.util.Observer;
 
 public class JsonFilterTest {
 
-	@Test
-	public void parseCorrectMessage() {
-		final Closure closure = new Closure();
-		FakeStringMessageMulticastReceiver fsmmr = new FakeStringMessageMulticastReceiver();
+	private AnnouncePath ap;
+	private FakeStringMessageMulticastReceiver fsmmr;
+
+	@Before
+	public void setup() {
+		fsmmr = new FakeStringMessageMulticastReceiver();
 		JsonFilter jf = new JsonFilter();
 		fsmmr.addObserver(jf);
 		jf.addObserver(new Observer(){
 			public void update(Observable o, Object arg) {
-				closure.ap = (AnnouncePath)arg;
+				ap = (AnnouncePath)arg;
 			}
 		});
+	}
+
+	@Test
+	public void parseCorrectMessage() {
 		fsmmr.emitSingleCorrectMessage();
-		assertTrue(closure.ap != null);
+		assertTrue(ap != null);
 	}
 
 	@Test
 	public void parseInvalidJsonMessage() {
-		final Closure closure = new Closure();
-		FakeStringMessageMulticastReceiver fsmmr = new FakeStringMessageMulticastReceiver();
-		JsonFilter jf = new JsonFilter();
-		fsmmr.addObserver(jf);
-		jf.addObserver(new Observer(){
-			public void update(Observable o, Object arg) {
-				closure.ap = (AnnouncePath)arg;
-			}
-		});
 		fsmmr.emitInvalidJsonMessage();
-		assertTrue(closure.ap == null);
+		assertTrue(ap == null);
 	}
 
 	@Test
 	public void parseEmptyMessage() {
-		final Closure closure = new Closure();
-		FakeStringMessageMulticastReceiver fsmmr = new FakeStringMessageMulticastReceiver();
-		JsonFilter jf = new JsonFilter();
-		fsmmr.addObserver(jf);
-		jf.addObserver(new Observer(){
-			public void update(Observable o, Object arg) {
-				closure.ap = (AnnouncePath)arg;
-			}
-		});
 		fsmmr.emitEmptyString();
-		assertTrue(closure.ap == null);
+		assertTrue(ap == null);
 	}
 
 	@Test
 	public void parseNullMessage() {
-		final Closure closure = new Closure();
-		FakeStringMessageMulticastReceiver fsmmr = new FakeStringMessageMulticastReceiver();
-		JsonFilter jf = new JsonFilter();
-		fsmmr.addObserver(jf);
-		jf.addObserver(new Observer(){
-			public void update(Observable o, Object arg) {
-				closure.ap = (AnnouncePath)arg;
-			}
-		});
 		fsmmr.emitNull();
-		assertTrue(closure.ap == null);
+		assertTrue(ap == null);
 	}
 }
 
-class Closure {
-	public AnnouncePath ap;
-}
