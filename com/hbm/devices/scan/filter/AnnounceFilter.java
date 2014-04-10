@@ -28,7 +28,6 @@ public class AnnounceFilter extends Observable implements Observer {
 	public void update(Observable o, Object arg) {
 		AnnouncePath ap = (AnnouncePath)arg;
 		Announce announce = ap.getAnnounce();
-		String uuid = announce.getParams().getDevice().getUuid();
 
 		synchronized(deviceMap) {
 			if (deviceMap.containsKey(ap)) {
