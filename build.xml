@@ -47,14 +47,7 @@
            destdir="${build}">
       <classpath refid="project.class.path"/>
     </javac>
-    <!-- Copy files from ${src} into ${build} -->
-    <copy todir="${build}">
-      <fileset dir=".">
-        <exclude name="**/*.java"/>
-      </fileset>
-    </copy>
   </target>
-
 
   <target name="test" depends="compile" description="run the tests " >
     <junit printsummary="yes" fork="yes" haltonfailure="no">
