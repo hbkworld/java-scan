@@ -48,5 +48,11 @@ public class JsonFilterTest {
 		fsmmr.emitNull();
 		assertTrue(ap == null);
 	}
+
+	@Test
+	public void parseMissingDeviceMessage() {
+		fsmmr.emitMissingDeviceMessage();
+		assertTrue(ap == null);
+	}
 }
 
