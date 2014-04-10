@@ -148,7 +148,6 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 					"\"name\":\"eth0\",\"type\":\"ethernet\"}"+
 			"}," +
 			"\"router\": {" +
-				"\"uuid\": \"0x12345\"" +
 			"}" +
 		"}" +
 	"}";
