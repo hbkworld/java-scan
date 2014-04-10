@@ -7,6 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.messages.*;
 import java.lang.reflect.Type;
@@ -26,11 +27,18 @@ public class JsonFilter extends Observable implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		String s = (String)arg;
-		JsonRpc json = gson.fromJson(s, JsonRpc.class);
-		if (json instanceof Announce) {
-			AnnouncePath ap = new AnnouncePath((Announce)json);
-			setChanged();
-			notifyObservers(ap);
+		try {
+			JsonRpc json = gson.fromJson(s, JsonRpc.class);
+			if (json instanceof Announce) {
+				AnnouncePath ap = new AnnouncePath((Announce)json);
+				setChanged();
+				notifyObservers(ap);
+			}
+		} catch (JsonSyntaxException e) {
+			/* There is no error handling necessary in this case. If
+			 * sombody sends us invalid JSON, we just ignore the packet
+			 * and go ahead.
+			 */
 		}
 	}
 }
