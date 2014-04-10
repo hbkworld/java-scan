@@ -90,5 +90,11 @@ public class JsonFilterTest {
 		fsmmr.emitMissingRouterUuidMessage();
 		assertTrue(ap == null);
 	}
+
+	@Test
+	public void parseMissingFamilyTypeMessage() {
+		fsmmr.emitMissingFamilyTypeMessage();
+		assertTrue(ap == null);
+	}
 }
 
