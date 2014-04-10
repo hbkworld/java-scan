@@ -133,7 +133,7 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 		"}" +
 	"}";
 
-	private static final String missingRouterUuid =
+	private static final String missingRouterUuidMessage =
 	"{" +
 		"\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{" +
 			"\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\"," + 
@@ -173,6 +173,41 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 		notifyObservers("");
 	}
 
+	public void emitMissingDeviceMessage() {
+		setChanged();
+		notifyObservers(missingDeviceMessage);
+	}
+	
+	public void emitMissingDeviceUuidMessage() {
+		setChanged();
+		notifyObservers(missingDeviceUuidMessage);
+	}
+
+	public void emitMissingParamsMessage() {
+		setChanged();
+		notifyObservers(missingParamsMessage);
+	}
+
+	public void emitNoInterfaceNameMessage() {
+		setChanged();
+		notifyObservers(noInterfaceNameMessage);
+	}
+
+	public void emitNoInterfaceMessage() {
+		setChanged();
+		notifyObservers(noInterfaceMessage);
+	}
+
+	public void emitNoNetSettingsMessage() {
+		setChanged();
+		notifyObservers(noNetSettingsMessage);
+	}
+
+	public void emitMissingRouterUuidMessage() {
+		setChanged();
+		notifyObservers(missingRouterUuidMessage);
+	}
+		
 	public void start() {
 		for (int i = 0; i < 1; i++) {
 			setChanged();
