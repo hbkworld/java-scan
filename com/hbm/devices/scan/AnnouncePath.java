@@ -7,16 +7,20 @@ public class AnnouncePath {
 	private Announce announce;
 	private int hash;
 
-	public AnnouncePath(Announce announce) {
+	public AnnouncePath(Announce announce) throws MissingDataException {
 		this.announce = announce;
 		StringBuilder sb = new StringBuilder(100);
-		sb.append(announce.getParams().getDevice().getUuid());
-		Router router = announce.getParams().getRouter();
-		if (router != null) {
-			sb.append(router.getUuid());
+		try {
+			sb.append(announce.getParams().getDevice().getUuid());
+			Router router = announce.getParams().getRouter();
+			if (router != null) {
+				sb.append(router.getUuid());
+			}
+			sb.append(announce.getParams().getNetSettings().getInterface().getName());
+			hash = sb.toString().hashCode();
+		} catch (NullPointerException e) {
+			throw new MissingDataException();
 		}
-		sb.append(announce.getParams().getNetSettings().getInterface().getName());
-		hash = sb.toString().hashCode();
 	}
 
 	@Override

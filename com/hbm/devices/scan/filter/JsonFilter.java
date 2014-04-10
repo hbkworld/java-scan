@@ -1,5 +1,6 @@
 package com.hbm.devices.scan.filter;
 
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializationContext;
@@ -10,10 +11,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.messages.*;
+import com.hbm.devices.scan.MissingDataException;
 import java.lang.reflect.Type;
 import java.util.Observable;
 import java.util.Observer;
-
 public class JsonFilter extends Observable implements Observer {
 
 	private Gson gson;
@@ -38,6 +39,15 @@ public class JsonFilter extends Observable implements Observer {
 			/* There is no error handling necessary in this case. If
 			 * somebody sends us invalid JSON, we just ignore the packet
 			 * and go ahead.
+			 */
+		} catch (MissingDataException e) {
+			/* During the creation of an AnnouncePath object it is
+			 * required that some sub-objects are created in the parsed
+			 * JSON object (i.e. the device's UUID). If these
+			 * sub-objects are not created, the construction of the
+			 * AnnouncePath object failes.
+			 *
+			 * Go ahead with the next packet.
 			 */
 		}
 	}
