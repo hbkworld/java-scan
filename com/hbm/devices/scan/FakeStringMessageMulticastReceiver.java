@@ -32,7 +32,7 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 
 	private static final String invalidJsonMessage =
 	"{" +
-		"\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{" +
+		"\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":" +
 			"\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\"," + 
 			"\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\"," +
 			"\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"}," +

@@ -24,6 +24,21 @@ public class JsonFilterTest {
 		fsmmr.emitSingleCorrectMessage();
 		assertTrue(closure.ap != null);
 	}
+
+	@Test
+	public void parseInvalidJsonMessage() {
+		final Closure closure = new Closure();
+		FakeStringMessageMulticastReceiver fsmmr = new FakeStringMessageMulticastReceiver();
+		JsonFilter jf = new JsonFilter();
+		fsmmr.addObserver(jf);
+		jf.addObserver(new Observer(){
+			public void update(Observable o, Object arg) {
+				closure.ap = (AnnouncePath)arg;
+			}
+		});
+		fsmmr.emitInvalidJsonMessage();
+		assertTrue(closure.ap == null);
+	}
 }
 
 class Closure {
