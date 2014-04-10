@@ -2,6 +2,7 @@ package com.hbm.devices.scan.filter;
 
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.MissingDataException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,9 +18,12 @@ public class Filter extends Observable implements Observer {
 	public void update(Observable o, Object arg) {
 		AnnouncePath ap = (AnnouncePath)arg;
 		Announce announce = ap.getAnnounce();
-		if (matcher.match(announce)) {
-			setChanged();
-			notifyObservers(ap);
+		try {
+			if (matcher.match(announce)) {
+				setChanged();
+				notifyObservers(ap);
+			}
+		} catch (MissingDataException e) {
 		}
 	}
 }

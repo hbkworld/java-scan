@@ -1,6 +1,7 @@
 package com.hbm.devices.scan.filter;
 
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.MissingDataException;
 
 public class FamilytypeMatch implements Matcher {
 
@@ -10,8 +11,13 @@ public class FamilytypeMatch implements Matcher {
 		this.familytype = f;
 	}
 
-	public boolean match(Announce a) {
-		return a.getParams().getDevice().getFamilyType().equals(familytype);
+	public boolean match(Announce a) throws MissingDataException {
+		try {
+			String ft = a.getParams().getDevice().getFamilyType();
+			return ft.equals(familytype);
+		} catch (NullPointerException e) {
+			throw new MissingDataException();
+		}
 	}
 }
 
