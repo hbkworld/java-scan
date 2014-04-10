@@ -36,7 +36,7 @@ public class JsonFilter extends Observable implements Observer {
 			}
 		} catch (JsonSyntaxException e) {
 			/* There is no error handling necessary in this case. If
-			 * sombody sends us invalid JSON, we just ignore the packet
+			 * somebody sends us invalid JSON, we just ignore the packet
 			 * and go ahead.
 			 */
 		}

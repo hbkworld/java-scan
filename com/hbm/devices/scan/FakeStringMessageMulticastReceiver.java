@@ -66,6 +66,16 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 		notifyObservers(invalidJsonMessage);
 	}
 
+	public void emitEmptyString() {
+		setChanged();
+		notifyObservers("");
+	}
+
+	public void emitNull() {
+		setChanged();
+		notifyObservers("");
+	}
+
 	public void start() {
 		for (int i = 0; i < 1; i++) {
 			setChanged();
