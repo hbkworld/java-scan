@@ -54,5 +54,41 @@ public class JsonFilterTest {
 		fsmmr.emitMissingDeviceMessage();
 		assertTrue(ap == null);
 	}
+
+	@Test
+	public void parseMissingDeviceUuidMessage() {
+		fsmmr.emitMissingDeviceUuidMessage();
+		assertTrue(ap == null);
+	}
+
+	@Test
+	public void parseMissingParamsMessage() {
+		fsmmr.emitMissingParamsMessage();
+		assertTrue(ap == null);
+	}
+
+	@Test
+	public void parseNoInterfaceNameMessage() {
+		fsmmr.emitNoInterfaceNameMessage();
+		assertTrue(ap == null);
+	}
+
+	@Test
+	public void parseNoInterfaceMessage() {
+		fsmmr.emitNoInterfaceMessage();
+		assertTrue(ap == null);
+	}
+
+	@Test
+	public void parseNoNetSettingsMessage() {
+		fsmmr.emitNoNetSettingsMessage();
+		assertTrue(ap == null);
+	}
+
+	@Test
+	public void parseMissingRouterUuidMessage() {
+		fsmmr.emitMissingRouterUuidMessage();
+		assertTrue(ap == null);
+	}
 }
 
