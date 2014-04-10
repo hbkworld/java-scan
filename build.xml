@@ -49,7 +49,16 @@
     </javac>
   </target>
 
-  <target name="test" depends="compile" description="run the tests " >
+  <target name="compiletest" depends="compile" description="compile the tests " >
+    <javac debug="true"
+           includeantruntime="false"
+           srcdir="test"
+           destdir="${build}">
+      <classpath refid="project.test.class.path"/>
+    </javac>
+  </target>
+
+  <target name="test" depends="compiletest" description="run the tests " >
     <junit printsummary="yes" fork="yes" haltonfailure="no">
       <formatter type="plain"/>
       <batchtest fork="true">
