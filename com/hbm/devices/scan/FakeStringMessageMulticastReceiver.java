@@ -242,5 +242,7 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 		}
 	}
 
+	public void stop() {
+	}
 }
 
