@@ -6,6 +6,7 @@ public class AnnouncePath {
 
 	private Announce announce;
 	private int hash;
+	public Object cookie;
 
 	public AnnouncePath(Announce announce) throws MissingDataException {
 		this.announce = announce;
