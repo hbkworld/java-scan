@@ -24,6 +24,13 @@ public class AnnounceFilter extends Observable implements Observer {
 		executor = new ScheduledThreadPoolExecutor(1);
 	}
 
+	public void stop() {
+		executor.shutdownNow();
+		try {
+			executor.awaitTermination(1, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {}
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
 		AnnouncePath ap = (AnnouncePath)arg;
