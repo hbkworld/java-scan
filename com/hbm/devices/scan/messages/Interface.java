@@ -1,6 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Interface {
@@ -46,17 +45,13 @@ public class Interface {
 			sb.append("\n\t\tconfigurationMethod: " + configurationMethod);
 		if (ipv4 != null) {
 			sb.append("\n\t\tIPv4 addresses:");
-			Iterator<IPv4Entry> i = ipv4.iterator();
-			while (i.hasNext()) {
-				IPv4Entry e = i.next();
+			for (IPv4Entry e : ipv4) {
 				sb.append("\n\t\t\t" + e);
 			}
 		}
 		if (ipv6 != null) {
 			sb.append("\n\t\tIPv6 addresses:");
-			Iterator<IPv6Entry> i = ipv6.iterator();
-			while (i.hasNext()) {
-				IPv6Entry e = i.next();
+			for (IPv6Entry e : ipv6) {
 				sb.append("\n\t\t\t" + e);
 			}
 		}

@@ -11,7 +11,6 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Observable;
 
 public class StringMessageMulticastReceiver extends Observable {
@@ -72,21 +71,17 @@ public class StringMessageMulticastReceiver extends Observable {
 	}
 
 	private void joinOnAllInterfaces(MulticastSocket s) throws SocketException, IOException {
-		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
-		Iterator<NetworkInterface> niIterator = interfaces.iterator();
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
-		while (niIterator.hasNext()) {
-			NetworkInterface ni = niIterator.next();
+		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
+		for (NetworkInterface ni : interfaces) {
 			s.joinGroup(sa, ni);
 		}
 	}
 
 	private void leaveOnAllInterfaces(MulticastSocket s) throws IOException {
 		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
-		Iterator<NetworkInterface> niIterator = interfaces.iterator();
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
-		while (niIterator.hasNext()) {
-			NetworkInterface ni = niIterator.next();
+		for (NetworkInterface ni : interfaces) {
 			s.leaveGroup(sa, ni);
 		}
 	}

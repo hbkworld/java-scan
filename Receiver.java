@@ -16,7 +16,6 @@ import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.NetworkInterface;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -80,14 +79,12 @@ public class Receiver implements Observer {
 		Announce a = ap.getAnnounce();
 		System.out.print(a.getParams().getDevice().getUuid());
 		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
-		Iterator<IPv4Entry> iterator = ipv4.iterator();
-		while (iterator.hasNext()) {
-			System.out.print(" " + iterator.next());
+		for (IPv4Entry entry : ipv4) {
+			System.out.print(" " + entry);
 		}
 		Iterable<ServiceEntry> sentries = a.getParams().getServices();
-		Iterator<ServiceEntry> siterator = sentries.iterator();
-		while (siterator.hasNext()) {
-			System.out.print(" " + siterator.next());
+		for (IPv6Entry entry : ipv6) {
+			System.out.print(" " + entry);
 		}
 		System.out.println();
 */

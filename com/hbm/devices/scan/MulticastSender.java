@@ -7,7 +7,6 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.HashSet;
 
 public class MulticastSender {
@@ -19,9 +18,7 @@ public class MulticastSender {
 	}
 
 	public void sendMessage(String msg) throws IOException, SocketException {
-		Iterator<NetworkInterface> it = multicastSender.iterator();
-		while (it.hasNext()) {
-			NetworkInterface iface = it.next();
+		for (NetworkInterface iface : multicastSender) { 
 			socket.setNetworkInterface(iface);
 			DatagramPacket packet = new DatagramPacket(msg.getBytes(), msg.length(),
 				InetAddress.getByName(ScanConstants.SCAN_ADDRESS), ScanConstants.SCAN_PORT);

@@ -1,6 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class AnnounceParams {
@@ -45,9 +44,7 @@ public class AnnounceParams {
 			sb.append(router);
 		if (services != null) {
 			sb.append("Services:");
-			Iterator<ServiceEntry> i = services.iterator();
-			while (i.hasNext()) {
-				ServiceEntry se = i.next();
+			for (ServiceEntry se : services) {
 				sb.append("\n\t" + se);
 			}
 		}
