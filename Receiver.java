@@ -10,12 +10,14 @@ import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.RegisterDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.net.NetworkInterface;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Iterator;
-import java.io.IOException;
-
-import java.net.InetAddress;
 
 public class Receiver implements Observer {
 	public static void main(String[] args) {
@@ -48,20 +50,32 @@ public class Receiver implements Observer {
 		}
 	}
 
+	private Collection<NetworkInterface> scanInterfaces;
+
+	public Receiver() throws SocketException {
+		scanInterfaces = new IPv4ScanInterfaces().getInterfaces();
+	}
 
 	public void update(Observable o, Object arg) {
 		AnnouncePath ap;
 		if (arg instanceof RegisterDeviceEvent) {
-			System.out.print("registered: ");
+			System.out.println("registered: ");
 			ap = ((RegisterDeviceEvent)arg).getAnnouncePath();
 		} else if (arg instanceof UnregisterDeviceEvent) {
-			System.out.print("unregistered: ");
+			System.out.println("unregistered: ");
 			ap = ((UnregisterDeviceEvent)arg).getAnnouncePath();
 		} else {
 			System.out.println("unknown");
 			return;
 		}
 
+		Announce a = ap.getAnnounce();
+		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
+		InetAddress connectAddress = IPv4ScanInterfaces.getConnectableIPv4Address(scanInterfaces, ipv4);
+		if (connectAddress != null) {
+			System.out.println("Connectable!");
+		}
+/*
 		Announce a = ap.getAnnounce();
 		System.out.print(a.getParams().getDevice().getUuid());
 		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
@@ -75,5 +89,6 @@ public class Receiver implements Observer {
 			System.out.print(" " + siterator.next());
 		}
 		System.out.println();
+*/
 	}
 }
