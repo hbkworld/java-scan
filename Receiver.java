@@ -8,6 +8,7 @@ import com.hbm.devices.scan.filter.JsonFilter;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.RegisterDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
+import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.IPv4ScanInterfaces;
 
 import java.io.IOException;
@@ -51,9 +52,11 @@ public class Receiver implements Observer {
 	}
 
 	private Collection<NetworkInterface> scanInterfaces;
+	private ConnectionFinder connectionFinder;
 
 	public Receiver() throws SocketException {
 		scanInterfaces = new IPv4ScanInterfaces().getInterfaces();
+		connectionFinder = new ConnectionFinder(scanInterfaces, false);
 	}
 
 	public void update(Observable o, Object arg) {
@@ -61,19 +64,17 @@ public class Receiver implements Observer {
 		if (arg instanceof RegisterDeviceEvent) {
 			System.out.println("registered: ");
 			ap = ((RegisterDeviceEvent)arg).getAnnouncePath();
+			Announce a = ap.getAnnounce();
+			InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
+			if (connectAddress != null) {
+				System.out.println("Connectable: " + connectAddress);
+			}
 		} else if (arg instanceof UnregisterDeviceEvent) {
 			System.out.println("unregistered: ");
 			ap = ((UnregisterDeviceEvent)arg).getAnnouncePath();
 		} else {
 			System.out.println("unknown");
 			return;
-		}
-
-		Announce a = ap.getAnnounce();
-		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
-		InetAddress connectAddress = IPv4ScanInterfaces.getConnectableIPv4Address(scanInterfaces, ipv4);
-		if (connectAddress != null) {
-			System.out.println("Connectable!");
 		}
 /*
 		Announce a = ap.getAnnounce();
