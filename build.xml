@@ -47,6 +47,7 @@
            destdir="${build}">
       <classpath refid="project.class.path"/>
     </javac>
+	<copy file ="com/hbm/devices/scan/messages.txt" todir="${build}/com/hbm/devices/scan/"/>
   </target>
 
   <target name="compiletest" depends="compile" description="compile the tests " >
