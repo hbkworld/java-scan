@@ -1,5 +1,9 @@
 package com.hbm.devices.scan;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.IOException;
 import java.util.Observable;
 
 public class FakeStringMessageMulticastReceiver extends Observable {
@@ -228,17 +232,23 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 		setChanged();
 		notifyObservers(missingFamilyTypeMessage);
 	}
-		
+	
 	public void start() {
-		for (int i = 0; i < 1; i++) {
-			setChanged();
-			notifyObservers(correctMessage);
-			try {
-				synchronized(this) {
-					this.wait(6000);
-				}
-			} catch (InterruptedException e) {
+		InputStream is = getClass().getResourceAsStream("/com/hbm/devices/scan/messages.txt");
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
+		try {
+			String line;
+			while ((line = br.readLine()) != null) {
+				setChanged();
+				notifyObservers(line);
 			}
+		} catch (IOException e) {}
+
+		try {
+			synchronized(this) {
+				this.wait(6000);
+			}
+		} catch (InterruptedException e) {
 		}
 	}
 
