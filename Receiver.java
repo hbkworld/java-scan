@@ -1,14 +1,14 @@
 import com.hbm.devices.scan.AnnounceReceiver;
-import com.hbm.devices.scan.FakeStringMessageMulticastReceiver;
 import com.hbm.devices.scan.AnnouncePath;
-import com.hbm.devices.scan.filter.Filter;
-import com.hbm.devices.scan.filter.FamilytypeMatch;
-import com.hbm.devices.scan.filter.JsonFilter;
+import com.hbm.devices.scan.FakeStringMessageMulticastReceiver;
 import com.hbm.devices.scan.filter.AnnounceFilter;
-import com.hbm.devices.scan.IPv4ScanInterfaces;
+import com.hbm.devices.scan.filter.FamilytypeMatch;
+import com.hbm.devices.scan.filter.Filter;
+import com.hbm.devices.scan.filter.JsonFilter;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.RegisterDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
+import com.hbm.devices.scan.util.IPv4ScanInterfaces;
 
 import java.io.IOException;
 import java.net.InetAddress;

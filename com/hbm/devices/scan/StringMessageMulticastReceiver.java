@@ -1,5 +1,7 @@
 package com.hbm.devices.scan;
 
+import com.hbm.devices.scan.util.IPv4ScanInterfaces;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;

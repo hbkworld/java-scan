@@ -2,7 +2,7 @@
  * Convenience class to gather all network interfaces eligible for
  * multicast scanning.
  */
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.util;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
