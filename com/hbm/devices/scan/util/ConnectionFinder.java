@@ -15,26 +15,26 @@ public class ConnectionFinder {
 	private IPv4ConnectionFinder ipv4ConnectionFinder;
 	private IPv6ConnectionFinder ipv6ConnectionFinder;
 
-	public ConnectionFinder(Announce announce, boolean preferIPv6) {
+	public ConnectionFinder(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
 		this.preferIPv6 = preferIPv6;
-		this.ipv4ConnectionFinder = new IPv4ConnectionFinder(announce);
-		this.ipv6ConnectionFinder = new IPv6ConnectionFinder(announce);
+		this.ipv4ConnectionFinder = new IPv4ConnectionFinder(interfaces);
+		this.ipv6ConnectionFinder = new IPv6ConnectionFinder(interfaces);
 	}
 
-	public InetAddress getConnectableAddress(Collection<NetworkInterface> interfaces) {
+	public InetAddress getConnectableAddress(Announce announce) {
 		if (preferIPv6) {
-			InetAddress address = ipv6ConnectionFinder.getConnectableAddress(interfaces);
+			InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
 			if (address != null) {
 				return address;
 			} else {
-				return ipv4ConnectionFinder.getConnectableAddress(interfaces);
+				return ipv4ConnectionFinder.getConnectableAddress(announce);
 			}
 		} else {
-			InetAddress address = ipv4ConnectionFinder.getConnectableAddress(interfaces);
+			InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
 			if (address != null) {
 				return address;
 			} else {
-				return ipv6ConnectionFinder.getConnectableAddress(interfaces);
+				return ipv6ConnectionFinder.getConnectableAddress(announce);
 			}
 		}
 	}

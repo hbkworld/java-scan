@@ -7,10 +7,10 @@ import java.util.Collection;
 
 class IPv6ConnectionFinder {
 	
-	public IPv6ConnectionFinder(Announce announce) {
+	public IPv6ConnectionFinder(Collection<NetworkInterface> interfaces) {
 	}
 
-	public InetAddress getConnectableAddress(Collection<NetworkInterface> interfaces) {
+	public InetAddress getConnectableAddress(Announce announce) {
 		return null;
 	}
 }
