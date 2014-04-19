@@ -70,7 +70,7 @@ public class IPv4ScanInterfaces {
 			if (interfaceAddress instanceof Inet4Address) {
 				short interfacePrefix = niAddress.getNetworkPrefixLength();
 				short announcePrefix = getPrefix(announceNetmask);
-				if (addressMatch(announceAddress, announcePrefix, interfaceAddress, interfacePrefix)) {
+				if (sameNet(announceAddress, announcePrefix, interfaceAddress, interfacePrefix)) {
 					return announceAddress;
 				}
 			}
@@ -87,7 +87,7 @@ public class IPv4ScanInterfaces {
 		return (short)prefix;
 	}
 
-	private static boolean addressMatch(InetAddress announceAddress, short announcePrefix,
+	private static boolean sameNet(InetAddress announceAddress, short announcePrefix,
 	                                    InetAddress interfaceAddress, short interfacePrefix) {
 		byte[] announceBytes = announceAddress.getAddress();
 		byte[] interfaceBytes = interfaceAddress.getAddress();
