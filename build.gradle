@@ -1,7 +1,5 @@
 apply plugin: 'java'
 
-baseName = 'devscan'
-
 repositories {
     mavenCentral()
 }
