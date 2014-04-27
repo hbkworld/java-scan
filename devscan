@@ -1,3 +1,0 @@
-#!/bin/sh
-JAVA_HEAP_MAX_SIZE=192
-exec java -Xmx${JAVA_HEAP_MAX_SIZE}M -jar "devscan.jar" "$@"
