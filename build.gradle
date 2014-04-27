@@ -3,42 +3,82 @@ apply plugin: 'java'
 version = '0.1'
 
 repositories {
-    mavenCentral()
+	mavenCentral()
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir 'src/main/java'
+				exclude 'Receiver.java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
+}
+
+sourceSets {
+	receiver {
+		java {
+			srcDir 'src/main/java'
+		}
+		resources {
+			srcDir 'src/main/resources'
+		}
+	}
 }
 
 dependencies {
-    compile files('libs/gson-2.2.4.jar')
+	compile files('libs/gson-2.2.4.jar')
+	receiverCompile files('libs/gson-2.2.4.jar')
 	testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
-    classifier = 'sources'
+	classifier = 'sources'
 	archiveName = jar.baseName +'-' + classifier + '.' + jar.extension
-    from sourceSets.main.allSource
+	from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
+	classifier = 'javadoc'
 	archiveName = jar.baseName +'-' + classifier + '.' + jar.extension
-    from javadoc.destinationDir
+	from javadoc.destinationDir
+}
+
+task receiverJar(type: Jar) {
+	from sourceSets.receiver.output
+	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	archiveName = sourceSets.receiver.name + '.' + jar.extension
+	manifest {
+		attributes \
+			'Implementation-Title': 'HBM Device Scan Example', \
+			'Implementation-Version': version, \
+			'Implementation-Vendor': 'Hottinger Baldwin Messtechnik GmbH', \
+			'Built-By': System.getProperty('user.name'), \
+			'Built-JDK': System.getProperty('java.version'), \
+			'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"), \
+			'Main-Class': 'Receiver'
+	}
 }
 
 artifacts {
-    archives sourcesJar
-    archives javadocJar
+	archives sourcesJar
+	archives javadocJar
+	archives receiverJar
 }
 
 jar {
 	archiveName = jar.baseName + '.' + jar.extension
 	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest {
-        attributes \
-		'Implementation-Title': 'HBM Device Scan', \
-		'Implementation-Version': version, \
-        'Implementation-Vendor': 'Hottinger Baldwin Messtechnik GmbH', \
-		'Built-By': System.getProperty('user.name'), \
-		'Built-JDK': System.getProperty('java.version'), \
-		'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"), \
-		'Main-Class': 'Receiver'
-    }
+	manifest {
+		attributes \
+			'Implementation-Title': 'HBM Device Scan Library', \
+			'Implementation-Version': version, \
+			'Implementation-Vendor': 'Hottinger Baldwin Messtechnik GmbH', \
+			'Built-By': System.getProperty('user.name'), \
+			'Built-JDK': System.getProperty('java.version'), \
+			'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+	}
 }
