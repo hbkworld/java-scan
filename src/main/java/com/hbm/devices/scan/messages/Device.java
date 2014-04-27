@@ -25,6 +25,10 @@ public class Device {
 		return firmwareVersion;
 	}
 
+	public boolean getIsRouter() {
+		return isRouter;
+	}
+
 	@Override
 	public String toString() {
 		return "Device:\n" + 
@@ -32,7 +36,8 @@ public class Device {
 		"\tname: " + name + "\n" +
 		"\tfamily: " + familyType + "\n" +
 		"\ttype: " + type + "\n" +
-		"\tfirmware version: " + firmwareVersion + "\n";
+		"\tfirmware version: " + firmwareVersion + "\n" +
+		"\tisRouter: " + isRouter + "\n";
 	}
 
 	private String uuid;
@@ -40,5 +45,6 @@ public class Device {
 	private String type;
 	private String familyType;
 	private String firmwareVersion;
+	private boolean isRouter;
 }
 
