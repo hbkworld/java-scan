@@ -1,0 +1,20 @@
+apply plugin: 'java'
+
+dependencies {
+    compile files('libs/gson-2.2.4.jar')
+}
+
+version = '0.1'
+jar {
+	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest {
+        attributes \
+		'Implementation-Title': 'HBM Device Scan', \
+		'Implementation-Version': version, \
+        'Implementation-Vendor': 'Hottinger Baldwin Messtechnik GmbH', \
+		'Built-By': System.getProperty('user.name'), \
+		'Built-JDK': System.getProperty('java.version'), \
+		'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"), \
+		'Main-Class': 'Receiver'
+    }
+}
