@@ -8,6 +8,8 @@ import java.util.Observable;
 
 public class FakeStringMessageMulticastReceiver extends Observable {
 
+	private boolean shallRun = true;
+
 	private static final String correctMessage =
 	"{" +
 		"\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{" +
@@ -243,9 +245,20 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 				notifyObservers(line);
 			}
 		} catch (IOException e) {}
+		synchronized(this) {
+			while (shallRun) {
+				try {
+					this.wait();
+				} catch (InterruptedException e) {}
+			}
+		}
 	}
 
 	public void stop() {
+		synchronized(this) {
+			shallRun = false;
+			this.notifyAll();
+		}
 	}
 }
 
