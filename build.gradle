@@ -12,6 +12,7 @@ dependencies {
 version = '0.1'
 jar {
 	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	archiveName="devscan.jar"
     manifest {
         attributes \
 		'Implementation-Title': 'HBM Device Scan', \
