@@ -21,7 +21,7 @@ public class Device {
 		return familyType;
 	}
 
-	public String getfirmwareVersion() {
+	public String getFirmwareVersion() {
 		return firmwareVersion;
 	}
 
