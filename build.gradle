@@ -1,7 +1,12 @@
 apply plugin: 'java'
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile files('libs/gson-2.2.4.jar')
+	testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
 version = '0.1'
