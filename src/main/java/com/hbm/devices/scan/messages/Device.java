@@ -25,7 +25,7 @@ public class Device {
 		return firmwareVersion;
 	}
 
-	public boolean getIsRouter() {
+	public boolean isRouter() {
 		return isRouter;
 	}
 
