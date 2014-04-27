@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Observable;
 
-public class StringMessageMulticastReceiver extends Observable {
+public class StringMessageMulticastReceiver extends MessageReceiver {
 
 	private InetAddress multicastIP;
 	private int port;

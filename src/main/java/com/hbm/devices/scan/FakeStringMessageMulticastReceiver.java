@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Observable;
 
-public class FakeStringMessageMulticastReceiver extends Observable {
+public class FakeStringMessageMulticastReceiver extends MessageReceiver {
 
 	private boolean shallRun = true;
 
