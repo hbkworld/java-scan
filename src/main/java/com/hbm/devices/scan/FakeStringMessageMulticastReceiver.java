@@ -243,13 +243,6 @@ public class FakeStringMessageMulticastReceiver extends Observable {
 				notifyObservers(line);
 			}
 		} catch (IOException e) {}
-
-		try {
-			synchronized(this) {
-				this.wait(6000);
-			}
-		} catch (InterruptedException e) {
-		}
 	}
 
 	public void stop() {
