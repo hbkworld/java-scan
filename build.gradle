@@ -1,5 +1,7 @@
 apply plugin: 'java'
 
+baseName = 'devscan'
+
 repositories {
     mavenCentral()
 }
@@ -9,10 +11,24 @@ dependencies {
 	testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives sourcesJar
+    archives javadocJar
+}
+
 version = '0.1'
 jar {
 	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-	archiveName="devscan.jar"
     manifest {
         attributes \
 		'Implementation-Title': 'HBM Device Scan', \
