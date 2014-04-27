@@ -45,6 +45,6 @@ public class Device {
 	private String type;
 	private String familyType;
 	private String firmwareVersion;
-	private boolean isRouter;
+	private boolean isRouter = false;
 }
 
