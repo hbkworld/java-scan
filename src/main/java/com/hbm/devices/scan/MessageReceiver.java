@@ -4,6 +4,6 @@ import java.util.Observable;
 
 public abstract class MessageReceiver extends Observable {
 
-	abstract void start();
-	abstract void stop();
+	public abstract void start();
+	public abstract void stop();
 }
