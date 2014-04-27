@@ -75,18 +75,16 @@ public class Receiver implements Observer {
 			System.out.println("unknown");
 			return;
 		}
-/*
 		Announce a = ap.getAnnounce();
-		System.out.print(a.getParams().getDevice().getUuid());
+		System.out.print(a.getParams().getDevice());
 		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
 		for (IPv4Entry entry : ipv4) {
 			System.out.print(" " + entry);
 		}
-		Iterable<ServiceEntry> sentries = a.getParams().getServices();
-		for (IPv6Entry entry : ipv6) {
+		Iterable<ServiceEntry> services = a.getParams().getServices();
+		for (ServiceEntry entry : services) {
 			System.out.print(" " + entry);
 		}
 		System.out.println();
-*/
 	}
 }
