@@ -1,5 +1,7 @@
 apply plugin: 'java'
 
+version = '0.1'
+
 repositories {
     mavenCentral()
 }
@@ -11,11 +13,13 @@ dependencies {
 
 task sourcesJar(type: Jar, dependsOn: classes) {
     classifier = 'sources'
+	archiveName = jar.baseName +'-' + classifier + '.' + jar.extension
     from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
+	archiveName = jar.baseName +'-' + classifier + '.' + jar.extension
     from javadoc.destinationDir
 }
 
@@ -24,8 +28,8 @@ artifacts {
     archives javadocJar
 }
 
-version = '0.1'
 jar {
+	archiveName = jar.baseName + '.' + jar.extension
 	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     manifest {
         attributes \
