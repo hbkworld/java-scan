@@ -13,6 +13,27 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Observable;
 
+/**
+ * This class has the capability to receive String messages from a
+ * multicast UDP socket.
+ * 
+ * All network interfaces that are eligible to receive IPv4 multicast
+ * messages (see {@link com.hbm.devices.scan.util.IPv4ScanInterfaces}) are
+ * joined.
+ *
+ * Receiving messages is done infinitely when calling {@link
+ * #start() start()} method. After calling {@link #stop() stop()}, {@link
+ * #start() start()} returns.
+ *
+ * In addition, via {@link com.hbm.devices.scan.MessageReceiver} this
+ * class is also an {@link java.util.Observable}. 
+ * So objects which are interested in String multicast messages have to
+ * implement the {@link java.util.Observer} interface
+ * and register themselves to an instance of this class with
+ * addObserver().
+ *
+ * @since 1.0
+ */
 public class StringMessageMulticastReceiver extends MessageReceiver {
 
 	private InetAddress multicastIP;
