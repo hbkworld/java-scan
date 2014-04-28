@@ -1,7 +1,3 @@
-/**
- * Convenience class to gather all network interfaces eligible for
- * multicast scanning.
- */
 package com.hbm.devices.scan.util;
 
 import java.net.Inet4Address;
@@ -17,6 +13,10 @@ import java.util.List;
 
 import com.hbm.devices.scan.messages.IPv4Entry;
 
+/**
+ * Convenience class to gather all network interfaces eligible for
+ * multicast scanning.
+ */
 public class IPv4ScanInterfaces {
 
 	public IPv4ScanInterfaces() throws SocketException {
