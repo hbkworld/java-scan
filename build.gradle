@@ -41,6 +41,12 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.allSource
 }
 
+javadoc {
+	configure(options) {
+		links = ['http://docs.oracle.com/javase/7/docs/api/']
+	}
+}
+
 task javadocJar(type: Jar, dependsOn: javadoc) {
 	classifier = 'javadoc'
 	archiveName = jar.baseName +'-' + classifier + '.' + jar.extension
