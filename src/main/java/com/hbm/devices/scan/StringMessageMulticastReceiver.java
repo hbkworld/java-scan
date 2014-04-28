@@ -16,15 +16,15 @@ import java.util.Observable;
 /**
  * This class has the capability to receive String messages from a
  * multicast UDP socket.
- * 
+ * <p>
  * All network interfaces that are eligible to receive IPv4 multicast
  * messages (see {@link com.hbm.devices.scan.util.IPv4ScanInterfaces}) are
  * joined.
- *
+ * <p>
  * Receiving messages is done infinitely when calling {@link
  * #start() start()} method. After calling {@link #stop() stop()}, {@link
  * #start() start()} returns.
- *
+ * <p>
  * In addition, via {@link com.hbm.devices.scan.MessageReceiver} this
  * class is also an {@link java.util.Observable}. 
  * So objects which are interested in String multicast messages have to
