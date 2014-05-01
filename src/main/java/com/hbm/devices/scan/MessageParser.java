@@ -1,5 +1,4 @@
-package com.hbm.devices.scan.filter;
-
+package com.hbm.devices.scan;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,11 +14,12 @@ import com.hbm.devices.scan.MissingDataException;
 import java.lang.reflect.Type;
 import java.util.Observable;
 import java.util.Observer;
-public class JsonFilter extends Observable implements Observer {
+
+public class MessageParser extends Observable implements Observer {
 
 	private Gson gson;
 
-	public JsonFilter() {
+	public MessageParser() {
 		GsonBuilder builder = new GsonBuilder();
 		builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
 		gson = builder.create();

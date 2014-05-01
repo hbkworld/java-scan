@@ -2,13 +2,13 @@ import org.junit.* ;
 import static org.junit.Assert.* ;
 
 import com.hbm.devices.scan.AnnouncePath;
-import com.hbm.devices.scan.filter.JsonFilter;
+import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import java.util.Observable;
 import java.util.Observer;
 
-public class JsonFilterTest {
+public class MessageParserTest {
 
 	private AnnouncePath ap;
 	private FakeMessageReceiver fsmmr;
@@ -16,7 +16,7 @@ public class JsonFilterTest {
 	@Before
 	public void setup() {
 		fsmmr = new FakeMessageReceiver();
-		JsonFilter jf = new JsonFilter();
+		MessageParser jf = new MessageParser();
 		fsmmr.addObserver(jf);
 		jf.addObserver(new Observer(){
 			public void update(Observable o, Object arg) {

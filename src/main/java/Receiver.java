@@ -4,7 +4,7 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.Filter;
-import com.hbm.devices.scan.filter.JsonFilter;
+import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.LostDeviceEvent;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.MessageReceiver;
@@ -32,7 +32,7 @@ public class Receiver implements Observer {
 			*/
 			MessageReceiver ar = new AnnounceReceiver();
 			//MessageReceiver ar = new FakeMessageReceiver();
-			JsonFilter jf = new JsonFilter();
+			MessageParser jf = new MessageParser();
 			ar.addObserver(jf);
 
 			Filter ftFilter = new Filter(new FamilytypeMatch("QuantumX"));

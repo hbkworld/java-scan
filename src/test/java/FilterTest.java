@@ -2,7 +2,7 @@ import org.junit.* ;
 import static org.junit.Assert.* ;
 
 import com.hbm.devices.scan.AnnouncePath;
-import com.hbm.devices.scan.filter.JsonFilter;
+import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.FakeMessageReceiver;
@@ -18,7 +18,7 @@ public class FilterTest {
 	@Before
 	public void setup() {
 		fsmmr = new FakeMessageReceiver();
-		JsonFilter jf = new JsonFilter();
+		MessageParser jf = new MessageParser();
 		fsmmr.addObserver(jf);
 		Filter ftFilter = new Filter(new FamilytypeMatch("QuantumX"));
 		jf.addObserver(ftFilter);
