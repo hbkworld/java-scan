@@ -17,9 +17,9 @@ import com.hbm.devices.scan.messages.IPv4Entry;
  * Convenience class to gather all network interfaces eligible for
  * multicast scanning.
  */
-public class IPv4ScanInterfaces {
+public class ScanInterfaces {
 
-	public IPv4ScanInterfaces() throws SocketException {
+	public ScanInterfaces() throws SocketException {
 		interfaces = new LinkedList<NetworkInterface>();
 		Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
 

@@ -1,6 +1,6 @@
 package com.hbm.devices.scan;
 
-import com.hbm.devices.scan.util.IPv4ScanInterfaces;
+import com.hbm.devices.scan.util.ScanInterfaces;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -18,7 +18,7 @@ import java.util.Observable;
  * multicast UDP socket.
  * <p>
  * All network interfaces that are eligible to receive IPv4 multicast
- * messages (see {@link com.hbm.devices.scan.util.IPv4ScanInterfaces}) are
+ * messages (see {@link com.hbm.devices.scan.util.ScanInterfaces}) are
  * joined.
  * <p>
  * Receiving messages is done infinitely when calling {@link
@@ -93,14 +93,14 @@ public class MulticastMessageReceiver extends MessageReceiver {
 
 	private void joinOnAllInterfaces(MulticastSocket s) throws SocketException, IOException {
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
-		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
+		Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
 		for (NetworkInterface ni : interfaces) {
 			s.joinGroup(sa, ni);
 		}
 	}
 
 	private void leaveOnAllInterfaces(MulticastSocket s) throws IOException {
-		Collection<NetworkInterface> interfaces = new IPv4ScanInterfaces().getInterfaces();
+		Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 		for (NetworkInterface ni : interfaces) {
 			s.leaveGroup(sa, ni);

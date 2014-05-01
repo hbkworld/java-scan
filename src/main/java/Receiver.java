@@ -11,7 +11,7 @@ import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.NewDeviceEvent;
 import com.hbm.devices.scan.util.ConnectionFinder;
-import com.hbm.devices.scan.util.IPv4ScanInterfaces;
+import com.hbm.devices.scan.util.ScanInterfaces;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -60,7 +60,7 @@ public class Receiver implements Observer {
 	private ConnectionFinder connectionFinder;
 
 	public Receiver() throws SocketException {
-		scanInterfaces = new IPv4ScanInterfaces().getInterfaces();
+		scanInterfaces = new ScanInterfaces().getInterfaces();
 		connectionFinder = new ConnectionFinder(scanInterfaces, false);
 	}
 
