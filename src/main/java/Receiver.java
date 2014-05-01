@@ -1,6 +1,6 @@
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.AnnounceReceiver;
-import com.hbm.devices.scan.FakeStringMessageMulticastReceiver;
+import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.Filter;
@@ -31,7 +31,7 @@ public class Receiver implements Observer {
 			System.out.println("v6: " + v6.getCanonicalHostName());
 			*/
 			MessageReceiver ar = new AnnounceReceiver();
-			//MessageReceiver ar = new FakeStringMessageMulticastReceiver();
+			//MessageReceiver ar = new FakeMessageReceiver();
 			JsonFilter jf = new JsonFilter();
 			ar.addObserver(jf);
 
