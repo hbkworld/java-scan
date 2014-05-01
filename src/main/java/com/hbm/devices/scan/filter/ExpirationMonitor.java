@@ -1,4 +1,4 @@
-package com.hbm.devices.scan.filter;
+package com.hbm.devices.scan;
 
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.LostDeviceEvent;
@@ -12,13 +12,13 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
-public class AnnounceFilter extends Observable implements Observer {
+public class ExpirationMonitor extends Observable implements Observer {
 
 	private HashMap<AnnouncePath, ScheduledFuture> deviceMap;
 	private HashMap<ScheduledFuture, AnnounceTimerTask> futureMap;
 	private ScheduledThreadPoolExecutor executor;
 
-	public AnnounceFilter() {
+	public ExpirationMonitor() {
 		deviceMap = new HashMap<AnnouncePath, ScheduledFuture>(100);
 		futureMap = new HashMap<ScheduledFuture, AnnounceTimerTask>(100);
 		executor = new ScheduledThreadPoolExecutor(1);

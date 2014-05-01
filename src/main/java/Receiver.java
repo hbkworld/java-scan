@@ -1,11 +1,11 @@
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.AnnounceReceiver;
+import com.hbm.devices.scan.ExpirationMonitor;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.Filter;
-import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.LostDeviceEvent;
+import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
@@ -42,7 +42,7 @@ public class Receiver implements Observer {
 			Filter ftFilter = new Filter(new FamilytypeMatch("QuantumX"));
 			jf.addObserver(ftFilter);
 			
-			AnnounceFilter af = new AnnounceFilter();
+			ExpirationMonitor af = new ExpirationMonitor();
 			ftFilter.addObserver(af);
 			
 			Receiver r = new Receiver();
