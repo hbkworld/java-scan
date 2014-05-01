@@ -1,9 +1,9 @@
 package com.hbm.devices.scan.filter;
 
 import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.LostDeviceEvent;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.NewDeviceEvent;
-import com.hbm.devices.scan.UnregisterDeviceEvent;
 
 import java.util.HashMap;
 import java.util.Observable;
@@ -83,7 +83,7 @@ public class AnnounceFilter extends Observable implements Observer {
 				deviceMap.remove(announcePath);
 			}
 			setChanged();
-			notifyObservers(new UnregisterDeviceEvent(announcePath));
+			notifyObservers(new LostDeviceEvent(announcePath));
 		}
 	
 		AnnouncePath getAnnouncePath() {

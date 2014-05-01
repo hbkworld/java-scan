@@ -1,15 +1,15 @@
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.AnnounceReceiver;
 import com.hbm.devices.scan.FakeStringMessageMulticastReceiver;
-import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.JsonFilter;
+import com.hbm.devices.scan.LostDeviceEvent;
+import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.NewDeviceEvent;
-import com.hbm.devices.scan.UnregisterDeviceEvent;
 import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.IPv4ScanInterfaces;
 
@@ -70,9 +70,9 @@ public class Receiver implements Observer {
 			if (connectAddress != null) {
 				System.out.println("Connectable: " + connectAddress);
 			}
-		} else if (arg instanceof UnregisterDeviceEvent) {
+		} else if (arg instanceof LostDeviceEvent) {
 			System.out.println("unregistered: ");
-			ap = ((UnregisterDeviceEvent)arg).getAnnouncePath();
+			ap = ((LostDeviceEvent)arg).getAnnouncePath();
 		} else {
 			System.out.println("unknown");
 			return;

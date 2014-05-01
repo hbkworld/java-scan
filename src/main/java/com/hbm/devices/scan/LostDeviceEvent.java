@@ -1,10 +1,10 @@
 package com.hbm.devices.scan;
 
-public class UnregisterDeviceEvent {
+public class LostDeviceEvent {
 
 	private AnnouncePath announcePath;
 
-	public UnregisterDeviceEvent(AnnouncePath ap) {
+	public LostDeviceEvent(AnnouncePath ap) {
 		announcePath = ap;
 	}
 
