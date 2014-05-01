@@ -9,6 +9,10 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
 
+/**
+ * Convenience class for checking if an IP connection is possible to an
+ * announced device.
+ */
 public class ConnectionFinder {
 	
 	private boolean preferIPv6;
