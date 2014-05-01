@@ -46,6 +46,7 @@ javadoc {
 		links = ['http://docs.oracle.com/javase/7/docs/api/']
 		bottom = 'Copyright &copy; 2014-2014 <a href=\"http://www.hbm.com\" target=\"_blank\">Hottinger Baldwin Messtechnik GmbH</a>.'
 		footer = 'HBM Device Scan API'
+		use = true
 		options.overview = "src/main/doc/overview.html"
 	}
 }
