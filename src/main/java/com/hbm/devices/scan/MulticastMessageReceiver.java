@@ -10,6 +10,7 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.Observable;
 
@@ -53,11 +54,13 @@ public class MulticastMessageReceiver extends MessageReceiver {
 
 	public void start() {
 		byte[] buffer = new byte[65536];
+		Charset charset= Charset.forName("UTF-8");
+		System.out.println(charset);
 		DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 		while (shallRun) {
 			try {
 				socket.receive(packet);
-				String s = new String(buffer, 0, packet.getLength());
+				String s = new String(buffer, 0, packet.getLength(), charset);
 				setChanged();
 				notifyObservers(s);
 			} catch (IOException e) {
