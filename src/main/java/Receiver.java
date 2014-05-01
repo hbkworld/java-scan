@@ -30,8 +30,12 @@ public class Receiver implements Observer {
 			InetAddress v6 = InetAddress.getByName("2a01:238:43f7:d600:42ba:27f8:ca8b:96ed");
 			System.out.println("v6: " + v6.getCanonicalHostName());
 			*/
-			MessageReceiver ar = new AnnounceReceiver();
-			//MessageReceiver ar = new FakeMessageReceiver();
+			MessageReceiver ar;
+			if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
+				ar = new FakeMessageReceiver();
+			} else {
+				ar = new AnnounceReceiver();
+			}
 			MessageParser jf = new MessageParser();
 			ar.addObserver(jf);
 
