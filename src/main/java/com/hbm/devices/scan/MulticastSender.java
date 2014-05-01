@@ -10,6 +10,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 public class MulticastSender {
+	
+	private MulticastSocket socket;
+	private HashSet<NetworkInterface> multicastSender;
 
 	public MulticastSender(Collection<NetworkInterface> ifs) throws IOException {
 		socket = new MulticastSocket(ScanConstants.SCAN_PORT);
@@ -30,7 +33,4 @@ public class MulticastSender {
 		socket.close();
 		super.finalize();
 	}
-	
-	private MulticastSocket socket;
-	private HashSet<NetworkInterface> multicastSender;
 }
