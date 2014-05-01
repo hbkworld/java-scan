@@ -8,7 +8,7 @@ import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.JsonFilter;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
-import com.hbm.devices.scan.RegisterDeviceEvent;
+import com.hbm.devices.scan.NewDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
 import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.IPv4ScanInterfaces;
@@ -62,9 +62,9 @@ public class Receiver implements Observer {
 
 	public void update(Observable o, Object arg) {
 		AnnouncePath ap;
-		if (arg instanceof RegisterDeviceEvent) {
+		if (arg instanceof NewDeviceEvent) {
 			System.out.println("registered: ");
-			ap = ((RegisterDeviceEvent)arg).getAnnouncePath();
+			ap = ((NewDeviceEvent)arg).getAnnouncePath();
 			Announce a = ap.getAnnounce();
 			InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
 			if (connectAddress != null) {

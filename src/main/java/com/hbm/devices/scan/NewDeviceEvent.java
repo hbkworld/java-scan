@@ -1,10 +1,10 @@
 package com.hbm.devices.scan;
 
-public class RegisterDeviceEvent {
+public class NewDeviceEvent {
 
 	private AnnouncePath announcePath;
 
-	public RegisterDeviceEvent(AnnouncePath ap) {
+	public NewDeviceEvent(AnnouncePath ap) {
 		announcePath = ap;
 	}
 	

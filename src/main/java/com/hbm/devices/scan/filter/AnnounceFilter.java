@@ -2,7 +2,7 @@ package com.hbm.devices.scan.filter;
 
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.messages.*;
-import com.hbm.devices.scan.RegisterDeviceEvent;
+import com.hbm.devices.scan.NewDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
 
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public class AnnounceFilter extends Observable implements Observer {
 				Announce oldAnnounce = task.getAnnouncePath().getAnnounce();
 				if (!oldAnnounce.equals(announce)) {
 					setChanged();
-					notifyObservers(new RegisterDeviceEvent(ap));
+					notifyObservers(new NewDeviceEvent(ap));
 				}
 				sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
 				deviceMap.put(ap, sf);
@@ -57,7 +57,7 @@ public class AnnounceFilter extends Observable implements Observer {
 				deviceMap.put(ap, sf);
 				futureMap.put(sf, task);
 				setChanged();
-				notifyObservers(new RegisterDeviceEvent(ap));
+				notifyObservers(new NewDeviceEvent(ap));
 			}
 		}
 	}
