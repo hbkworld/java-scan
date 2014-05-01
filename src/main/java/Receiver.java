@@ -1,11 +1,12 @@
-import com.hbm.devices.scan.AnnounceReceiver;
 import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.AnnounceReceiver;
 import com.hbm.devices.scan.FakeStringMessageMulticastReceiver;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.filter.AnnounceFilter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.JsonFilter;
+import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.RegisterDeviceEvent;
 import com.hbm.devices.scan.UnregisterDeviceEvent;
@@ -23,12 +24,15 @@ import java.util.Observer;
 public class Receiver implements Observer {
 	public static void main(String[] args) {
 		try {
+<<<<<<< HEAD
 			/*
 			InetAddress v4 = InetAddress.getByName("85.214.228.118");
 			System.out.println("v4: " + v4.getCanonicalHostName());
 			InetAddress v6 = InetAddress.getByName("2a01:238:43f7:d600:42ba:27f8:ca8b:96ed");
 			System.out.println("v6: " + v6.getCanonicalHostName());
 			*/
+=======
+>>>>>>> Use type MessageReceiver when instantiating Receivers.
 			MessageReceiver ar = new AnnounceReceiver();
 			//MessageReceiver ar = new FakeStringMessageMulticastReceiver();
 			JsonFilter jf = new JsonFilter();
