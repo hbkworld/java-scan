@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 
-public class AnnounceReceiver extends StringMessageMulticastReceiver {
+public class AnnounceReceiver extends MulticastMessageReceiver {
 
 	public AnnounceReceiver() throws UnknownHostException, SocketException, IOException {
 		super(ScanConstants.SCAN_ADDRESS, ScanConstants.SCAN_PORT);

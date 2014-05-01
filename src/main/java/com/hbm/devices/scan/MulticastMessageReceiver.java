@@ -34,18 +34,18 @@ import java.util.Observable;
  *
  * @since 1.0
  */
-public class StringMessageMulticastReceiver extends MessageReceiver {
+public class MulticastMessageReceiver extends MessageReceiver {
 
 	private InetAddress multicastIP;
 	private int port;
 	private boolean shallRun = true;
 	private MulticastSocket socket;
 
-	public StringMessageMulticastReceiver(String multicastIP, int port) throws UnknownHostException, SocketException, IOException {
+	public MulticastMessageReceiver(String multicastIP, int port) throws UnknownHostException, SocketException, IOException {
 		this(InetAddress.getByName(multicastIP), port);
 	}
 
-	public StringMessageMulticastReceiver(InetAddress multicastIP, int port) throws SocketException, IOException {
+	public MulticastMessageReceiver(InetAddress multicastIP, int port) throws SocketException, IOException {
 		this.multicastIP = multicastIP;
 		this.port = port;
 		this.socket = setupMulticastSocket();
