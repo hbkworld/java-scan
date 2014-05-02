@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import java.util.Observable;
 
+/**
+ * This class emits fake announce messages.
+ * <p>
+ */
 public class FakeMessageReceiver extends MessageReceiver {
 
 	private boolean shallRun = true;

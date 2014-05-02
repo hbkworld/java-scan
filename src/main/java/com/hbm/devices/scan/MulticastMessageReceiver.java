@@ -15,8 +15,8 @@ import java.util.Collection;
 import java.util.Observable;
 
 /**
- * This class has the capability to receive String messages from a
- * multicast UDP socket.
+ * This class receives messages from a multicast UDP socket and converts
+ * them to a {@link java.lang.String}.
  * <p>
  * All network interfaces that are eligible to receive IPv4 multicast
  * messages (see {@link com.hbm.devices.scan.util.ScanInterfaces}) are

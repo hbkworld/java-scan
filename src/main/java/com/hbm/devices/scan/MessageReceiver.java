@@ -2,6 +2,11 @@ package com.hbm.devices.scan;
 
 import java.util.Observable;
 
+/**
+ * Super class for all message receivers.
+ *
+ * @since 1.0
+ */
 public abstract class MessageReceiver extends Observable {
 
 	public abstract void start();
