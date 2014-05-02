@@ -11,10 +11,21 @@ import com.google.gson.JsonSyntaxException;
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.MissingDataException;
+
 import java.lang.reflect.Type;
 import java.util.Observable;
 import java.util.Observer;
-
+/**
+ * This class gets JSON announce messages, parses them and notifies
+ * {@link AnnouncePath} objects.
+ *
+ * The whole class is designed as a best effort service. So invalid JSON
+ * messages, or messages that do not conform to the HBM network
+ * discovery and configuration protocol are simply ignored. Users of
+ * this class will <em>not</em> get any error messages or exceptions.
+ *
+ * @since 1.0
+ */
 public class MessageParser extends Observable implements Observer {
 
 	private Gson gson;
