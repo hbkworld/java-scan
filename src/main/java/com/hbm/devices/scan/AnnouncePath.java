@@ -35,7 +35,7 @@ public class AnnouncePath {
 		try {
 			String deviceUuid = announce.getParams().getDevice().getUuid();
 			if (deviceUuid == null) {
-				throw new MissingDataException();
+				throw new MissingDataException("No device UUID in announce object!");
 			}
 			sb.append(deviceUuid);
 
@@ -43,19 +43,19 @@ public class AnnouncePath {
 			if (router != null) {
 				String routerUuid = router.getUuid();
 				if (routerUuid == null) {
-					throw new MissingDataException();
+					throw new MissingDataException("No router UUID in announce object!");
 				}
 				sb.append(routerUuid);
 			}
 
 			String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
 			if (deviceInterfaceName == null) {
-				throw new MissingDataException();
+				throw new MissingDataException("No network interface name in announce object!");
 			}
 			sb.append(deviceInterfaceName);
 			hash = sb.toString().hashCode();
 		} catch (NullPointerException e) {
-			throw new MissingDataException();
+			throw new MissingDataException("Information missing in announce object!");
 		}
 	}
 

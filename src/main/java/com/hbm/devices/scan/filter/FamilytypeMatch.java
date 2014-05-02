@@ -16,7 +16,7 @@ public class FamilytypeMatch implements Matcher {
 			String ft = a.getParams().getDevice().getFamilyType();
 			return ft.equals(familytype);
 		} catch (NullPointerException e) {
-			throw new MissingDataException();
+			throw new MissingDataException("No family type in announce object!");
 		}
 	}
 }
