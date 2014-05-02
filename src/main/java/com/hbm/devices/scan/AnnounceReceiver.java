@@ -1,6 +1,5 @@
 package com.hbm.devices.scan;
 
-import com.hbm.devices.scan.ScanConstants;
 import java.io.IOException;
 import java.net.SocketException;
 import java.net.UnknownHostException;
@@ -12,7 +11,10 @@ import java.net.UnknownHostException;
  */
 public class AnnounceReceiver extends MulticastMessageReceiver {
 
+	public static final String ANNOUNCE_ADDRESS = "239.255.77.76";
+	public static final int ANNOUNCE_PORT = 31416;
+
 	public AnnounceReceiver() throws UnknownHostException, SocketException, IOException {
-		super(ScanConstants.SCAN_ADDRESS, ScanConstants.SCAN_PORT);
+		super(ANNOUNCE_ADDRESS, ANNOUNCE_PORT);
 	}
 }

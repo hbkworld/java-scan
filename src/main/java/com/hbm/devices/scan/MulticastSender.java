@@ -17,10 +17,13 @@ public class MulticastSender {
 	private Charset charset;
 	private InetAddress configureAddress;
 
+	public static final String CONFIGURATION_ADDRESS = "239.255.77.77";
+	public static final int CONFIGURATION_PORT = 31417;
+
 	public MulticastSender(Collection<NetworkInterface> ifs) throws IOException {
 		charset = Charset.forName("UTF-8");
-		configureAddress = InetAddress.getByName(ScanConstants.SCAN_ADDRESS);
-		socket = new MulticastSocket(ScanConstants.SCAN_PORT);
+		configureAddress = InetAddress.getByName(CONFIGURATION_ADDRESS);
+		socket = new MulticastSocket(CONFIGURATION_PORT);
 		multicastSender = new HashSet<NetworkInterface>();
 		multicastSender.addAll(ifs);
 		// join all interfaces
@@ -28,7 +31,7 @@ public class MulticastSender {
 
 	public void sendMessage(String msg) throws IOException, SocketException {
 		byte[] bytes = msg.getBytes(charset);
-		DatagramPacket packet = new DatagramPacket(bytes, bytes.length,	configureAddress, ScanConstants.SCAN_PORT);
+		DatagramPacket packet = new DatagramPacket(bytes, bytes.length,	configureAddress, CONFIGURATION_PORT);
 		for (NetworkInterface iface : multicastSender) { 
 			socket.setNetworkInterface(iface);
 			socket.send(packet);
