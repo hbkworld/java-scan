@@ -38,8 +38,9 @@ public class Receiver implements Observer {
 			}
 			MessageParser jf = new MessageParser();
 			ar.addObserver(jf);
-
-			Filter ftFilter = new Filter(new FamilytypeMatch("QuantumX"));
+			
+			String[] families = {"QuantumX"};
+			Filter ftFilter = new Filter(new FamilytypeMatch(families));
 			jf.addObserver(ftFilter);
 			
 			ExpirationMonitor af = new ExpirationMonitor();

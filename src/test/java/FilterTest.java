@@ -20,7 +20,8 @@ public class FilterTest {
 		fsmmr = new FakeMessageReceiver();
 		MessageParser jf = new MessageParser();
 		fsmmr.addObserver(jf);
-		Filter ftFilter = new Filter(new FamilytypeMatch("QuantumX"));
+		String[] families = {"QuantumX"};
+		Filter ftFilter = new Filter(new FamilytypeMatch(families));
 		jf.addObserver(ftFilter);
 		ftFilter.addObserver(new Observer(){
 			public void update(Observable o, Object arg) {
