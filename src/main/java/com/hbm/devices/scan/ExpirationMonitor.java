@@ -5,12 +5,12 @@ import com.hbm.devices.scan.LostDeviceEvent;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.NewDeviceEvent;
 
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 /**
  * This class provides the concept of posting new/lost device events.
