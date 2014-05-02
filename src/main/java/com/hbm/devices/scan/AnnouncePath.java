@@ -33,11 +33,11 @@ public class AnnouncePath {
 		this.announce = announce;
 		StringBuilder sb = new StringBuilder(100);
 		try {
-			String uuid = announce.getParams().getDevice().getUuid();
-			if (uuid == null) {
+			String deviceUuid = announce.getParams().getDevice().getUuid();
+			if (deviceUuid == null) {
 				throw new MissingDataException();
 			}
-			sb.append(announce.getParams().getDevice().getUuid());
+			sb.append(deviceUuid);
 
 			Router router = announce.getParams().getRouter();
 			if (router != null) {
@@ -45,14 +45,14 @@ public class AnnouncePath {
 				if (routerUuid == null) {
 					throw new MissingDataException();
 				}
-				sb.append(router.getUuid());
+				sb.append(routerUuid);
 			}
 
-			String interfaceName = announce.getParams().getNetSettings().getInterface().getName();
-			if (interfaceName == null) {
+			String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
+			if (deviceInterfaceName == null) {
 				throw new MissingDataException();
 			}
-			sb.append(announce.getParams().getNetSettings().getInterface().getName());
+			sb.append(deviceInterfaceName);
 			hash = sb.toString().hashCode();
 		} catch (NullPointerException e) {
 			throw new MissingDataException();
