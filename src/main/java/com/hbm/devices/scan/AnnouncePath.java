@@ -20,6 +20,13 @@ public class AnnouncePath {
 
 	private Announce announce;
 	private int hash;
+
+	/**
+	 * Placeholder for user defined object.
+	 * <p>
+	 * This object carries user defined data, it will not be used from
+	 * code inside this package.
+	 */
 	public Object cookie;
 
 	AnnouncePath(Announce announce) throws MissingDataException {
@@ -52,6 +59,12 @@ public class AnnouncePath {
 		}
 	}
 
+	/**
+	 * Calculates a unique hash for a communication path.
+	 * <p>
+	 * Currently the device uuid, the router uuid and the interface name
+	 * of the sending device are take into the hash calculation.
+	 */
 	@Override
 	public int hashCode() {
 		return hash;
