@@ -22,7 +22,7 @@ public class AnnouncePath {
 	private int hash;
 	public Object cookie;
 
-	public AnnouncePath(Announce announce) throws MissingDataException {
+	AnnouncePath(Announce announce) throws MissingDataException {
 		this.announce = announce;
 		StringBuilder sb = new StringBuilder(100);
 		try {
