@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 /**
  * Convenience class to receive announce multicast messages.
+ * <p>
  *
  * @since 1.0
  */

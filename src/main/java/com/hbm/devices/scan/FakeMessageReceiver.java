@@ -9,6 +9,8 @@ import java.util.Observable;
 /**
  * This class emits fake announce messages.
  * <p>
+ *
+ * @since 1.0
  */
 public class FakeMessageReceiver extends MessageReceiver {
 

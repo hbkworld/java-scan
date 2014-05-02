@@ -18,7 +18,7 @@ import java.util.Observer;
 /**
  * This class gets JSON announce messages, parses them and notifies
  * {@link AnnouncePath} objects.
- *
+ * <p>
  * The whole class is designed as a best effort service. So invalid JSON
  * messages, or messages that do not conform to the HBM network
  * discovery and configuration protocol are simply ignored. Users of

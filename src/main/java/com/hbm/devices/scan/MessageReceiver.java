@@ -4,6 +4,7 @@ import java.util.Observable;
 
 /**
  * Super class for all message receivers.
+ * <p>
  *
  * @since 1.0
  */

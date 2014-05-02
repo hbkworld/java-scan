@@ -12,6 +12,17 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * This class provides the concept of posting new/lost device events.
+ * <p>
+ * The class reads {@link AnnouncePath} objects, looks the up in a
+ * private hashmap and notifies a {@link NewDeviceEvent} if the announce
+ * describes a devices that wasn't known upto now. Furthermore, it
+ * notifies a {@link LostDeviceEvent} if no new announce for a
+ * particular device was received during the expiration period.
+ *
+ * @since 1.0
+ */
 public class ExpirationMonitor extends Observable implements Observer {
 
 	private HashMap<AnnouncePath, ScheduledFuture> deviceMap;
