@@ -15,6 +15,14 @@ public abstract class JsonRpc {
 		return json;
 	}
 
+    public String getJsonrpc() {
+        return jsonrpc;
+    }
+
+    public String getMethod() {
+        return method;
+    }
+    
 	private String jsonrpc;
 	private String method;
 	private String json;
