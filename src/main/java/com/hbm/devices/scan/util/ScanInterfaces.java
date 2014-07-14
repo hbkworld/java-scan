@@ -2,16 +2,11 @@ package com.hbm.devices.scan.util;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
-import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedList;
-import java.util.List;
-
-import com.hbm.devices.scan.messages.IPv4Entry;
 
 /**
  * Convenience class to gather all network interfaces eligible for

@@ -12,7 +12,6 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.Collection;
-import java.util.Observable;
 
 /**
  * This class receives messages from a multicast UDP socket and converts

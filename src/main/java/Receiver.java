@@ -7,13 +7,11 @@ import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.LostDeviceEvent;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.MessageReceiver;
-import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.NewDeviceEvent;
 import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.NetworkInterface;

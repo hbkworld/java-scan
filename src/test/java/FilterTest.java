@@ -6,7 +6,6 @@ import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.Announce;
 import java.util.Observable;
 import java.util.Observer;
 

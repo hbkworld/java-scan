@@ -4,7 +4,6 @@ import static org.junit.Assert.* ;
 import com.hbm.devices.scan.AnnouncePath;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.Announce;
 import java.util.Observable;
 import java.util.Observer;
 
