@@ -14,6 +14,8 @@ public interface Matcher {
 	 * @return			<code>true</code> if the information is in the
 	 * 					{@link Announce} object, <code>false</code>
 	 * 					otherwise.
+	 * @throws MissingDataException if some information in the JSON 
+	 *                  packet ist missing for a comparison.
 	 */
 	boolean match(Announce announce) throws MissingDataException;
 }
