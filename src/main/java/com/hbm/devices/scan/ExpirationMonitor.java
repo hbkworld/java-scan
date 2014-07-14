@@ -5,6 +5,7 @@ import com.hbm.devices.scan.LostDeviceEvent;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.NewDeviceEvent;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -25,13 +26,13 @@ import java.util.Observer;
  */
 public class ExpirationMonitor extends Observable implements Observer {
 
-	private HashMap<AnnouncePath, ScheduledFuture> deviceMap;
-	private HashMap<ScheduledFuture, AnnounceTimerTask> futureMap;
+	private HashMap<AnnouncePath, ScheduledFuture<Void>> deviceMap;
+	private HashMap<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
 	private ScheduledThreadPoolExecutor executor;
 
 	public ExpirationMonitor() {
-		deviceMap = new HashMap<AnnouncePath, ScheduledFuture>(100);
-		futureMap = new HashMap<ScheduledFuture, AnnounceTimerTask>(100);
+		deviceMap = new HashMap<AnnouncePath, ScheduledFuture<Void>>(100);
+		futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(100);
 		executor = new ScheduledThreadPoolExecutor(1);
 	}
 
@@ -49,7 +50,7 @@ public class ExpirationMonitor extends Observable implements Observer {
 
 		synchronized(deviceMap) {
 			if (deviceMap.containsKey(ap)) {
-				ScheduledFuture sf = deviceMap.get(ap);
+			    ScheduledFuture<Void> sf = deviceMap.get(ap);
 				sf.cancel(false);
 				deviceMap.remove(ap);
 				AnnounceTimerTask task = futureMap.remove(sf);
@@ -61,10 +62,9 @@ public class ExpirationMonitor extends Observable implements Observer {
 				sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
 				deviceMap.put(ap, sf);
 				futureMap.put(sf, task);
-			} else {
-				int expriationMs = getExpiration(announce);
+			} else {				
 				AnnounceTimerTask task = new AnnounceTimerTask(ap);
-				ScheduledFuture sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+				ScheduledFuture<Void> sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
 				deviceMap.put(ap, sf);
 				futureMap.put(sf, task);
 				setChanged();
@@ -81,20 +81,21 @@ public class ExpirationMonitor extends Observable implements Observer {
 		return expiration * 1000;
 	}
 
-	class AnnounceTimerTask implements Runnable {
+	class AnnounceTimerTask implements Callable<Void> {
 		private AnnouncePath announcePath;
 	
 		AnnounceTimerTask(AnnouncePath ap) {
 			announcePath = ap;
 		}
 
-		@Override
-		public void run() {
+        @Override
+		public Void call() throws Exception {
 			synchronized(deviceMap) {
 				deviceMap.remove(announcePath);
 			}
 			setChanged();
 			notifyObservers(new LostDeviceEvent(announcePath));
+			return null;
 		}
 	
 		AnnouncePath getAnnouncePath() {
