@@ -6,12 +6,17 @@ public class NetSettings {
 
 	private NetSettings() {
 	}
+	
+	public NetSettings(Interface<?, ?> iface) {
+	    this();
+	    this.iface = iface;
+	}
 
 	public DefaultGateway getDefaultGateway() {
 		return defaultGateway;
 	}
 	
-	public Interface getInterface() {
+	public Interface<?, ?> getInterface() {
 		return iface;
 	}
 
@@ -30,6 +35,6 @@ public class NetSettings {
 	private DefaultGateway defaultGateway;
 
 	@SerializedName("interface")
-	private Interface iface;
+	private Interface<?, ?> iface;
 }
 

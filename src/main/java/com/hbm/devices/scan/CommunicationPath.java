@@ -16,7 +16,7 @@ import com.hbm.devices.scan.messages.*;
  *
  * @since 1.0
  */
-public class AnnouncePath {
+public class CommunicationPath {
 
 	private Announce announce;
 	private int hash;
@@ -29,7 +29,7 @@ public class AnnouncePath {
 	 */
 	public Object cookie;
 
-	AnnouncePath(Announce announce) throws MissingDataException {
+	CommunicationPath(Announce announce) throws MissingDataException {
 		this.announce = announce;
 		StringBuilder sb = new StringBuilder(100);
 		try {

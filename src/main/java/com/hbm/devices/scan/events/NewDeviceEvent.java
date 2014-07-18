@@ -1,7 +1,10 @@
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.events;
+
+import com.hbm.devices.scan.CommunicationPath;
+import com.hbm.devices.scan.DeviceMonitor;
 
 /**
- * This event is emitted by an {@link ExpirationMonitor}.
+ * This event is emitted by an {@link DeviceMonitor}.
  * <p>
  * The event is notified when an announce method from a device that is
  * unknown upto now is received. In addition, this event is also fired
@@ -12,13 +15,13 @@ package com.hbm.devices.scan;
  */
 public class NewDeviceEvent {
 
-	private AnnouncePath announcePath;
+	private CommunicationPath communicationPath;
 
-	public NewDeviceEvent(AnnouncePath ap) {
-		announcePath = ap;
+	public NewDeviceEvent(CommunicationPath ap) {
+		communicationPath = ap;
 	}
 	
-	public AnnouncePath getAnnouncePath() {
-		return announcePath;
+	public CommunicationPath getAnnouncePath() {
+		return communicationPath;
 	}
 }

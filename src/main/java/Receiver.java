@@ -1,15 +1,15 @@
-import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.CommunicationPath;
 import com.hbm.devices.scan.AnnounceReceiver;
-import com.hbm.devices.scan.ExpirationMonitor;
+import com.hbm.devices.scan.DeviceMonitor;
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.events.LostDeviceEvent;
+import com.hbm.devices.scan.events.NewDeviceEvent;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
 import com.hbm.devices.scan.filter.Filter;
-import com.hbm.devices.scan.LostDeviceEvent;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
-import com.hbm.devices.scan.NewDeviceEvent;
-import com.hbm.devices.scan.util.ConnectionFinder;
+import com.hbm.devices.scan.util.ConnectionMatcher;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
 import java.net.InetAddress;
@@ -41,7 +41,7 @@ public class Receiver implements Observer {
 			Filter ftFilter = new Filter(new FamilytypeMatch(families));
 			jf.addObserver(ftFilter);
 			
-			ExpirationMonitor af = new ExpirationMonitor();
+			DeviceMonitor af = new DeviceMonitor();
 			ftFilter.addObserver(af);
 			
 			Receiver r = new Receiver();
@@ -56,20 +56,20 @@ public class Receiver implements Observer {
 	}
 
 	private Collection<NetworkInterface> scanInterfaces;
-	private ConnectionFinder connectionFinder;
+	private ConnectionMatcher connectionMatcher;
 
 	public Receiver() throws SocketException {
 		scanInterfaces = new ScanInterfaces().getInterfaces();
-		connectionFinder = new ConnectionFinder(scanInterfaces, false);
+		connectionMatcher = new ConnectionMatcher(scanInterfaces, false);
 	}
 
 	public void update(Observable o, Object arg) {
-		AnnouncePath ap;
+		CommunicationPath ap;
 		if (arg instanceof NewDeviceEvent) {
 			System.out.println("registered: ");
 			ap = ((NewDeviceEvent)arg).getAnnouncePath();
 			Announce a = ap.getAnnounce();
-			InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
+			InetAddress connectAddress = connectionMatcher.getConnectableAddress(a);
 			if (connectAddress != null) {
 				System.out.println("Connectable: " + connectAddress);
 			}
@@ -82,8 +82,8 @@ public class Receiver implements Observer {
 		}
 		Announce a = ap.getAnnounce();
 		System.out.print(a.getParams().getDevice());
-		Iterable<IPv4Entry> ipv4 = a.getParams().getNetSettings().getInterface().getIPv4();
-		for (IPv4Entry entry : ipv4) {
+		Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
+		for (Object entry : ipv4) {
 			System.out.print(" " + entry);
 		}
 		Iterable<ServiceEntry> services = a.getParams().getServices();

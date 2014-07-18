@@ -4,8 +4,8 @@ public class IPv4Entry {
 
 	private IPv4Entry() {
 	}
-
-	public String getAddress() {
+		
+    public String getAddress() {
 		return address;
 	}
 

@@ -1,7 +1,10 @@
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.events;
+
+import com.hbm.devices.scan.CommunicationPath;
+import com.hbm.devices.scan.DeviceMonitor;
 
 /**
- * This event is emitted by an {@link ExpirationMonitor} when an annouce
+ * This event is emitted by an {@link DeviceMonitor} when an annouce
  * messages wasn't refreshed during the expiration time.
  * <p>
  *
@@ -10,13 +13,13 @@ package com.hbm.devices.scan;
 
 public class LostDeviceEvent {
 
-	private AnnouncePath announcePath;
+	private CommunicationPath communicationPath;
 
-	public LostDeviceEvent(AnnouncePath ap) {
-		announcePath = ap;
+	public LostDeviceEvent(CommunicationPath ap) {
+		communicationPath = ap;
 	}
 
-	public AnnouncePath getAnnouncePath() {
-		return announcePath;
+	public CommunicationPath getAnnouncePath() {
+		return communicationPath;
 	}
 }

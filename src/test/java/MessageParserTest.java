@@ -1,7 +1,7 @@
 import org.junit.* ;
 import static org.junit.Assert.* ;
 
-import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.CommunicationPath;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import java.util.Observable;
@@ -9,7 +9,7 @@ import java.util.Observer;
 
 public class MessageParserTest {
 
-	private AnnouncePath ap;
+	private CommunicationPath ap;
 	private FakeMessageReceiver fsmmr;
 
 	@Before
@@ -19,7 +19,7 @@ public class MessageParserTest {
 		fsmmr.addObserver(jf);
 		jf.addObserver(new Observer(){
 			public void update(Observable o, Object arg) {
-				ap = (AnnouncePath)arg;
+				ap = (CommunicationPath)arg;
 			}
 		});
 	}

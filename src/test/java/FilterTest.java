@@ -1,7 +1,7 @@
 import org.junit.* ;
 import static org.junit.Assert.* ;
 
-import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.CommunicationPath;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.filter.FamilytypeMatch;
@@ -11,7 +11,7 @@ import java.util.Observer;
 
 public class FilterTest {
 
-	private AnnouncePath ap;
+	private CommunicationPath ap;
 	private FakeMessageReceiver fsmmr;
 
 	@Before
@@ -24,7 +24,7 @@ public class FilterTest {
 		jf.addObserver(ftFilter);
 		ftFilter.addObserver(new Observer(){
 			public void update(Observable o, Object arg) {
-				ap = (AnnouncePath)arg;
+				ap = (CommunicationPath)arg;
 			}
 		});
 	}

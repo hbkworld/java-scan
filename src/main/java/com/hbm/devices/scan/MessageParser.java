@@ -8,7 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
-import com.hbm.devices.scan.AnnouncePath;
+import com.hbm.devices.scan.CommunicationPath;
 import com.hbm.devices.scan.messages.*;
 import com.hbm.devices.scan.MissingDataException;
 
@@ -17,7 +17,7 @@ import java.util.Observable;
 import java.util.Observer;
 /**
  * This class gets JSON announce messages, parses them and notifies
- * {@link AnnouncePath} objects.
+ * {@link CommunicationPath} objects.
  * <p>
  * The whole class is designed as a best effort service. So invalid JSON
  * messages, or messages that do not conform to the HBM network
@@ -42,7 +42,7 @@ public class MessageParser extends Observable implements Observer {
 		try {
 			JsonRpc json = gson.fromJson(s, JsonRpc.class);
 			if (json instanceof Announce) {
-				AnnouncePath ap = new AnnouncePath((Announce)json);
+				CommunicationPath ap = new CommunicationPath((Announce)json);
 				setChanged();
 				notifyObservers(ap);
 			}
@@ -52,11 +52,11 @@ public class MessageParser extends Observable implements Observer {
 			 * and go ahead.
 			 */
 		} catch (MissingDataException e) {
-			/* During the creation of an AnnouncePath object it is
+			/* During the creation of an CommunicationPath object it is
 			 * required that some sub-objects are created in the parsed
 			 * JSON object (i.e. the device's UUID). If these
 			 * sub-objects are not created, the construction of the
-			 * AnnouncePath object failes.
+			 * CommunicationPath object failes.
 			 *
 			 * Go ahead with the next packet.
 			 */

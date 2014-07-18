@@ -5,6 +5,9 @@ public class Router {
 	private Router() {
 	}
 
+	/**
+	 * @return     A string containing the unique ID of the router the device is connected to.
+	 */
 	public String getUuid() {
 		return uuid;
 	}
