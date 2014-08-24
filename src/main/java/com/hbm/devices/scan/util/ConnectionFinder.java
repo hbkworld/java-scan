@@ -13,13 +13,13 @@ import java.util.Collection;
  * Convenience class for checking if an IP connection is possible to an
  * announced device.
  */
-public class ConnectionMatcher {
+public class ConnectionFinder {
 	
 	private boolean preferIPv6;
 	private IPv4ConnectionFinder ipv4ConnectionFinder;
 	private IPv6ConnectionFinder ipv6ConnectionFinder;
 
-	public ConnectionMatcher(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
+	public ConnectionFinder(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
 		this.preferIPv6 = preferIPv6;
 		this.ipv4ConnectionFinder = new IPv4ConnectionFinder(interfaces);
 		this.ipv6ConnectionFinder = new IPv6ConnectionFinder(interfaces);

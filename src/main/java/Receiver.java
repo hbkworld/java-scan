@@ -9,7 +9,7 @@ import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.*;
-import com.hbm.devices.scan.util.ConnectionMatcher;
+import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
 import java.net.InetAddress;
@@ -56,11 +56,11 @@ public class Receiver implements Observer {
 	}
 
 	private Collection<NetworkInterface> scanInterfaces;
-	private ConnectionMatcher connectionMatcher;
+	private ConnectionFinder connectionFinder;
 
 	public Receiver() throws SocketException {
 		scanInterfaces = new ScanInterfaces().getInterfaces();
-		connectionMatcher = new ConnectionMatcher(scanInterfaces, false);
+		connectionFinder = new ConnectionFinder(scanInterfaces, false);
 	}
 
 	public void update(Observable o, Object arg) {
@@ -69,7 +69,7 @@ public class Receiver implements Observer {
 			System.out.println("registered: ");
 			ap = ((NewDeviceEvent)arg).getAnnouncePath();
 			Announce a = ap.getAnnounce();
-			InetAddress connectAddress = connectionMatcher.getConnectableAddress(a);
+			InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
 			if (connectAddress != null) {
 				System.out.println("Connectable: " + connectAddress);
 			}
