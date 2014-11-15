@@ -10,3 +10,7 @@ Travis CI: <a href="https://travis-ci.org/gatzka/java-scan">
        src="https://travis-ci.org/gatzka/java-scan.svg?branch=master"/>
 </a>
 
+Coverity: <a href="https://scan.coverity.com/projects/3486">
+  <img alt="Coverity Scan Build Status"
+       src="https://scan.coverity.com/projects/3486/badge.svg"/>
+</a>
