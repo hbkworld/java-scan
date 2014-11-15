@@ -147,11 +147,11 @@ public class Interface {
 		};
 
 		public static Method fromString(String s) {
-			if (s.equals("manual")) {
+			if ("manual".equals(s)) {
 				return MANUAL;
-			} else if (s.equals("dhcp")) {
+			} else if ("dhcp".equals(s)) {
 				return DHCP;
-			} else if (s.equals("routerSolicitation")) {
+			} else if ("routerSolicitation".equals(s)) {
 				return ROUTER_SOLICITATION;
 			} else {
 				return null;
