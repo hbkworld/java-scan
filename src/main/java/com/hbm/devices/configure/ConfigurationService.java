@@ -56,7 +56,7 @@ public class ConfigurationService implements Observer, Noticeable {
      * It starts the network multicast sockets for communication with the devices, the message
      * parsers to convert incoming JSON Strings into objects or outgoing objects into JSON Strings.
      */
-    public ConfigurationService() {
+    public ConfigurationService() throws IOException {
         this.executor = new ScheduledThreadPoolExecutor(1);
 
         this.awaitingResponses = new HashMap<String, ConfigQuery>();
@@ -65,14 +65,10 @@ public class ConfigurationService implements Observer, Noticeable {
         this.configSender = new ConfigurationSender();
         this.configParser = new ConfigParser(this);
 
-        try {
-            MulticastSender multicastSender;
-            multicastSender = new MulticastSender(new ScanInterfaces().getInterfaces(), this);
-            configSender.addObserver(configParser);
-            configParser.addObserver(multicastSender);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        MulticastSender multicastSender;
+        multicastSender = new MulticastSender(new ScanInterfaces().getInterfaces(), this);
+        configSender.addObserver(configParser);
+        configParser.addObserver(multicastSender);
 
         responseListener = new ResponseListener();
         responseListener.addObserver(this);
@@ -89,35 +85,25 @@ public class ConfigurationService implements Observer, Noticeable {
      * @param forcedQueryID
      */
     @SuppressWarnings("unused")
-    private ConfigurationService(Observer fakeSender, Observable fakeReceiver, String forcedQueryID) {
+    private ConfigurationService(Observer fakeSender, Observable fakeReceiver, String forcedQueryID) throws Exception {
         this.executor = new ScheduledThreadPoolExecutor(1);
 
         this.awaitingResponses = new HashMap<String, ConfigQuery>();
         this.timeoutTasks = new HashMap<String, ScheduledFuture<Void>>();
 
         Constructor<ConfigurationSender> senderConstr;
-        try {
-            senderConstr = ConfigurationSender.class.getDeclaredConstructor(String.class);
-            senderConstr.setAccessible(true);
-            this.configSender = senderConstr.newInstance(forcedQueryID);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        senderConstr = ConfigurationSender.class.getDeclaredConstructor(String.class);
+        senderConstr.setAccessible(true);
+        this.configSender = senderConstr.newInstance(forcedQueryID);
         this.configParser = new ConfigParser(this);
 
         configSender.addObserver(configParser);
         configParser.addObserver(fakeSender);
 
         Constructor<ResponseListener> listenerConstr;
-        try {
-            listenerConstr = ResponseListener.class.getDeclaredConstructor(Observable.class);
-            listenerConstr.setAccessible(true);
-            responseListener = listenerConstr.newInstance(fakeReceiver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        listenerConstr = ResponseListener.class.getDeclaredConstructor(Observable.class);
+        listenerConstr.setAccessible(true);
+        responseListener = listenerConstr.newInstance(fakeReceiver);
         responseListener.addObserver(this);
     }
 
