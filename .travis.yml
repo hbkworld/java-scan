@@ -1,5 +1,16 @@
 language: java
 
+branches:
+  except:
+    - /^feature.*$/
+
+env:
+  global:
+   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
+   #   via the "travis encrypt" command using the project repo's public key
+    - secure: "Kiai/UtToreLOWItSqQvbBg7ioTHcpmQXKE9sX1LjQsWxBuuTYjPqa/Axdl9HiGX46iORjdZJmRajm3gi1gjBHCN1OWiJ5SYmIuQM6zucUf/9OqQsiZNP1Xjeq+2Y6j5X2VMCeIMNM5OJFN0iVRMJ8no3wl6GqdJRDu62vGSFEE="
+
+
 before_install:
   - sudo rm -r /usr/local/gradle
   - curl -LO http://services.gradle.org/distributions/gradle-2.2-bin.zip
@@ -11,3 +22,13 @@ jdk:
   - oraclejdk7
   - openjdk7
   - openjdk6
+
+addons:
+  coverity_scan:
+    project:
+      name: "gatzka/java-scan"
+      description: "Build submitted via Travis CI"
+    notification_email: stephan.gatzka@gmail.com
+    build_command_prepend: "gradle clean"
+    build_command:   "gradle build"
+    branch_pattern: coverity_scan
