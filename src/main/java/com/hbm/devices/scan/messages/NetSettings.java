@@ -1,7 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import java.util.LinkedList;
-
 import com.google.gson.annotations.SerializedName;
 
 public class NetSettings {
