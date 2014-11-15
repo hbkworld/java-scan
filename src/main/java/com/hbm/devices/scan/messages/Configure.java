@@ -68,8 +68,7 @@ public class Configure extends JsonRpc {
      * @throws MissingDataException
      * @throws NullPointerException
      */
-    public static void checkForErrors(Configure config) throws MissingDataException,
-            NullPointerException {
+    public static void checkForErrors(Configure config) throws MissingDataException {
         if (config == null) {
             throw new NullPointerException("config object must not be null");
         }

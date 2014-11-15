@@ -38,8 +38,7 @@ public class Device {
      * @throws MissingDataException
      * @throws NullPointerException
      */
-    public static void checkForErrors(Device device) throws MissingDataException,
-            NullPointerException {
+    public static void checkForErrors(Device device) throws MissingDataException {
         if (device == null) {
             throw new NullPointerException("device object must not be null");
         }

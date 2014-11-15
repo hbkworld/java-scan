@@ -84,8 +84,7 @@ public class NetSettings {
      * @throws MissingDataException
      * @throws NullPointerException
      */
-    public static void checkForErrors(NetSettings settings) throws MissingDataException,
-            NullPointerException {
+    public static void checkForErrors(NetSettings settings) throws MissingDataException {
         if (settings == null)
             throw new NullPointerException("settings object must not be null");
 

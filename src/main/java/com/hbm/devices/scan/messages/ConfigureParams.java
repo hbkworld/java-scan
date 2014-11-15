@@ -58,8 +58,7 @@ public class ConfigureParams {
         return sb.toString();
     }
 
-    public static void checkForErrors(ConfigureParams params) throws MissingDataException,
-            NullPointerException {
+    public static void checkForErrors(ConfigureParams params) throws MissingDataException {
         if (params == null) {
             throw new NullPointerException("params object must not be null");
         }

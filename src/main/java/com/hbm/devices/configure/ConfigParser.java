@@ -50,7 +50,7 @@ public class ConfigParser extends Observable implements Observer, Noticeable {
      *             is thrown, when the {@link Configure} object is null or a sub-object in the
      *             config parameter is null, which must not be null according to the specification
      */
-    public String getJsonString(Configure config) throws MissingDataException, NullPointerException {
+    public String getJsonString(Configure config) throws MissingDataException {
         Configure.checkForErrors(config);
         return gson.toJson(config);
     }

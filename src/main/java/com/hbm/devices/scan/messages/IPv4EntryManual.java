@@ -29,8 +29,7 @@ public class IPv4EntryManual {
         return manualAddress + "/" + manualNetmask;
     }
 
-    public static void checkForErrors(IPv4EntryManual ip) throws MissingDataException,
-            NullPointerException {
+    public static void checkForErrors(IPv4EntryManual ip) throws MissingDataException {
         if (ip == null) {
             throw new NullPointerException("ip object must not be null");
         }

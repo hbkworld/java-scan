@@ -196,13 +196,10 @@ public class ConfigurationService implements Observer, Noticeable {
      *            the interface with the callback methods for error handling
      * @param timeout
      *            the time in ms, the service waits for a response
-     * @throws NullPointerException
-     * @throws IllegalArgumentException
      * @throws MissingDataException
      */
     public void sendConfiguration(ConfigureParams configParams, final ConfigCallback callback,
-            int timeout) throws NullPointerException, IllegalArgumentException,
-            MissingDataException {
+            int timeout) throws MissingDataException {
         if (configParams == null) {
             throw new NullPointerException("configParams must not be null");
         }

@@ -84,8 +84,7 @@ public class Interface {
      * @throws MissingDataException
      * @throws NullPointerException
      */
-    public static void checkForErrors(Interface iface) throws MissingDataException,
-            NullPointerException {
+    public static void checkForErrors(Interface iface) throws MissingDataException {
         if (iface == null) {
             throw new NullPointerException("interface object must not be null");
         }

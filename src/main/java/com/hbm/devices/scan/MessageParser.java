@@ -100,8 +100,7 @@ public class MessageParser extends Observable implements Observer {
 }
 
 class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
-    public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-            throws JsonParseException {
+    public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 
         JsonRpc rpcObject = null;
         JsonObject jsonObject = json.getAsJsonObject();
