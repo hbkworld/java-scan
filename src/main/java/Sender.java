@@ -21,7 +21,7 @@ public class Sender {
 			// NetSettings settings = new NetSettings(new Interface("eth0", Method.manual,
 			// new IPv4EntryManual("abcd", "255.255.0.0")));
 			
-			NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+			NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 
 			ConfigureParams configParams = new ConfigureParams(device, settings);
 

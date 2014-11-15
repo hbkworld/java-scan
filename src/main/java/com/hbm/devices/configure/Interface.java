@@ -14,12 +14,12 @@ public class Interface {
 
 	private String name;
 	private IPv4EntryManual ipv4;
-	private Method configurationMethod;
+	private String configurationMethod;
 
 	/**
 	 * This constructor is used to instantiate an {@link Interface} object.
 	 * <p>
-	 * Note: The parameter {@code configMethod} must not be {@link Method#manual}. If you want to
+	 * Note: The parameter {@code configMethod} must not be {@link Method#MANUAL}. If you want to
 	 * set a manual ipv4 use the constructor
 	 * {@link #Interface(String, com.hbm.devices.scan.messages.Interface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
 	 * <p>
@@ -46,7 +46,7 @@ public class Interface {
 	 */
 	public Interface(String interfaceName, Method configMethod, IPv4EntryManual ipv4) {
 		this.name = interfaceName;
-		this.configurationMethod = configMethod;
+		this.configurationMethod = configMethod.toString();
 		this.ipv4 = ipv4;
 	}
 
@@ -70,10 +70,11 @@ public class Interface {
 	 * 
 	 * @return returns the configuration {@link Method}
 	 */
+	 /*
 	public Method getConfigurationMethod() {
 		return this.configurationMethod;
 	}
-
+*/
 	@Override
 	public String toString() {
 		StringBuffer result = new StringBuffer();
@@ -108,10 +109,10 @@ public class Interface {
 			throw new MissingDataException("No configuration method in Interface");
 		}
 
-		if (iface.configurationMethod.equals(Method.manual) && iface.ipv4 == null) {
+		if (iface.configurationMethod.equals(Method.MANUAL.toString()) && iface.ipv4 == null) {
 			throw new MissingDataException("No ipv4 in Interface");
 		}
-		if (iface.configurationMethod.equals(Method.manual)) {
+		if (iface.configurationMethod.equals(Method.MANUAL.toString())) {
 			// only check if there has to be a ipv4
 			IPv4EntryManual.checkForErrors(iface.ipv4);
 		}

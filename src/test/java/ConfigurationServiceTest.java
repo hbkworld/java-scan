@@ -66,7 +66,7 @@ public class ConfigurationServiceTest {
 	@Test
 	public void sendingTest() {
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		try {
 			service.sendConfiguration(configParams, new SimpleCallback(), 5000);
@@ -104,7 +104,7 @@ public class ConfigurationServiceTest {
 		};
 
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 
 		try {
@@ -144,7 +144,7 @@ public class ConfigurationServiceTest {
 		};
 
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 
 		try {
@@ -190,7 +190,7 @@ public class ConfigurationServiceTest {
 		};
 
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 
 		synchronized (cb) {
@@ -245,7 +245,7 @@ public class ConfigurationServiceTest {
 		};
 
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 
 		synchronized (cb) {

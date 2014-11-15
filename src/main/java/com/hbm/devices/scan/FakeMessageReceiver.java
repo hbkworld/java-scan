@@ -15,7 +15,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 
 	private boolean shallRun = true;
 
-	public static final String correctMessage = "{"
+	public static final String CORRECT_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -32,7 +32,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
 			+ "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
 
-	public static final String correctMessageDifferentIP = "{"
+	public static final String CORRECT_MESSAGE_DIFFERENT_IP = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -49,7 +49,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
 			+ "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
 
-	public static final String correctMessageDifferentServices = "{"
+	public static final String CORRECT_MESSAGE_DIFFERENT_SERVICES = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -66,7 +66,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}"
 			+ "}";
 
-	public static final String correctMessageDifferentDevice = "{"
+	public static final String CORRECT_MESSAGE_DIFFERENT_DEVICE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -83,7 +83,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
 			+ "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
 
-	private static final String invalidJsonMessage = "{"
+	private static final String INVALID_JSON_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -100,7 +100,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
 			+ "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
 
-	private static final String missingDeviceMessage = "{"
+	private static final String MISSING_DEVICE_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\"," + "\"expiration\":15," + "\"netSettings\":{"
 			+ "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
@@ -109,7 +109,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
 			+ "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
 
-	private static final String missingDeviceUuidMessage = "{"
+	private static final String MISSING_DEVICE_UUID_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -120,10 +120,10 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
 			+ "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
 
-	private static final String missingParamsMessage = "{"
+	private static final String MISSING_PARAMS_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\"" + "}";
 
-	private static final String noInterfaceNameMessage = "{"
+	private static final String NO_INTERFACE_NAME_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -135,7 +135,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
 			+ "\"type\":\"ethernet\"}" + "}" + "}" + "}";
 
-	private static final String noInterfaceMessage = "{"
+	private static final String NO_INTERFACE_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -143,14 +143,14 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "\"expiration\":15," + "\"netSettings\":{"
 			+ "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"}" + "}" + "}" + "}";
 
-	private static final String noNetSettingsMessage = "{"
+	private static final String NO_NET_SETTINGS_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
 			+ "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
 			+ "\"expiration\":15" + "}" + "}";
 
-	private static final String missingRouterUuidMessage = "{"
+	private static final String MISSING_ROUTER_UUID_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -162,7 +162,7 @@ public class FakeMessageReceiver extends MessageReceiver {
 			+ "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
 			+ "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"router\": {" + "}" + "}" + "}";
 
-	private static final String missingFamilyTypeMessage = "{"
+	private static final String MISSING_FAMILY_TYPE_MESSAGE = "{"
 			+ "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
 			+ "\"apiVersion\":\"1.0\",\"device\":{"
 			+ "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
@@ -176,27 +176,27 @@ public class FakeMessageReceiver extends MessageReceiver {
 
 	public void emitSingleCorrectMessage() {
 		setChanged();
-		notifyObservers(correctMessage);
+		notifyObservers(CORRECT_MESSAGE);
 	}
 
 	public void emitSingleCorrentMessageDifferentIP() {
 		setChanged();
-		notifyObservers(correctMessageDifferentIP);
+		notifyObservers(CORRECT_MESSAGE_DIFFERENT_IP);
 	}
 
 	public void emitSingleCorrectMessageDifferentServices() {
 		setChanged();
-		notifyObservers(correctMessageDifferentServices);
+		notifyObservers(CORRECT_MESSAGE_DIFFERENT_SERVICES);
 	}
 
 	public void emitSingleCorrectMessageDifferentDevice() {
 		setChanged();
-		notifyObservers(correctMessageDifferentDevice);
+		notifyObservers(CORRECT_MESSAGE_DIFFERENT_DEVICE);
 	}
 
 	public void emitInvalidJsonMessage() {
 		setChanged();
-		notifyObservers(invalidJsonMessage);
+		notifyObservers(INVALID_JSON_MESSAGE);
 	}
 
 	public void emitEmptyString() {
@@ -211,53 +211,53 @@ public class FakeMessageReceiver extends MessageReceiver {
 
 	public void emitMissingDeviceMessage() {
 		setChanged();
-		notifyObservers(missingDeviceMessage);
+		notifyObservers(MISSING_DEVICE_MESSAGE);
 	}
 
 	public void emitMissingDeviceUuidMessage() {
 		setChanged();
-		notifyObservers(missingDeviceUuidMessage);
+		notifyObservers(MISSING_DEVICE_UUID_MESSAGE);
 	}
 
 	public void emitMissingParamsMessage() {
 		setChanged();
-		notifyObservers(missingParamsMessage);
+		notifyObservers(MISSING_PARAMS_MESSAGE);
 	}
 
 	public void emitNoInterfaceNameMessage() {
 		setChanged();
-		notifyObservers(noInterfaceNameMessage);
+		notifyObservers(NO_INTERFACE_NAME_MESSAGE);
 	}
 
 	public void emitNoInterfaceMessage() {
 		setChanged();
-		notifyObservers(noInterfaceMessage);
+		notifyObservers(NO_INTERFACE_MESSAGE);
 	}
 
 	public void emitNoNetSettingsMessage() {
 		setChanged();
-		notifyObservers(noNetSettingsMessage);
+		notifyObservers(NO_NET_SETTINGS_MESSAGE);
 	}
 
 	public void emitMissingRouterUuidMessage() {
 		setChanged();
-		notifyObservers(missingRouterUuidMessage);
+		notifyObservers(MISSING_ROUTER_UUID_MESSAGE);
 	}
 
 	public void emitMissingFamilyTypeMessage() {
 		setChanged();
-		notifyObservers(missingFamilyTypeMessage);
+		notifyObservers(MISSING_FAMILY_TYPE_MESSAGE);
 	}
 
-	public static String missingTypeResponseMessage = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
-	public static String noSuccessIdResponseMessage = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
-	public static String correctErrorResponseMessage = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static String invalidErrorSuccessResponseMessage = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static String missingErrorObjectResponseMessage = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static String missingErrorCodeResponseMessage = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static String noErrorCodeResponseMessage = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static String missingErrorMessageReponseMessage = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static String noErrorMessageResponseMessage = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String missingTypeResponseMessage = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
+	public static final String noSuccessIdResponseMessage = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
+	public static final String correctErrorResponseMessage = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String InvalidErrorSuccessResponseMessage = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MissingErrorObjectResponseMessage = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MissingErrorCodeResponseMessage = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String NoErrorCodeResponseMessage = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MissingErrorMessageReponseMessage = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String NoErrorMessageResponseMessage = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
 
 	public void emitSingleCorrectSuccessResponseMessage(String queryID) {
 		String correctSuccessResponseMessage = "{\"id\":\"" + queryID
@@ -283,32 +283,32 @@ public class FakeMessageReceiver extends MessageReceiver {
 
 	public void emitInvalidErrorSuccessReponseMessage() {
 		setChanged();
-		notifyObservers(invalidErrorSuccessResponseMessage);
+		notifyObservers(InvalidErrorSuccessResponseMessage);
 	}
 
 	public void emitMissingErrorObjectResponseMessage() {
 		setChanged();
-		notifyObservers(missingErrorObjectResponseMessage);
+		notifyObservers(MissingErrorObjectResponseMessage);
 	}
 
 	public void emitMissingErrorCodeResponseMessage() {
 		setChanged();
-		notifyObservers(missingErrorCodeResponseMessage);
+		notifyObservers(MissingErrorCodeResponseMessage);
 	}
 
 	public void emitNoErrorCodeResponseMessage() {
 		setChanged();
-		notifyObservers(noErrorCodeResponseMessage);
+		notifyObservers(NoErrorCodeResponseMessage);
 	}
 
 	public void emitMissingErrorMessageReponseMessage() {
 		setChanged();
-		notifyObservers(missingErrorMessageReponseMessage);
+		notifyObservers(MissingErrorMessageReponseMessage);
 	}
 
 	public void emitNoErrorMessageResponseMessage() {
 		setChanged();
-		notifyObservers(noErrorMessageResponseMessage);
+		notifyObservers(NoErrorMessageResponseMessage);
 	}
 	
 	public void start() {

@@ -28,7 +28,7 @@ public class Interface {
 	public Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
 		this();
 		this.name = name;
-		this.configurationMethod = method.name();
+		this.configurationMethod = method.toString();
 		this.ipv4 = ipv4;
 		this.ipv6 = ipv6;
 	}
@@ -127,17 +127,35 @@ public class Interface {
 	private List<IPv6Entry> ipv6;
 
 	public enum Method {
-		manual, dhcp, RouterSolicitation;
+		MANUAL {
+			@Override
+		    public String toString() {
+				return "manual";
+			}
+		},
+		DHCP {
+			@Override
+		    public String toString() {
+				return "dhcp";
+			}
+		},
+		ROUTER_SOLICITATION {
+			@Override
+		    public String toString() {
+				return "routerSolicitation";
+			}
+		};
 
 		public static Method fromString(String s) {
-			if (s.equalsIgnoreCase("manual"))
-				return manual;
-			else if (s.equalsIgnoreCase("dhcp"))
-				return dhcp;
-			else if (s.equalsIgnoreCase("router") || s.equalsIgnoreCase("routersolicitation"))
-				return RouterSolicitation;
-			else
+			if (s.equals("manual")) {
+				return MANUAL;
+			} else if (s.equals("dhcp")) {
+				return DHCP;
+			} else if (s.equals("routerSolicitation")) {
+				return ROUTER_SOLICITATION;
+			} else {
 				return null;
+			}
 		}
 	}
 }

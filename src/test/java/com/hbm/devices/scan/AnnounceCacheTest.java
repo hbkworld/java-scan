@@ -28,21 +28,21 @@ public class AnnounceCacheTest {
 		fakeReceiver.emitSingleCorrectMessage();
 		assertTrue(parser.getCache().getCacheAmount() == 1);
 		assertTrue(parser.getCache().getPathsAmount() == 1);
-		assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.correctMessage));
+		assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
 
 		fakeReceiver.emitSingleCorrectMessageDifferentDevice();
 
 		assertTrue(parser.getCache().getCacheAmount() == 2);
 		assertTrue(parser.getCache().getPathsAmount() == 2);
-		assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.correctMessage));
+		assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
 		assertTrue(parser.getCache().hasStringInCache(
-				FakeMessageReceiver.correctMessageDifferentDevice));
+				FakeMessageReceiver.CORRECT_MESSAGE_DIFFERENT_DEVICE));
 	}
 
 	@Test
 	public void GetFromCacheTest() {
 		fakeReceiver.emitSingleCorrectMessage();
-		assertNotNull(parser.getCache().getAnnounceByString(FakeMessageReceiver.correctMessage));
+		assertNotNull(parser.getCache().getAnnounceByString(FakeMessageReceiver.CORRECT_MESSAGE));
 	}
 
 	@Test
@@ -60,9 +60,9 @@ public class AnnounceCacheTest {
 
 		assertTrue(parser.getCache().getCacheAmount() == 1);
 		assertTrue(parser.getCache().getPathsAmount() == 1);
-		assertFalse(parser.getCache().hasStringInCache(FakeMessageReceiver.correctMessage));
+		assertFalse(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
 		assertTrue(parser.getCache().hasStringInCache(
-				FakeMessageReceiver.correctMessageDifferentServices));
+				FakeMessageReceiver.CORRECT_MESSAGE_DIFFERENT_SERVICES));
 	}
 
 }

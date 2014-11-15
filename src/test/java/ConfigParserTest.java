@@ -45,7 +45,7 @@ public class ConfigParserTest {
 	@Test
 	public void parseCorrectConfig() {
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		Configure conf = new Configure(configParams, "TEST-UUID");
 
@@ -72,7 +72,7 @@ public class ConfigParserTest {
 	@Test
 	public void parseNullUUID() {
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		Configure conf = new Configure(configParams, null);
 		cp.update(null, conf);
@@ -81,7 +81,7 @@ public class ConfigParserTest {
 
 	@Test
 	public void parseNullDevice() {
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(null, settings);
 		Configure conf = new Configure(configParams, "TEST-UUID");
 		cp.update(null, conf);
@@ -91,7 +91,7 @@ public class ConfigParserTest {
 	@Test
 	public void parseNoDevice() {
 		Device device = new Device("");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		Configure conf = new Configure(configParams, "TEST-UUID");
 		cp.update(null, conf);
@@ -121,7 +121,7 @@ public class ConfigParserTest {
 	@Test
 	public void parseNullInterfaceName() {
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface(null, Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface(null, Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		Configure conf = new Configure(configParams, "TEST-UUID");
 		cp.update(null, conf);
@@ -131,7 +131,7 @@ public class ConfigParserTest {
 	@Test
 	public void parseNoInterfaceName() {
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("", Method.dhcp, null));
+		NetSettings settings = new NetSettings(new Interface("", Method.DHCP, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		Configure conf = new Configure(configParams, "TEST-UUID");
 		cp.update(null, conf);
@@ -140,22 +140,13 @@ public class ConfigParserTest {
 	}
 
 	@Test
-	public void parseNoConfigurationMethod() {
-		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", null, null));
-		ConfigureParams configParams = new ConfigureParams(device, settings);
-		Configure conf = new Configure(configParams, "TEST-UUID");
-		cp.update(null, conf);
-		assertTrue(this.exception instanceof MissingDataException);
-	}
-
-	@Test
 	public void parseManualAndNoIp() {
 		Device device = new Device("0009E5001571");
-		NetSettings settings = new NetSettings(new Interface("eth0", Method.manual, null));
+		NetSettings settings = new NetSettings(new Interface("eth0", Method.MANUAL, null));
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		Configure conf = new Configure(configParams, "TEST-UUID");
 		cp.update(null, conf);
+		System.out.println(this.exception);
 		assertTrue(this.exception instanceof MissingDataException);
 	}
 
