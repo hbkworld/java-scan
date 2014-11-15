@@ -7,6 +7,6 @@ before_install:
   - sudo mv gradle-2.2 /usr/local/gradle
 
 jdk:
-#  - oraclejdk8
+  - oraclejdk8
   - oraclejdk7
-#  - openjdk7
+  - openjdk7
