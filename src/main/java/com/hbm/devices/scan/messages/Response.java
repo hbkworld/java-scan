@@ -16,14 +16,14 @@ public class Response extends JsonRpc {
 	}
 
 	private String result; // Device specific
-	private ResponseError error;
+	private ErrorObject error;
 	private String id;
 
 	public String getResult() {
 		return result;
 	}
 
-	public ResponseError getError() {
+	public ErrorObject getError() {
 		return error;
 	}
 
@@ -48,7 +48,7 @@ public class Response extends JsonRpc {
 		}
 
 		if (response.error != null) {
-			ResponseError.checkForErrors(response.error);
+			ErrorObject.checkForErrors(response.error);
 		}
 	}
 

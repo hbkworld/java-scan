@@ -2,7 +2,7 @@ package com.hbm.devices.scan.messages;
 
 import com.hbm.devices.scan.MissingDataException;
 
-public class ResponseError {
+public class ErrorObject {
 
 	private int code;
 	private String message;
@@ -20,7 +20,7 @@ public class ResponseError {
 		return data;
 	}
 
-	public static void checkForErrors(ResponseError error) throws MissingDataException {
+	public static void checkForErrors(ErrorObject error) throws MissingDataException {
 		if (error == null) {
 			return;
 		}
