@@ -110,13 +110,16 @@ class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
 			String type = jsonObject.get("method").getAsString();
 			if (type.compareTo("announce") == 0) {
 				rpcObject = context.deserialize(json, Announce.class);
-				rpcObject.setJSONString(jsonObject.toString());
-
+				if (rpcObject != null) {
+					rpcObject.setJSONString(jsonObject.toString());
+				}
 			}
 		} else if (jsonObject.has("result") || jsonObject.has("error")) {
 			// is a response object
 			rpcObject = context.deserialize(json, Response.class);
-			rpcObject.setJSONString(jsonObject.toString());
+			if (rpcObject != null) {
+				rpcObject.setJSONString(jsonObject.toString());
+			}
 		}
 		return rpcObject;
 	}
