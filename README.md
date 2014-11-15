@@ -1,4 +1,4 @@
-# java-scan A Java implementation of the HBM device discovery protocol.
+# A Java implementation of the HBM device discovery protocol.
 
 ## License
 Copyright (c) 2014 Stephan Gatzka. See the [LICENSE](LICENSE) file for license rights and
