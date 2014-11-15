@@ -249,15 +249,15 @@ public class FakeMessageReceiver extends MessageReceiver {
 		notifyObservers(MISSING_FAMILY_TYPE_MESSAGE);
 	}
 
-	public static final String missingTypeResponseMessage = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
-	public static final String noSuccessIdResponseMessage = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
-	public static final String correctErrorResponseMessage = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static final String InvalidErrorSuccessResponseMessage = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static final String MissingErrorObjectResponseMessage = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static final String MissingErrorCodeResponseMessage = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static final String NoErrorCodeResponseMessage = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static final String MissingErrorMessageReponseMessage = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-	public static final String NoErrorMessageResponseMessage = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MISSING_TYPE_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
+	public static final String NO_SUCCESS_ID_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
+	public static final String CORRECT_ERROR_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String NO_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+	public static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
 
 	public void emitSingleCorrectSuccessResponseMessage(String queryID) {
 		String correctSuccessResponseMessage = "{\"id\":\"" + queryID
@@ -268,47 +268,47 @@ public class FakeMessageReceiver extends MessageReceiver {
 
 	public void emitMissingTypeResponseMessage() {
 		setChanged();
-		notifyObservers(missingTypeResponseMessage);
+		notifyObservers(MISSING_TYPE_RESPONSE_MESSAGE);
 	}
 
 	public void emitNoSuccessIdResponseMessage() {
 		setChanged();
-		notifyObservers(noSuccessIdResponseMessage);
+		notifyObservers(NO_SUCCESS_ID_RESPONSE_MESSAGE);
 	}
 
 	public void emitSingleCorrectErrorResponseMessage() {
 		setChanged();
-		notifyObservers(correctErrorResponseMessage);
+		notifyObservers(CORRECT_ERROR_RESPONSE_MESSAGE);
 	}
 
 	public void emitInvalidErrorSuccessReponseMessage() {
 		setChanged();
-		notifyObservers(InvalidErrorSuccessResponseMessage);
+		notifyObservers(INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE);
 	}
 
 	public void emitMissingErrorObjectResponseMessage() {
 		setChanged();
-		notifyObservers(MissingErrorObjectResponseMessage);
+		notifyObservers(MISSING_ERROR_OBJECT_RESPONSE_MESSAGE);
 	}
 
 	public void emitMissingErrorCodeResponseMessage() {
 		setChanged();
-		notifyObservers(MissingErrorCodeResponseMessage);
+		notifyObservers(MISSING_ERROR_CODE_RESPONSE_MESSAGE);
 	}
 
 	public void emitNoErrorCodeResponseMessage() {
 		setChanged();
-		notifyObservers(NoErrorCodeResponseMessage);
+		notifyObservers(NO_ERROR_CODE_RESPONSE_MESSAGE);
 	}
 
 	public void emitMissingErrorMessageReponseMessage() {
 		setChanged();
-		notifyObservers(MissingErrorMessageReponseMessage);
+		notifyObservers(MISSING_ERROR_MESSAGE_REPONSE_MESSAGE);
 	}
 
 	public void emitNoErrorMessageResponseMessage() {
 		setChanged();
-		notifyObservers(NoErrorMessageResponseMessage);
+		notifyObservers(NO_ERROR_MESSAGE_RESPONSE_MESSAGE);
 	}
 	
 	public void start() {
