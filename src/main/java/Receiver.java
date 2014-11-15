@@ -55,9 +55,6 @@ public class Receiver implements Observer {
 			Receiver r = new Receiver();
 			af.addObserver(r);
 			ar.start();
-			synchronized (args) {
-				args.wait();
-			}
 		} catch (Exception e) {
 			System.out.println(e);
 		}
