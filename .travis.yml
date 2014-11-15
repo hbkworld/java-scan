@@ -1,5 +1,11 @@
 language: java
 
+before_install:
+  - sudo rm -r /usr/local/gradle
+  - curl -LO http://services.gradle.org/distributions/gradle-2.2-bin.zip
+  - unzip -q gradle-2.2-bin.zip
+  - sudo mv gradle-2.2 /usr/local/gradle
+
 jdk:
   - oraclejdk8
 #  - oraclejdk7
