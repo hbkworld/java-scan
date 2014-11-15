@@ -16,6 +16,8 @@ import java.util.List;
  */
 public class ScanInterfaces {
 
+    private List<NetworkInterface> interfaces;
+
     public ScanInterfaces() throws SocketException {
         interfaces = new LinkedList<NetworkInterface>();
         Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
@@ -63,6 +65,4 @@ public class ScanInterfaces {
         }
         return false;
     }
-
-    private List<NetworkInterface> interfaces;
 }

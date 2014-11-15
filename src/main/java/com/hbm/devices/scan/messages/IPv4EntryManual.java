@@ -4,6 +4,9 @@ import com.hbm.devices.scan.MissingDataException;
 
 public class IPv4EntryManual {
 
+    private String manualAddress;
+    private String manualNetmask;
+
     protected IPv4EntryManual() {
     }
 
@@ -25,9 +28,6 @@ public class IPv4EntryManual {
     public String toString() {
         return manualAddress + "/" + manualNetmask;
     }
-
-    private String manualAddress;
-    private String manualNetmask;
 
     public static void checkForErrors(IPv4EntryManual ip) throws MissingDataException,
             NullPointerException {

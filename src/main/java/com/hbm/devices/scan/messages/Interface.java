@@ -9,6 +9,13 @@ import java.util.List;
  */
 public class Interface {
 
+    private String name;
+    private String type;
+    private String description;
+    private String configurationMethod;
+    private List<IPv4Entry> ipv4;
+    private List<IPv6Entry> ipv6;
+
     private Interface() {
     }
 
@@ -118,13 +125,6 @@ public class Interface {
         }
         return sb.toString();
     }
-
-    private String name;
-    private String type;
-    private String description;
-    private String configurationMethod;
-    private List<IPv4Entry> ipv4;
-    private List<IPv6Entry> ipv6;
 
     public enum Method {
         MANUAL {

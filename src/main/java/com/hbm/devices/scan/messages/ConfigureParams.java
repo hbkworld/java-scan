@@ -4,6 +4,10 @@ import com.hbm.devices.scan.MissingDataException;
 
 public class ConfigureParams {
 
+    private com.hbm.devices.configure.Device device;
+    private com.hbm.devices.configure.NetSettings netSettings;
+    private int ttl;
+
     private ConfigureParams() {
     }
 
@@ -37,10 +41,6 @@ public class ConfigureParams {
     public int getTtl() {
         return ttl;
     }
-
-    private com.hbm.devices.configure.Device device;
-    private com.hbm.devices.configure.NetSettings netSettings;
-    private int ttl;
 
     @Override
     public String toString() {

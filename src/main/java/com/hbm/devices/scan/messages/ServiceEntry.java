@@ -11,6 +11,9 @@ package com.hbm.devices.scan.messages;
  */
 public class ServiceEntry {
 
+    private String type;
+    private int port;
+
     private ServiceEntry() {
     }
 
@@ -32,8 +35,4 @@ public class ServiceEntry {
     public String toString() {
         return "type: " + type + " port: " + port;
     }
-
-    private String type;
-    private int port;
-
 }

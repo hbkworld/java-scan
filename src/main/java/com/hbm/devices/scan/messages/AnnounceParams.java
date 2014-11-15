@@ -12,6 +12,12 @@ import java.util.List;
  */
 public class AnnounceParams {
 
+    private Device device;
+    private NetSettings netSettings;
+    private Router router;
+    private List<ServiceEntry> services;
+    private int expiration;
+
     private AnnounceParams() {
     }
 
@@ -34,12 +40,6 @@ public class AnnounceParams {
     public int getExpiration() {
         return expiration;
     }
-
-    private Device device;
-    private NetSettings netSettings;
-    private Router router;
-    private List<ServiceEntry> services;
-    private int expiration;
 
     @Override
     public String toString() {

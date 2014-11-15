@@ -23,6 +23,15 @@ import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
 public class Receiver implements Observer {
+
+    private Collection<NetworkInterface> scanInterfaces;
+    private ConnectionFinder connectionFinder;
+
+    public Receiver() throws SocketException {
+        scanInterfaces = new ScanInterfaces().getInterfaces();
+        connectionFinder = new ConnectionFinder(scanInterfaces, false);
+    }
+
     public static void main(String[] args) {
         try {
             MessageReceiver ar;
@@ -47,14 +56,6 @@ public class Receiver implements Observer {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-
-    private Collection<NetworkInterface> scanInterfaces;
-    private ConnectionFinder connectionFinder;
-
-    public Receiver() throws SocketException {
-        scanInterfaces = new ScanInterfaces().getInterfaces();
-        connectionFinder = new ConnectionFinder(scanInterfaces, false);
     }
 
     public void update(Observable o, Object arg) {

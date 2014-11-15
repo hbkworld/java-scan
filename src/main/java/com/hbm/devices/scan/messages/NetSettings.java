@@ -6,6 +6,11 @@ import com.google.gson.annotations.SerializedName;
 
 public class NetSettings {
 
+    private DefaultGateway defaultGateway;
+
+    @SerializedName("interface")
+    private Interface iface;
+
     private NetSettings() {
     }
     
@@ -35,10 +40,5 @@ public class NetSettings {
 
         return sb.toString();
     }
-
-    private DefaultGateway defaultGateway;
-
-    @SerializedName("interface")
-    private Interface iface;
 }
 

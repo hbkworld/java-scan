@@ -7,6 +7,13 @@ package com.hbm.devices.scan.messages;
  */
 public class Device {
 
+    private String uuid;
+    private String name;
+    private String type;
+    private String familyType;
+    private String firmwareVersion;
+    private boolean isRouter = false;
+
     private Device() {
     }
 
@@ -71,11 +78,4 @@ public class Device {
                 + familyType + "\n" + "\ttype: " + type + "\n" + "\tfirmware version: "
                 + firmwareVersion + "\n" + "\tisRouter: " + isRouter + "\n";
     }
-
-    private String uuid;
-    private String name;
-    private String type;
-    private String familyType;
-    private String firmwareVersion;
-    private boolean isRouter = false;
 }

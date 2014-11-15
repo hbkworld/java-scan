@@ -174,6 +174,16 @@ public class FakeMessageReceiver extends MessageReceiver {
             + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
             + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
 
+    public static final String MISSING_TYPE_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
+    public static final String NO_SUCCESS_ID_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
+    public static final String CORRECT_ERROR_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    public static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    public static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    public static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    public static final String NO_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    public static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    public static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+
     public void emitSingleCorrectMessage() {
         setChanged();
         notifyObservers(CORRECT_MESSAGE);
@@ -248,16 +258,6 @@ public class FakeMessageReceiver extends MessageReceiver {
         setChanged();
         notifyObservers(MISSING_FAMILY_TYPE_MESSAGE);
     }
-
-    public static final String MISSING_TYPE_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
-    public static final String NO_SUCCESS_ID_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
-    public static final String CORRECT_ERROR_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String NO_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
 
     public void emitSingleCorrectSuccessResponseMessage(String queryID) {
         String correctSuccessResponseMessage = "{\"id\":\"" + queryID

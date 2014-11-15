@@ -2,6 +2,9 @@ package com.hbm.devices.scan.messages;
 
 public class IPv6Entry {
 
+    private String address;
+    private String prefix;
+
     private IPv6Entry() {
     }
 
@@ -23,7 +26,4 @@ public class IPv6Entry {
     public String toString() {
         return address + "/" + prefix;
     }
-    
-    private String address;
-    private String prefix;
 }

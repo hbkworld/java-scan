@@ -11,13 +11,13 @@ import com.hbm.devices.scan.MissingDataException;
  */
 public class Response extends JsonRpc {
 
-    protected Response() {
-        super("response"); // but the method field will not be received from responding device
-    }
-
     private String result; // Device specific
     private ErrorObject error;
     private String id;
+
+    protected Response() {
+        super("response"); // but the method field will not be received from responding device
+    }
 
     public String getResult() {
         return result;

@@ -10,6 +10,9 @@ import com.hbm.devices.scan.MissingDataException;
  */
 public class Configure extends JsonRpc {
 
+    private String id;
+    private ConfigureParams params;
+
     private Configure() {
         super("configure");
     }
@@ -30,8 +33,6 @@ public class Configure extends JsonRpc {
     public ConfigureParams getParams() {
         return params;
     }
-
-    private ConfigureParams params;
 
     @Override
     public String toString() {
@@ -85,6 +86,4 @@ public class Configure extends JsonRpc {
 
         ConfigureParams.checkForErrors(config.params);
     }
-
-    private String id;
 }

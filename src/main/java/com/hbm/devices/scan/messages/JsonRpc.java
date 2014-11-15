@@ -2,6 +2,10 @@ package com.hbm.devices.scan.messages;
 
 public abstract class JsonRpc {
     
+    private String jsonrpc;
+    private String method;
+    private String json;
+    
     protected JsonRpc(String method) {
         jsonrpc = new String("2.0");
         this.method = method;
@@ -22,8 +26,4 @@ public abstract class JsonRpc {
     public String getMethod() {
         return method;
     }
-    
-    private String jsonrpc;
-    private String method;
-    private String json;
 }

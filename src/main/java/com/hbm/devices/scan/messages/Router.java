@@ -2,6 +2,8 @@ package com.hbm.devices.scan.messages;
 
 public class Router {
 
+    private String uuid;
+
     private Router() {
     }
 
@@ -17,7 +19,5 @@ public class Router {
         return "Router:\n" +
         "\t uuid: " + uuid;
     }
-
-    private String uuid;
 }
 

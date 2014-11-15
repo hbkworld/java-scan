@@ -2,6 +2,8 @@ package com.hbm.devices.scan.messages;
 
 public class Announce extends JsonRpc {
 
+    private AnnounceParams params;
+
     private Announce() {
         super("announce");
     }
@@ -9,8 +11,6 @@ public class Announce extends JsonRpc {
     public AnnounceParams getParams() {
         return params;
     }
-
-    private AnnounceParams params;
 
     @Override
     public String toString() {

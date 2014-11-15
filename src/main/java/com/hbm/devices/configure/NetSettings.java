@@ -12,6 +12,11 @@ import com.hbm.devices.scan.messages.DefaultGateway;
  */
 public class NetSettings {
 
+    private DefaultGateway defaultGateway;
+
+    @SerializedName("interface")
+    private Interface iface;
+
     private NetSettings() {
     }
 
@@ -69,11 +74,6 @@ public class NetSettings {
 
         return sb.toString();
     }
-
-    private DefaultGateway defaultGateway;
-
-    @SerializedName("interface")
-    private Interface iface;
 
     /**
      * This method checks the {@link NetSettings} object for errors and if it conforms to the HBM
