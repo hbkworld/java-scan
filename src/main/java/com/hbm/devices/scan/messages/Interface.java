@@ -21,7 +21,9 @@ public class Interface {
 	 *            during the startup. Currently the values *manual*, *dhcp* and *RouterSolicitation*
 	 *            are valid.
 	 * @param ipv4
+	 *           A List containing all valid IPv4 addresses for the interface.
 	 * @param ipv6
+	 *           A List containing all valid IPv6 addresses for the interface.
 	 */
 	public Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
 		this();
