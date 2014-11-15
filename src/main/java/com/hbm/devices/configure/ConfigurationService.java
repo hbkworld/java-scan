@@ -99,8 +99,7 @@ public class ConfigurationService implements Observer, Noticeable {
 			senderConstr = ConfigurationSender.class.getDeclaredConstructor(String.class);
 			senderConstr.setAccessible(true);
 			this.configSender = senderConstr.newInstance(forcedQueryID);
-		} catch (NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -114,8 +113,7 @@ public class ConfigurationService implements Observer, Noticeable {
 			listenerConstr = ResponseListener.class.getDeclaredConstructor(Observable.class);
 			listenerConstr.setAccessible(true);
 			responseListener = listenerConstr.newInstance(fakeReceiver);
-		} catch (NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
