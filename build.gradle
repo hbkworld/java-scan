@@ -64,14 +64,16 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.allSource
 }
 
-javadoc {
-	configure(options) {
-		links = ['http://docs.oracle.com/javase/7/docs/api/']
-		bottom = 'Copyright &copy; 2014-2014 <a href=\"http://www.hbm.com\" target=\"_blank\">Hottinger Baldwin Messtechnik GmbH</a>.'
-		footer = 'HBM Device Scan API'
-		header = 'HBM Device Scan API'
-		use = true
-		options.overview = "src/main/doc/overview.html"
+if (!JavaVersion.current().isJava6Compatible()) {
+	javadoc {
+		configure(options) {
+			links = ['http://docs.oracle.com/javase/7/docs/api/']
+			bottom = 'Copyright &copy; 2014-2014 <a href=\"http://www.hbm.com\" target=\"_blank\">Hottinger Baldwin Messtechnik GmbH</a>.'
+			footer = 'HBM Device Scan API'
+			header = 'HBM Device Scan API'
+			use = true
+			options.overview = "src/main/doc/overview.html"
+		}
 	}
 }
 
