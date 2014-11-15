@@ -60,10 +60,12 @@ public class NetSettings {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Network settings:\n");
-		if (defaultGateway != null)
+		if (defaultGateway != null) {
 			sb.append("\t defaultGateway: " + defaultGateway + "\n");
-		if (iface != null)
+		}
+		if (iface != null) {
 			sb.append("\t interface: \n" + iface + "\n");
+		}
 
 		return sb.toString();
 	}

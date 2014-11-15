@@ -45,8 +45,9 @@ class IPv4ConnectionFinder {
 			Announce announce) {
 		Iterable<?> announceAddresses = (Iterable<?>) announce.getParams().getNetSettings()
 				.getInterface().getIPv4();
-		if (announceAddresses == null)
+		if (announceAddresses == null) {
 			return null;
+		}
 
 		for (Object ipv4Entry : announceAddresses) {
 			try {

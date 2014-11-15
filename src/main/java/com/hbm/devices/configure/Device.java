@@ -40,8 +40,9 @@ public class Device {
 	 */
 	public static void checkForErrors(Device device) throws MissingDataException,
 			NullPointerException {
-		if (device == null)
+		if (device == null) {
 			throw new NullPointerException("device object must not be null");
+		}
 
 		if (device.uuid == null) {
 			throw new NullPointerException("No uuid in Device");

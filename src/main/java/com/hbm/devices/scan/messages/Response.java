@@ -32,8 +32,9 @@ public class Response extends JsonRpc {
 	}
 
 	public static void checkForErrors(Response response) throws MissingDataException {
-		if (response == null)
+		if (response == null) {
 			return;
+		}
 
 		if (response.id == null || response.id.length() <= 0) {
 			throw new MissingDataException("No response id in response object");

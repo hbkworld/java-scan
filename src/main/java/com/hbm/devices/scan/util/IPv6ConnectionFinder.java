@@ -47,8 +47,9 @@ class IPv6ConnectionFinder {
 			Announce announce) {
 		List<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
 				.getInterface().getIPv6();
-		if (announceAddresses == null)
+		if (announceAddresses == null) {
 			return null;
+		}
 		for (IPv6Entry address : announceAddresses) {
 			InetAddress announceAddress;
 			try {
@@ -71,8 +72,9 @@ class IPv6ConnectionFinder {
 
 	private static boolean sameNet(InetAddress announceAddress, short announcePrefixLength,
 			InetAddress interfaceAddress, short interfacePrefixLength) {
-		if (announcePrefixLength != interfacePrefixLength)
+		if (announcePrefixLength != interfacePrefixLength) {
 			return false;
+		}
 
 		byte[] announceAddr = announceAddress.getAddress();
 		byte[] interfaceAddr = interfaceAddress.getAddress();

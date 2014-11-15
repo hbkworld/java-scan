@@ -84,14 +84,18 @@ public class Interface {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Interface:");
-		if (name != null)
+		if (name != null) {
 			sb.append("\n\t\tname: " + name);
-		if (type != null)
+		}
+		if (type != null) {
 			sb.append("\n\t\ttype: " + type);
-		if (description != null)
+		}
+		if (description != null) {
 			sb.append("\n\t\tdescription: " + description);
-		if (configurationMethod != null)
+		}
+		if (configurationMethod != null) {
 			sb.append("\n\t\tconfigurationMethod: " + configurationMethod);
+		}
 		if (ipv4 != null) {
 			sb.append("\n\t\tIPv4 addresses:");
 			if (ipv4 instanceof List<?>) {

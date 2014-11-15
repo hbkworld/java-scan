@@ -45,10 +45,12 @@ public class ConfigureParams {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (device != null)
+		if (device != null) {
 			sb.append(device);
-		if (netSettings != null)
+		}
+		if (netSettings != null) {
 			sb.append(netSettings);
+		}
 		sb.append("ttl: " + ttl + "\n");
 
 		sb.append("\n");
@@ -58,8 +60,9 @@ public class ConfigureParams {
 
 	public static void checkForErrors(ConfigureParams params) throws MissingDataException,
 			NullPointerException {
-		if (params == null)
+		if (params == null) {
 			throw new NullPointerException("params object must not be null");
+		}
 
 		if (params.ttl < 1) {
 			throw new MissingDataException(

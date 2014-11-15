@@ -69,8 +69,9 @@ public class Configure extends JsonRpc {
 	 */
 	public static void checkForErrors(Configure config) throws MissingDataException,
 			NullPointerException {
-		if (config == null)
+		if (config == null) {
 			throw new NullPointerException("config object must not be null");
+		}
 
 		if (config.id == null) {
 			throw new NullPointerException("no queryId in configure");

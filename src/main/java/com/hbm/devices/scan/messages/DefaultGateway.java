@@ -34,10 +34,12 @@ public class DefaultGateway {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("Gateway: ");
-		if (ipv4Address != null)
+		if (ipv4Address != null) {
 			sb.append("IPv4: " + ipv4Address);
-		if (ipv6Address != null)
+		}
+		if (ipv6Address != null) {
 			sb.append("IPv6: " + ipv6Address);
+		}
 		return sb.toString();
 	}
 

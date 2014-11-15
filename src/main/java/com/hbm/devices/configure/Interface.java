@@ -94,8 +94,9 @@ public class Interface {
 	 */
 	public static void checkForErrors(Interface iface) throws MissingDataException,
 			NullPointerException {
-		if (iface == null)
+		if (iface == null) {
 			throw new NullPointerException("interface object must not be null");
+		}
 
 		if (iface.name == null) {
 			throw new NullPointerException("No name in Interface");
@@ -114,6 +115,5 @@ public class Interface {
 			// only check if there has to be a ipv4
 			IPv4EntryManual.checkForErrors(iface.ipv4);
 		}
-
 	}
 }

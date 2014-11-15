@@ -43,12 +43,15 @@ public class AnnounceParams {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (device != null)
+		if (device != null) {
 			sb.append(device);
-		if (netSettings != null)
+		}
+		if (netSettings != null) {
 			sb.append(netSettings);
-		if (router != null)
+		}
+		if (router != null) {
 			sb.append(router);
+		}
 		if (services != null) {
 			sb.append("Services:");
 			for (ServiceEntry se : services) {
