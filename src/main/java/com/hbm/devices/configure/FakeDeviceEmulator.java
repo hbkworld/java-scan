@@ -19,29 +19,29 @@ import com.google.gson.JsonParser;
  */
 public class FakeDeviceEmulator extends Observable implements Observer {
 
-	private static String receivingString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
-	private static String sendingString = "{\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"result\":0}";
+    private static String receivingString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
+    private static String sendingString = "{\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"result\":0}";
 
-	private JsonParser parser;
-	private static JsonElement shouldReceive;
+    private JsonParser parser;
+    private static JsonElement shouldReceive;
 
-	public FakeDeviceEmulator() {
-		this.parser = new JsonParser();
-		shouldReceive = this.parser.parse(receivingString);
-	}
+    public FakeDeviceEmulator() {
+        this.parser = new JsonParser();
+        shouldReceive = this.parser.parse(receivingString);
+    }
 
-	@Override
-	public void update(Observable o, Object obj) {
-		if (obj instanceof String) {
-			String msg = (String) obj;
-			JsonElement received = parser.parse(msg);
+    @Override
+    public void update(Observable o, Object obj) {
+        if (obj instanceof String) {
+            String msg = (String) obj;
+            JsonElement received = parser.parse(msg);
 
-			if (shouldReceive.equals(received)) {
-				setChanged();
-				notifyObservers(sendingString);
-			}
-		}
+            if (shouldReceive.equals(received)) {
+                setChanged();
+                notifyObservers(sendingString);
+            }
+        }
 
-	}
+    }
 
 }

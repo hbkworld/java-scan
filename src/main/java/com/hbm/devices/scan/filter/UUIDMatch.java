@@ -11,35 +11,35 @@ import com.hbm.devices.scan.messages.Announce;
  */
 public class UUIDMatch implements Matcher {
 
-	private String[] uuids;
+    private String[] uuids;
 
-	public UUIDMatch(String[] uuids) {
-		this.uuids = uuids;
-	}
+    public UUIDMatch(String[] uuids) {
+        this.uuids = uuids;
+    }
 
-	@Override
-	public boolean match(Announce announce) throws MissingDataException {
-		try {
-			String deviceUUID = announce.getParams().getDevice().getUuid();
-			for (String s : uuids) {
-				if (deviceUUID.equals(s)) {
-					return true;
-				}
-			}
-			return false;
-		} catch (NullPointerException e) {
-			throw new MissingDataException("No uuid type in response object");
-		}
-	}
+    @Override
+    public boolean match(Announce announce) throws MissingDataException {
+        try {
+            String deviceUUID = announce.getParams().getDevice().getUuid();
+            for (String s : uuids) {
+                if (deviceUUID.equals(s)) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (NullPointerException e) {
+            throw new MissingDataException("No uuid type in response object");
+        }
+    }
 
-	@Override
-	public String getMatcherName() {
-		return "UUID";
-	}
+    @Override
+    public String getMatcherName() {
+        return "UUID";
+    }
 
-	@Override
-	public String[] getFilterStrings() {
-		return uuids;
-	}
+    @Override
+    public String[] getFilterStrings() {
+        return uuids;
+    }
 
 }

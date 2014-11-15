@@ -27,57 +27,57 @@ import com.hbm.devices.configure.Noticeable;
  */
 public class MulticastSender implements Observer {
 
-	private MulticastSocket socket;
-	private Collection<NetworkInterface> multicastSender;
-	private Charset charset;
-	private InetAddress configureAddress;
+    private MulticastSocket socket;
+    private Collection<NetworkInterface> multicastSender;
+    private Charset charset;
+    private InetAddress configureAddress;
 
-	private Noticeable noticeable;
+    private Noticeable noticeable;
 
-	public static final String CONFIGURATION_ADDRESS = "239.255.77.77";
-	public static final int CONFIGURATION_PORT = 31417;
+    public static final String CONFIGURATION_ADDRESS = "239.255.77.77";
+    public static final int CONFIGURATION_PORT = 31417;
 
-	public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
-		charset = Charset.forName("UTF-8");
-		configureAddress = InetAddress.getByName(CONFIGURATION_ADDRESS);
-		socket = new MulticastSocket(null);
-		socket.setReuseAddress(true);
-		socket.bind(new InetSocketAddress(CONFIGURATION_PORT));
-		
-		multicastSender = new LinkedList<NetworkInterface>();
-		multicastSender.addAll(ifs);
-		this.noticeable = noticeable;
-		// TODO: join all interfaces
-	}
+    public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
+        charset = Charset.forName("UTF-8");
+        configureAddress = InetAddress.getByName(CONFIGURATION_ADDRESS);
+        socket = new MulticastSocket(null);
+        socket.setReuseAddress(true);
+        socket.bind(new InetSocketAddress(CONFIGURATION_PORT));
+        
+        multicastSender = new LinkedList<NetworkInterface>();
+        multicastSender.addAll(ifs);
+        this.noticeable = noticeable;
+        // TODO: join all interfaces
+    }
 
-	public void sendMessage(String msg) throws IOException {
-		byte[] bytes = msg.getBytes(charset);
-		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
-				CONFIGURATION_PORT);
-		for (NetworkInterface iface : multicastSender) {
-			socket.setNetworkInterface(iface);
-			socket.send(packet);
-		}
-	}
+    public void sendMessage(String msg) throws IOException {
+        byte[] bytes = msg.getBytes(charset);
+        DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
+                CONFIGURATION_PORT);
+        for (NetworkInterface iface : multicastSender) {
+            socket.setNetworkInterface(iface);
+            socket.send(packet);
+        }
+    }
 
-	protected void finalize() throws Throwable {
-		socket.close();
-		super.finalize();
-	}
+    protected void finalize() throws Throwable {
+        socket.close();
+        super.finalize();
+    }
 
-	/**
-	 * This method receives a String and transmits it via the multicast socket
-	 */
-	@Override
-	public void update(Observable o, Object arg) {
-		if (arg instanceof String) {
-			try {
-				this.sendMessage((String) arg);
-			} catch (Exception e) {
-				if (this.noticeable != null) {
-					this.noticeable.onException(e);
-				}
-			}
-		}
-	}
+    /**
+     * This method receives a String and transmits it via the multicast socket
+     */
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof String) {
+            try {
+                this.sendMessage((String) arg);
+            } catch (Exception e) {
+                if (this.noticeable != null) {
+                    this.noticeable.onException(e);
+                }
+            }
+        }
+    }
 }

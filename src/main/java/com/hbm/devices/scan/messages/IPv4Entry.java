@@ -2,23 +2,23 @@ package com.hbm.devices.scan.messages;
 
 public class IPv4Entry {
 
-	protected IPv4Entry() {
-	}
-		
+    protected IPv4Entry() {
+    }
+        
     public String getAddress() {
-		return address;
-	}
+        return address;
+    }
 
-	public String getNetmask() {
-		return netmask;
-	}
+    public String getNetmask() {
+        return netmask;
+    }
 
-	@Override
-	public String toString() {
-		return address + "/" + netmask;
-	}
-	
-	private String address;
-	private String netmask;
+    @Override
+    public String toString() {
+        return address + "/" + netmask;
+    }
+    
+    private String address;
+    private String netmask;
 
 }

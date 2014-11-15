@@ -17,64 +17,64 @@ import com.hbm.devices.scan.messages.Response;
  */
 public class ResponseListener extends Observable implements Observer, Runnable {
 
-	private ResponseReceiver responseReceiver;
-	private MessageParser messageParser;
+    private ResponseReceiver responseReceiver;
+    private MessageParser messageParser;
 
-	/**
-	 * This is the default constructor to instantiate a ReponseListener
-	 */
-	public ResponseListener() {
-		try {
-			responseReceiver = new ResponseReceiver();
+    /**
+     * This is the default constructor to instantiate a ReponseListener
+     */
+    public ResponseListener() {
+        try {
+            responseReceiver = new ResponseReceiver();
 
-			messageParser = new MessageParser();
+            messageParser = new MessageParser();
 
-			responseReceiver.addObserver(messageParser);
-			messageParser.addObserver(this);
+            responseReceiver.addObserver(messageParser);
+            messageParser.addObserver(this);
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Don't use this constructor. It is only used for the JUnit tests
-	 * 
-	 */
-	@SuppressWarnings("unused")
-	private ResponseListener(Observable receiver) {
-		messageParser = new MessageParser();
+    /**
+     * Don't use this constructor. It is only used for the JUnit tests
+     * 
+     */
+    @SuppressWarnings("unused")
+    private ResponseListener(Observable receiver) {
+        messageParser = new MessageParser();
 
-		receiver.addObserver(messageParser);
-		messageParser.addObserver(this);
-	}
+        receiver.addObserver(messageParser);
+        messageParser.addObserver(this);
+    }
 
-	/**
-	 * This method starts the listening socket to receive incoming responses
-	 */
-	@Override
-	public void run() {
-		responseReceiver.start();
-	}
+    /**
+     * This method starts the listening socket to receive incoming responses
+     */
+    @Override
+    public void run() {
+        responseReceiver.start();
+    }
 
-	/**
-	 * This method stops the listening socket
-	 */
-	public void stop() {
-		responseReceiver.stop();
-	}
+    /**
+     * This method stops the listening socket
+     */
+    public void stop() {
+        responseReceiver.stop();
+    }
 
-	/**
-	 * This method filters the received and parsed packets. So only {@link Response} objects are
-	 * forwarded.
-	 */
-	@Override
-	public void update(Observable o, Object obj) {
-		if (obj instanceof Response) {
-			Response response = (Response) obj;
+    /**
+     * This method filters the received and parsed packets. So only {@link Response} objects are
+     * forwarded.
+     */
+    @Override
+    public void update(Observable o, Object obj) {
+        if (obj instanceof Response) {
+            Response response = (Response) obj;
 
-			setChanged();
-			notifyObservers(response);
-		}
-	}
+            setChanged();
+            notifyObservers(response);
+        }
+    }
 }

@@ -18,65 +18,65 @@ import com.hbm.devices.scan.messages.*;
  */
 public class CommunicationPath {
 
-	private Announce announce;
-	private int hash;
+    private Announce announce;
+    private int hash;
 
-	/**
-	 * Placeholder for user defined object.
-	 * <p>
-	 * This object carries user defined data, it will not be used from
-	 * code inside this package.
-	 */
-	public Object cookie;
+    /**
+     * Placeholder for user defined object.
+     * <p>
+     * This object carries user defined data, it will not be used from
+     * code inside this package.
+     */
+    public Object cookie;
 
-	CommunicationPath(Announce announce) throws MissingDataException {
-		this.announce = announce;
-		StringBuilder sb = new StringBuilder(100);
-		try {
-			String deviceUuid = announce.getParams().getDevice().getUuid();
-			if (deviceUuid == null) {
-				throw new MissingDataException("No device UUID in announce object!");
-			}
-			sb.append(deviceUuid);
+    CommunicationPath(Announce announce) throws MissingDataException {
+        this.announce = announce;
+        StringBuilder sb = new StringBuilder(100);
+        try {
+            String deviceUuid = announce.getParams().getDevice().getUuid();
+            if (deviceUuid == null) {
+                throw new MissingDataException("No device UUID in announce object!");
+            }
+            sb.append(deviceUuid);
 
-			Router router = announce.getParams().getRouter();
-			if (router != null) {
-				String routerUuid = router.getUuid();
-				if (routerUuid == null) {
-					throw new MissingDataException("No router UUID in announce object!");
-				}
-				sb.append(routerUuid);
-			}
+            Router router = announce.getParams().getRouter();
+            if (router != null) {
+                String routerUuid = router.getUuid();
+                if (routerUuid == null) {
+                    throw new MissingDataException("No router UUID in announce object!");
+                }
+                sb.append(routerUuid);
+            }
 
-			String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
-			if (deviceInterfaceName == null) {
-				throw new MissingDataException("No network interface name in announce object!");
-			}
-			sb.append(deviceInterfaceName);
-			hash = sb.toString().hashCode();
-		} catch (NullPointerException e) {
-			throw new MissingDataException("Information missing in announce object!");
-		}
-	}
+            String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
+            if (deviceInterfaceName == null) {
+                throw new MissingDataException("No network interface name in announce object!");
+            }
+            sb.append(deviceInterfaceName);
+            hash = sb.toString().hashCode();
+        } catch (NullPointerException e) {
+            throw new MissingDataException("Information missing in announce object!");
+        }
+    }
 
-	/**
-	 * Calculates a unique hash for a communication path.
-	 * <p>
-	 * Currently the device uuid, the router uuid and the interface name
-	 * of the sending device are take into the hash calculation.
-	 */
-	@Override
-	public int hashCode() {
-		return hash;
-	}
+    /**
+     * Calculates a unique hash for a communication path.
+     * <p>
+     * Currently the device uuid, the router uuid and the interface name
+     * of the sending device are take into the hash calculation.
+     */
+    @Override
+    public int hashCode() {
+        return hash;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		return hash == o.hashCode();
-	}
-	
-	public Announce getAnnounce() {
-		return announce;
-	}
-	
+    @Override
+    public boolean equals(Object o) {
+        return hash == o.hashCode();
+    }
+    
+    public Announce getAnnounce() {
+        return announce;
+    }
+    
 }

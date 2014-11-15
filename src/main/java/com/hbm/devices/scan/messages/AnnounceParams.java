@@ -12,56 +12,56 @@ import java.util.List;
  */
 public class AnnounceParams {
 
-	private AnnounceParams() {
-	}
+    private AnnounceParams() {
+    }
 
-	public Device getDevice() {
-		return device;
-	}
+    public Device getDevice() {
+        return device;
+    }
 
-	public NetSettings getNetSettings() {
-		return netSettings;
-	}
+    public NetSettings getNetSettings() {
+        return netSettings;
+    }
 
-	public Router getRouter() {
-		return router;
-	}
+    public Router getRouter() {
+        return router;
+    }
 
-	public Iterable<ServiceEntry> getServices() {
-		return services;
-	}
+    public Iterable<ServiceEntry> getServices() {
+        return services;
+    }
 
-	public int getExpiration() {
-		return expiration;
-	}
+    public int getExpiration() {
+        return expiration;
+    }
 
-	private Device device;
-	private NetSettings netSettings;
-	private Router router;
-	private List<ServiceEntry> services;
-	private int expiration;
+    private Device device;
+    private NetSettings netSettings;
+    private Router router;
+    private List<ServiceEntry> services;
+    private int expiration;
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		if (device != null) {
-			sb.append(device);
-		}
-		if (netSettings != null) {
-			sb.append(netSettings);
-		}
-		if (router != null) {
-			sb.append(router);
-		}
-		if (services != null) {
-			sb.append("Services:");
-			for (ServiceEntry se : services) {
-				sb.append("\n\t" + se);
-			}
-		}
-		sb.append("\nexpiration: " + expiration + "\n");
-		sb.append("\n");
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if (device != null) {
+            sb.append(device);
+        }
+        if (netSettings != null) {
+            sb.append(netSettings);
+        }
+        if (router != null) {
+            sb.append(router);
+        }
+        if (services != null) {
+            sb.append("Services:");
+            for (ServiceEntry se : services) {
+                sb.append("\n\t" + se);
+            }
+        }
+        sb.append("\nexpiration: " + expiration + "\n");
+        sb.append("\n");
 
-		return sb.toString();
-	}
+        return sb.toString();
+    }
 }

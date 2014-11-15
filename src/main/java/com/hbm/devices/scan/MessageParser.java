@@ -28,99 +28,99 @@ import com.hbm.devices.scan.messages.Response;
  */
 public class MessageParser extends Observable implements Observer {
 
-	private Gson gson;
+    private Gson gson;
 
-	private AnnounceCache announceCache;
+    private AnnounceCache announceCache;
 
-	private boolean useCache;
+    private boolean useCache;
 
-	public MessageParser() {
-		this(true);
-	}
+    public MessageParser() {
+        this(true);
+    }
 
-	public MessageParser(boolean useCache) {
-		GsonBuilder builder = new GsonBuilder();
-		builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
-		gson = builder.create();
+    public MessageParser(boolean useCache) {
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
+        gson = builder.create();
 
-		this.useCache = useCache;
-		if (useCache) {
-			this.announceCache = new AnnounceCache();
-		}
-	}
+        this.useCache = useCache;
+        if (useCache) {
+            this.announceCache = new AnnounceCache();
+        }
+    }
 
-	public AnnounceCache getCache() {
-		return this.announceCache;
-	}
+    public AnnounceCache getCache() {
+        return this.announceCache;
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		String s = (String) arg;
-		try {
-			JsonRpc json;
-			boolean newParsedString;
-			if (useCache && announceCache.hasStringInCache(s)) {
-				newParsedString = false;
-				json = announceCache.getAnnounceByString(s);
-			} else {
-				newParsedString = true;
-				json = gson.fromJson(s, JsonRpc.class);
-			}
-			if (json instanceof Announce) {
-				CommunicationPath ap = new CommunicationPath((Announce) json);
-				// add the parsed AnnounceObject to the cache, if its a new, not yet cached String
-				// Only cache Announce objects!
-				if (useCache && newParsedString) {
-					announceCache.addCommunicationPath(s, ap);
-				}
-				setChanged();
-				notifyObservers(ap);
-			} else if (json instanceof Response) {
-				Response response = (Response) json;
-				Response.checkForErrors(response);
+    @Override
+    public void update(Observable o, Object arg) {
+        String s = (String) arg;
+        try {
+            JsonRpc json;
+            boolean newParsedString;
+            if (useCache && announceCache.hasStringInCache(s)) {
+                newParsedString = false;
+                json = announceCache.getAnnounceByString(s);
+            } else {
+                newParsedString = true;
+                json = gson.fromJson(s, JsonRpc.class);
+            }
+            if (json instanceof Announce) {
+                CommunicationPath ap = new CommunicationPath((Announce) json);
+                // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
+                // Only cache Announce objects!
+                if (useCache && newParsedString) {
+                    announceCache.addCommunicationPath(s, ap);
+                }
+                setChanged();
+                notifyObservers(ap);
+            } else if (json instanceof Response) {
+                Response response = (Response) json;
+                Response.checkForErrors(response);
 
-				setChanged();
-				notifyObservers(response);
-			}
-		} catch (JsonSyntaxException e) {
-			/*
-			 * There is no error handling necessary in this case. If somebody sends us invalid JSON,
-			 * we just ignore the packet and go ahead.
-			 */
-		} catch (MissingDataException e) {
-			/*
-			 * During the creation of an CommunicationPath object it is required that some
-			 * sub-objects are created in the parsed JSON object (i.e. the device's UUID). If these
-			 * sub-objects are not created, the construction of the CommunicationPath object fails.
-			 * 
-			 * Go ahead with the next packet.
-			 */
-		}
-	}
+                setChanged();
+                notifyObservers(response);
+            }
+        } catch (JsonSyntaxException e) {
+            /*
+             * There is no error handling necessary in this case. If somebody sends us invalid JSON,
+             * we just ignore the packet and go ahead.
+             */
+        } catch (MissingDataException e) {
+            /*
+             * During the creation of an CommunicationPath object it is required that some
+             * sub-objects are created in the parsed JSON object (i.e. the device's UUID). If these
+             * sub-objects are not created, the construction of the CommunicationPath object fails.
+             * 
+             * Go ahead with the next packet.
+             */
+        }
+    }
 }
 
 class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
-	public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-			throws JsonParseException {
+    public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+            throws JsonParseException {
 
-		JsonRpc rpcObject = null;
-		JsonObject jsonObject = json.getAsJsonObject();
+        JsonRpc rpcObject = null;
+        JsonObject jsonObject = json.getAsJsonObject();
 
-		if (jsonObject.has("method")) {
-			String type = jsonObject.get("method").getAsString();
-			if (type.compareTo("announce") == 0) {
-				rpcObject = context.deserialize(json, Announce.class);
-				if (rpcObject != null) {
-					rpcObject.setJSONString(jsonObject.toString());
-				}
-			}
-		} else if (jsonObject.has("result") || jsonObject.has("error")) {
-			// is a response object
-			rpcObject = context.deserialize(json, Response.class);
-			if (rpcObject != null) {
-				rpcObject.setJSONString(jsonObject.toString());
-			}
-		}
-		return rpcObject;
-	}
+        if (jsonObject.has("method")) {
+            String type = jsonObject.get("method").getAsString();
+            if (type.compareTo("announce") == 0) {
+                rpcObject = context.deserialize(json, Announce.class);
+                if (rpcObject != null) {
+                    rpcObject.setJSONString(jsonObject.toString());
+                }
+            }
+        } else if (jsonObject.has("result") || jsonObject.has("error")) {
+            // is a response object
+            rpcObject = context.deserialize(json, Response.class);
+            if (rpcObject != null) {
+                rpcObject.setJSONString(jsonObject.toString());
+            }
+        }
+        return rpcObject;
+    }
 }

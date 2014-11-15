@@ -17,27 +17,27 @@ import com.hbm.devices.scan.messages.Announce;
  */
 public class Filter extends Observable implements Observer {
 
-	private Matcher matcher;
+    private Matcher matcher;
 
-	public Filter(Matcher m) {
-		this.matcher = m;
-	}
+    public Filter(Matcher m) {
+        this.matcher = m;
+    }
 
-	public Matcher getMatcher() {
-		return this.matcher;
-	}
+    public Matcher getMatcher() {
+        return this.matcher;
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		CommunicationPath ap = (CommunicationPath) arg;
-		Announce announce = ap.getAnnounce();
-		try {
-			if (matcher.match(announce)) {
-				setChanged();
-				notifyObservers(ap);
-			}
-		} catch (MissingDataException e) {
-			// Ignore
-		}
-	}
+    @Override
+    public void update(Observable o, Object arg) {
+        CommunicationPath ap = (CommunicationPath) arg;
+        Announce announce = ap.getAnnounce();
+        try {
+            if (matcher.match(announce)) {
+                setChanged();
+                notifyObservers(ap);
+            }
+        } catch (MissingDataException e) {
+            // Ignore
+        }
+    }
 }

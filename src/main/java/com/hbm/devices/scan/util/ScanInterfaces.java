@@ -16,53 +16,53 @@ import java.util.List;
  */
 public class ScanInterfaces {
 
-	public ScanInterfaces() throws SocketException {
-		interfaces = new LinkedList<NetworkInterface>();
-		Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
+    public ScanInterfaces() throws SocketException {
+        interfaces = new LinkedList<NetworkInterface>();
+        Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
 
-		if (ifs != null) {
-			while (ifs.hasMoreElements()) {
-				NetworkInterface iface = ifs.nextElement();
-				if (willScan(iface)) {
-					interfaces.add(iface);
-				}
-			}
-		}
-	}
+        if (ifs != null) {
+            while (ifs.hasMoreElements()) {
+                NetworkInterface iface = ifs.nextElement();
+                if (willScan(iface)) {
+                    interfaces.add(iface);
+                }
+            }
+        }
+    }
 
-	public Collection<NetworkInterface> getInterfaces() {
-		return interfaces;
-	}
+    public Collection<NetworkInterface> getInterfaces() {
+        return interfaces;
+    }
 
-	private static boolean willScan(NetworkInterface iface) throws SocketException {
-		if (iface.isLoopback()) {
-			return false;
-		}
-		if (!iface.isUp()) {
-			return false;
-		}
-		if (!hasConfiguredIPv4Address(iface)) {
-			return false;
-		}
-		if (iface.supportsMulticast()) {
-			return true;
-		}
-		return false;
-	}
+    private static boolean willScan(NetworkInterface iface) throws SocketException {
+        if (iface.isLoopback()) {
+            return false;
+        }
+        if (!iface.isUp()) {
+            return false;
+        }
+        if (!hasConfiguredIPv4Address(iface)) {
+            return false;
+        }
+        if (iface.supportsMulticast()) {
+            return true;
+        }
+        return false;
+    }
 
-	private static boolean hasConfiguredIPv4Address(NetworkInterface iface) {
-		Enumeration<InetAddress> addrs = iface.getInetAddresses();
-		while (addrs.hasMoreElements()) {
-			InetAddress addr = addrs.nextElement();
-			if (addr instanceof Inet4Address) {
-				Inet4Address addr4 = (Inet4Address) addr;
-				if (!addr4.isAnyLocalAddress()) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    private static boolean hasConfiguredIPv4Address(NetworkInterface iface) {
+        Enumeration<InetAddress> addrs = iface.getInetAddresses();
+        while (addrs.hasMoreElements()) {
+            InetAddress addr = addrs.nextElement();
+            if (addr instanceof Inet4Address) {
+                Inet4Address addr4 = (Inet4Address) addr;
+                if (!addr4.isAnyLocalAddress()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-	private List<NetworkInterface> interfaces;
+    private List<NetworkInterface> interfaces;
 }

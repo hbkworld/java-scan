@@ -15,51 +15,51 @@ import com.hbm.devices.scan.events.UpdateDeviceEvent;
 
 public class DeviceMonitorTest {
 
-	private FakeMessageReceiver fsmmr;
+    private FakeMessageReceiver fsmmr;
 
-	private boolean newDevice;
-	private boolean updateDevice;
+    private boolean newDevice;
+    private boolean updateDevice;
 
-	@Before
-	public void setup() {
-		this.newDevice = false;
-		this.updateDevice = false;
-		fsmmr = new FakeMessageReceiver();
-		MessageParser jf = new MessageParser();
-		fsmmr.addObserver(jf);
-		DeviceMonitor af = new DeviceMonitor();
-		jf.addObserver(af);
-		af.addObserver(new Observer() {
-			public void update(Observable o, Object arg) {
-				if (arg instanceof NewDeviceEvent) {
-					newDevice = true;
-				} else if (arg instanceof UpdateDeviceEvent) {
-					updateDevice = true;
-				}
-			}
-		});
-	}
+    @Before
+    public void setup() {
+        this.newDevice = false;
+        this.updateDevice = false;
+        fsmmr = new FakeMessageReceiver();
+        MessageParser jf = new MessageParser();
+        fsmmr.addObserver(jf);
+        DeviceMonitor af = new DeviceMonitor();
+        jf.addObserver(af);
+        af.addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                if (arg instanceof NewDeviceEvent) {
+                    newDevice = true;
+                } else if (arg instanceof UpdateDeviceEvent) {
+                    updateDevice = true;
+                }
+            }
+        });
+    }
 
-	@Test
-	public void NewDeviceEvent() {
-		fsmmr.emitSingleCorrectMessage();
-		assertTrue(newDevice);
-		assertFalse(updateDevice);
-	}
+    @Test
+    public void NewDeviceEvent() {
+        fsmmr.emitSingleCorrectMessage();
+        assertTrue(newDevice);
+        assertFalse(updateDevice);
+    }
 
-	@Test
-	public void UpdateDeviceEvent() {
-		fsmmr.emitSingleCorrectMessage();
-		assertTrue(newDevice);
-		newDevice = false;
+    @Test
+    public void UpdateDeviceEvent() {
+        fsmmr.emitSingleCorrectMessage();
+        assertTrue(newDevice);
+        newDevice = false;
 
-		fsmmr.emitSingleCorrentMessageDifferentIP();
-		assertTrue(updateDevice && !newDevice);
-		updateDevice = false;
+        fsmmr.emitSingleCorrentMessageDifferentIP();
+        assertTrue(updateDevice && !newDevice);
+        updateDevice = false;
 
-		// Check if the event is not fired again
-		fsmmr.emitSingleCorrentMessageDifferentIP();
-		assertFalse(updateDevice || newDevice);
-	}
+        // Check if the event is not fired again
+        fsmmr.emitSingleCorrentMessageDifferentIP();
+        assertFalse(updateDevice || newDevice);
+    }
 
 }

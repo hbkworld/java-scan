@@ -8,6 +8,6 @@ package com.hbm.devices.configure;
  */
 public interface Noticeable {
 
-	public void onException(Exception e);
+    public void onException(Exception e);
 
 }

@@ -11,29 +11,29 @@ package com.hbm.devices.scan.messages;
  */
 public class ServiceEntry {
 
-	private ServiceEntry() {
-	}
+    private ServiceEntry() {
+    }
 
-	/**
-	 * @return Name of the service.
-	 */
-	public String getType() {
-		return type;
-	}
+    /**
+     * @return Name of the service.
+     */
+    public String getType() {
+        return type;
+    }
 
-	/**
-	 * @return IP port of the service.
-	 */
-	public int getPort() {
-		return port;
-	}
+    /**
+     * @return IP port of the service.
+     */
+    public int getPort() {
+        return port;
+    }
 
-	@Override
-	public String toString() {
-		return "type: " + type + " port: " + port;
-	}
+    @Override
+    public String toString() {
+        return "type: " + type + " port: " + port;
+    }
 
-	private String type;
-	private int port;
+    private String type;
+    private int port;
 
 }

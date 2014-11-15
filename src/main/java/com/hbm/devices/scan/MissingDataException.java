@@ -8,9 +8,9 @@ package com.hbm.devices.scan;
  */
 
 public class MissingDataException extends Exception {
-	public MissingDataException(String message) {
-		super(message);
-	}
+    public MissingDataException(String message) {
+        super(message);
+    }
 
-	private static final long serialVersionUID = -575018775746931024L;
+    private static final long serialVersionUID = -575018775746931024L;
 }

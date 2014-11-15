@@ -13,13 +13,13 @@ import com.hbm.devices.scan.DeviceMonitor;
 
 public class LostDeviceEvent {
 
-	private CommunicationPath communicationPath;
+    private CommunicationPath communicationPath;
 
-	public LostDeviceEvent(CommunicationPath ap) {
-		communicationPath = ap;
-	}
+    public LostDeviceEvent(CommunicationPath ap) {
+        communicationPath = ap;
+    }
 
-	public CommunicationPath getAnnouncePath() {
-		return communicationPath;
-	}
+    public CommunicationPath getAnnouncePath() {
+        return communicationPath;
+    }
 }

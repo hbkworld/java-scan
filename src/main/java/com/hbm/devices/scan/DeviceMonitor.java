@@ -26,84 +26,84 @@ import com.hbm.devices.scan.messages.Announce;
  */
 public class DeviceMonitor extends Observable implements Observer {
 
-	private Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
-	private Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
-	private ScheduledThreadPoolExecutor executor;
+    private Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
+    private Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
+    private ScheduledThreadPoolExecutor executor;
 
-	public DeviceMonitor() {
-		deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(100);
-		futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(100);
-		executor = new ScheduledThreadPoolExecutor(1);
-	}
+    public DeviceMonitor() {
+        deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(100);
+        futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(100);
+        executor = new ScheduledThreadPoolExecutor(1);
+    }
 
-	public void stop() {
-		executor.shutdownNow();
-		try {
-			executor.awaitTermination(1, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			// Ignore
-		}
-	}
+    public void stop() {
+        executor.shutdownNow();
+        try {
+            executor.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            // Ignore
+        }
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		CommunicationPath ap = (CommunicationPath) arg;
-		Announce announce = ap.getAnnounce();
+    @Override
+    public void update(Observable o, Object arg) {
+        CommunicationPath ap = (CommunicationPath) arg;
+        Announce announce = ap.getAnnounce();
 
-		synchronized (deviceMap) {
-			if (deviceMap.containsKey(ap)) {
-				ScheduledFuture<Void> sf = deviceMap.get(ap);
-				sf.cancel(false);
-				deviceMap.remove(ap);
-				AnnounceTimerTask task = futureMap.remove(sf);
-				Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
-				if (!oldAnnounce.equals(announce)) {
-					setChanged();
-					notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), ap));
-				}
-				task = new AnnounceTimerTask(ap);
-				sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
-				deviceMap.put(ap, sf);
-				futureMap.put(sf, task);
-			} else {
-				AnnounceTimerTask task = new AnnounceTimerTask(ap);
-				ScheduledFuture<Void> sf = executor.schedule(task, getExpiration(announce),
-						TimeUnit.MILLISECONDS);
-				deviceMap.put(ap, sf);
-				futureMap.put(sf, task);
-				setChanged();
-				notifyObservers(new NewDeviceEvent(ap));
-			}
-		}
-	}
+        synchronized (deviceMap) {
+            if (deviceMap.containsKey(ap)) {
+                ScheduledFuture<Void> sf = deviceMap.get(ap);
+                sf.cancel(false);
+                deviceMap.remove(ap);
+                AnnounceTimerTask task = futureMap.remove(sf);
+                Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
+                if (!oldAnnounce.equals(announce)) {
+                    setChanged();
+                    notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), ap));
+                }
+                task = new AnnounceTimerTask(ap);
+                sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+                deviceMap.put(ap, sf);
+                futureMap.put(sf, task);
+            } else {
+                AnnounceTimerTask task = new AnnounceTimerTask(ap);
+                ScheduledFuture<Void> sf = executor.schedule(task, getExpiration(announce),
+                        TimeUnit.MILLISECONDS);
+                deviceMap.put(ap, sf);
+                futureMap.put(sf, task);
+                setChanged();
+                notifyObservers(new NewDeviceEvent(ap));
+            }
+        }
+    }
 
-	private int getExpiration(Announce announce) {
-		int expiration = announce.getParams().getExpiration();
-		if (expiration == 0) {
-			expiration = 6;
-		}
-		return expiration * 1000;
-	}
+    private int getExpiration(Announce announce) {
+        int expiration = announce.getParams().getExpiration();
+        if (expiration == 0) {
+            expiration = 6;
+        }
+        return expiration * 1000;
+    }
 
-	class AnnounceTimerTask implements Callable<Void> {
-		private CommunicationPath CommunicationPath;
+    class AnnounceTimerTask implements Callable<Void> {
+        private CommunicationPath CommunicationPath;
 
-		AnnounceTimerTask(CommunicationPath ap) {
-			CommunicationPath = ap;
-		}
+        AnnounceTimerTask(CommunicationPath ap) {
+            CommunicationPath = ap;
+        }
 
-		@Override
-		public Void call() throws Exception {
-			synchronized (deviceMap) {
-				deviceMap.remove(CommunicationPath);
-			}
-			setChanged();
-			notifyObservers(new LostDeviceEvent(CommunicationPath));
-			return null;
-		}
+        @Override
+        public Void call() throws Exception {
+            synchronized (deviceMap) {
+                deviceMap.remove(CommunicationPath);
+            }
+            setChanged();
+            notifyObservers(new LostDeviceEvent(CommunicationPath));
+            return null;
+        }
 
-		CommunicationPath getCommunicationPath() {
-			return CommunicationPath;
-		}
-	}
+        CommunicationPath getCommunicationPath() {
+            return CommunicationPath;
+        }
+    }
 }

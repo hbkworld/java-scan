@@ -7,26 +7,26 @@ import com.hbm.devices.scan.messages.Interface.Method;
 
 public class Sender {
 
-	public static void main(String[] args) {
-		try {
+    public static void main(String[] args) {
+        try {
 
-			ConfigurationService service = new ConfigurationService();
+            ConfigurationService service = new ConfigurationService();
 
-			Device device = new Device("0009E5001571");
-			
-			NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
+            Device device = new Device("0009E5001571");
+            
+            NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 
-			ConfigureParams configParams = new ConfigureParams(device, settings);
+            ConfigureParams configParams = new ConfigureParams(device, settings);
 
-			try {
-				service.sendConfiguration(configParams, new SimpleCallback(), 5000);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}
+            try {
+                service.sendConfiguration(configParams, new SimpleCallback(), 5000);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

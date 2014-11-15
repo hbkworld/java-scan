@@ -14,20 +14,20 @@ import com.hbm.devices.scan.DeviceMonitor;
  */
 public class UpdateDeviceEvent {
 
-	private CommunicationPath oldCommunicationPath;
-	private CommunicationPath newCommunicationPath;
+    private CommunicationPath oldCommunicationPath;
+    private CommunicationPath newCommunicationPath;
 
-	public UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
-		this.oldCommunicationPath = oldPath;
-		this.newCommunicationPath = newPath;
-	}
+    public UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
+        this.oldCommunicationPath = oldPath;
+        this.newCommunicationPath = newPath;
+    }
 
-	public CommunicationPath getOldCommunicationPath() {
-		return this.oldCommunicationPath;
-	}
+    public CommunicationPath getOldCommunicationPath() {
+        return this.oldCommunicationPath;
+    }
 
-	public CommunicationPath getNewCommunicationPath() {
-		return this.newCommunicationPath;
-	}
+    public CommunicationPath getNewCommunicationPath() {
+        return this.newCommunicationPath;
+    }
 
 }

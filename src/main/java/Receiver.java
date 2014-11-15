@@ -23,88 +23,88 @@ import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
 public class Receiver implements Observer {
-	public static void main(String[] args) {
-		try {
-			MessageReceiver ar;
-			if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
-				ar = new FakeMessageReceiver();
-			} else {
-				ar = new AnnounceReceiver();
-			}
-			MessageParser jf = new MessageParser();
-			ar.addObserver(jf);
+    public static void main(String[] args) {
+        try {
+            MessageReceiver ar;
+            if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
+                ar = new FakeMessageReceiver();
+            } else {
+                ar = new AnnounceReceiver();
+            }
+            MessageParser jf = new MessageParser();
+            ar.addObserver(jf);
 
-			String[] families = { "QuantumX" };
-			Filter ftFilter = new Filter(new FamilytypeMatch(families));
-			jf.addObserver(ftFilter);
+            String[] families = { "QuantumX" };
+            Filter ftFilter = new Filter(new FamilytypeMatch(families));
+            jf.addObserver(ftFilter);
 
-			DeviceMonitor af = new DeviceMonitor();
-			ftFilter.addObserver(af);
+            DeviceMonitor af = new DeviceMonitor();
+            ftFilter.addObserver(af);
 
-			Receiver r = new Receiver();
-			af.addObserver(r);
-			ar.start();
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+            Receiver r = new Receiver();
+            af.addObserver(r);
+            ar.start();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
-	private Collection<NetworkInterface> scanInterfaces;
-	private ConnectionFinder connectionFinder;
+    private Collection<NetworkInterface> scanInterfaces;
+    private ConnectionFinder connectionFinder;
 
-	public Receiver() throws SocketException {
-		scanInterfaces = new ScanInterfaces().getInterfaces();
-		connectionFinder = new ConnectionFinder(scanInterfaces, false);
-	}
+    public Receiver() throws SocketException {
+        scanInterfaces = new ScanInterfaces().getInterfaces();
+        connectionFinder = new ConnectionFinder(scanInterfaces, false);
+    }
 
-	public void update(Observable o, Object arg) {
-		CommunicationPath ap;
-		if (arg instanceof NewDeviceEvent) {
-			ap = ((NewDeviceEvent) arg).getAnnouncePath();
-			Announce a = ap.getAnnounce();
-			InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
-			System.out.println("New Device:");
-			if (connectAddress != null) {
-				System.out.println("Connectable: " + connectAddress);
-			}
-		} else if (arg instanceof LostDeviceEvent) {
-			ap = ((LostDeviceEvent) arg).getAnnouncePath();
-			System.out.println("Lost Device:");
-		} else if (arg instanceof UpdateDeviceEvent) {
-			UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
-			ap = event.getNewCommunicationPath();
-			System.out.println("Update Device:");
-		} else {
-			System.out.println("unknown");
-			return;
-		}
+    public void update(Observable o, Object arg) {
+        CommunicationPath ap;
+        if (arg instanceof NewDeviceEvent) {
+            ap = ((NewDeviceEvent) arg).getAnnouncePath();
+            Announce a = ap.getAnnounce();
+            InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
+            System.out.println("New Device:");
+            if (connectAddress != null) {
+                System.out.println("Connectable: " + connectAddress);
+            }
+        } else if (arg instanceof LostDeviceEvent) {
+            ap = ((LostDeviceEvent) arg).getAnnouncePath();
+            System.out.println("Lost Device:");
+        } else if (arg instanceof UpdateDeviceEvent) {
+            UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
+            ap = event.getNewCommunicationPath();
+            System.out.println("Update Device:");
+        } else {
+            System.out.println("unknown");
+            return;
+        }
 
-		Announce a = ap.getAnnounce();
-		System.out.print(a.getParams().getDevice());
+        Announce a = ap.getAnnounce();
+        System.out.print(a.getParams().getDevice());
 
-		System.out.println("\tIP-Addresses:");
-		System.out.println("\t interfaceName: "
-				+ a.getParams().getNetSettings().getInterface().getName());
-		System.out.println("\t method:"
-				+ a.getParams().getNetSettings().getInterface().getConfigurationMethod());
-		Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
-		Iterable<IPv6Entry> ipv6 = a.getParams().getNetSettings().getInterface().getIPv6();
-		if (ipv4 != null) {
-			for (Object entry : ipv4) {
-				System.out.print("\t " + entry + "\n");
-			}
-		}
-		if (ipv6 != null) {
-			for (IPv6Entry e : ipv6) {
-				System.out.println("\t " + e);
-			}
-		}
+        System.out.println("\tIP-Addresses:");
+        System.out.println("\t interfaceName: "
+                + a.getParams().getNetSettings().getInterface().getName());
+        System.out.println("\t method:"
+                + a.getParams().getNetSettings().getInterface().getConfigurationMethod());
+        Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
+        Iterable<IPv6Entry> ipv6 = a.getParams().getNetSettings().getInterface().getIPv6();
+        if (ipv4 != null) {
+            for (Object entry : ipv4) {
+                System.out.print("\t " + entry + "\n");
+            }
+        }
+        if (ipv6 != null) {
+            for (IPv6Entry e : ipv6) {
+                System.out.println("\t " + e);
+            }
+        }
 
-		System.out.println("\tServices:");
-		Iterable<ServiceEntry> services = a.getParams().getServices();
-		for (ServiceEntry entry : services) {
-			System.out.print("\t " + entry + "\n");
-		}
-		System.out.println();
-	}
+        System.out.println("\tServices:");
+        Iterable<ServiceEntry> services = a.getParams().getServices();
+        for (ServiceEntry entry : services) {
+            System.out.print("\t " + entry + "\n");
+        }
+        System.out.println();
+    }
 }

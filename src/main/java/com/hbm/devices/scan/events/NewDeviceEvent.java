@@ -14,13 +14,13 @@ import com.hbm.devices.scan.DeviceMonitor;
  */
 public class NewDeviceEvent {
 
-	private CommunicationPath communicationPath;
+    private CommunicationPath communicationPath;
 
-	public NewDeviceEvent(CommunicationPath ap) {
-		communicationPath = ap;
-	}
+    public NewDeviceEvent(CommunicationPath ap) {
+        communicationPath = ap;
+    }
 
-	public CommunicationPath getAnnouncePath() {
-		return communicationPath;
-	}
+    public CommunicationPath getAnnouncePath() {
+        return communicationPath;
+    }
 }

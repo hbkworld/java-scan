@@ -15,18 +15,18 @@ import java.util.Observer;
  */
 public class FakeMulticastSender implements Observer {
 
-	private String lastSent;
+    private String lastSent;
 
-	public FakeMulticastSender() {
-	}
+    public FakeMulticastSender() {
+    }
 
-	public String getLastSent() {
-		return this.lastSent;
-	}
+    public String getLastSent() {
+        return this.lastSent;
+    }
 
-	@Override
-	public void update(Observable o, Object arg) {
-		this.lastSent = (String) arg;
-	}
+    @Override
+    public void update(Observable o, Object arg) {
+        this.lastSent = (String) arg;
+    }
 
 }
