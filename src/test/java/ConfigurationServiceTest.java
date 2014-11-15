@@ -53,8 +53,7 @@ public class ConfigurationServiceTest {
 					"TEST_UUID");
 			this.service2 = configurationServiceConstructor.newInstance(emulator, emulator,
 					"TEST_UUID");
-		} catch (NoSuchMethodException | SecurityException | InstantiationException
-				| IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -71,7 +70,7 @@ public class ConfigurationServiceTest {
 		ConfigureParams configParams = new ConfigureParams(device, settings);
 		try {
 			service.sendConfiguration(configParams, new SimpleCallback(), 5000);
-		} catch (NullPointerException | IllegalArgumentException | MissingDataException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		String correctString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
@@ -111,7 +110,7 @@ public class ConfigurationServiceTest {
 		try {
 			service2.sendConfiguration(configParams, cb, 20);
 
-		} catch (NullPointerException | IllegalArgumentException | MissingDataException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -151,7 +150,7 @@ public class ConfigurationServiceTest {
 		try {
 			service2.sendConfiguration(configParams, cb, 20);
 
-		} catch (NullPointerException | IllegalArgumentException | MissingDataException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -197,8 +196,8 @@ public class ConfigurationServiceTest {
 		synchronized (cb) {
 			try {
 				service.sendConfiguration(configParams, cb, 50);
-			} catch (NullPointerException | IllegalArgumentException | MissingDataException e1) {
-				e1.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			while (!timeout && !received) {
 				try {
@@ -252,8 +251,8 @@ public class ConfigurationServiceTest {
 		synchronized (cb) {
 			try {
 				service.sendConfiguration(configParams, cb, 50);
-			} catch (NullPointerException | IllegalArgumentException | MissingDataException e1) {
-				e1.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			while (!timeout && !received) {
 				try {
