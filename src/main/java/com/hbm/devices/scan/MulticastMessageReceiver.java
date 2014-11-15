@@ -93,7 +93,6 @@ public class MulticastMessageReceiver extends MessageReceiver {
 	private MulticastSocket setupMulticastSocket() throws SocketException, IOException {
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 		MulticastSocket s = new MulticastSocket(null);
-		// MulticastSocket s = new MulticastSocket(sa);
 		s.setReuseAddress(true);
 		s.bind(sa);
 

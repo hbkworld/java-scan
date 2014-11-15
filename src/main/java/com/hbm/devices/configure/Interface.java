@@ -66,15 +66,6 @@ public class Interface {
 		return this.ipv4;
 	}
 
-	/**
-	 * 
-	 * @return returns the configuration {@link Method}
-	 */
-	 /*
-	public Method getConfigurationMethod() {
-		return this.configurationMethod;
-	}
-*/
 	@Override
 	public String toString() {
 		StringBuffer result = new StringBuffer();

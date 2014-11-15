@@ -54,7 +54,6 @@ public class ResponseListener extends Observable implements Observer, Runnable {
 	 */
 	@Override
 	public void run() {
-		// System.out.println("starting responseListener");
 		responseReceiver.start();
 	}
 
@@ -63,7 +62,6 @@ public class ResponseListener extends Observable implements Observer, Runnable {
 	 */
 	public void stop() {
 		responseReceiver.stop();
-		// System.out.println("responseListener stopped");
 	}
 
 	/**
@@ -79,5 +77,4 @@ public class ResponseListener extends Observable implements Observer, Runnable {
 			notifyObservers(response);
 		}
 	}
-
 }

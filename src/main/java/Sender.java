@@ -13,13 +13,6 @@ public class Sender {
 			ConfigurationService service = new ConfigurationService();
 
 			Device device = new Device("0009E5001571");
-			// Device device = new Device("0009E500087B");
-			
-			// NetSettings settings = new NetSettings(new Interface("eth0", Method.manual,
-			// new IPv4EntryManual("172.19.170.53", "255.255.0.0")));
-			
-			// NetSettings settings = new NetSettings(new Interface("eth0", Method.manual,
-			// new IPv4EntryManual("abcd", "255.255.0.0")));
 			
 			NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 

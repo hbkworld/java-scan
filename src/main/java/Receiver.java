@@ -25,12 +25,6 @@ import com.hbm.devices.scan.util.ScanInterfaces;
 public class Receiver implements Observer {
 	public static void main(String[] args) {
 		try {
-			/*
-			 * InetAddress v4 = InetAddress.getByName("85.214.228.118"); System.out.println("v4: " +
-			 * v4.getCanonicalHostName()); InetAddress v6 =
-			 * InetAddress.getByName("2a01:238:43f7:d600:42ba:27f8:ca8b:96ed");
-			 * System.out.println("v6: " + v6.getCanonicalHostName());
-			 */
 			MessageReceiver ar;
 			if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
 				ar = new FakeMessageReceiver();
@@ -44,13 +38,8 @@ public class Receiver implements Observer {
 			Filter ftFilter = new Filter(new FamilytypeMatch(families));
 			jf.addObserver(ftFilter);
 
-			// String[] uuids = { "0009E5001571" };
-			// Filter uuidFilter = new Filter(new UUIDMatch(uuids));
-			// ftFilter.addObserver(uuidFilter);
-
 			DeviceMonitor af = new DeviceMonitor();
 			ftFilter.addObserver(af);
-			// uuidFilter.addObserver(af);
 
 			Receiver r = new Receiver();
 			af.addObserver(r);

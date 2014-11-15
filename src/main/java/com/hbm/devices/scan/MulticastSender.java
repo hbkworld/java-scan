@@ -42,7 +42,6 @@ public class MulticastSender implements Observer {
 			throws IOException {
 		charset = Charset.forName("UTF-8");
 		configureAddress = InetAddress.getByName(CONFIGURATION_ADDRESS);
-//		socket = new MulticastSocket(CONFIGURATION_PORT);
 		socket = new MulticastSocket(null);
 		socket.setReuseAddress(true);
 		socket.bind(new InetSocketAddress(CONFIGURATION_PORT));
@@ -50,7 +49,7 @@ public class MulticastSender implements Observer {
 		multicastSender = new LinkedList<NetworkInterface>();
 		multicastSender.addAll(ifs);
 		this.noticeable = noticeable;
-		// join all interfaces
+		// TODO: join all interfaces
 	}
 
 	public void sendMessage(String msg) throws IOException, SocketException {
@@ -80,8 +79,6 @@ public class MulticastSender implements Observer {
 				if (this.noticeable != null) {
 					this.noticeable.onException(e);
 				}
-				// System.err.println("Cannot send message");
-				// e.printStackTrace();
 			}
 		}
 	}
