@@ -312,23 +312,26 @@ public class FakeMessageReceiver extends MessageReceiver {
 	}
 	
 	public void start() {
-		InputStream is = getClass().getResourceAsStream("/messages.txt");
-		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		try {
-			String line;
-			while ((line = br.readLine()) != null) {
-				setChanged();
-				notifyObservers(line);
-			}
-		} catch (IOException e) {
-		}
-		synchronized (this) {
-			while (shallRun) {
-				try {
-					this.wait();
-				} catch (InterruptedException e) {
+			InputStream is = getClass().getResourceAsStream("/messages.txt");
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+				String line;
+				while ((line = br.readLine()) != null) {
+					setChanged();
+					notifyObservers(line);
+				}
+			synchronized (this) {
+				while (shallRun) {
+					try {
+						this.wait();
+					} catch (InterruptedException e) {
+					}
 				}
 			}
+			br.close();
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
