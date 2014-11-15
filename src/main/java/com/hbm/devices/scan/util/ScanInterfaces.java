@@ -9,7 +9,7 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 
 /**
- * Convenience class to gather all network interfaces eligible for multicast scanning & sending.
+ * Convenience class to gather all network interfaces eligible for multicast scanning &amp; sending.
  * 
  * @since 1.0
  */
