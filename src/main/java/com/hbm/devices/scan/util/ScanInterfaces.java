@@ -19,10 +19,12 @@ public class ScanInterfaces {
 		interfaces = new LinkedList<NetworkInterface>();
 		Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
 
-		while (ifs.hasMoreElements()) {
-			NetworkInterface iface = ifs.nextElement();
-			if (willScan(iface)) {
-				interfaces.add(iface);
+		if (ifs != null) {
+			while (ifs.hasMoreElements()) {
+				NetworkInterface iface = ifs.nextElement();
+				if (willScan(iface)) {
+					interfaces.add(iface);
+				}
 			}
 		}
 	}
