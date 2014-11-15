@@ -6,7 +6,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -38,8 +37,7 @@ public class MulticastSender implements Observer {
 	public static final String CONFIGURATION_ADDRESS = "239.255.77.77";
 	public static final int CONFIGURATION_PORT = 31417;
 
-	public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable)
-			throws IOException {
+	public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
 		charset = Charset.forName("UTF-8");
 		configureAddress = InetAddress.getByName(CONFIGURATION_ADDRESS);
 		socket = new MulticastSocket(null);
@@ -52,7 +50,7 @@ public class MulticastSender implements Observer {
 		// TODO: join all interfaces
 	}
 
-	public void sendMessage(String msg) throws IOException, SocketException {
+	public void sendMessage(String msg) throws IOException {
 		byte[] bytes = msg.getBytes(charset);
 		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
 				CONFIGURATION_PORT);

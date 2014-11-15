@@ -6,8 +6,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.MulticastSocket;
 import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
@@ -37,13 +35,11 @@ public class MulticastMessageReceiver extends MessageReceiver {
 	private boolean shallRun = true;
 	private MulticastSocket socket;
 
-	public MulticastMessageReceiver(String multicastIP, int port) throws UnknownHostException,
-			SocketException, IOException {
+	public MulticastMessageReceiver(String multicastIP, int port) throws IOException {
 		this(InetAddress.getByName(multicastIP), port);
 	}
 
-	public MulticastMessageReceiver(InetAddress multicastIP, int port) throws SocketException,
-			IOException {
+	public MulticastMessageReceiver(InetAddress multicastIP, int port) throws IOException {
 		this.multicastIP = multicastIP;
 		this.port = port;
 		this.socket = setupMulticastSocket();
@@ -90,7 +86,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
 		}
 	}
 
-	private MulticastSocket setupMulticastSocket() throws SocketException, IOException {
+	private MulticastSocket setupMulticastSocket() throws IOException {
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 		MulticastSocket s = new MulticastSocket(null);
 		s.setReuseAddress(true);
@@ -100,7 +96,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
 		return s;
 	}
 
-	private void joinOnAllInterfaces(MulticastSocket s) throws SocketException, IOException {
+	private void joinOnAllInterfaces(MulticastSocket s) throws IOException {
 		InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
 		Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
 		for (NetworkInterface ni : interfaces) {
