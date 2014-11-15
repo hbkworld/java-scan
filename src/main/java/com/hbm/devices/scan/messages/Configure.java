@@ -50,6 +50,11 @@ public class Configure extends JsonRpc {
 		return this.getJSONString().equals(rhs.getJSONString());
 	}
 
+	@Override
+	public int hashCode() {
+		return getJSONString().hashCode();
+	}
+
 	public String getQueryId() {
 		return id;
 	}

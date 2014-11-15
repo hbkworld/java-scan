@@ -28,4 +28,9 @@ public class Announce extends JsonRpc {
 		Announce rhs = (Announce)o;
 		return this.getJSONString().equals(rhs.getJSONString());
 	}
+
+	@Override
+	public int hashCode() {
+		return getJSONString().hashCode();
+	}
 }
