@@ -37,6 +37,7 @@ public class Filter extends Observable implements Observer {
 				notifyObservers(ap);
 			}
 		} catch (MissingDataException e) {
+			// Ignore
 		}
 	}
 }

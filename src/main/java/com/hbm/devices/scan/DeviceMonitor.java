@@ -40,6 +40,7 @@ public class DeviceMonitor extends Observable implements Observer {
 		try {
 			executor.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
+			// Ignore
 		}
 	}
 
