@@ -129,6 +129,7 @@ public class ConfigurationService implements Observer, Noticeable {
 			executor.awaitTermination(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 		}
+		super.finalize();
 	}
 
 	/**
