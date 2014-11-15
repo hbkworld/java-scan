@@ -2,7 +2,7 @@ package com.hbm.devices.scan.messages;
 
 public class IPv4Entry {
 
-	private IPv4Entry() {
+	protected IPv4Entry() {
 	}
 		
     public String getAddress() {

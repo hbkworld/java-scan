@@ -2,6 +2,13 @@ package com.hbm.devices.scan.messages;
 
 import java.util.LinkedList;
 
+/**
+ * The AnnounceParams describe the properties of the device, which contain information of the device
+ * itself (like uuid, name, type, etc), the NetSettings, router information the device is connected
+ * to and running services
+ * 
+ * @since 1.0
+ */
 public class AnnounceParams {
 
 	private AnnounceParams() {
@@ -22,14 +29,14 @@ public class AnnounceParams {
 	public Iterable<ServiceEntry> getServices() {
 		return services;
 	}
-	
+
 	public int getExpiration() {
 		return expiration;
 	}
 
 	private Device device;
- 	private NetSettings netSettings;
- 	private Router router;
+	private NetSettings netSettings;
+	private Router router;
 	private LinkedList<ServiceEntry> services;
 	private int expiration;
 
@@ -50,7 +57,7 @@ public class AnnounceParams {
 		}
 		sb.append("\nexpiration: " + expiration + "\n");
 		sb.append("\n");
-		
+
 		return sb.toString();
 	}
 }

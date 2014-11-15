@@ -1,7 +1,7 @@
 package com.hbm.devices.scan.filter;
 
-import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.MissingDataException;
+import com.hbm.devices.scan.messages.Announce;
 
 /**
  * This class matches family type information in Announce objects.
@@ -30,5 +30,14 @@ public class FamilytypeMatch implements Matcher {
 			throw new MissingDataException("No family type in announce object!");
 		}
 	}
-}
 
+	@Override
+	public String getMatcherName() {
+		return "Famility type";
+	}
+
+	@Override
+	public String[] getFilterStrings() {
+		return familyTypes;
+	}
+}

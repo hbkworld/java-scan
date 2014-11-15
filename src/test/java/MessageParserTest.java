@@ -1,15 +1,20 @@
-import org.junit.* ;
-import static org.junit.Assert.* ;
+import static org.junit.Assert.assertTrue;
 
-import com.hbm.devices.scan.CommunicationPath;
-import com.hbm.devices.scan.MessageParser;
-import com.hbm.devices.scan.FakeMessageReceiver;
 import java.util.Observable;
 import java.util.Observer;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import com.hbm.devices.scan.CommunicationPath;
+import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.MessageParser;
+import com.hbm.devices.scan.messages.Response;
 
 public class MessageParserTest {
 
 	private CommunicationPath ap;
+	private Response res;
 	private FakeMessageReceiver fsmmr;
 
 	@Before
@@ -17,13 +22,20 @@ public class MessageParserTest {
 		fsmmr = new FakeMessageReceiver();
 		MessageParser jf = new MessageParser();
 		fsmmr.addObserver(jf);
-		jf.addObserver(new Observer(){
+		jf.addObserver(new Observer() {
 			public void update(Observable o, Object arg) {
-				ap = (CommunicationPath)arg;
+				if (arg instanceof CommunicationPath) {
+					ap = (CommunicationPath) arg;
+				} else if (arg instanceof Response) {
+					res = (Response) arg;
+				}
 			}
 		});
 	}
 
+	/*
+	 * TESTING ANNOUNCE
+	 */
 	@Test
 	public void parseCorrectMessage() {
 		fsmmr.emitSingleCorrectMessage();
@@ -89,5 +101,61 @@ public class MessageParserTest {
 		fsmmr.emitMissingRouterUuidMessage();
 		assertTrue(ap == null);
 	}
-}
 
+	/*
+	 * TESTING RESPONSE
+	 */
+
+	@Test
+	public void parseCorrectSuccessReponseMessage() {
+		fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
+		assertTrue(res != null);
+	}
+
+	@Test
+	public void parseCorrectErrorReponseMessage() {
+		fsmmr.emitSingleCorrectErrorResponseMessage();
+		assertTrue(res != null);
+	}
+
+	@Test
+	public void parseInvalidSuccessErrorReponseMessage() {
+		fsmmr.emitInvalidErrorSuccessReponseMessage();
+		assertTrue(res == null);
+	}
+
+	@Test
+	public void parseNoSuccessIdResponseMessage() {
+		fsmmr.emitNoSuccessIdResponseMessage();
+		assertTrue(res == null);
+	}
+
+	@Test
+	public void parseMissingErrorObjectResponseMessage() {
+		fsmmr.emitMissingErrorObjectResponseMessage();
+		assertTrue(res == null);
+	}
+
+	@Test
+	public void parseNoErrorCodeResponseMessage() {
+		fsmmr.emitNoErrorCodeResponseMessage();
+		assertTrue(res == null);
+	}
+
+	@Test
+	public void parseMissingErrorMessageReponseMessage() {
+		fsmmr.emitMissingErrorMessageReponseMessage();
+		assertTrue(res == null);
+	}
+
+	@Test
+	public void parseNoErrorMessageResponseMessage() {
+		fsmmr.emitNoErrorMessageResponseMessage();
+		assertTrue(res == null);
+	}
+
+	// @Test(expected = IndexOutOfBoundsException.class)
+	// public void parseBLA() {
+	//
+	// }
+}

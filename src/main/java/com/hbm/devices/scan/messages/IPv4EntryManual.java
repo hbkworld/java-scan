@@ -1,17 +1,19 @@
 package com.hbm.devices.scan.messages;
 
+import com.hbm.devices.scan.MissingDataException;
+
 public class IPv4EntryManual {
 
-	private IPv4EntryManual() {
+	protected IPv4EntryManual() {
 	}
-	
+
 	public IPv4EntryManual(String address, String netmask) {
-	    this();
-	    this.manualAddress = address;
-	    this.manualNetmask = netmask;
+		this();
+		this.manualAddress = address;
+		this.manualNetmask = netmask;
 	}
-		
-    public String getAddress() {
+
+	public String getAddress() {
 		return manualAddress;
 	}
 
@@ -23,8 +25,17 @@ public class IPv4EntryManual {
 	public String toString() {
 		return manualAddress + "/" + manualNetmask;
 	}
-	
+
 	private String manualAddress;
 	private String manualNetmask;
+
+	public static void checkForErrors(IPv4EntryManual ip) throws MissingDataException,
+			NullPointerException {
+		if (ip == null)
+			throw new NullPointerException("ip object must not be null");
+
+		// TODO: hier weiß ich nicht genau ob ipaddress & netmask vorhanden sein muss, oder nur
+		// (mind.) eins
+	}
 
 }

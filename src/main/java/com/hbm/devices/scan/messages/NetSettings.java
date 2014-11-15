@@ -1,5 +1,7 @@
 package com.hbm.devices.scan.messages;
 
+import java.util.LinkedList;
+
 import com.google.gson.annotations.SerializedName;
 
 public class NetSettings {
@@ -7,7 +9,7 @@ public class NetSettings {
 	private NetSettings() {
 	}
 	
-	public NetSettings(Interface<?, ?> iface) {
+	public NetSettings(Interface<LinkedList<IPv4Entry>, LinkedList<IPv6Entry>> iface) {
 	    this();
 	    this.iface = iface;
 	}
@@ -16,7 +18,7 @@ public class NetSettings {
 		return defaultGateway;
 	}
 	
-	public Interface<?, ?> getInterface() {
+	public Interface<LinkedList<IPv4Entry>, LinkedList<IPv6Entry>> getInterface() {
 		return iface;
 	}
 
@@ -35,6 +37,6 @@ public class NetSettings {
 	private DefaultGateway defaultGateway;
 
 	@SerializedName("interface")
-	private Interface<?, ?> iface;
+	private Interface<LinkedList<IPv4Entry>, LinkedList<IPv6Entry>> iface;
 }
 

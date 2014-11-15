@@ -1,5 +1,6 @@
 apply plugin: 'java'
 apply plugin: "sonar-runner"
+apply plugin: 'jacoco'
 
 version = '1.0'
 
@@ -28,6 +29,27 @@ sourceSets {
 			srcDir 'src/main/resources'
 		}
 	}
+}
+
+jacoco {
+    toolVersion = "0.7.2.201409121644"
+}
+
+jacocoTestReport {
+	description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        xml {
+            enabled true
+            destination "${buildDir}/reports/jacoco/xml/jacoco.xml"
+        }
+
+        csv.enabled false
+
+        html {
+            enabled true
+            destination "${buildDir}/reports/jacoco/html"
+        }
+    }
 }
 
 dependencies {

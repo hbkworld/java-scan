@@ -4,17 +4,19 @@
  */
 package com.hbm.devices.scan.util;
 
-import com.hbm.devices.scan.messages.Announce;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
 
+import com.hbm.devices.scan.messages.Announce;
+
 /**
- * Convenience class for checking if an IP connection is possible to an
- * announced device.
+ * Convenience class for checking if an IP connection is possible to an announced device.
+ * 
+ * @since 1.0
  */
 public class ConnectionFinder {
-	
+
 	private boolean preferIPv6;
 	private IPv4ConnectionFinder ipv4ConnectionFinder;
 	private IPv6ConnectionFinder ipv6ConnectionFinder;

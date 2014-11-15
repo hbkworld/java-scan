@@ -9,8 +9,9 @@ import java.util.Enumeration;
 import java.util.LinkedList;
 
 /**
- * Convenience class to gather all network interfaces eligible for
- * multicast scanning.
+ * Convenience class to gather all network interfaces eligible for multicast scanning & sending.
+ * 
+ * @since 1.0
  */
 public class ScanInterfaces {
 
@@ -51,7 +52,7 @@ public class ScanInterfaces {
 		while (addrs.hasMoreElements()) {
 			InetAddress addr = addrs.nextElement();
 			if (addr instanceof Inet4Address) {
-				Inet4Address addr4 = (Inet4Address)addr;
+				Inet4Address addr4 = (Inet4Address) addr;
 				if (!addr4.isAnyLocalAddress()) {
 					return true;
 				}

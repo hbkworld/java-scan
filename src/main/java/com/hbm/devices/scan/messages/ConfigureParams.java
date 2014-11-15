@@ -1,57 +1,45 @@
 package com.hbm.devices.scan.messages;
 
-import java.util.LinkedList;
+import com.hbm.devices.scan.MissingDataException;
 
 public class ConfigureParams {
 
-	private ConfigureParams() {	    
-	}
-	
-	public ConfigureParams(Device device, NetSettings netSettings) {
-	    this();
-	    this.device = device;
-	    this.netSettings = netSettings;
-	}	
-	
-	public ConfigureParams(Device device, NetSettings netSettings, int ttl) {
-	    this(device, netSettings);
-	    this.ttl = ttl;
+	private ConfigureParams() {
 	}
 
-	public Device getDevice() {
+	public ConfigureParams(com.hbm.devices.configure.Device device,
+			com.hbm.devices.configure.NetSettings netSettings) {
+		this();
+		this.device = device;
+		this.netSettings = netSettings;
+		this.ttl = 1;
+	}
+
+	public ConfigureParams(com.hbm.devices.configure.Device device,
+			com.hbm.devices.configure.NetSettings netSettings, int ttl) {
+		this(device, netSettings);
+		this.ttl = ttl;
+	}
+
+	public com.hbm.devices.configure.Device getDevice() {
 		return device;
 	}
 
-	public NetSettings getNetSettings() {
+	public com.hbm.devices.configure.NetSettings getNetSettings() {
 		return netSettings;
 	}
 
-	public Router getRouter() {
-		return router;
-	}
-
-	public Iterable<ServiceEntry> getServices() {
-		return services;
-	}
-	
-	public int getExpiration() {
-		return expiration;
-	}
-
 	/**
-	 * @return      An optional key which limits the number of router hops a configure 
-	 *              request/response can cross. Leaving out this key should default to a ttl 
-	 *              (Time to live) of 1 when sending datagrams, so no router boundary is crossed.
+	 * @return An optional key which limits the number of router hops a configure request/response
+	 *         can cross. Leaving out this key should default to a ttl (Time to live) of 1 when
+	 *         sending datagrams, so no router boundary is crossed.
 	 */
 	public int getTtl() {
-	    return ttl;
+		return ttl;
 	}
-	
-	private Device device;
- 	private NetSettings netSettings;
- 	private Router router;
-	private LinkedList<ServiceEntry> services;
-	private int expiration;
+
+	private com.hbm.devices.configure.Device device;
+	private com.hbm.devices.configure.NetSettings netSettings;
 	private int ttl;
 
 	@Override
@@ -61,17 +49,31 @@ public class ConfigureParams {
 			sb.append(device);
 		if (netSettings != null)
 			sb.append(netSettings);
-		if (router != null)
-			sb.append(router);
-		if (services != null) {
-			sb.append("Services:");
-			for (ServiceEntry se : services) {
-				sb.append("\n\t" + se);
-			}
-		}
-		sb.append("\nexpiration: " + expiration + "\n");
+		sb.append("ttl: " + ttl + "\n");
+
 		sb.append("\n");
-		
+
 		return sb.toString();
+	}
+
+	public static void checkForErrors(ConfigureParams params) throws MissingDataException,
+			NullPointerException {
+		if (params == null)
+			throw new NullPointerException("params object must not be null");
+
+		if (params.ttl < 1) {
+			throw new MissingDataException(
+					"time-to-live must be greater or equals 1 in ConfigureParams");
+		}
+
+		if (params.device == null) {
+			throw new NullPointerException("No device in ConfigureParams");
+		}
+		com.hbm.devices.configure.Device.checkForErrors(params.device);
+
+		if (params.netSettings == null) {
+			throw new NullPointerException("No net settings in ConfigureParams");
+		}
+		com.hbm.devices.configure.NetSettings.checkForErrors(params.netSettings);
 	}
 }

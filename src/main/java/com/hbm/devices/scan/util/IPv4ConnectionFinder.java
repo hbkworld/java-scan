@@ -1,10 +1,7 @@
 package com.hbm.devices.scan.util;
 
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.IPv4Entry;
-
-import java.net.InetAddress;
 import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.net.UnknownHostException;
@@ -12,10 +9,13 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.IPv4Entry;
+
 class IPv4ConnectionFinder {
 
 	private Iterable<InterfaceAddress> ipv4Addresses;
-	
+
 	public IPv4ConnectionFinder(Collection<NetworkInterface> interfaces) {
 		List<InterfaceAddress> addressList = new LinkedList<InterfaceAddress>();
 
@@ -41,15 +41,22 @@ class IPv4ConnectionFinder {
 		return null;
 	}
 
-	private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress, Announce announce) {
-		Iterable<?> announceAddresses = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
+	private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
+			Announce announce) {
+		Iterable<?> announceAddresses = (Iterable<?>) announce.getParams().getNetSettings()
+				.getInterface().getIPv4();
+		if (announceAddresses == null)
+			return null;
+
 		for (Object ipv4Entry : announceAddresses) {
 			try {
-				InetAddress announceAddress = InetAddress.getByName(((IPv4Entry) ipv4Entry).getAddress());
+				InetAddress announceAddress = InetAddress.getByName(((IPv4Entry) ipv4Entry)
+						.getAddress());
 				if (!(announceAddress instanceof Inet4Address)) {
 					continue;
 				}
-				InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry).getNetmask());
+				InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry)
+						.getNetmask());
 				short announcePrefix = calculatePrefix(announceNetmask);
 
 				InetAddress ifaceAddress = interfaceAddress.getAddress();
@@ -61,7 +68,7 @@ class IPv4ConnectionFinder {
 				continue;
 			}
 		}
-	
+
 		return null;
 	}
 
@@ -71,11 +78,11 @@ class IPv4ConnectionFinder {
 		for (int i = 0; i < 4; i++) {
 			prefix += Integer.bitCount(address[i] & 0xff);
 		}
-		return (short)prefix;
+		return (short) prefix;
 	}
 
 	private static boolean sameNet(InetAddress announceAddress, short announcePrefix,
-	                               InetAddress interfaceAddress, short interfacePrefix) {
+			InetAddress interfaceAddress, short interfacePrefix) {
 		byte[] announceBytes = announceAddress.getAddress();
 		byte[] interfaceBytes = interfaceAddress.getAddress();
 		int announceInteger = convertToInteger(announceBytes);
@@ -86,10 +93,10 @@ class IPv4ConnectionFinder {
 	}
 
 	private static int convertToInteger(byte[] address) {
-		int value = ((((int)address[0]) & 0xff) << 24);
-		value |= ((((int)address[1]) & 0xff) << 16);
-		value |= ((((int)address[2]) & 0xff) << 8);
-		value |= ((((int)address[3]) & 0xff) << 0);
+		int value = ((((int) address[0]) & 0xff) << 24);
+		value |= ((((int) address[1]) & 0xff) << 16);
+		value |= ((((int) address[2]) & 0xff) << 8);
+		value |= ((((int) address[3]) & 0xff) << 0);
 		return value;
 	}
 }
