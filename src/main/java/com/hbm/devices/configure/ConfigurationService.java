@@ -179,7 +179,7 @@ public class ConfigurationService implements Observer, Noticeable {
                 } else {
                     configQuery.getConfigCallback().onError(configQuery, response);
                 }
-            } // if the response does not correspond to a query, drop the received response
+            }
         }
 
     }

@@ -49,7 +49,7 @@ public class AnnounceCache {
             String lastAnnounceString = awailablePaths.get(comPath.hashCode());
             parsedMessages.remove(lastAnnounceString);
             parsedMessages.put(announceString, comPath.getAnnounce());
-            awailablePaths.put(comPath.hashCode(), announceString); // update last sent string
+            awailablePaths.put(comPath.hashCode(), announceString);
         } else {
             // the device has not sent an announce message earlier
             this.awailablePaths.put(comPath.hashCode(), announceString);
