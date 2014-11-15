@@ -9,7 +9,7 @@ public class NetSettings {
 	private NetSettings() {
 	}
 	
-	public NetSettings(Interface<LinkedList<IPv4Entry>, LinkedList<IPv6Entry>> iface) {
+	public NetSettings(Interface iface) {
 	    this();
 	    this.iface = iface;
 	}
@@ -18,7 +18,7 @@ public class NetSettings {
 		return defaultGateway;
 	}
 	
-	public Interface<LinkedList<IPv4Entry>, LinkedList<IPv6Entry>> getInterface() {
+	public Interface getInterface() {
 		return iface;
 	}
 
@@ -37,6 +37,6 @@ public class NetSettings {
 	private DefaultGateway defaultGateway;
 
 	@SerializedName("interface")
-	private Interface<LinkedList<IPv4Entry>, LinkedList<IPv6Entry>> iface;
+	private Interface iface;
 }
 

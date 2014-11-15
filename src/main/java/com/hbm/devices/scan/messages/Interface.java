@@ -1,13 +1,13 @@
 package com.hbm.devices.scan.messages;
 
-import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The interface describes the properties of an network interface.
  * 
  * @since 1.0
  */
-public class Interface<T_IPV4, T_IPV6> {
+public class Interface {
 
 	private Interface() {
 	}
@@ -23,15 +23,7 @@ public class Interface<T_IPV4, T_IPV6> {
 	 * @param ipv4
 	 * @param ipv6
 	 */
-	// public Interface(String name, Method method, LinkedList<IPv4Entry> ipv4,
-	// LinkedList<IPv6Entry> ipv6) {
-	// this();
-	// this.name = name;
-	// this.configurationMethod = method.name();
-	// this.ipv4 = ipv4;
-	// this.ipv6 = ipv6;
-	// }
-	public Interface(String name, Method method, T_IPV4 ipv4, T_IPV6 ipv6) {
+	public Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
 		this();
 		this.name = name;
 		this.configurationMethod = method.name();
@@ -75,14 +67,14 @@ public class Interface<T_IPV4, T_IPV6> {
 	/**
 	 * @return An array containig all IPv4 addresses of the interface with their netmask.
 	 */
-	public T_IPV4 getIPv4() {
+	public List<IPv4Entry> getIPv4() {
 		return ipv4;
 	}
 
 	/**
 	 * @return An array containig all IPv6 addresses of the interface with their prefix.
 	 */
-	public T_IPV6 getIPv6() {
+	public List<IPv6Entry> getIPv6() {
 		return ipv6;
 	}
 
@@ -100,8 +92,8 @@ public class Interface<T_IPV4, T_IPV6> {
 			sb.append("\n\t\tconfigurationMethod: " + configurationMethod);
 		if (ipv4 != null) {
 			sb.append("\n\t\tIPv4 addresses:");
-			if (ipv4 instanceof LinkedList<?>) {
-				for (Object e : (LinkedList<?>) ipv4) {
+			if (ipv4 instanceof List<?>) {
+				for (Object e : (List<?>) ipv4) {
 					sb.append("\n\t\t\t" + e);
 				}
 			} else {
@@ -110,8 +102,8 @@ public class Interface<T_IPV4, T_IPV6> {
 		}
 		if (ipv6 != null) {
 			sb.append("\n\t\tIPv6 addresses:");
-			if (ipv6 instanceof LinkedList<?>) {
-				for (Object e : (LinkedList<?>) ipv6) {
+			if (ipv6 instanceof List<?>) {
+				for (Object e : (List<?>) ipv6) {
 					sb.append("\n\t\t\t" + e);
 				}
 			} else {
@@ -125,10 +117,8 @@ public class Interface<T_IPV4, T_IPV6> {
 	private String type;
 	private String description;
 	private String configurationMethod;
-	// private LinkedList<IPv4Entry> ipv4;
-	// private LinkedList<IPv6Entry> ipv6;
-	private T_IPV4 ipv4;
-	private T_IPV6 ipv6;
+	private List<IPv4Entry> ipv4;
+	private List<IPv6Entry> ipv6;
 
 	public enum Method {
 		manual, dhcp, RouterSolicitation;
