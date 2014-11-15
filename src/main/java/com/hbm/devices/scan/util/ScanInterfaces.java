@@ -7,6 +7,7 @@ import java.net.SocketException;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Convenience class to gather all network interfaces eligible for multicast scanning &amp; sending.
@@ -63,5 +64,5 @@ public class ScanInterfaces {
 		return false;
 	}
 
-	private LinkedList<NetworkInterface> interfaces;
+	private List<NetworkInterface> interfaces;
 }

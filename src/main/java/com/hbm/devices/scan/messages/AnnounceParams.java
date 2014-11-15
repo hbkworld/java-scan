@@ -1,6 +1,7 @@
 package com.hbm.devices.scan.messages;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * The AnnounceParams describe the properties of the device, which contain information of the device
@@ -37,7 +38,7 @@ public class AnnounceParams {
 	private Device device;
 	private NetSettings netSettings;
 	private Router router;
-	private LinkedList<ServiceEntry> services;
+	private List<ServiceEntry> services;
 	private int expiration;
 
 	@Override

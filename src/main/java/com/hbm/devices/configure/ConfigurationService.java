@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.Callable;
@@ -38,8 +39,8 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  */
 public class ConfigurationService implements Observer, Noticeable {
 
-	private HashMap<String, ConfigQuery> awaitingResponses;
-	private HashMap<String, ScheduledFuture<Void>> timeoutTasks;
+	private Map<String, ConfigQuery> awaitingResponses;
+	private Map<String, ScheduledFuture<Void>> timeoutTasks;
 
 	private ResponseListener responseListener;
 	private Thread responseListenerThread;

@@ -1,11 +1,12 @@
 package com.hbm.devices.scan;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 public class StressTestMessageReceiver extends MessageReceiver {
 
-	private LinkedList<String> deviceUuidList;
+	private List<String> deviceUuidList;
 	private int loopAmount;
 
 	private long startNanoTime;

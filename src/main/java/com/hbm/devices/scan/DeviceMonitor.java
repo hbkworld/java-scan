@@ -1,6 +1,7 @@
 package com.hbm.devices.scan;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.Callable;
@@ -25,8 +26,8 @@ import com.hbm.devices.scan.messages.Announce;
  */
 public class DeviceMonitor extends Observable implements Observer {
 
-	private HashMap<CommunicationPath, ScheduledFuture<Void>> deviceMap;
-	private HashMap<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
+	private Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
+	private Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
 	private ScheduledThreadPoolExecutor executor;
 
 	public DeviceMonitor() {
