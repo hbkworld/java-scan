@@ -27,7 +27,7 @@ public class FamilytypeMatch implements Matcher {
             }
             return false;
         } catch (NullPointerException e) {
-            throw new MissingDataException("No family type in announce object!");
+            throw new MissingDataException("No family type in announce object!", e);
         }
     }
 

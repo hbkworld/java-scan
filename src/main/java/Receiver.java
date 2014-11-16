@@ -59,7 +59,7 @@ public class Receiver implements Observer {
             af.addObserver(r);
             ar.start();
         } catch (Exception e) {
-            LOGGER.log(Level.SEVERE, e.toString());
+            LOGGER.log(Level.SEVERE, "Error instantiating announce receiver chain!", e);
         }
     }
 

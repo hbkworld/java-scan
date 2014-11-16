@@ -2,9 +2,12 @@ package com.hbm.devices.scan.filter;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.CommunicationPath;
 import com.hbm.devices.scan.MissingDataException;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 
 /**
@@ -18,6 +21,7 @@ import com.hbm.devices.scan.messages.Announce;
 public class Filter extends Observable implements Observer {
 
     private Matcher matcher;
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public Filter(Matcher m) {
         this.matcher = m;
@@ -37,7 +41,7 @@ public class Filter extends Observable implements Observer {
                 notifyObservers(ap);
             }
         } catch (MissingDataException e) {
-            // Ignore
+            LOGGER.log(Level.INFO, "Some information is missing in announce!", e);
         }
     }
 }

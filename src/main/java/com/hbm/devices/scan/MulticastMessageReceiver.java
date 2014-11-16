@@ -8,6 +8,8 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.nio.charset.Charset;
 import java.util.Collection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.util.ScanInterfaces;
 
@@ -34,6 +36,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
     private int port;
     private boolean shallRun = true;
     private MulticastSocket socket;
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public MulticastMessageReceiver(String multicastIP, int port) throws IOException {
         this(InetAddress.getByName(multicastIP), port);
@@ -66,6 +69,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
                  * 
                  * Just try receiving the next datagram.
                  */
+                LOGGER.log(Level.INFO, "Error receiving Multicast messages!", e);
             }
         }
     }
@@ -82,6 +86,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
             /*
              * No error handling by intention. Stopping to receive datagrams is best effort.
              */
+            LOGGER.log(Level.INFO, "Can't close multicast socket!", e);
         }
     }
 

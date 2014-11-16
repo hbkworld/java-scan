@@ -1,8 +1,9 @@
 package com.hbm.devices.configure;
 
-import java.util.logging.Logger;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.ResponseReceiver;
@@ -36,7 +37,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
             messageParser.addObserver(this);
 
         } catch (Exception e) {
-            LOGGER.info(e.toString());
+            LOGGER.log(Level.INFO, "Can't instantiate response receiver!", e);
         }
     }
 

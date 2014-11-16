@@ -28,7 +28,7 @@ public class UUIDMatch implements Matcher {
             }
             return false;
         } catch (NullPointerException e) {
-            throw new MissingDataException("No uuid type in response object");
+            throw new MissingDataException("No uuid type in response object", e);
         }
     }
 

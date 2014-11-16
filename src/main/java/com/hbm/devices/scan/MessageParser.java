@@ -3,6 +3,8 @@ package com.hbm.devices.scan;
 import java.lang.reflect.Type;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,10 +30,9 @@ import com.hbm.devices.scan.messages.Response;
 public class MessageParser extends Observable implements Observer {
 
     private Gson gson;
-
     private AnnounceCache announceCache;
-
     private boolean useCache;
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public MessageParser() {
         this(true);
@@ -86,6 +87,7 @@ public class MessageParser extends Observable implements Observer {
              * There is no error handling necessary in this case. If somebody sends us invalid JSON,
              * we just ignore the packet and go ahead.
              */
+            LOGGER.log(Level.INFO, "Can't parse JSON!", e);
         } catch (MissingDataException e) {
             /*
              * During the creation of an CommunicationPath object it is required that some
@@ -94,6 +96,7 @@ public class MessageParser extends Observable implements Observer {
              * 
              * Go ahead with the next packet.
              */
+            LOGGER.log(Level.INFO, "Some information is missing in JSON!", e);
         }
     }
 }

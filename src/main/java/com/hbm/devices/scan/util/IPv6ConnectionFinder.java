@@ -8,13 +8,17 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.IPv6Entry;
 
 class IPv6ConnectionFinder {
 
     private Iterable<InterfaceAddress> ipv6Addresses;
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public IPv6ConnectionFinder(Collection<NetworkInterface> interfaces) {
 
@@ -63,6 +67,7 @@ class IPv6ConnectionFinder {
                 }
 
             } catch (UnknownHostException e) {
+                LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address!", e);
                 continue;
             }
 

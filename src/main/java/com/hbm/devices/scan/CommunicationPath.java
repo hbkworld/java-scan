@@ -55,7 +55,7 @@ public class CommunicationPath {
             sb.append(deviceInterfaceName);
             hash = sb.toString().hashCode();
         } catch (NullPointerException e) {
-            throw new MissingDataException("Information missing in announce object!");
+            throw new MissingDataException("Information missing in announce object!", e);
         }
     }
 

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -332,13 +333,13 @@ public class FakeMessageReceiver extends MessageReceiver {
                 }
             }
         } catch (IOException e) {
-            LOGGER.info(e.toString());
+            LOGGER.log(Level.INFO, "Can't read messages!", e);
         } finally {
             try {
                 br.close();
                 is.close();
             } catch (IOException e) {
-                LOGGER.info(e.toString());
+                LOGGER.log(Level.INFO, "Can't close reader!", e);
             }
         }
     }
