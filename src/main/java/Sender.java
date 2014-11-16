@@ -1,3 +1,4 @@
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.configure.ConfigurationService;
@@ -30,11 +31,11 @@ public class Sender {
                 service.sendConfiguration(configParams, new SimpleCallback(), 5000);
                 service.shutdown();
             } catch (Exception e) {
-                LOGGER.info(e.toString());
+                LOGGER.log(Level.SEVERE, "Can't send device configuration!", e);
             }
 
         } catch (Exception e) {
-            LOGGER.info(e.toString());
+            LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
         }
     }
 }
