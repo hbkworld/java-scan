@@ -52,7 +52,6 @@ public class MulticastMessageReceiver extends MessageReceiver {
     public void start() {
         byte[] buffer = new byte[65536];
         Charset charset = Charset.forName("UTF-8");
-        // System.out.println(charset);
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
         while (shallRun) {
             try {
