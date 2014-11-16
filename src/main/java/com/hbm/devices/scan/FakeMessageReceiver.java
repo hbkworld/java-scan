@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.logging.Logger;
 
 /**
  * This class emits fake announce messages.
@@ -330,7 +331,8 @@ public class FakeMessageReceiver extends MessageReceiver {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+			Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
+			log.info(e.toString());
         } finally {
             try {
                 br.close();

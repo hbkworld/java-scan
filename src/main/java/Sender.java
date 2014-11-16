@@ -1,7 +1,10 @@
+import java.util.logging.Logger;
+
 import com.hbm.devices.configure.ConfigurationService;
 import com.hbm.devices.configure.Device;
 import com.hbm.devices.configure.Interface;
 import com.hbm.devices.configure.NetSettings;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
 
@@ -22,12 +25,13 @@ public class Sender {
                 service.sendConfiguration(configParams, new SimpleCallback(), 5000);
 				service.shutdown();
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
+                log.info(e.toString());
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
+            log.info(e.toString());
         }
     }
-
 }

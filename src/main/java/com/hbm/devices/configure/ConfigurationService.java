@@ -1,5 +1,6 @@
 package com.hbm.devices.configure;
 
+
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -11,9 +12,11 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.MissingDataException;
 import com.hbm.devices.scan.MulticastSender;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
@@ -230,8 +233,7 @@ public class ConfigurationService implements Observer, Noticeable {
 
     @Override
     public void onException(Exception e) {
-        // If an error occurred, simply notify the user. The hashmaps will be cleaned up via timeout
-        e.printStackTrace();
+        Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
+        log.info(e.toString());
     }
-
 }

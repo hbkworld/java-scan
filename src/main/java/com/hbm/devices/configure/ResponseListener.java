@@ -1,10 +1,12 @@
 package com.hbm.devices.configure;
 
+import java.util.logging.Logger;
 import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.ResponseReceiver;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Response;
 
 /**
@@ -33,7 +35,8 @@ public class ResponseListener extends Observable implements Observer, Runnable {
             messageParser.addObserver(this);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
+            log.info(e.toString());
         }
     }
 
