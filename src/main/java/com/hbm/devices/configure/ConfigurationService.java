@@ -112,8 +112,8 @@ public class ConfigurationService implements Observer, Noticeable {
         responseListener.addObserver(this);
     }
 
-	public void shutdown() {
-		multicastSender.shutdown();
+    public void shutdown() {
+        multicastSender.shutdown();
         responseListener.stop();
 
         executor.shutdownNow();
@@ -122,7 +122,7 @@ public class ConfigurationService implements Observer, Noticeable {
         } catch (InterruptedException e) {
             // Ignore
         }
-	}
+    }
 
     /**
      * This method checks, if the service is waiting for a response.

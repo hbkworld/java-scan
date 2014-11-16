@@ -59,13 +59,13 @@ public class CommunicationPath {
         }
     }
 
-	public void setCookie(Object c) {
-		cookie = c;
-	}
+    public void setCookie(Object c) {
+        cookie = c;
+    }
 
-	public Object getCookie() {
-		return cookie;
-	}
+    public Object getCookie() {
+        return cookie;
+    }
 
     /**
      * Calculates a unique hash for a communication path.

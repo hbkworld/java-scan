@@ -25,7 +25,7 @@ public class Sender {
 
             try {
                 service.sendConfiguration(configParams, new SimpleCallback(), 5000);
-				service.shutdown();
+                service.shutdown();
             } catch (Exception e) {
                 LOGGER.info(e.toString());
             }

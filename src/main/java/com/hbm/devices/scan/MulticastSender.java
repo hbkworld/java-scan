@@ -60,9 +60,9 @@ public class MulticastSender implements Observer {
         }
     }
 
-	public void shutdown() {
+    public void shutdown() {
         socket.close();
-	}
+    }
 
     /**
      * This method receives a String and transmits it via the multicast socket
