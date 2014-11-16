@@ -3,11 +3,16 @@ package com.hbm.devices.scan;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
+
+import com.hbm.devices.scan.ScanConstants;
 
 public class StressTestMessageReceiver extends MessageReceiver {
 
     private List<String> deviceUuidList;
     private int loopAmount;
+
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     private long startNanoTime;
 
@@ -44,8 +49,7 @@ public class StressTestMessageReceiver extends MessageReceiver {
 
     @Override
     public void start() {
-        System.out.println("Starting Test: " + loopAmount + " x " + deviceUuidList.size()
-                + " Announces");
+        LOGGER.info("Starting Test: " + loopAmount + " x " + deviceUuidList.size() + " Announces\n");
         this.startNanoTime = System.nanoTime();
 
         for (int i = 0; i < loopAmount; i++) {
@@ -55,9 +59,9 @@ public class StressTestMessageReceiver extends MessageReceiver {
             }
         }
 
-        System.out.println("Duration for sending & parsing " + loopAmount + " x "
+        LOGGER.info("Duration for sending & parsing " + loopAmount + " x "
                 + deviceUuidList.size() + " announces: "
-                + ((System.nanoTime() - startNanoTime) / 1000000d) + "ms");
+                + ((System.nanoTime() - startNanoTime) / 1000000d) + "ms\n");
 
     }
 

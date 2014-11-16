@@ -4,6 +4,8 @@ import java.net.SocketException;
 import java.util.Collection;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.AnnounceReceiver;
 import com.hbm.devices.scan.CommunicationPath;
@@ -11,6 +13,7 @@ import com.hbm.devices.scan.DeviceMonitor;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.MessageReceiver;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.events.LostDeviceEvent;
 import com.hbm.devices.scan.events.NewDeviceEvent;
 import com.hbm.devices.scan.events.UpdateDeviceEvent;
@@ -26,6 +29,8 @@ public class Receiver implements Observer {
 
     private Collection<NetworkInterface> scanInterfaces;
     private ConnectionFinder connectionFinder;
+
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public Receiver() throws SocketException {
         scanInterfaces = new ScanInterfaces().getInterfaces();
@@ -54,7 +59,7 @@ public class Receiver implements Observer {
             af.addObserver(r);
             ar.start();
         } catch (Exception e) {
-            System.out.println(e);
+            LOGGER.log(Level.SEVERE, e.toString());
         }
     }
 
@@ -64,48 +69,48 @@ public class Receiver implements Observer {
             ap = ((NewDeviceEvent) arg).getAnnouncePath();
             Announce a = ap.getAnnounce();
             InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
-            System.out.println("New Device:");
+            LOGGER.info("New Device:\n");
             if (connectAddress != null) {
-                System.out.println("Connectable: " + connectAddress);
+                LOGGER.info("Connectable: " + connectAddress + "\n");
             }
         } else if (arg instanceof LostDeviceEvent) {
             ap = ((LostDeviceEvent) arg).getAnnouncePath();
-            System.out.println("Lost Device:");
+            LOGGER.info("Lost Device:\n");
         } else if (arg instanceof UpdateDeviceEvent) {
             UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
             ap = event.getNewCommunicationPath();
-            System.out.println("Update Device:");
+            LOGGER.info("Update Device:\n");
         } else {
-            System.out.println("unknown");
+            LOGGER.info("unknown\n");
             return;
         }
 
         Announce a = ap.getAnnounce();
-        System.out.print(a.getParams().getDevice());
+        LOGGER.info(a.getParams().getDevice().toString());
 
-        System.out.println("\tIP-Addresses:");
-        System.out.println("\t interfaceName: "
-                + a.getParams().getNetSettings().getInterface().getName());
-        System.out.println("\t method:"
-                + a.getParams().getNetSettings().getInterface().getConfigurationMethod());
+        LOGGER.info("\tIP-Addresses:\n");
+        LOGGER.info("\t interfaceName: "
+                + a.getParams().getNetSettings().getInterface().getName() + "\n");
+        LOGGER.info("\t method:"
+                + a.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
         Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
         Iterable<IPv6Entry> ipv6 = a.getParams().getNetSettings().getInterface().getIPv6();
         if (ipv4 != null) {
             for (Object entry : ipv4) {
-                System.out.print("\t " + entry + "\n");
+                LOGGER.info("\t " + entry + "\n");
             }
         }
         if (ipv6 != null) {
             for (IPv6Entry e : ipv6) {
-                System.out.println("\t " + e);
+                LOGGER.info("\t " + e + "\n");
             }
         }
 
-        System.out.println("\tServices:");
+        LOGGER.info("\tServices:\n");
         Iterable<ServiceEntry> services = a.getParams().getServices();
         for (ServiceEntry entry : services) {
-            System.out.print("\t " + entry + "\n");
+            LOGGER.info("\t " + entry + "\n");
         }
-        System.out.println();
+        LOGGER.info("\n");
     }
 }

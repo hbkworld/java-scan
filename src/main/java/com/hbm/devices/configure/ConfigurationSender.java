@@ -74,10 +74,7 @@ public class ConfigurationSender extends Observable {
      *            the query to be sent
      */
     public void sendQuery(ConfigQuery query) {
-        System.out.println("sending ConfigQuery...");
-        this.setChanged();
-        this.notifyObservers(query.getConfiguration());
-
+        setChanged();
+        notifyObservers(query.getConfiguration());
     }
-
 }
