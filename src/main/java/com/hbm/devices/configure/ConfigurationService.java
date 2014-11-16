@@ -92,7 +92,7 @@ public class ConfigurationService implements Observer, Noticeable {
      * @param forcedQueryID
      */
     @SuppressWarnings("unused")
-    private ConfigurationService(Observer fakeSender, Observable fakeReceiver, String forcedQueryID) throws Exception {
+    private ConfigurationService(Observer fakeSender, Observable fakeReceiver, String forcedQueryID) throws NoSuchMethodException, ReflectiveOperationException {
         this.executor = new ScheduledThreadPoolExecutor(1);
 
         this.awaitingResponses = new HashMap<String, ConfigQuery>();
