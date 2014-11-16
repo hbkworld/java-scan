@@ -94,10 +94,10 @@ class IPv4ConnectionFinder {
     }
 
     private static int convertToInteger(byte[] address) {
-        int value = ((((int) address[0]) & 0xff) << 24);
-        value |= ((((int) address[1]) & 0xff) << 16);
-        value |= ((((int) address[2]) & 0xff) << 8);
-        value |= ((((int) address[3]) & 0xff) << 0);
+        int value = ((int)address[0] & 0xff) << 24;
+        value |= ((int)address[1] & 0xff) << 16;
+        value |= ((int)address[2] & 0xff) << 8;
+        value |= (((int) address[3]) & 0xff) << 0;
         return value;
     }
 }
