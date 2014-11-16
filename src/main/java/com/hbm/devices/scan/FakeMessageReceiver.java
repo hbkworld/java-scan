@@ -327,7 +327,7 @@ public class FakeMessageReceiver extends MessageReceiver {
                     try {
                         this.wait();
                     } catch (InterruptedException e) {
-                        // Ignore
+                        LOGGER.info(e.toString());
                     }
                 }
             }
@@ -338,7 +338,7 @@ public class FakeMessageReceiver extends MessageReceiver {
                 br.close();
                 is.close();
             } catch (IOException e) {
-                // Ignore
+                LOGGER.info(e.toString());
             }
         }
     }
