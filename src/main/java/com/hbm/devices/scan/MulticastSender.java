@@ -29,7 +29,7 @@ import com.hbm.devices.scan.ScanConstants;
 public class MulticastSender implements Observer {
 
     private MulticastSocket socket;
-    private Collection<NetworkInterface> multicastSender;
+    private Collection<NetworkInterface> interfaces;
     private Charset charset;
     private InetAddress configureAddress;
 
@@ -42,8 +42,8 @@ public class MulticastSender implements Observer {
         socket.setReuseAddress(true);
         socket.bind(new InetSocketAddress(ScanConstants.CONFIGURATION_PORT));
         
-        multicastSender = new LinkedList<NetworkInterface>();
-        multicastSender.addAll(ifs);
+        interfaces = new LinkedList<NetworkInterface>();
+        interfaces.addAll(ifs);
         this.noticeable = noticeable;
         // TODO: join all interfaces
     }
@@ -52,7 +52,7 @@ public class MulticastSender implements Observer {
         byte[] bytes = msg.getBytes(charset);
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
             ScanConstants.CONFIGURATION_PORT);
-        for (NetworkInterface iface : multicastSender) {
+        for (NetworkInterface iface : interfaces) {
             socket.setNetworkInterface(iface);
             socket.send(packet);
         }
