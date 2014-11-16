@@ -80,9 +80,11 @@ public class NetSettings {
      * network discovery and configuration protocol.
      * 
      * @param settings
-     *            the {@link NetSettings} object, which should be checked for errors
+     *          the {@link NetSettings} object, which should be checked for errors
      * @throws MissingDataException
+     *          if some information required by the specification is missing in {@code settings}.
      * @throws NullPointerException
+     *          if {@code settings} is null.
      */
     public static void checkForErrors(NetSettings settings) throws MissingDataException {
         if (settings == null) {
@@ -90,7 +92,7 @@ public class NetSettings {
         }
 
         if (settings.iface == null) {
-            throw new NullPointerException("No interface in NetSettings");
+            throw new MissingDataException("No interface in NetSettings");
         }
         Interface.checkForErrors(settings.iface);
     }

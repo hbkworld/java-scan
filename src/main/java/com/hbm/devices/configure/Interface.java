@@ -82,16 +82,17 @@ public class Interface {
      * @param iface
      *            the {@link Interface} object, which should be checked for errors
      * @throws MissingDataException
+     *          if some information required by the specification is not
+     *          included  in {@code iface.}
      * @throws NullPointerException
+     *          if {@code iface} is null.
      */
     public static void checkForErrors(Interface iface) throws MissingDataException {
         if (iface == null) {
             throw new NullPointerException("interface object must not be null");
         }
 
-        if (iface.name == null) {
-            throw new NullPointerException("No name in Interface");
-        } else if (iface.name.length() == 0) {
+        if ((iface.name == null) || (iface.name.length() == 0)) {
             throw new MissingDataException("No name in Interface");
         }
 

@@ -34,18 +34,18 @@ public class Device {
      * discovery and configuration protocol.
      * 
      * @param device
-     *            the {@link Device} object, which should be checked for errors
+     *          the {@link Device} object, which should be checked for errors
      * @throws MissingDataException
+     *          if information required by the specification is mssing in {@code device}.
      * @throws NullPointerException
+     *          if {@code device} is null.
      */
     public static void checkForErrors(Device device) throws MissingDataException {
         if (device == null) {
             throw new NullPointerException("device object must not be null");
         }
 
-        if (device.uuid == null) {
-            throw new NullPointerException("No uuid in Device");
-        } else if (device.uuid.length() == 0) {
+        if ((device.uuid == null) || (device.uuid.length() == 0)) {
             throw new MissingDataException("No uuid in Device");
         }
     }

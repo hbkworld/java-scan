@@ -66,7 +66,7 @@ public class ConfigParserTest {
     public void parseNullParams() {
         Configure conf = new Configure(null, "TEST-UUID");
         cp.update(null, conf);
-        assertTrue(this.exception instanceof NullPointerException);
+        assertTrue(this.exception instanceof MissingDataException);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         Configure conf = new Configure(configParams, null);
         cp.update(null, conf);
-        assertTrue(this.exception instanceof NullPointerException);
+        assertTrue(this.exception instanceof MissingDataException);
     }
 
     @Test
@@ -105,7 +105,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(device, null);
         Configure conf = new Configure(configParams, null);
         cp.update(null, conf);
-        assertTrue(this.exception instanceof NullPointerException);
+        assertTrue(this.exception instanceof MissingDataException);
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         Configure conf = new Configure(configParams, "TEST-UUID");
         cp.update(null, conf);
-        assertTrue(this.exception instanceof NullPointerException);
+        assertTrue(this.exception instanceof MissingDataException);
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         Configure conf = new Configure(configParams, "TEST-UUID");
         cp.update(null, conf);
-        assertTrue(this.exception instanceof NullPointerException);
+        assertTrue(this.exception instanceof MissingDataException);
     }
 
     @Test
