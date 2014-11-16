@@ -14,8 +14,8 @@ public class ScanConstants {
     public static final String ANNOUNCE_ADDRESS;
     public static final int ANNOUNCE_PORT;
 
-    public static final String RESPONSE_ADDRESS;
-    public static final int RESPONSE_PORT;
+    public static final String CONFIGURATION_ADDRESS;
+    public static final int CONFIGURATION_PORT;
 
     public static final String LOGGER_NAME = "scan";
 
@@ -28,8 +28,8 @@ public class ScanConstants {
             props.load(ClassLoader.getSystemResourceAsStream("scan.properties"));
             ANNOUNCE_ADDRESS = props.getProperty("scan.announce.address");
             ANNOUNCE_PORT = Integer.parseInt(props.getProperty("scan.announce.port"));
-            RESPONSE_ADDRESS = props.getProperty("scan.configure.address");
-            RESPONSE_PORT = Integer.parseInt(props.getProperty("scan.configure.port"));
+            CONFIGURATION_ADDRESS = props.getProperty("scan.configure.address");
+            CONFIGURATION_PORT = Integer.parseInt(props.getProperty("scan.configure.port"));
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }

@@ -11,6 +11,6 @@ import java.io.IOException;
 public class ResponseReceiver extends MulticastMessageReceiver {
 
     public ResponseReceiver() throws IOException {
-        super(ScanConstants.RESPONSE_ADDRESS, ScanConstants.RESPONSE_PORT);
+        super(ScanConstants.CONFIGURATION_ADDRESS, ScanConstants.CONFIGURATION_PORT);
     }
 }

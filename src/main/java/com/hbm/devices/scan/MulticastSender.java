@@ -37,10 +37,10 @@ public class MulticastSender implements Observer {
 
     public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
         charset = Charset.forName("UTF-8");
-        configureAddress = InetAddress.getByName(ScanConstants.RESPONSE_ADDRESS);
+        configureAddress = InetAddress.getByName(ScanConstants.CONFIGURATION_ADDRESS);
         socket = new MulticastSocket(null);
         socket.setReuseAddress(true);
-        socket.bind(new InetSocketAddress(ScanConstants.RESPONSE_PORT));
+        socket.bind(new InetSocketAddress(ScanConstants.CONFIGURATION_PORT));
         
         multicastSender = new LinkedList<NetworkInterface>();
         multicastSender.addAll(ifs);
@@ -51,7 +51,7 @@ public class MulticastSender implements Observer {
     public void sendMessage(String msg) throws IOException {
         byte[] bytes = msg.getBytes(charset);
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
-            ScanConstants.RESPONSE_PORT);
+            ScanConstants.CONFIGURATION_PORT);
         for (NetworkInterface iface : multicastSender) {
             socket.setNetworkInterface(iface);
             socket.send(packet);
