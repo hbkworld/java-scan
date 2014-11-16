@@ -13,6 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.configure.Noticeable;
+import com.hbm.devices.scan.ScanConstants;
 
 /**
  * This class receives {@link java.lang.String} messages and sends them via multicast UDP sockets
@@ -34,15 +35,12 @@ public class MulticastSender implements Observer {
 
     private Noticeable noticeable;
 
-    public static final String CONFIGURATION_ADDRESS = "239.255.77.77";
-    public static final int CONFIGURATION_PORT = 31417;
-
     public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
         charset = Charset.forName("UTF-8");
-        configureAddress = InetAddress.getByName(CONFIGURATION_ADDRESS);
+        configureAddress = InetAddress.getByName(ScanConstants.RESPONSE_ADDRESS);
         socket = new MulticastSocket(null);
         socket.setReuseAddress(true);
-        socket.bind(new InetSocketAddress(CONFIGURATION_PORT));
+        socket.bind(new InetSocketAddress(ScanConstants.RESPONSE_PORT));
         
         multicastSender = new LinkedList<NetworkInterface>();
         multicastSender.addAll(ifs);
@@ -53,7 +51,7 @@ public class MulticastSender implements Observer {
     public void sendMessage(String msg) throws IOException {
         byte[] bytes = msg.getBytes(charset);
         DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
-                CONFIGURATION_PORT);
+            ScanConstants.RESPONSE_PORT);
         for (NetworkInterface iface : multicastSender) {
             socket.setNetworkInterface(iface);
             socket.send(packet);
