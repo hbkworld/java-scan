@@ -27,7 +27,7 @@ public class CommunicationPath {
      * This object carries user defined data, it will not be used from
      * code inside this package.
      */
-    public Object cookie;
+    private Object cookie;
 
     CommunicationPath(Announce announce) throws MissingDataException {
         this.announce = announce;
@@ -58,6 +58,14 @@ public class CommunicationPath {
             throw new MissingDataException("Information missing in announce object!");
         }
     }
+
+	public void setCookie(Object c) {
+		cookie = c;
+	}
+
+	public Object getCookie() {
+		return cookie;
+	}
 
     /**
      * Calculates a unique hash for a communication path.
