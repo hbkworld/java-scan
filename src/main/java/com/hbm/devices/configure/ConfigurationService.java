@@ -107,18 +107,16 @@ public class ConfigurationService implements Observer, Noticeable {
         responseListener.addObserver(this);
     }
 
-    @Override
-    public void finalize() throws Throwable {
-        this.responseListener.stop();
+	public void shutdown() {
+        responseListener.stop();
 
-        this.executor.shutdownNow();
+        executor.shutdownNow();
         try {
             executor.awaitTermination(1, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             // Ignore
         }
-        super.finalize();
-    }
+	}
 
     /**
      * This method checks, if the service is waiting for a response.

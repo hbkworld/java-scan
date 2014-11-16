@@ -20,6 +20,7 @@ public class Sender {
 
             try {
                 service.sendConfiguration(configParams, new SimpleCallback(), 5000);
+				service.shutdown();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
