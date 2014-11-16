@@ -1,10 +1,12 @@
+package com.hbm.devices.scan;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import com.hbm.devices.scan.util.LRUCache;
+import com.hbm.devices.scan.LRUCache;
 
 public class LRUCacheTest {
 
