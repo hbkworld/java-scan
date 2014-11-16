@@ -86,24 +86,24 @@ public class DeviceMonitor extends Observable implements Observer {
     }
 
     class AnnounceTimerTask implements Callable<Void> {
-        private CommunicationPath CommunicationPath;
+        private CommunicationPath communicationPath;
 
         AnnounceTimerTask(CommunicationPath ap) {
-            CommunicationPath = ap;
+            communicationPath = ap;
         }
 
         @Override
         public Void call() throws Exception {
             synchronized (deviceMap) {
-                deviceMap.remove(CommunicationPath);
+                deviceMap.remove(communicationPath);
             }
             setChanged();
-            notifyObservers(new LostDeviceEvent(CommunicationPath));
+            notifyObservers(new LostDeviceEvent(communicationPath));
             return null;
         }
 
         CommunicationPath getCommunicationPath() {
-            return CommunicationPath;
+            return communicationPath;
         }
     }
 }
