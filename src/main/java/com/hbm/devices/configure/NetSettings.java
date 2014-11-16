@@ -85,8 +85,9 @@ public class NetSettings {
      * @throws NullPointerException
      */
     public static void checkForErrors(NetSettings settings) throws MissingDataException {
-        if (settings == null)
+        if (settings == null) {
             throw new NullPointerException("settings object must not be null");
+		}
 
         if (settings.iface == null) {
             throw new NullPointerException("No interface in NetSettings");
