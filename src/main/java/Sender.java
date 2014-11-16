@@ -10,6 +10,8 @@ import com.hbm.devices.scan.messages.Interface.Method;
 
 public class Sender {
 
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
+
     public static void main(String[] args) {
         try {
 
@@ -25,13 +27,11 @@ public class Sender {
                 service.sendConfiguration(configParams, new SimpleCallback(), 5000);
 				service.shutdown();
             } catch (Exception e) {
-                Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
-                log.info(e.toString());
+                LOGGER.info(e.toString());
             }
 
         } catch (Exception e) {
-            Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
-            log.info(e.toString());
+            LOGGER.info(e.toString());
         }
     }
 }

@@ -21,6 +21,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
 
     private ResponseReceiver responseReceiver;
     private MessageParser messageParser;
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
      * This is the default constructor to instantiate a ReponseListener
@@ -35,8 +36,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
             messageParser.addObserver(this);
 
         } catch (Exception e) {
-            Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
-            log.info(e.toString());
+            LOGGER.info(e.toString());
         }
     }
 

@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 public class FakeMessageReceiver extends MessageReceiver {
 
     private boolean shallRun = true;
+	private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public static final String CORRECT_MESSAGE = "{"
             + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
@@ -331,8 +332,7 @@ public class FakeMessageReceiver extends MessageReceiver {
                 }
             }
         } catch (IOException e) {
-			Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
-			log.info(e.toString());
+			LOGGER.info(e.toString());
         } finally {
             try {
                 br.close();

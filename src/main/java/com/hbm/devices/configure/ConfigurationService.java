@@ -54,6 +54,8 @@ public class ConfigurationService implements Observer, Noticeable {
 
     private ScheduledThreadPoolExecutor executor;
 
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
+
     /**
      * This is the standard constructor to instantiate a configuration service.
      * <p>
@@ -233,7 +235,6 @@ public class ConfigurationService implements Observer, Noticeable {
 
     @Override
     public void onException(Exception e) {
-        Logger log = Logger.getLogger(ScanConstants.LOGGER_NAME);
-        log.info(e.toString());
+        LOGGER.info(e.toString());
     }
 }
