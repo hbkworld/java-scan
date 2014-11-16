@@ -1,6 +1,5 @@
 package com.hbm.devices.configure;
 
-
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -61,6 +60,9 @@ public class ConfigurationService implements Observer, Noticeable {
      * <p>
      * It starts the network multicast sockets for communication with the devices, the message
      * parsers to convert incoming JSON Strings into objects or outgoing objects into JSON Strings.
+     *
+     * @throws IOException
+     *              if the multicast sockets cannot be started.
      */
     public ConfigurationService() throws IOException {
         this.executor = new ScheduledThreadPoolExecutor(1);
@@ -181,12 +183,13 @@ public class ConfigurationService implements Observer, Noticeable {
      * {@link ConfigCallback#onError(ConfigQuery, Response)} is called.
      * 
      * @param configParams
-     *            the configuration parameters, which are send via multicast
+     *              the configuration parameters, which are send via multicast
      * @param callback
-     *            the interface with the callback methods for error handling
+     *              the interface with the callback methods for error handling
      * @param timeout
-     *            the time in ms, the service waits for a response
+     *              the time in ms, the service waits for a response
      * @throws MissingDataException
+     *              if some information in {@code configParams} is missing according to the specification.
      */
     public void sendConfiguration(ConfigureParams configParams, final ConfigCallback callback,
             int timeout) throws MissingDataException {
