@@ -60,10 +60,9 @@ public class MulticastSender implements Observer {
         }
     }
 
-    protected void finalize() throws Throwable {
+	public void shutdown() {
         socket.close();
-        super.finalize();
-    }
+	}
 
     /**
      * This method receives a String and transmits it via the multicast socket

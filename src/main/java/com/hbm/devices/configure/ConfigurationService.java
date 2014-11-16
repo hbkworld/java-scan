@@ -42,6 +42,7 @@ public class ConfigurationService implements Observer, Noticeable {
     private Map<String, ConfigQuery> awaitingResponses;
     private Map<String, ScheduledFuture<Void>> timeoutTasks;
 
+    private MulticastSender multicastSender;
     private ResponseListener responseListener;
     private Thread responseListenerThread;
 
@@ -65,7 +66,6 @@ public class ConfigurationService implements Observer, Noticeable {
         this.configSender = new ConfigurationSender();
         this.configParser = new ConfigParser(this);
 
-        MulticastSender multicastSender;
         multicastSender = new MulticastSender(new ScanInterfaces().getInterfaces(), this);
         configSender.addObserver(configParser);
         configParser.addObserver(multicastSender);
@@ -108,6 +108,7 @@ public class ConfigurationService implements Observer, Noticeable {
     }
 
 	public void shutdown() {
+		multicastSender.shutdown();
         responseListener.stop();
 
         executor.shutdownNow();
