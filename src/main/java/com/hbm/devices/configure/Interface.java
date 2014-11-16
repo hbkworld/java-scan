@@ -68,7 +68,7 @@ public class Interface {
 
     @Override
     public String toString() {
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         result.append("\t  name: " + name + "\n");
         result.append("\t  method: " + configurationMethod + "\n");
         result.append("\t  ip: " + ipv4 + "\n");
