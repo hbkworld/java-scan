@@ -63,6 +63,7 @@ public class Receiver implements Observer {
         }
     }
 
+    @Override
     public void update(Observable o, Object arg) {
         CommunicationPath ap;
         if (arg instanceof NewDeviceEvent) {

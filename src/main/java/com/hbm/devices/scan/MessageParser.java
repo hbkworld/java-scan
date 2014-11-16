@@ -102,6 +102,8 @@ public class MessageParser extends Observable implements Observer {
 }
 
 class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
+
+    @Override
     public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 
         JsonRpc rpcObject = null;
