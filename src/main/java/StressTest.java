@@ -5,6 +5,9 @@ import com.hbm.devices.scan.StressTestMessageReceiver;
 
 public class StressTest {
 
+    private StressTest() {
+    }
+
     public static void main(String[] args) {
         System.out.println("Test without Cache:");
         MessageReceiver mr = new StressTestMessageReceiver(53, 50000);

@@ -12,6 +12,9 @@ public class Sender {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
+    private Sender() {
+    }
+
     public static void main(String[] args) {
         try {
 
