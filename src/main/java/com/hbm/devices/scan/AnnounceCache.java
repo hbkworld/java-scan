@@ -1,7 +1,9 @@
 package com.hbm.devices.scan;
 
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.util.LRUCache;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class AnnounceCache {
 
@@ -55,5 +57,31 @@ public class AnnounceCache {
             this.awailablePaths.put(comPath.hashCode(), announceString);
             this.parsedMessages.put(announceString, comPath.getAnnounce());
         }
+    }
+}
+
+class LRUCache<K, V> extends LinkedHashMap<K, V> {
+
+    private static final long serialVersionUID = -1131809227943539842L;
+
+    /**
+     * By default the cache size is 100.
+     */
+    private static final int DEFAULT_CACHE_SIZE = 100;
+
+    private int maxSize;
+
+    LRUCache() {
+        this(DEFAULT_CACHE_SIZE);
+    }
+
+    LRUCache(int maxSize) {
+        super(maxSize + 1, .75f, true);
+        this.maxSize = maxSize;
+    }
+
+    @Override
+    protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
+        return size() > maxSize;
     }
 }
