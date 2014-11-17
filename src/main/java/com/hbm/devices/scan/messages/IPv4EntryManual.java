@@ -1,7 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import com.hbm.devices.scan.MissingDataException;
-
 public class IPv4EntryManual {
 
     private String manualAddress;

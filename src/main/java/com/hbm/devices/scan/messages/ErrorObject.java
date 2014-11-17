@@ -1,7 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import com.hbm.devices.scan.MissingDataException;
-
 public class ErrorObject {
 
     private int code;

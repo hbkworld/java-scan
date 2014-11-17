@@ -1,7 +1,7 @@
 package com.hbm.devices.configure;
 
 import com.google.gson.annotations.SerializedName;
-import com.hbm.devices.scan.MissingDataException;
+import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.DefaultGateway;
 
 /**

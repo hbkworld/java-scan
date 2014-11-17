@@ -4,8 +4,8 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.google.gson.Gson;
-import com.hbm.devices.scan.MissingDataException;
 import com.hbm.devices.scan.messages.Configure;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class is used to parse {@link Configure} objects into a JSON-String.

@@ -1,7 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import com.hbm.devices.scan.MissingDataException;
-
 /**
  * The Response contains the information, a device sent back, after it received a configuration
  * request

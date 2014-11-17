@@ -13,10 +13,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.MissingDataException;
 import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
 

@@ -1,7 +1,5 @@
 package com.hbm.devices.scan.messages;
 
-import com.hbm.devices.scan.MissingDataException;
-
 /**
  * Network configuration request datagrams are dedicated requests, so only the device addressed by
  * request/configure/device/uuid must answer with a network configuration response datagram.

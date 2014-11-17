@@ -1,6 +1,6 @@
 package com.hbm.devices.configure;
 
-import com.hbm.devices.scan.MissingDataException;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * The device class specifies which device should be configured.

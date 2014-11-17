@@ -15,6 +15,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.JsonRpc;
+import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
 
 /**

@@ -20,7 +20,7 @@ import com.hbm.devices.configure.FakeMulticastSender;
 import com.hbm.devices.configure.Interface;
 import com.hbm.devices.configure.NetSettings;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.MissingDataException;
+import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
 import com.hbm.devices.scan.messages.Response;

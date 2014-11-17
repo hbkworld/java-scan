@@ -6,9 +6,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.CommunicationPath;
-import com.hbm.devices.scan.MissingDataException;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class filters {@link CommunicationPath} objects with according to a {@link Matcher} object.

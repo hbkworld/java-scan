@@ -1,4 +1,4 @@
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.messages;
 
 /**
  * This exception is thrown if an announce message doesn't carry the information required by the
