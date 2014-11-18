@@ -93,8 +93,8 @@ class IPv4ConnectionFinder {
         byte[] interfaceBytes = interfaceAddress.getAddress();
         int announceInteger = convertToInteger(announceBytes);
         int interfaceInteger = convertToInteger(interfaceBytes);
-        announceInteger = announceInteger >>> (32 - announcePrefix);
-        interfaceInteger = interfaceInteger >>> (32 - interfacePrefix);
+        announceInteger = announceInteger >>> (Integer.SIZE - announcePrefix);
+        interfaceInteger = interfaceInteger >>> (Integer.SIZE - interfacePrefix);
         return announceInteger == interfaceInteger;
     }
 
