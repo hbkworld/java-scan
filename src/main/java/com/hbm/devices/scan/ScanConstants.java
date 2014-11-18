@@ -3,6 +3,16 @@ package com.hbm.devices.scan;
 import java.io.IOException;
 import java.util.Properties;
 
+
+
+
+
+
+import java.io.InputStream;
+
+
+
+
 /**
  * Convenience class to receive response multicast messages.
  * <p>
@@ -24,8 +34,11 @@ public class ScanConstants {
 
     static {
         try {
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream("scan.properties");
             Properties props = new Properties();
-            props.load(ClassLoader.getSystemResourceAsStream("scan.properties"));
+            props.load(is);
+
             ANNOUNCE_ADDRESS = props.getProperty("scan.announce.address");
             ANNOUNCE_PORT = Integer.parseInt(props.getProperty("scan.announce.port"));
             CONFIGURATION_ADDRESS = props.getProperty("scan.configure.address");
