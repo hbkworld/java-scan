@@ -22,90 +22,23 @@ public class FakeMessageReceiver extends MessageReceiver {
     public static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
     public static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
     private static final String INVALID_JSON_MESSAGE;
-
-    private static final String MISSING_DEVICE_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\"," + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
-
-    private static final String MISSING_DEVICE_UUID_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\"}," + "\"expiration\":15,"
-            + "\"netSettings\":{" + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
-
-    private static final String MISSING_PARAMS_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\"" + "}";
-
-    private static final String NO_INTERFACE_NAME_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"type\":\"ethernet\"}" + "}" + "}" + "}";
-
-    private static final String NO_INTERFACE_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"}" + "}" + "}" + "}";
-
-    private static final String NO_NET_SETTINGS_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15" + "}" + "}";
-
-    private static final String MISSING_ROUTER_UUID_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"router\": {" + "}" + "}" + "}";
-
-    private static final String MISSING_FAMILY_TYPE_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{"
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
-
-    private static final String MISSING_TYPE_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
-    private static final String NO_SUCCESS_ID_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
-    private static final String CORRECT_ERROR_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    private static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    private static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    private static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    private static final String NO_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    private static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String MISSING_DEVICE_MESSAGE;
+    private static final String MISSING_DEVICE_UUID_MESSAGE;
+    private static final String MISSING_PARAMS_MESSAGE;
+    private static final String NO_INTERFACE_NAME_MESSAGE;
+    private static final String NO_INTERFACE_MESSAGE;
+    private static final String NO_NET_SETTINGS_MESSAGE;
+    private static final String MISSING_ROUTER_UUID_MESSAGE;
+    private static final String MISSING_FAMILY_TYPE_MESSAGE;
+    private static final String MISSING_TYPE_RESPONSE_MESSAGE;
+    private static final String NO_SUCCESS_ID_RESPONSE_MESSAGE;
+    private static final String CORRECT_ERROR_RESPONSE_MESSAGE;
+    private static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE;
+    private static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE;
+    private static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE;
+    private static final String NO_ERROR_CODE_RESPONSE_MESSAGE;
+    private static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE;
+    private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -115,7 +48,6 @@ public class FakeMessageReceiver extends MessageReceiver {
 
     public void emitSingleCorrectMessage() {
         setChanged();
-        System.out.println("message:" + CORRECT_MESSAGE);
         notifyObservers(CORRECT_MESSAGE);
     }
 
@@ -274,7 +206,6 @@ public class FakeMessageReceiver extends MessageReceiver {
         try {
             ClassLoader classloader = Thread.currentThread().getContextClassLoader();
             InputStream is = classloader.getResourceAsStream("fakemessages.properties");
-            System.out.println("prop file: " + is);
             Properties props = new Properties();
             props.load(is);
             FAKE_DEVICE_1 = props.getProperty("scan.announce.device1");
@@ -287,6 +218,23 @@ public class FakeMessageReceiver extends MessageReceiver {
             CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
             CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");
             INVALID_JSON_MESSAGE = props.getProperty("scan.announce.invalid_json_message");
+            MISSING_DEVICE_MESSAGE = props.getProperty("scan.announce.scan.announce.missing_device_message");
+            MISSING_DEVICE_UUID_MESSAGE = props.getProperty("scan.announce.missing_device_uuid_message");
+            MISSING_PARAMS_MESSAGE = props.getProperty("scan.announce.missing_params_message");
+            NO_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.no_interface_name_message");
+            NO_INTERFACE_MESSAGE = props.getProperty("scan.announce.no_interface_message");
+            NO_NET_SETTINGS_MESSAGE = props.getProperty("scan.announce.no_net_settings_message");
+            MISSING_ROUTER_UUID_MESSAGE = props.getProperty("scan.announce.missing_router_uuid_message");
+            MISSING_FAMILY_TYPE_MESSAGE = props.getProperty("scan.announce.missing_family_type_message");
+            MISSING_TYPE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missing_type_response_message");
+            NO_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_success_id_response_message");
+            CORRECT_ERROR_RESPONSE_MESSAGE = props.getProperty("scan.configure.correct_error_response_message");
+            INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = props.getProperty("scan.configure.invalid_error_success_response_message");
+            MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = props.getProperty("scan.configure.missing_error_object_response_message");
+            MISSING_ERROR_CODE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missing_error_code_response_message");
+            NO_ERROR_CODE_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_error_code_response_message");
+            MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = props.getProperty("scan.configure.missing_error_message_response_message");
+            NO_ERROR_MESSAGE_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_error_message_response_message");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
