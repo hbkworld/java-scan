@@ -20,18 +20,12 @@ public class CommunicationPath {
 
     private Announce announce;
     private int hash;
-
-    /**
-     * Placeholder for user defined object.
-     * <p>
-     * This object carries user defined data, it will not be used from
-     * code inside this package.
-     */
     private Object cookie;
+    private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
     CommunicationPath(Announce announce) throws MissingDataException {
         this.announce = announce;
-        StringBuilder sb = new StringBuilder(100);
+        StringBuilder sb = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
         try {
             String deviceUuid = announce.getParams().getDevice().getUuid();
             if (deviceUuid == null) {
