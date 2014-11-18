@@ -1,9 +1,8 @@
 package com.hbm.devices.scan;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,90 +17,11 @@ public class FakeMessageReceiver extends MessageReceiver {
     private boolean shallRun = true;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    public static final String CORRECT_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"services\":["
-            + "{\"port\":7411,\"type\":\"daqStream\"},"
-            + "{\"port\":8080,\"type\":\"daqStreamWS\"},"
-            + "{\"port\":5001,\"type\":\"hbmProtocol\"}," + "{\"port\":80,\"type\":\"http\"},"
-            + "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
-            + "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
-
-    public static final String CORRECT_MESSAGE_DIFFERENT_IP = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.63\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123b\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"services\":["
-            + "{\"port\":7411,\"type\":\"daqStream\"},"
-            + "{\"port\":8080,\"type\":\"daqStreamWS\"},"
-            + "{\"port\":5001,\"type\":\"hbmProtocol\"}," + "{\"port\":80,\"type\":\"http\"},"
-            + "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
-            + "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
-
-    public static final String CORRECT_MESSAGE_DIFFERENT_SERVICES = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"services\":["
-            + "{\"port\":7411,\"type\":\"daqStream\"},"
-            + "{\"port\":8080,\"type\":\"daqStreamWS\"},"
-            + "{\"port\":5001,\"type\":\"hbmProtocol\"}," + "{\"port\":80,\"type\":\"http\"},"
-            + "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}"
-            + "}";
-
-    public static final String CORRECT_MESSAGE_DIFFERENT_DEVICE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123C\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"services\":["
-            + "{\"port\":7411,\"type\":\"daqStream\"},"
-            + "{\"port\":8080,\"type\":\"daqStreamWS\"},"
-            + "{\"port\":5001,\"type\":\"hbmProtocol\"}," + "{\"port\":80,\"type\":\"http\"},"
-            + "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
-            + "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
-
-    private static final String INVALID_JSON_MESSAGE = "{"
-            + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":"
-            + "\"apiVersion\":\"1.0\",\"device\":{\"familyType\":\"QuantumX\","
-            + "\"firmwareVersion\":\"4.1.1.18610.1\",\"hardwareId\":\"MX410_R0\","
-            + "\"name\":\"MX410 Matthias\",\"type\":\"MX410\",\"uuid\":\"0009E500123A\"},"
-            + "\"expiration\":15," + "\"netSettings\":{"
-            + "\"defaultGateway\":{\"ipv4Address\":\"172.19.169.254\"},"
-            + "\"interface\":{\"description\":\"ethernet backplane side\","
-            + "\"ipv4\":[{\"address\":\"172.19.192.57\",\"netmask\":\"255.255.0.0\"}],"
-            + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
-            + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}," + "\"services\":["
-            + "{\"port\":7411,\"type\":\"daqStream\"},"
-            + "{\"port\":8080,\"type\":\"daqStreamWS\"},"
-            + "{\"port\":5001,\"type\":\"hbmProtocol\"}," + "{\"port\":80,\"type\":\"http\"},"
-            + "{\"port\":11122,\"type\":\"jetd\"}," + "{\"port\":11123,\"type\":\"jetws\"},"
-            + "{\"port\":22,\"type\":\"ssh\"}" + "]" + "}" + "}";
+    public static final String CORRECT_MESSAGE;
+    private static final String CORRECT_MESSAGE_DIFFERENT_IP;
+    public static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
+    public static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
+    private static final String INVALID_JSON_MESSAGE;
 
     private static final String MISSING_DEVICE_MESSAGE = "{"
             + "\"jsonrpc\":\"2.0\",\"method\":\"announce\",\"params\":{"
@@ -177,18 +97,25 @@ public class FakeMessageReceiver extends MessageReceiver {
             + "\"ipv6\":[{\"address\":\"fe80::209:e5ff:fe00:123a\",\"prefix\":64}],"
             + "\"name\":\"eth0\",\"type\":\"ethernet\"}" + "}" + "}" + "}";
 
-    public static final String MISSING_TYPE_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
-    public static final String NO_SUCCESS_ID_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
-    public static final String CORRECT_ERROR_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String NO_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
-    public static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String MISSING_TYPE_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\"}";
+    private static final String NO_SUCCESS_ID_RESPONSE_MESSAGE = "{\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"result\":}";
+    private static final String CORRECT_ERROR_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = "{\"result\":0,\"error\":{\"code\":-3,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String MISSING_ERROR_OBJECT_RESPONSE_MESSAGE = "{\"error\":,\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String NO_ERROR_CODE_RESPONSE_MESSAGE = "{\"error\":{\"code\":,\"message\":\"'abcd' is not a valid ip V4 address\"},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = "{\"error\":{\"code\":-3},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+    private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE = "{\"error\":{\"code\":-3,\"message\":},\"id\":\"9f22cf19-87f0-48e9-8c4d-43fe2eb80775\",\"jsonrpc\":\"2.0\"}";
+
+    private static final String FAKE_DEVICE_1;
+    private static final String FAKE_DEVICE_2;
+    private static final String FAKE_DEVICE_3;
+    private static final String FAKE_DEVICE_4;
+    private static final String FAKE_DEVICE_5;
 
     public void emitSingleCorrectMessage() {
         setChanged();
+        System.out.println("message:" + CORRECT_MESSAGE);
         notifyObservers(CORRECT_MESSAGE);
     }
 
@@ -315,31 +242,23 @@ public class FakeMessageReceiver extends MessageReceiver {
     }
     
     public void start() {
-        InputStream is = getClass().getResourceAsStream("/messages.txt");
-        BufferedReader br = new BufferedReader(new InputStreamReader(is));
-        try {
-            String line;
-            while ((line = br.readLine()) != null) {
-                setChanged();
-                notifyObservers(line);
-            }
-            synchronized (this) {
-                while (shallRun) {
-                    try {
-                        this.wait();
-                    } catch (InterruptedException e) {
-                        LOGGER.info(e.toString());
-                    }
+        setChanged();
+        notifyObservers(FAKE_DEVICE_1);
+        setChanged();
+        notifyObservers(FAKE_DEVICE_2);
+        setChanged();
+        notifyObservers(FAKE_DEVICE_3);
+        setChanged();
+        notifyObservers(FAKE_DEVICE_4);
+        setChanged();
+        notifyObservers(FAKE_DEVICE_5);
+        synchronized (this) {
+            while (shallRun) {
+                try {
+                    this.wait();
+                } catch (InterruptedException e) {
+                    LOGGER.info(e.toString());
                 }
-            }
-        } catch (IOException e) {
-            LOGGER.log(Level.INFO, "Can't read messages!", e);
-        } finally {
-            try {
-                br.close();
-                is.close();
-            } catch (IOException e) {
-                LOGGER.log(Level.INFO, "Can't close reader!", e);
             }
         }
     }
@@ -348,6 +267,28 @@ public class FakeMessageReceiver extends MessageReceiver {
         synchronized (this) {
             shallRun = false;
             this.notifyAll();
+        }
+    }
+
+    static {
+        try {
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream("fakemessages.properties");
+            System.out.println("prop file: " + is);
+            Properties props = new Properties();
+            props.load(is);
+            FAKE_DEVICE_1 = props.getProperty("scan.announce.device1");
+            FAKE_DEVICE_2 = props.getProperty("scan.announce.device2");
+            FAKE_DEVICE_3 = props.getProperty("scan.announce.device3");
+            FAKE_DEVICE_4 = props.getProperty("scan.announce.device4");
+            FAKE_DEVICE_5 = props.getProperty("scan.announce.device5");
+            CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
+            CORRECT_MESSAGE_DIFFERENT_IP = props.getProperty("scan.announce.correct_message_different_ip");
+            CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
+            CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");
+            INVALID_JSON_MESSAGE = props.getProperty("scan.announce.invalid_json_message");
+        } catch (IOException e) {
+            throw new ExceptionInInitializerError(e);
         }
     }
 }
