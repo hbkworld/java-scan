@@ -13,13 +13,14 @@
 import org.junit.*;
 import static org.junit.Assert.*;
 
-import com.hbm.devices.scan.CommunicationPath;
-import com.hbm.devices.scan.MessageParser;
-import com.hbm.devices.scan.filter.Filter;
-import com.hbm.devices.scan.filter.FamilytypeMatch;
-import com.hbm.devices.scan.FakeMessageReceiver;
 import java.util.Observable;
 import java.util.Observer;
+
+import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.filter.FamilytypeMatch;
+import com.hbm.devices.scan.filter.Filter;
+import com.hbm.devices.scan.messages.CommunicationPath;
 
 public class FilterTest {
 

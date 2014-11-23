@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/afl-3.0.php
  */
 
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.messages;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -20,7 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.MessageParser;
+import com.hbm.devices.scan.messages.MessageParser;
 
 public class AnnounceCacheTest {
 

@@ -13,7 +13,7 @@
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.DeviceMonitor;
-import com.hbm.devices.scan.MessageParser;
+import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.StressTestMessageReceiver;
 

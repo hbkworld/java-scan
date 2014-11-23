@@ -21,9 +21,9 @@ import org.junit.Test;
 
 import com.hbm.devices.scan.DeviceMonitor;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.events.NewDeviceEvent;
 import com.hbm.devices.scan.events.UpdateDeviceEvent;
+import com.hbm.devices.scan.messages.MessageParser;
 
 public class DeviceMonitorTest {
 

@@ -18,9 +18,9 @@ import java.util.Observer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.hbm.devices.scan.CommunicationPath;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.MessageParser;
+import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
 
 public class MessageParserTest {

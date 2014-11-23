@@ -17,9 +17,9 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.MessageParser;
 import com.hbm.devices.scan.ResponseReceiver;
 import com.hbm.devices.scan.ScanConstants;
+import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
 
 /**
