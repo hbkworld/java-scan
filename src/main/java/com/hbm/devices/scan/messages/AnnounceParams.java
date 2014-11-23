@@ -15,9 +15,10 @@ package com.hbm.devices.scan.messages;
 import java.util.List;
 
 /**
- * The AnnounceParams describe the properties of the device, which contain information of the device
- * itself (like uuid, name, type, etc), the NetSettings, router information the device is connected
- * to and running services
+ * The AnnounceParams describe the properties of the device, which contain
+ * information of the device itself (like uuid, name, type, etc), the
+ * NetSettings, router information the device is connected to and running
+ * services
  * 
  * @since 1.0
  */
@@ -32,11 +33,17 @@ public class AnnounceParams {
     private AnnounceParams() {
     }
 
-    public Device getDevice() {
+    public Device getDevice() throws MissingDataException {
+        if (device == null) {
+            throw new MissingDataException("No device section in announce params!");
+        }
         return device;
     }
 
-    public NetSettings getNetSettings() {
+    public NetSettings getNetSettings() throws MissingDataException {
+        if (netSettings == null) {
+            throw new MissingDataException("No netSettings section in announce params!");
+        }
         return netSettings;
     }
 
@@ -44,7 +51,7 @@ public class AnnounceParams {
         return router;
     }
 
-    public Iterable<ServiceEntry> getServices() {
+    public Iterable<ServiceEntry> getServices() throws MissingDataException {
         return services;
     }
 
