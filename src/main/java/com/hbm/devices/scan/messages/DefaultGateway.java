@@ -13,8 +13,10 @@
 package com.hbm.devices.scan.messages;
 
 /**
- * The default gateway describes the configured default gateway of a device. Only a single default
- * gateway is possible.
+ * The default gateway describes the configured default gateway of a
+ * device.<p>
+ *
+ * Only a single default gateway is possible.
  * 
  * @since 1.0
  */
@@ -33,14 +35,18 @@ public class DefaultGateway {
     }
 
     /**
-     * @return A string containing the IPv4 address of the configured default gateway.
+     * @return
+     *      A string containing the IPv4 address of the configured
+     *      default gateway.
      */
     public String getIpv4Address() {
         return ipv4Address;
     }
 
     /**
-     * @return A string containing the IPv6 address of the configured default gateway.
+     * @return
+     *      A string containing the IPv6 address of the configured
+     *      default gateway.
      */
     public String getIpv6Address() {
         return ipv6Address;

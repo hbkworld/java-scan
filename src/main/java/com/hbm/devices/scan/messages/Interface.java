@@ -33,16 +33,18 @@ public class Interface {
 
     /**
      * @param name
-     *            A string containing the interface name that should be configured. The interface
-     *            name must be gathered from an announce datagram.
+     *      A string containing the interface name that should be
+     *      configured. The interface name must be gathered from
+     *      an announce datagram.
      * @param method
-     *            A string enumeration describing how the network settings configured on the device
-     *            during the startup. Currently the values *manual*, *dhcp* and *RouterSolicitation*
-     *            are valid.
+     *      A string enumeration describing how the network
+     *      settings configured on the device during the startup.
+     *      Currently the values *manual*, *dhcp* and
+     *      *RouterSolicitation* are valid.
      * @param ipv4
-     *           A List containing all valid IPv4 addresses for the interface.
+     *      A List containing all valid IPv4 addresses for the interface.
      * @param ipv6
-     *           A List containing all valid IPv6 addresses for the interface.
+     *      A List containing all valid IPv6 addresses for the interface.
      */
     public Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
         this();
@@ -53,47 +55,69 @@ public class Interface {
     }
 
     /**
-     * @return A string containing the name of the interface. For embedded Linux systems typically
-     *         something like eth0, eth1, ... .
+     * @return
+     *      A string containing the name of the interface. For
+     *      Linux systems typically something like eth0,
+     *      eth1, ... .
+     * @throws MissingDataException
+     *      if no name is set
      */
-    public String getName() {
+    public String getName() throws MissingDataException {
+        if (name == null) {
+            throw new MissingDataException("Interface has no name!");
+        }
         return name;
     }
 
     /**
-     * @return An optional string containing the type of the interface. For QuantumX systems it
-     *         might be useful to distinguish Ethernet and Firewire interfaces.
+     * @return
+     *      An optional string containing the type of the interface.
+     *      For QuantumX systems it might be useful to distinguish
+     *      Ethernet and Firewire interfaces.
      */
     public String getType() {
         return type;
     }
 
     /**
-     * @return An optional string containing some additional information. QuantumX devices report
-     *         whether the interface is on the front or back side.
+     * @return
+     *      An optional string containing some additional
+     *      information. QuantumX devices report whether the
+     *      interface is on the front or back side.
      */
     public String getDescription() {
         return description;
     }
 
     /**
-     * @return A string enumeration describing how the network settings configured on the device
-     *         during the startup. Currently the values *manual*, *dhcp* and *RouterSolicitation*
-     *         are valid.
+     * @return
+     *      A string enumeration describing how the network settings
+     *      configured on the device during the startup. Currently
+     *      the values *manual*, *dhcp* and *RouterSolicitation* are
+     *      valid.
+     * @throws MissingDataException
+     *      if no configuration method is set
      */
-    public String getConfigurationMethod() {
+    public String getConfigurationMethod() throws MissingDataException {
+        if (configurationMethod == null) {
+            throw new MissingDataException("No configuration method set in interface section!");
+        }
         return configurationMethod;
     }
 
     /**
-     * @return An array containig all IPv4 addresses of the interface with their netmask.
+     * @return
+     *      An array containig all IPv4 addresses of the interface
+     *      with their netmask.
      */
     public List<IPv4Entry> getIPv4() {
         return ipv4;
     }
 
     /**
-     * @return An array containig all IPv6 addresses of the interface with their prefix.
+     * @return
+     *      An array containig all IPv6 addresses of the interface
+     *      with their prefix.
      */
     public List<IPv6Entry> getIPv6() {
         return ipv6;

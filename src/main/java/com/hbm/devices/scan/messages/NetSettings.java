@@ -25,7 +25,6 @@ public class NetSettings {
     }
     
     public NetSettings(Interface iface) {
-        this();
         this.iface = iface;
     }
 
@@ -33,7 +32,10 @@ public class NetSettings {
         return defaultGateway;
     }
     
-    public Interface getInterface() {
+    public Interface getInterface() throws MissingDataException {
+        if (iface == null) {
+            throw new MissingDataException("No interface section in netSettings!");
+        }
         return iface;
     }
 
