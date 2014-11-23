@@ -10,9 +10,7 @@
  * http://opensource.org/licenses/afl-3.0.php
  */
 
-package com.hbm.devices.scan;
-
-import com.hbm.devices.scan.messages.Announce;
+package com.hbm.devices.scan.messages;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

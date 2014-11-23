@@ -10,7 +10,7 @@
  * http://opensource.org/licenses/afl-3.0.php
  */
 
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.messages;
 
 import java.lang.reflect.Type;
 import java.util.Observable;
@@ -25,10 +25,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.JsonRpc;
-import com.hbm.devices.scan.messages.MissingDataException;
-import com.hbm.devices.scan.messages.Response;
+
+import com.hbm.devices.scan.ScanConstants;
 
 /**
  * This class gets JSON announce messages, parses them and notifies {@link CommunicationPath}

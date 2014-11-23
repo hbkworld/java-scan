@@ -10,9 +10,7 @@
  * http://opensource.org/licenses/afl-3.0.php
  */
 
-package com.hbm.devices.scan;
-
-import com.hbm.devices.scan.messages.*;
+package com.hbm.devices.scan.messages;
 
 /**
  * This class carries parsed announce messages.

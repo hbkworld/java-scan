@@ -27,6 +27,7 @@ import com.hbm.devices.scan.events.LostDeviceEvent;
 import com.hbm.devices.scan.events.NewDeviceEvent;
 import com.hbm.devices.scan.events.UpdateDeviceEvent;
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 /**

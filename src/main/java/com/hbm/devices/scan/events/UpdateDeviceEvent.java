@@ -12,7 +12,7 @@
 
 package com.hbm.devices.scan.events;
 
-import com.hbm.devices.scan.CommunicationPath;
+import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.DeviceMonitor;
 
 /**
