@@ -19,7 +19,7 @@ public abstract class JsonRpc {
     private String json;
     
     protected JsonRpc(String method) {
-        jsonrpc = new String("2.0");
+        jsonrpc = "2.0";
         this.method = method;
     }
     
