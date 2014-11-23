@@ -12,6 +12,8 @@
 
 package com.hbm.devices.scan.messages;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * The device describes some properties of the device.
  * 
@@ -24,7 +26,8 @@ public class Device {
     private String type;
     private String familyType;
     private String firmwareVersion;
-    private boolean isRouter = false;
+    @SerializedName("isRouter")
+    private boolean router = false;
 
     private Device() {
     }
@@ -81,13 +84,13 @@ public class Device {
      * @return this key is send with value true if the module acts as a IP router.
      */
     public boolean isRouter() {
-        return isRouter;
+        return router;
     }
 
     @Override
     public String toString() {
         return "Device:\n" + "\tUUID: " + uuid + "\n" + "\tname: " + name + "\n" + "\tfamily: "
                 + familyType + "\n" + "\ttype: " + type + "\n" + "\tfirmware version: "
-                + firmwareVersion + "\n" + "\tisRouter: " + isRouter + "\n";
+                + firmwareVersion + "\n" + "\tisRouter: " + router + "\n";
     }
 }
