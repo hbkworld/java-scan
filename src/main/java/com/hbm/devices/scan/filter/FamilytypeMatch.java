@@ -31,17 +31,13 @@ public class FamilytypeMatch implements Matcher {
 
     @Override
     public boolean match(Announce a) throws MissingDataException {
-        try {
-            String ft = a.getParams().getDevice().getFamilyType();
-            for (int i = 0; i < familyTypes.length; i++) {
-                if (ft.equals(familyTypes[i])) {
-                    return true;
-                }
+        String ft = a.getParams().getDevice().getFamilyType();
+        for (int i = 0; i < familyTypes.length; i++) {
+            if (familyTypes[i].equals(ft)) {
+                return true;
             }
-            return false;
-        } catch (NullPointerException e) {
-            throw new MissingDataException("No family type in announce object!", e);
         }
+        return false;
     }
 
     @Override

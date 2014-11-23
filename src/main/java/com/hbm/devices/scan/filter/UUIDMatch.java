@@ -31,17 +31,13 @@ public class UUIDMatch implements Matcher {
 
     @Override
     public boolean match(Announce announce) throws MissingDataException {
-        try {
-            String deviceUUID = announce.getParams().getDevice().getUuid();
-            for (String s : uuids) {
-                if (deviceUUID.equals(s)) {
-                    return true;
-                }
+        String deviceUUID = announce.getParams().getDevice().getUuid();
+        for (String s : uuids) {
+            if (s.equals(deviceUUID)) {
+                return true;
             }
-            return false;
-        } catch (NullPointerException e) {
-            throw new MissingDataException("No uuid type in response object", e);
         }
+        return false;
     }
 
     @Override
