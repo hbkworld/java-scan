@@ -117,22 +117,14 @@ public class Interface {
         }
         if (ipv4 != null) {
             sb.append("\n\t\tIPv4 addresses:");
-            if (ipv4 instanceof List<?>) {
-                for (Object e : (List<?>) ipv4) {
-                    sb.append("\n\t\t\t" + e);
-                }
-            } else {
-                sb.append("\n\t\t\t" + ipv4);
+            for (Object e : ipv4) {
+                sb.append("\n\t\t\t" + e);
             }
         }
         if (ipv6 != null) {
             sb.append("\n\t\tIPv6 addresses:");
-            if (ipv6 instanceof List<?>) {
-                for (Object e : (List<?>) ipv6) {
-                    sb.append("\n\t\t\t" + e);
-                }
-            } else {
-                sb.append("\n\t\t\t" + ipv6);
+            for (Object e : ipv6) {
+                sb.append("\n\t\t\t" + e);
             }
         }
         return sb.toString();
