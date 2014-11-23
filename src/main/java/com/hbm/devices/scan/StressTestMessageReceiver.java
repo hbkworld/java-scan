@@ -14,12 +14,13 @@ package com.hbm.devices.scan;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 import java.util.UUID;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
 
-public class StressTestMessageReceiver extends MessageReceiver {
+public class StressTestMessageReceiver extends Observable implements MessageReceiver {
 
     private List<String> deviceUuidList;
     private int loopAmount;

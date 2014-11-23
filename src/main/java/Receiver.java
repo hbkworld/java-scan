@@ -51,14 +51,17 @@ public class Receiver implements Observer {
 
     public static void main(String[] args) {
         try {
-            MessageReceiver ar;
-            if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
-                ar = new FakeMessageReceiver();
-            } else {
-                ar = new AnnounceReceiver();
-            }
             MessageParser jf = new MessageParser();
-            ar.addObserver(jf);
+            MessageReceiver mr;
+            if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
+                FakeMessageReceiver fmr = new FakeMessageReceiver();
+                fmr.addObserver(jf);
+                mr = fmr;
+            } else {
+                AnnounceReceiver ar = new AnnounceReceiver();
+                ar.addObserver(jf);
+                mr = ar;
+            }
 
             String[] families = { "QuantumX" };
             Filter ftFilter = new Filter(new FamilytypeMatch(families));
@@ -69,7 +72,7 @@ public class Receiver implements Observer {
 
             Receiver r = new Receiver();
             af.addObserver(r);
-            ar.start();
+            mr.start();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error instantiating announce receiver chain!", e);
         }

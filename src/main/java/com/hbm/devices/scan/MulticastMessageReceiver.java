@@ -20,6 +20,7 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.nio.charset.Charset;
 import java.util.Collection;
+import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -42,7 +43,7 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  *
  * @since 1.0
  */
-public class MulticastMessageReceiver extends MessageReceiver {
+public class MulticastMessageReceiver extends Observable implements MessageReceiver {
 
     private InetAddress multicastIP;
     private int port;
