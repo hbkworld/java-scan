@@ -21,6 +21,7 @@ import java.net.NetworkInterface;
 import java.util.Collection;
 
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * Convenience class for checking if an IP connection is possible to an announced device.
@@ -39,7 +40,7 @@ public class ConnectionFinder {
         this.ipv6ConnectionFinder = new IPv6ConnectionFinder(interfaces);
     }
 
-    public InetAddress getConnectableAddress(Announce announce) {
+    public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         if (preferIPv6) {
             InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
             if (address != null) {

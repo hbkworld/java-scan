@@ -25,6 +25,7 @@ import com.hbm.devices.scan.events.LostDeviceEvent;
 import com.hbm.devices.scan.events.NewDeviceEvent;
 import com.hbm.devices.scan.events.UpdateDeviceEvent;
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class provides the concept of posting new/lost device events.
@@ -90,8 +91,13 @@ public class DeviceMonitor extends Observable implements Observer {
     }
 
     private int getExpiration(Announce announce) {
-        int expiration = announce.getParams().getExpiration();
-        if (expiration == 0) {
+        int expiration;
+        try {
+            expiration = announce.getParams().getExpiration();
+            if (expiration == 0) {
+                expiration = 6;
+            }
+        } catch (MissingDataException e) {
             expiration = 6;
         }
         return expiration * 1000;

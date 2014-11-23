@@ -26,13 +26,14 @@ import java.util.logging.Logger;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.IPv4Entry;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 class IPv4ConnectionFinder {
 
     private Iterable<InterfaceAddress> ipv4Addresses;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    public IPv4ConnectionFinder(Collection<NetworkInterface> interfaces) {
+    IPv4ConnectionFinder(Collection<NetworkInterface> interfaces) {
         List<InterfaceAddress> addressList = new LinkedList<InterfaceAddress>();
 
         for (NetworkInterface iface : interfaces) {
@@ -47,7 +48,7 @@ class IPv4ConnectionFinder {
         ipv4Addresses = addressList;
     }
 
-    public InetAddress getConnectableAddress(Announce announce) {
+    InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         for (InterfaceAddress niAddress : ipv4Addresses) {
             InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {
@@ -58,7 +59,7 @@ class IPv4ConnectionFinder {
     }
 
     private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
-            Announce announce) {
+            Announce announce) throws MissingDataException {
         Iterable<?> announceAddresses = (Iterable<?>) announce.getParams().getNetSettings()
                 .getInterface().getIPv4();
         if (announceAddresses == null) {
