@@ -70,7 +70,7 @@ public class ConfigureParams {
 
     public static void checkForErrors(ConfigureParams params) throws MissingDataException {
         if (params == null) {
-            throw new NullPointerException("params object must not be null");
+            throw new IllegalArgumentException("params object must not be null");
         }
 
         if (params.ttl < 1) {
@@ -79,12 +79,12 @@ public class ConfigureParams {
         }
 
         if (params.device == null) {
-            throw new NullPointerException("No device in ConfigureParams");
+            throw new IllegalArgumentException("No device in ConfigureParams");
         }
         com.hbm.devices.configure.Device.checkForErrors(params.device);
 
         if (params.netSettings == null) {
-            throw new NullPointerException("No net settings in ConfigureParams");
+            throw new IllegalArgumentException("No net settings in ConfigureParams");
         }
         com.hbm.devices.configure.NetSettings.checkForErrors(params.netSettings);
     }

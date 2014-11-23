@@ -41,7 +41,7 @@ public class IPv4EntryManual {
 
     public static void checkForErrors(IPv4EntryManual ip) throws MissingDataException {
         if (ip == null) {
-            throw new NullPointerException("ip object must not be null");
+            throw new IllegalArgumentException("ip object must not be null");
         }
 
         // TODO: hier weiß ich nicht genau ob ipaddress & netmask vorhanden sein muss, oder nur

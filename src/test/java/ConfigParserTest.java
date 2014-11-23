@@ -97,7 +97,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(null, settings);
         Configure conf = new Configure(configParams, "TEST-UUID");
         cp.update(null, conf);
-        assertTrue(this.exception instanceof NullPointerException);
+        assertTrue(this.exception instanceof IllegalArgumentException);
     }
 
     @Test

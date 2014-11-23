@@ -95,12 +95,12 @@ public class NetSettings {
      *          the {@link NetSettings} object, which should be checked for errors
      * @throws MissingDataException
      *          if some information required by the specification is missing in {@code settings}.
-     * @throws NullPointerException
+     * @throws IllegalArgumentException
      *          if {@code settings} is null.
      */
     public static void checkForErrors(NetSettings settings) throws MissingDataException {
         if (settings == null) {
-            throw new NullPointerException("settings object must not be null");
+            throw new IllegalArgumentException("settings object must not be null");
         }
 
         if (settings.iface == null) {

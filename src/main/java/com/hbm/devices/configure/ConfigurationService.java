@@ -206,13 +206,13 @@ public class ConfigurationService implements Observer, Noticeable {
     public void sendConfiguration(ConfigureParams configParams, final ConfigCallback callback,
             int timeout) throws MissingDataException {
         if (configParams == null) {
-            throw new NullPointerException("configParams must not be null");
+            throw new IllegalArgumentException("configParams must not be null");
         }
         if (timeout <= 0) {
             throw new IllegalArgumentException("timeout must be greater than 0");
         }
         if (callback == null) {
-            throw new NullPointerException("the callback parameter must not be null");
+            throw new IllegalArgumentException("the callback parameter must not be null");
         }
 
         ConfigureParams.checkForErrors(configParams);

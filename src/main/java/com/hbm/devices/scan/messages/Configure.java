@@ -78,12 +78,12 @@ public class Configure extends JsonRpc {
      *          the {@link Configure} object, which should be checked for errors
      * @throws MissingDataException
      *          if some information required by the specification is not in {@code config}.
-     * @throws NullPointerException
+     * @throws IllegalArgumentException
      *          if {@code settings} is null.
      */
     public static void checkForErrors(Configure config) throws MissingDataException {
         if (config == null) {
-            throw new NullPointerException("config object must not be null");
+            throw new IllegalArgumentException("config object must not be null");
         }
 
         if ((config.id == null) || (config.id.length() == 0)) {

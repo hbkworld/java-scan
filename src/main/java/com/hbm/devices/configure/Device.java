@@ -49,12 +49,12 @@ public class Device {
      *          the {@link Device} object, which should be checked for errors
      * @throws MissingDataException
      *          if information required by the specification is mssing in {@code device}.
-     * @throws NullPointerException
+     * @throws IllegalArgumentException
      *          if {@code device} is null.
      */
     public static void checkForErrors(Device device) throws MissingDataException {
         if (device == null) {
-            throw new NullPointerException("device object must not be null");
+            throw new IllegalArgumentException("device object must not be null");
         }
 
         if ((device.uuid == null) || (device.uuid.length() == 0)) {

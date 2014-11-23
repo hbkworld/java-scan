@@ -96,12 +96,12 @@ public class Interface {
      * @throws MissingDataException
      *          if some information required by the specification is not
      *          included  in {@code iface.}
-     * @throws NullPointerException
+     * @throws IllegalArgumentException
      *          if {@code iface} is null.
      */
     public static void checkForErrors(Interface iface) throws MissingDataException {
         if (iface == null) {
-            throw new NullPointerException("interface object must not be null");
+            throw new IllegalArgumentException("interface object must not be null");
         }
 
         if ((iface.name == null) || (iface.name.length() == 0)) {
