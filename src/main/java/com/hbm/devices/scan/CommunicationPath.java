@@ -86,6 +86,9 @@ public class CommunicationPath {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         return hash == o.hashCode();
     }
     
