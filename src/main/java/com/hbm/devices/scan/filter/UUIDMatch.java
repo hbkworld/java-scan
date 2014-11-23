@@ -26,7 +26,7 @@ public class UUIDMatch implements Matcher {
     private String[] uuids;
 
     public UUIDMatch(String[] uuids) {
-        this.uuids = uuids;
+        this.uuids = uuids.clone();
     }
 
     @Override
@@ -51,7 +51,6 @@ public class UUIDMatch implements Matcher {
 
     @Override
     public String[] getFilterStrings() {
-        return uuids;
+        return uuids.clone();
     }
-
 }

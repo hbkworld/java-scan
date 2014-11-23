@@ -26,7 +26,7 @@ public class FamilytypeMatch implements Matcher {
     private String[] familyTypes;
 
     public FamilytypeMatch(String[] familyTypes) {
-        this.familyTypes = familyTypes;
+        this.familyTypes = familyTypes.clone();
     }
 
     @Override
@@ -51,6 +51,6 @@ public class FamilytypeMatch implements Matcher {
 
     @Override
     public String[] getFilterStrings() {
-        return familyTypes;
+        return familyTypes.clone();
     }
 }
