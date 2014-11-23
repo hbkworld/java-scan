@@ -33,7 +33,6 @@ import com.hbm.devices.scan.messages.Response;
 public class ResponseListener extends Observable implements Observer, Runnable {
 
     private ResponseReceiver responseReceiver;
-    private MessageParser messageParser;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
@@ -43,7 +42,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
         try {
             responseReceiver = new ResponseReceiver();
 
-            messageParser = new MessageParser();
+            MessageParser messageParser = new MessageParser();
 
             responseReceiver.addObserver(messageParser);
             messageParser.addObserver(this);
@@ -59,7 +58,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
      */
     @SuppressWarnings("unused")
     private ResponseListener(Observable receiver) {
-        messageParser = new MessageParser();
+        MessageParser messageParser = new MessageParser();
 
         receiver.addObserver(messageParser);
         messageParser.addObserver(this);
