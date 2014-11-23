@@ -12,7 +12,6 @@
 
 package com.hbm.devices.scan.messages;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
