@@ -64,6 +64,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
      * This method starts the listening socket. In an infinite loop this method waits for incoming
      * messages, converts them into strings and forwards them to all observers.
      */
+    @Override
     public void start() {
         byte[] buffer = new byte[65536];
         Charset charset = Charset.forName("UTF-8");
@@ -89,6 +90,7 @@ public class MulticastMessageReceiver extends MessageReceiver {
     /**
      * This method stops the listening socket and cancels the infinite receiving loop
      */
+    @Override
     public void stop() {
         shallRun = false;
         try {

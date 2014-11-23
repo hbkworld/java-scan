@@ -183,7 +183,8 @@ public class FakeMessageReceiver extends MessageReceiver {
         setChanged();
         notifyObservers(NO_ERROR_MESSAGE_RESPONSE_MESSAGE);
     }
-    
+
+    @Override
     public void start() {
         setChanged();
         notifyObservers(FAKE_DEVICE_1);
@@ -206,6 +207,7 @@ public class FakeMessageReceiver extends MessageReceiver {
         }
     }
 
+    @Override
     public void stop() {
         synchronized (this) {
             shallRun = false;

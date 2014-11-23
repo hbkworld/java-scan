@@ -29,6 +29,7 @@ public class FamilytypeMatch implements Matcher {
         this.familyTypes = familyTypes;
     }
 
+    @Override
     public boolean match(Announce a) throws MissingDataException {
         try {
             String ft = a.getParams().getDevice().getFamilyType();
