@@ -124,7 +124,7 @@ class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
 
         if (jsonObject.has("method")) {
             String type = jsonObject.get("method").getAsString();
-            if (type.compareTo("announce") == 0) {
+            if ("announce".compareTo(type) == 0) {
                 rpcObject = context.deserialize(json, Announce.class);
                 if (rpcObject != null) {
                     rpcObject.setJSONString(jsonObject.toString());
