@@ -118,16 +118,7 @@ jar {
 
 sonarRunner {
     toolVersion = '2.4' // default
-}
-
-sonarRunner {
     sonarProperties {
         property "sonar.host.url", "http://localhost:9000"
-        property "sonar.login", "gatzka"
-	    property "sonar.password", "gatzka"
-//        property "sonar.jdbc.url", "jdbc:mysql://localhost/sonar"
-//        property "sonar.jdbc.driverClassName", "com.mysql.jdbc.Driver"
-//        property "sonar.jdbc.username", "gatzka"
-//        property "sonar.jdbc.password", "gatzka"
     }
 }
