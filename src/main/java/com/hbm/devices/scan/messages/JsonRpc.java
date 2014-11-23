@@ -12,14 +12,17 @@
 
 package com.hbm.devices.scan.messages;
 
+import com.google.gson.annotations.SerializedName;
+
 public abstract class JsonRpc {
     
-    private String jsonrpc;
+    @SerializedName("jsonrpc")
+    private String jsonrpcVersion;
     private String method;
     private String json;
     
     protected JsonRpc(String method) {
-        jsonrpc = "2.0";
+        jsonrpcVersion = "2.0";
         this.method = method;
     }
     
@@ -32,7 +35,7 @@ public abstract class JsonRpc {
     }
 
     public String getJsonrpc() {
-        return jsonrpc;
+        return jsonrpcVersion;
     }
 
     public String getMethod() {
