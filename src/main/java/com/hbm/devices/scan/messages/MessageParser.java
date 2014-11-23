@@ -60,7 +60,7 @@ public class MessageParser extends Observable implements Observer {
         }
     }
 
-    public AnnounceCache getCache() {
+    AnnounceCache getCache() {
         return this.announceCache;
     }
 
