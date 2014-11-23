@@ -35,7 +35,7 @@ public class FakeDeviceEmulator extends Observable implements Observer {
     private static String sendingString = "{\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"result\":0}";
 
     private JsonParser parser;
-    private static JsonElement shouldReceive;
+    private JsonElement shouldReceive;
 
     public FakeDeviceEmulator() {
         this.parser = new JsonParser();
