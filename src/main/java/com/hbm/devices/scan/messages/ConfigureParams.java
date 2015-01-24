@@ -61,9 +61,7 @@ public class ConfigureParams {
         if (netSettings != null) {
             sb.append(netSettings);
         }
-        sb.append("ttl: " + ttl + "\n");
-
-        sb.append("\n");
+        sb.append("ttl: ").append(ttl).append("\n\n");
 
         return sb.toString();
     }

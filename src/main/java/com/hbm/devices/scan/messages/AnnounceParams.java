@@ -74,11 +74,10 @@ public class AnnounceParams {
         if (services != null) {
             sb.append("Services:");
             for (ServiceEntry se : services) {
-                sb.append("\n\t" + se);
+                sb.append("\n\t").append(se);
             }
         }
-        sb.append("\nexpiration: " + expiration + "\n");
-        sb.append("\n");
+        sb.append("\nexpiration: ").append(expiration).append("\n\n");
 
         return sb.toString();
     }

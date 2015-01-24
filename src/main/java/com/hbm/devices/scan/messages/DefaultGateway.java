@@ -56,10 +56,10 @@ public class DefaultGateway {
     public String toString() {
         StringBuilder sb = new StringBuilder("Gateway: ");
         if (ipv4Address != null) {
-            sb.append("IPv4: " + ipv4Address);
+            sb.append("IPv4: ").append(ipv4Address);
         }
         if (ipv6Address != null) {
-            sb.append("IPv6: " + ipv6Address);
+            sb.append("IPv6: ").append(ipv6Address);
         }
         return sb.toString();
     }

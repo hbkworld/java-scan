@@ -75,13 +75,12 @@ public class NetSettings {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Network settings:\n");
+        StringBuilder sb = new StringBuilder("Network settings:\n");
         if (defaultGateway != null) {
-            sb.append("\t defaultGateway: " + defaultGateway + "\n");
+            sb.append("\t defaultGateway: ").append(defaultGateway).append('\n');
         }
         if (iface != null) {
-            sb.append("\t interface: \n" + iface + "\n");
+            sb.append("\t interface: \n").append(iface).append('\n');
         }
 
         return sb.toString();

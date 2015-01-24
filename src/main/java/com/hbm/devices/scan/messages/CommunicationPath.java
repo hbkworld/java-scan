@@ -35,12 +35,13 @@ public class CommunicationPath {
 
     CommunicationPath(Announce announce) throws MissingDataException {
         this.announce = announce;
-        StringBuilder sb = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
 
         String deviceUuid = announce.getParams().getDevice().getUuid();
         if (deviceUuid == null) {
             throw new MissingDataException("No device UUID in announce object!");
         }
+
+        StringBuilder sb = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
         sb.append(deviceUuid);
 
         Router router = announce.getParams().getRouter();
