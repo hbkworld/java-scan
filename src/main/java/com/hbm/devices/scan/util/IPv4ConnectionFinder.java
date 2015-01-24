@@ -46,7 +46,7 @@ import com.hbm.devices.scan.messages.MissingDataException;
 
 class IPv4ConnectionFinder {
 
-    private Iterable<InterfaceAddress> ipv4Addresses;
+    private final Iterable<InterfaceAddress> ipv4Addresses;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     IPv4ConnectionFinder(Collection<NetworkInterface> interfaces) {

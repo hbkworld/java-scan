@@ -71,17 +71,17 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  */
 public class ConfigurationService implements Observer, Noticeable {
 
-    private Map<String, ConfigQuery> awaitingResponses;
-    private Map<String, ScheduledFuture<Void>> timeoutTasks;
+    private final Map<String, ConfigQuery> awaitingResponses;
+    private final Map<String, ScheduledFuture<Void>> timeoutTasks;
 
     private MulticastSender multicastSender;
-    private ResponseListener responseListener;
+    private final ResponseListener responseListener;
     private Thread responseListenerThread;
 
-    private ConfigurationSender configSender;
-    private ConfigParser configParser;
+    private final ConfigurationSender configSender;
+    private final ConfigParser configParser;
 
-    private ScheduledThreadPoolExecutor executor;
+    private final ScheduledThreadPoolExecutor executor;
 
     private static final Logger LOGGER = 
         Logger.getLogger(ScanConstants.LOGGER_NAME);
@@ -261,7 +261,7 @@ public class ConfigurationService implements Observer, Noticeable {
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
-        private ConfigQuery configQuery;
+        private final ConfigQuery configQuery;
 
         TimeoutTimerTask(ConfigQuery query) {
             configQuery = query;

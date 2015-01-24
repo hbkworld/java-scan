@@ -42,7 +42,7 @@ import com.hbm.devices.scan.DeviceMonitor;
  */
 public class NewDeviceEvent {
 
-    private CommunicationPath communicationPath;
+    private final CommunicationPath communicationPath;
 
     public NewDeviceEvent(CommunicationPath ap) {
         communicationPath = ap;

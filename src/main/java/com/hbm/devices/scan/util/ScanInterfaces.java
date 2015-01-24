@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class ScanInterfaces {
 
-    private List<NetworkInterface> interfaces;
+    private final List<NetworkInterface> interfaces;
 
     public ScanInterfaces() throws SocketException {
         interfaces = new LinkedList<NetworkInterface>();

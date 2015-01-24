@@ -39,7 +39,7 @@ import com.hbm.devices.scan.messages.Announce;
  */
 public class UUIDMatch implements Matcher {
 
-    private String[] uuids;
+    private final String[] uuids;
 
     public UUIDMatch(String[] uuids) {
         this.uuids = uuids.clone();

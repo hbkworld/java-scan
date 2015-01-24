@@ -58,9 +58,9 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public class DeviceMonitor extends Observable implements Observer {
 
-    private Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
-    private Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
-    private ScheduledThreadPoolExecutor executor;
+    private final Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
+    private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
+    private final ScheduledThreadPoolExecutor executor;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public DeviceMonitor() {
@@ -125,7 +125,7 @@ public class DeviceMonitor extends Observable implements Observer {
     }
 
     class AnnounceTimerTask implements Callable<Void> {
-        private CommunicationPath communicationPath;
+        private final CommunicationPath communicationPath;
 
         AnnounceTimerTask(CommunicationPath ap) {
             communicationPath = ap;

@@ -41,7 +41,7 @@ import com.hbm.devices.scan.DeviceMonitor;
 
 public class LostDeviceEvent {
 
-    private CommunicationPath communicationPath;
+    private final CommunicationPath communicationPath;
 
     public LostDeviceEvent(CommunicationPath ap) {
         communicationPath = ap;

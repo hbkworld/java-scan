@@ -33,9 +33,8 @@ import java.util.Map;
 
 public class AnnounceCache {
 
-    private LRUCache<String, Announce> parsedMessages;
-
-    private LRUCache<Integer, String> availablePaths;
+    private final LRUCache<String, Announce> parsedMessages;
+    private final LRUCache<Integer, String> availablePaths;
 
     AnnounceCache() {
         parsedMessages = new LRUCache<String, Announce>();

@@ -42,8 +42,8 @@ import com.hbm.devices.scan.DeviceMonitor;
  */
 public class UpdateDeviceEvent {
 
-    private CommunicationPath oldCommunicationPath;
-    private CommunicationPath newCommunicationPath;
+    private final CommunicationPath oldCommunicationPath;
+    private final CommunicationPath newCommunicationPath;
 
     public UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
         this.oldCommunicationPath = oldPath;

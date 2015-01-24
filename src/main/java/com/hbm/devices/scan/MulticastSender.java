@@ -56,12 +56,11 @@ import com.hbm.devices.scan.ScanConstants;
  */
 public class MulticastSender implements Observer {
 
-    private MulticastSocket socket;
-    private Collection<NetworkInterface> interfaces;
-    private Charset charset;
-    private InetAddress configureAddress;
-
-    private Noticeable noticeable;
+    private final MulticastSocket socket;
+    private final Collection<NetworkInterface> interfaces;
+    private final Charset charset;
+    private final InetAddress configureAddress;
+    private final Noticeable noticeable;
 
     public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
         charset = Charset.forName("UTF-8");

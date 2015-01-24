@@ -50,8 +50,8 @@ public class FakeDeviceEmulator extends Observable implements Observer {
     private static String receivingString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
     private static String sendingString = "{\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"result\":0}";
 
-    private JsonParser parser;
-    private JsonElement shouldReceive;
+    private final JsonParser parser;
+    private final JsonElement shouldReceive;
 
     public FakeDeviceEmulator() {
         this.parser = new JsonParser();

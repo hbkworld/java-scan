@@ -56,8 +56,8 @@ import com.hbm.devices.scan.util.ScanInterfaces;
 
 public class Receiver implements Observer {
 
-    private Collection<NetworkInterface> scanInterfaces;
-    private ConnectionFinder connectionFinder;
+    private final Collection<NetworkInterface> scanInterfaces;
+    private final ConnectionFinder connectionFinder;
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 

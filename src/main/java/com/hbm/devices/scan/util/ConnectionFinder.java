@@ -46,9 +46,9 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public class ConnectionFinder {
 
-    private boolean preferIPv6;
-    private IPv4ConnectionFinder ipv4ConnectionFinder;
-    private IPv6ConnectionFinder ipv6ConnectionFinder;
+    private final boolean preferIPv6;
+    private final IPv4ConnectionFinder ipv4ConnectionFinder;
+    private final IPv6ConnectionFinder ipv6ConnectionFinder;
 
     public ConnectionFinder(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
         this.preferIPv6 = preferIPv6;

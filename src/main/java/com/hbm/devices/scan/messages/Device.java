@@ -43,7 +43,7 @@ public class Device {
     private String familyType;
     private String firmwareVersion;
     @SerializedName("isRouter")
-    private boolean router = false;
+    private final boolean router = false;
 
     private Device() {
     }

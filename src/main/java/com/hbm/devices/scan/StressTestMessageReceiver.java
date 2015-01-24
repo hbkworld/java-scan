@@ -38,8 +38,8 @@ import com.hbm.devices.scan.ScanConstants;
 
 public class StressTestMessageReceiver extends Observable implements MessageReceiver {
 
-    private List<String> deviceUuidList;
-    private int loopAmount;
+    private final List<String> deviceUuidList;
+    private final int loopAmount;
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 

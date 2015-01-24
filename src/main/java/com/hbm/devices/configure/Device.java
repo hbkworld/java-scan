@@ -38,7 +38,7 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public class Device {
 
-    private String uuid;
+    private final String uuid;
 
     public Device(String uuid) {
         this.uuid = uuid;

@@ -48,7 +48,7 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public class Filter extends Observable implements Observer {
 
-    private Matcher matcher;
+    private final Matcher matcher;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public Filter(Matcher m) {

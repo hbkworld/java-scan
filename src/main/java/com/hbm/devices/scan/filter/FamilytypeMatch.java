@@ -39,7 +39,7 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public class FamilytypeMatch implements Matcher {
 
-    private String[] familyTypes;
+    private final String[] familyTypes;
 
     public FamilytypeMatch(String[] familyTypes) {
         this.familyTypes = familyTypes.clone();

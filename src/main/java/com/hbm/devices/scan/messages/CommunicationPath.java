@@ -44,8 +44,8 @@ package com.hbm.devices.scan.messages;
  */
 public class CommunicationPath {
 
-    private Announce announce;
-    private int hash;
+    private final Announce announce;
+    private final int hash;
     private Object cookie;
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 

@@ -46,9 +46,8 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public class ConfigParser extends Observable implements Observer, Noticeable {
 
-    private Gson gson;
-
-    private Noticeable noticeable;
+    private final Gson gson;
+    private final Noticeable noticeable;
 
     /**
      * The constructor which is used to instantiate a ConfigParser. You can also specify

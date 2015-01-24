@@ -33,8 +33,8 @@ import com.google.gson.annotations.SerializedName;
 public abstract class JsonRpc {
     
     @SerializedName("jsonrpc")
-    private String jsonrpcVersion;
-    private String method;
+    private final String jsonrpcVersion;
+    private final String method;
     private String json;
     
     protected JsonRpc(String method) {
