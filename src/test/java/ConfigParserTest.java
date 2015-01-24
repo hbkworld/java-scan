@@ -26,6 +26,7 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -123,7 +124,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         Configure conf = new Configure(configParams, "TEST-UUID");
         cp.update(null, conf);
-        assertTrue(fs.getLastSent() == null);
+        assertNull(fs.getLastSent());
         assertTrue(this.exception instanceof MissingDataException);
     }
 
@@ -163,7 +164,7 @@ public class ConfigParserTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         Configure conf = new Configure(configParams, "TEST-UUID");
         cp.update(null, conf);
-        assertTrue(fs.getLastSent() == null);
+        assertNull(fs.getLastSent());
         assertTrue(this.exception instanceof MissingDataException);
     }
 

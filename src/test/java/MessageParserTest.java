@@ -26,7 +26,8 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -67,67 +68,67 @@ public class MessageParserTest {
     @Test
     public void parseCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue(ap != null);
+        assertNotNull(ap);
     }
 
     @Test
     public void parseInvalidJsonMessage() {
         fsmmr.emitInvalidJsonMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseEmptyMessage() {
         fsmmr.emitEmptyString();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseNullMessage() {
         fsmmr.emitNull();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseMissingDeviceMessage() {
         fsmmr.emitMissingDeviceMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseMissingDeviceUuidMessage() {
         fsmmr.emitMissingDeviceUuidMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseMissingParamsMessage() {
         fsmmr.emitMissingParamsMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseNoInterfaceNameMessage() {
         fsmmr.emitNoInterfaceNameMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseNoNetSettingsMessage() {
         fsmmr.emitNoNetSettingsMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     @Test
     public void parseMissingRouterUuidMessage() {
         fsmmr.emitMissingRouterUuidMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 
     /*
@@ -137,49 +138,49 @@ public class MessageParserTest {
     @Test
     public void parseCorrectSuccessReponseMessage() {
         fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
-        assertTrue(res != null);
+        assertNotNull(res);
     }
 
     @Test
     public void parseCorrectErrorReponseMessage() {
         fsmmr.emitSingleCorrectErrorResponseMessage();
-        assertTrue(res != null);
+        assertNotNull(res);
     }
 
     @Test
     public void parseInvalidSuccessErrorReponseMessage() {
         fsmmr.emitInvalidErrorSuccessReponseMessage();
-        assertTrue(res == null);
+        assertNull(res);
     }
 
     @Test
     public void parseNoSuccessIdResponseMessage() {
         fsmmr.emitNoSuccessIdResponseMessage();
-        assertTrue(res == null);
+        assertNull(res);
     }
 
     @Test
     public void parseMissingErrorObjectResponseMessage() {
         fsmmr.emitMissingErrorObjectResponseMessage();
-        assertTrue(res == null);
+        assertNull(res);
     }
 
     @Test
     public void parseNoErrorCodeResponseMessage() {
         fsmmr.emitNoErrorCodeResponseMessage();
-        assertTrue(res == null);
+        assertNull(res);
     }
 
     @Test
     public void parseMissingErrorMessageReponseMessage() {
         fsmmr.emitMissingErrorMessageReponseMessage();
-        assertTrue(res == null);
+        assertNull(res);
     }
 
     @Test
     public void parseNoErrorMessageResponseMessage() {
         fsmmr.emitNoErrorMessageResponseMessage();
-        assertTrue(res == null);
+        assertNull(res);
     }
 
     // @Test(expected = IndexOutOfBoundsException.class)

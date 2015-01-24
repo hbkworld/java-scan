@@ -27,7 +27,7 @@
  */
 
 import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNull;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -61,7 +61,7 @@ public class FilterTest {
     @Test
     public void parseMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
-        assertTrue(ap == null);
+        assertNull(ap);
     }
 }
 
