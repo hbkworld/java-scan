@@ -77,7 +77,7 @@ public final class AnnounceParams {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder(20);
         if (device != null) {
             sb.append(device);
         }
