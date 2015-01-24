@@ -91,10 +91,10 @@ class IPv4ConnectionFinder {
                 }
                 final InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry)
                         .getNetmask());
-                final short announcePrefix = calculatePrefix(announceNetmask);
+                final int announcePrefix = calculatePrefix(announceNetmask);
 
                 final InetAddress ifaceAddress = interfaceAddress.getAddress();
-                final short ifaceAddressPrefix = interfaceAddress.getNetworkPrefixLength();
+                final int ifaceAddressPrefix = interfaceAddress.getNetworkPrefixLength();
                 if (sameNet(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
                     return announceAddress;
                 }
@@ -107,17 +107,17 @@ class IPv4ConnectionFinder {
         return null;
     }
 
-    private static short calculatePrefix(InetAddress announceNetmask) {
+    private static int calculatePrefix(InetAddress announceNetmask) {
         final byte[] address = announceNetmask.getAddress();
         int prefix = 0;
         for (int i = 0; i < 4; i++) {
             prefix += Integer.bitCount(address[i] & 0xff);
         }
-        return (short) prefix;
+        return prefix;
     }
 
-    private static boolean sameNet(InetAddress announceAddress, short announcePrefix,
-            InetAddress interfaceAddress, short interfacePrefix) {
+    private static boolean sameNet(InetAddress announceAddress, int announcePrefix,
+            InetAddress interfaceAddress, int interfacePrefix) {
         final byte[] announceBytes = announceAddress.getAddress();
         final byte[] interfaceBytes = interfaceAddress.getAddress();
         int announceInteger = convertToInteger(announceBytes);
