@@ -36,7 +36,7 @@ public final class Announce extends JsonRpc {
         super("announce");
     }
 
-    public AnnounceParams getParams() throws MissingDataException {
+    public AnnounceParams getParams() {
         return params;
     }
 

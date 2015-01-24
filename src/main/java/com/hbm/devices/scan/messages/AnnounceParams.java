@@ -67,7 +67,7 @@ public final class AnnounceParams {
         return router;
     }
 
-    public Iterable<ServiceEntry> getServices() throws MissingDataException {
+    public Iterable<ServiceEntry> getServices() {
         return services;
     }
 

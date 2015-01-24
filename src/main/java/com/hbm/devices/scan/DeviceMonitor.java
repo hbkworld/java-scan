@@ -112,13 +112,8 @@ public class DeviceMonitor extends Observable implements Observer {
 
     private int getExpiration(Announce announce) {
         int expiration;
-        try {
-            expiration = announce.getParams().getExpiration();
-            if (expiration == 0) {
-                expiration = 6;
-            }
-        } catch (MissingDataException e) {
-            LOGGER.log(Level.INFO, "No expiration in announce!", e);
+        expiration = announce.getParams().getExpiration();
+        if (expiration == 0) {
             expiration = 6;
         }
         return expiration * 1000;
