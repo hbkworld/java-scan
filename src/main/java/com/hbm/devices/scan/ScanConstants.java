@@ -38,7 +38,7 @@ import java.util.Properties;
  *
  * @since 1.0
  */
-public class ScanConstants {
+public final class ScanConstants {
 
     public static final String ANNOUNCE_ADDRESS;
     public static final int ANNOUNCE_PORT;

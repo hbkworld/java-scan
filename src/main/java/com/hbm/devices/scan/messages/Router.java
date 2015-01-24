@@ -28,7 +28,7 @@
 
 package com.hbm.devices.scan.messages;
 
-public class Router {
+public final class Router {
 
     private String uuid;
 

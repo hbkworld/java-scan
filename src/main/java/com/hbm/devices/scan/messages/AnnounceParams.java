@@ -38,7 +38,7 @@ import java.util.List;
  * 
  * @since 1.0
  */
-public class AnnounceParams {
+public final class AnnounceParams {
 
     private Device device;
     private NetSettings netSettings;

@@ -33,7 +33,7 @@ import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.StressTestMessageReceiver;
 
-public class StressTest {
+public final class StressTest {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 

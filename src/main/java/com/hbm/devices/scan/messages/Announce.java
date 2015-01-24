@@ -28,7 +28,7 @@
 
 package com.hbm.devices.scan.messages;
 
-public class Announce extends JsonRpc {
+public final class Announce extends JsonRpc {
 
     private AnnounceParams params;
 

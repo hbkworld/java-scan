@@ -37,7 +37,7 @@ import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
 
-public class Sender {
+public final class Sender {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 

@@ -37,7 +37,7 @@ package com.hbm.devices.scan.messages;
  * 
  * @since 1.0
  */
-public class ServiceEntry {
+public final class ServiceEntry {
 
     private String type;
     private int port;
