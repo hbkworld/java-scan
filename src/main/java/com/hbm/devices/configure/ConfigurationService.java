@@ -69,16 +69,16 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  * @since 1.0
  *
  */
-public class ConfigurationService implements Observer, Noticeable {
+public class ConfigurationService implements Observer {
 
     private final Map<String, ConfigQuery> awaitingResponses;
 
-    private MulticastSender multicastSender;
-    private final ResponseListener responseListener;
-    private Thread responseListenerThread;
+    // private MulticastSender multicastSender;
+    // private final ResponseListener responseListener;
+    // private Thread responseListenerThread;
 
-    private final ConfigurationSender configSender;
-    private final ConfigParser configParser;
+    // private final ConfigurationSender configSender;
+    // private final ConfigParser configParser;
 
     private final ScheduledThreadPoolExecutor executor;
 
@@ -97,67 +97,32 @@ public class ConfigurationService implements Observer, Noticeable {
      */
     public ConfigurationService() throws IOException {
         executor = new ScheduledThreadPoolExecutor(1);
-
         awaitingResponses = new HashMap<String, ConfigQuery>();
 
-        configSender = new ConfigurationSender();
-        configParser = new ConfigParser(this);
+        // configSender = new ConfigurationSender();
+        // configParser = new ConfigParser(this);
 
-        multicastSender = new MulticastSender(
-            new ScanInterfaces().getInterfaces(), this);
-        configSender.addObserver(configParser);
-        configParser.addObserver(multicastSender);
+        // multicastSender = new MulticastSender(
+        //     new ScanInterfaces().getInterfaces(), this);
+        // configSender.addObserver(configParser);
+        // configParser.addObserver(multicastSender);
 
-        responseListener = new ResponseListener();
-        responseListener.addObserver(this);
-        responseListenerThread = new Thread(responseListener);
-        responseListenerThread.start();
-    }
-
-    /**
-     * Don't use this constructor. It is only used for the JUnit tests
-     * to set up custom mutlicast sender and receiver
-     * 
-     * @param fakeSender
-     * @param fakeReceiver
-     * @param forcedQueryID
-     */
-    @SuppressWarnings("unused")
-    private ConfigurationService(Observer fakeSender, Observable fakeReceiver, 
-        String forcedQueryID) throws ReflectiveOperationException {
-        
-        executor = new ScheduledThreadPoolExecutor(1);
-
-        awaitingResponses = new HashMap<String, ConfigQuery>();
-
-        Constructor<ConfigurationSender> senderConstr;
-        senderConstr =
-            ConfigurationSender.class.getDeclaredConstructor(String.class);
-        senderConstr.setAccessible(true);
-        configSender = senderConstr.newInstance(forcedQueryID);
-        configParser = new ConfigParser(this);
-
-        configSender.addObserver(configParser);
-        configParser.addObserver(fakeSender);
-
-        Constructor<ResponseListener> listenerConstr;
-        listenerConstr =
-            ResponseListener.class.getDeclaredConstructor(Observable.class);
-        listenerConstr.setAccessible(true);
-        responseListener = listenerConstr.newInstance(fakeReceiver);
-        responseListener.addObserver(this);
+        // responseListener = new ResponseListener();
+        // responseListener.addObserver(this);
+        // responseListenerThread = new Thread(responseListener);
+        // responseListenerThread.start();
     }
 
     public void shutdown() {
-        multicastSender.shutdown();
-        responseListener.stop();
+    //    multicastSender.shutdown();
+    //    responseListener.stop();
 
-        executor.shutdownNow();
-        try {
-            executor.awaitTermination(1, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            // Ignore
-        }
+    //    executor.shutdownNow();
+    //    try {
+    //        executor.awaitTermination(1, TimeUnit.SECONDS);
+    //    } catch (InterruptedException e) {
+    //        // Ignore
+    //    }
     }
 
     /**
@@ -179,21 +144,22 @@ public class ConfigurationService implements Observer, Noticeable {
      * 
      * @param arg the received response
      */
-    @Override public void update(Observable o, Object arg) {
-        if (!(arg instanceof Response))  {
-            return;
-        }
-        final Response response = (Response)arg;
+    @Override
+	public void update(Observable o, Object arg) {
+    //     if (!(arg instanceof Response))  {
+    //         return;
+    //     }
+    //     final Response response = (Response)arg;
 
-        if (awaitingResponses.containsKey(response.getId())) {
-            final ConfigQuery configQuery = awaitingResponses.get(response.getId());
-            awaitingResponses.remove(response.getId());
-            if (response.getError() == null) {
-                configQuery.getConfigCallback().onSuccess(configQuery, response);
-            } else {
-                configQuery.getConfigCallback().onError(configQuery, response);
-            }
-        }
+    //     if (awaitingResponses.containsKey(response.getId())) {
+    //         final ConfigQuery configQuery = awaitingResponses.get(response.getId());
+    //         awaitingResponses.remove(response.getId());
+    //         if (response.getError() == null) {
+    //             configQuery.getConfigCallback().onSuccess(configQuery, response);
+    //         } else {
+    //             configQuery.getConfigCallback().onError(configQuery, response);
+    //         }
+    //     }
     }
 
     /**
@@ -220,26 +186,26 @@ public class ConfigurationService implements Observer, Noticeable {
     public void sendConfiguration(final ConfigureParams configParams,
         final ConfigCallback callback, int timeout) throws MissingDataException {
 
-        if (configParams == null) {
-            throw new IllegalArgumentException("configParams must not be null");
-        }
-        if (timeout <= 0) {
-            throw new IllegalArgumentException("timeout must be greater than 0");
-        }
-        if (callback == null) {
-            throw new IllegalArgumentException("the callback parameter must not be null");
-        }
+    //     if (configParams == null) {
+    //         throw new IllegalArgumentException("configParams must not be null");
+    //     }
+    //     if (timeout <= 0) {
+    //         throw new IllegalArgumentException("timeout must be greater than 0");
+    //     }
+    //     if (callback == null) {
+    //         throw new IllegalArgumentException("the callback parameter must not be null");
+    //     }
 
-        ConfigureParams.checkForErrors(configParams);
+    //     ConfigureParams.checkForErrors(configParams);
 
-        final ConfigQuery query =
-            configSender.generateConfigQuery(configParams, callback, timeout);
-        // save the QueryID in the hashmap and start timeoutTimer BEFORE sending the query
-        awaitingResponses.put(query.getQueryID(), query);
-        final TimeoutTimerTask task = new TimeoutTimerTask(query);
-        executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
+    //     final ConfigQuery query =
+    //         configSender.generateConfigQuery(configParams, callback, timeout);
+    //     // save the QueryID in the hashmap and start timeoutTimer BEFORE sending the query
+    //     awaitingResponses.put(query.getQueryID(), query);
+    //     final TimeoutTimerTask task = new TimeoutTimerTask(query);
+    //     executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
-        configSender.sendQuery(query);
+    //     configSender.sendQuery(query);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
@@ -259,11 +225,5 @@ public class ConfigurationService implements Observer, Noticeable {
             }
             return null;
         }
-
-    }
-
-    @Override
-    public void onException(Exception e) {
-        LOGGER.info(e.toString());
     }
 }
