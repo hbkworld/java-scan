@@ -53,7 +53,7 @@ public interface Matcher {
      * 
      * @return the name of the Mather.
      */
-    public String getMatcherName();
+    String getMatcherName();
 
     /**
      * This method returns all strings the filter allows. This simplifies displaying the filter
@@ -61,5 +61,5 @@ public interface Matcher {
      * 
      * @return an array containing all filter strings.
      */
-    public String[] getFilterStrings();
+    String[] getFilterStrings();
 }

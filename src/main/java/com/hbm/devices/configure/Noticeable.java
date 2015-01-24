@@ -35,7 +35,5 @@ package com.hbm.devices.configure;
  *
  */
 public interface Noticeable {
-
-    public void onException(Exception e);
-
+    void onException(Exception e);
 }
