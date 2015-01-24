@@ -235,7 +235,7 @@ public class ConfigurationService implements Observer, Noticeable {
      *              if some information in {@code configParams} is
      *              missing according to the specification.
      */
-    public void sendConfiguration(ConfigureParams configParams,
+    public void sendConfiguration(final ConfigureParams configParams,
         final ConfigCallback callback, int timeout) throws MissingDataException {
 
         if (configParams == null) {
