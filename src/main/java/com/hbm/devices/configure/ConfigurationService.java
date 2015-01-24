@@ -72,7 +72,6 @@ import com.hbm.devices.scan.util.ScanInterfaces;
 public class ConfigurationService implements Observer, Noticeable {
 
     private final Map<String, ConfigQuery> awaitingResponses;
-    private final Map<String, ScheduledFuture<Void>> timeoutTasks;
 
     private MulticastSender multicastSender;
     private final ResponseListener responseListener;
@@ -100,7 +99,6 @@ public class ConfigurationService implements Observer, Noticeable {
         executor = new ScheduledThreadPoolExecutor(1);
 
         awaitingResponses = new HashMap<String, ConfigQuery>();
-        timeoutTasks = new HashMap<String, ScheduledFuture<Void>>();
 
         configSender = new ConfigurationSender();
         configParser = new ConfigParser(this);
@@ -131,7 +129,6 @@ public class ConfigurationService implements Observer, Noticeable {
         executor = new ScheduledThreadPoolExecutor(1);
 
         awaitingResponses = new HashMap<String, ConfigQuery>();
-        timeoutTasks = new HashMap<String, ScheduledFuture<Void>>();
 
         Constructor<ConfigurationSender> senderConstr;
         senderConstr =
@@ -173,15 +170,6 @@ public class ConfigurationService implements Observer, Noticeable {
     }
 
     /**
-     * This method checks, if the service has running timeout timers
-     * 
-     * @return if the service has running timeout timers
-     */
-    public boolean hasResponseTimeoutTimer() {
-        return !timeoutTasks.isEmpty();
-    }
-
-    /**
      * 
      * This method is called when any response packet is received. It
      * checks if the received response corresponds to an earlier sent
@@ -200,12 +188,6 @@ public class ConfigurationService implements Observer, Noticeable {
         if (awaitingResponses.containsKey(response.getId())) {
             final ConfigQuery configQuery = awaitingResponses.get(response.getId());
             awaitingResponses.remove(response.getId());
-            // if a response is received within timeout,
-            // the timeoutTask is cancelled
-            if (timeoutTasks.containsKey(response.getId())) {
-                timeoutTasks.get(response.getId()).cancel(false);
-                timeoutTasks.remove(response.getId());
-            }
             if (response.getError() == null) {
                 configQuery.getConfigCallback().onSuccess(configQuery, response);
             } else {
@@ -274,7 +256,6 @@ public class ConfigurationService implements Observer, Noticeable {
                     awaitingResponses.remove(configQuery.getQueryID());
                     configQuery.getConfigCallback().onTimeout(configQuery);
                 }
-                timeoutTasks.remove(configQuery.getQueryID());
             }
             return null;
         }
