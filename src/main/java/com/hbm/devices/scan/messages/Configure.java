@@ -73,7 +73,7 @@ public class Configure extends JsonRpc {
         if (!(o instanceof Configure)) {
             return false;
         }
-        Configure rhs = (Configure) o;
+        final Configure rhs = (Configure)o;
         return this.getJSONString().equals(rhs.getJSONString());
     }
 

@@ -68,26 +68,26 @@ public class Receiver implements Observer {
 
     public static void main(String[] args) {
         try {
-            MessageParser jf = new MessageParser();
+            final MessageParser jf = new MessageParser();
             MessageReceiver mr;
             if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
-                FakeMessageReceiver fmr = new FakeMessageReceiver();
+                final FakeMessageReceiver fmr = new FakeMessageReceiver();
                 fmr.addObserver(jf);
                 mr = fmr;
             } else {
-                AnnounceReceiver ar = new AnnounceReceiver();
+                final AnnounceReceiver ar = new AnnounceReceiver();
                 ar.addObserver(jf);
                 mr = ar;
             }
 
-            String[] families = { "QuantumX" };
-            Filter ftFilter = new Filter(new FamilytypeMatch(families));
+            final String[] families = { "QuantumX" };
+            final Filter ftFilter = new Filter(new FamilytypeMatch(families));
             jf.addObserver(ftFilter);
 
-            DeviceMonitor af = new DeviceMonitor();
+            final DeviceMonitor af = new DeviceMonitor();
             ftFilter.addObserver(af);
 
-            Receiver r = new Receiver();
+            final Receiver r = new Receiver();
             af.addObserver(r);
             mr.start();
         } catch (Exception e) {
@@ -101,8 +101,8 @@ public class Receiver implements Observer {
             CommunicationPath ap;
             if (arg instanceof NewDeviceEvent) {
                 ap = ((NewDeviceEvent) arg).getAnnouncePath();
-                Announce a = ap.getAnnounce();
-                InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
+                final Announce a = ap.getAnnounce();
+                final InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
                 LOGGER.info("New Device:\n");
                 if (connectAddress != null) {
                     LOGGER.info("Connectable: " + connectAddress + "\n");
@@ -111,7 +111,7 @@ public class Receiver implements Observer {
                 ap = ((LostDeviceEvent) arg).getAnnouncePath();
                 LOGGER.info("Lost Device:\n");
             } else if (arg instanceof UpdateDeviceEvent) {
-                UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
+                final UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
                 ap = event.getNewCommunicationPath();
                 LOGGER.info("Update Device:\n");
             } else {
@@ -119,7 +119,7 @@ public class Receiver implements Observer {
                 return;
             }
 
-            Announce a = ap.getAnnounce();
+            final Announce a = ap.getAnnounce();
             LOGGER.info(a.getParams().getDevice().toString());
 
             LOGGER.info("\tIP-Addresses:\n");
@@ -127,22 +127,22 @@ public class Receiver implements Observer {
                     + a.getParams().getNetSettings().getInterface().getName() + "\n");
             LOGGER.info("\t method:"
                     + a.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
-            Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
-            Iterable<IPv6Entry> ipv6 = a.getParams().getNetSettings().getInterface().getIPv6();
+            final Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
+            final Iterable<IPv6Entry> ipv6 = a.getParams().getNetSettings().getInterface().getIPv6();
             if (ipv4 != null) {
-                for (Object entry : ipv4) {
+                for (final Object entry : ipv4) {
                     LOGGER.info("\t " + entry + "\n");
                 }
             }
             if (ipv6 != null) {
-                for (IPv6Entry e : ipv6) {
+                for (final IPv6Entry e : ipv6) {
                     LOGGER.info("\t " + e + "\n");
                 }
             }
 
             LOGGER.info("\tServices:\n");
-            Iterable<ServiceEntry> services = a.getParams().getServices();
-            for (ServiceEntry entry : services) {
+            final Iterable<ServiceEntry> services = a.getParams().getServices();
+            for (final ServiceEntry entry : services) {
                 LOGGER.info("\t " + entry + "\n");
             }
             LOGGER.info("\n");

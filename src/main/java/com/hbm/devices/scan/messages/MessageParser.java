@@ -66,7 +66,7 @@ public class MessageParser extends Observable implements Observer {
     }
 
     public MessageParser(boolean useCache) {
-        GsonBuilder builder = new GsonBuilder();
+        final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
         gson = builder.create();
 
@@ -82,7 +82,7 @@ public class MessageParser extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        String s = (String) arg;
+        final String s = (String) arg;
         try {
             JsonRpc json;
             boolean newParsedString;
@@ -94,7 +94,7 @@ public class MessageParser extends Observable implements Observer {
                 json = gson.fromJson(s, JsonRpc.class);
             }
             if (json instanceof Announce) {
-                CommunicationPath ap = new CommunicationPath((Announce) json);
+                final CommunicationPath ap = new CommunicationPath((Announce) json);
                 // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
                 // Only cache Announce objects!
                 if (useCache && newParsedString) {
@@ -103,7 +103,7 @@ public class MessageParser extends Observable implements Observer {
                 setChanged();
                 notifyObservers(ap);
             } else if (json instanceof Response) {
-                Response response = (Response) json;
+                final Response response = (Response)json;
                 Response.checkForErrors(response);
 
                 setChanged();
@@ -134,10 +134,10 @@ class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
     public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
 
         JsonRpc rpcObject = null;
-        JsonObject jsonObject = json.getAsJsonObject();
+        final JsonObject jsonObject = json.getAsJsonObject();
 
         if (jsonObject.has("method")) {
-            String type = jsonObject.get("method").getAsString();
+            final String type = jsonObject.get("method").getAsString();
             if ("announce".compareTo(type) == 0) {
                 rpcObject = context.deserialize(json, Announce.class);
                 if (rpcObject != null) {

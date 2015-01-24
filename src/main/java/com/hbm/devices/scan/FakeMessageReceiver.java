@@ -150,7 +150,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     }
 
     public void emitSingleCorrectSuccessResponseMessage(String queryID) {
-        String correctSuccessResponseMessage = "{\"id\":\"" + queryID
+        final String correctSuccessResponseMessage = "{\"id\":\"" + queryID
                 + "\",\"jsonrpc\":\"2.0\",\"result\":0}";
         setChanged();
         notifyObservers(correctSuccessResponseMessage);
@@ -234,9 +234,9 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
 
     static {
         try {
-            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            InputStream is = classloader.getResourceAsStream("fakemessages.properties");
-            Properties props = new Properties();
+            final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            final InputStream is = classloader.getResourceAsStream("fakemessages.properties");
+            final Properties props = new Properties();
             props.load(is);
             FAKE_DEVICE_1 = props.getProperty("scan.announce.device1");
             FAKE_DEVICE_2 = props.getProperty("scan.announce.device2");

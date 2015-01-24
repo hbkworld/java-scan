@@ -47,8 +47,8 @@ public class UUIDMatch implements Matcher {
 
     @Override
     public boolean match(Announce announce) throws MissingDataException {
-        String deviceUUID = announce.getParams().getDevice().getUuid();
-        for (String s : uuids) {
+        final String deviceUUID = announce.getParams().getDevice().getUuid();
+        for (final String s : uuids) {
             if (s.equals(deviceUUID)) {
                 return true;
             }

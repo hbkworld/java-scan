@@ -77,7 +77,7 @@ public class AnnounceParams {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         if (device != null) {
             sb.append(device);
         }
@@ -89,7 +89,7 @@ public class AnnounceParams {
         }
         if (services != null) {
             sb.append("Services:");
-            for (ServiceEntry se : services) {
+            for (final ServiceEntry se : services) {
                 sb.append("\n\t").append(se);
             }
         }

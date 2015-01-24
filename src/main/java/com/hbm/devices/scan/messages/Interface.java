@@ -141,7 +141,7 @@ public class Interface {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Interface:");
+        final StringBuilder sb = new StringBuilder("Interface:");
         if (name != null) {
             sb.append("\n\t\tname: ").append(name);
         }
@@ -156,13 +156,13 @@ public class Interface {
         }
         if (ipv4 != null) {
             sb.append("\n\t\tIPv4 addresses:");
-            for (Object e : ipv4) {
+            for (final Object e : ipv4) {
                 sb.append("\n\t\t\t").append(e);
             }
         }
         if (ipv6 != null) {
             sb.append("\n\t\tIPv6 addresses:");
-            for (Object e : ipv6) {
+            for (final Object e : ipv6) {
                 sb.append("\n\t\t\t").append(e);
             }
         }

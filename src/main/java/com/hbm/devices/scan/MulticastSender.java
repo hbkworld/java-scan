@@ -77,10 +77,10 @@ public class MulticastSender implements Observer {
     }
 
     public void sendMessage(String msg) throws IOException {
-        byte[] bytes = msg.getBytes(charset);
-        DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
+        final byte[] bytes = msg.getBytes(charset);
+        final DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
             ScanConstants.CONFIGURATION_PORT);
-        for (NetworkInterface iface : interfaces) {
+        for (final NetworkInterface iface : interfaces) {
             socket.setNetworkInterface(iface);
             socket.send(packet);
         }

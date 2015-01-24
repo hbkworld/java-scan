@@ -47,13 +47,10 @@ public class Sender {
     public static void main(String[] args) {
         try {
 
-            ConfigurationService service = new ConfigurationService();
-
-            Device device = new Device("0009E5001571");
-            
-            NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-
-            ConfigureParams configParams = new ConfigureParams(device, settings);
+            final ConfigurationService service = new ConfigurationService();
+            final Device device = new Device("0009E5001571");
+            final NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
+            final ConfigureParams configParams = new ConfigureParams(device, settings);
 
             try {
                 service.sendConfiguration(configParams, new SimpleCallback(), 5000);

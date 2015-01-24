@@ -52,24 +52,24 @@ public class CommunicationPath {
     CommunicationPath(Announce announce) throws MissingDataException {
         this.announce = announce;
 
-        String deviceUuid = announce.getParams().getDevice().getUuid();
+        final String deviceUuid = announce.getParams().getDevice().getUuid();
         if (deviceUuid == null) {
             throw new MissingDataException("No device UUID in announce object!");
         }
 
-        StringBuilder sb = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
+        final StringBuilder sb = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
         sb.append(deviceUuid);
 
-        Router router = announce.getParams().getRouter();
+        final Router router = announce.getParams().getRouter();
         if (router != null) {
-            String routerUuid = router.getUuid();
+            final String routerUuid = router.getUuid();
             if (routerUuid == null) {
                 throw new MissingDataException("No router UUID in announce object!");
             }
             sb.append(routerUuid);
         }
 
-        String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
+        final String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
         if (deviceInterfaceName == null) {
             throw new MissingDataException("No network interface name in announce object!");
         }

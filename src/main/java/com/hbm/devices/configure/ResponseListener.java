@@ -58,7 +58,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
         try {
             responseReceiver = new ResponseReceiver();
 
-            MessageParser messageParser = new MessageParser();
+            final MessageParser messageParser = new MessageParser();
 
             responseReceiver.addObserver(messageParser);
             messageParser.addObserver(this);
@@ -74,7 +74,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
      */
     @SuppressWarnings("unused")
     private ResponseListener(Observable receiver) {
-        MessageParser messageParser = new MessageParser();
+        final MessageParser messageParser = new MessageParser();
 
         receiver.addObserver(messageParser);
         messageParser.addObserver(this);
@@ -102,7 +102,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
     @Override
     public void update(Observable o, Object obj) {
         if (obj instanceof Response) {
-            Response response = (Response) obj;
+            final Response response = (Response) obj;
 
             setChanged();
             notifyObservers(response);

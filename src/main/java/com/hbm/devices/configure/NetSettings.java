@@ -91,7 +91,7 @@ public class NetSettings {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Network settings:\n");
+        final StringBuilder sb = new StringBuilder("Network settings:\n");
         if (defaultGateway != null) {
             sb.append("\t defaultGateway: ").append(defaultGateway).append('\n');
         }

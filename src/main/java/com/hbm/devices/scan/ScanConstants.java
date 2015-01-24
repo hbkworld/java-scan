@@ -53,9 +53,9 @@ public class ScanConstants {
 
     static {
         try {
-            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            InputStream is = classloader.getResourceAsStream("scan.properties");
-            Properties props = new Properties();
+            final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            final InputStream is = classloader.getResourceAsStream("scan.properties");
+            final Properties props = new Properties();
             props.load(is);
 
             ANNOUNCE_ADDRESS = props.getProperty("scan.announce.address");

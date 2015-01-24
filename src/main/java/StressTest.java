@@ -42,10 +42,10 @@ public class StressTest {
 
     public static void main(String[] args) {
         LOGGER.info("Test without Cache:\n");
-        StressTestMessageReceiver mr = new StressTestMessageReceiver(53, 50000);
-        MessageParser mp = new MessageParser(false);
+        final StressTestMessageReceiver mr = new StressTestMessageReceiver(53, 50000);
+        final MessageParser mp = new MessageParser(false);
         mr.addObserver(mp);
-        DeviceMonitor dm = new DeviceMonitor();
+        final DeviceMonitor dm = new DeviceMonitor();
         mp.addObserver(dm);
 
         mr.start();
@@ -53,10 +53,10 @@ public class StressTest {
         mr.stop();
 
         LOGGER.info("\nTest with Cache:\n");
-        StressTestMessageReceiver mr2 = new StressTestMessageReceiver(53, 50000);
-        MessageParser mp2 = new MessageParser(true);
+        final StressTestMessageReceiver mr2 = new StressTestMessageReceiver(53, 50000);
+        final MessageParser mp2 = new MessageParser(true);
         mr2.addObserver(mp2);
-        DeviceMonitor dm2 = new DeviceMonitor();
+        final DeviceMonitor dm2 = new DeviceMonitor();
         mp2.addObserver(dm2);
 
         mr2.start();

@@ -61,8 +61,8 @@ public class Filter extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        CommunicationPath ap = (CommunicationPath) arg;
-        Announce announce = ap.getAnnounce();
+        final CommunicationPath ap = (CommunicationPath) arg;
+        final Announce announce = ap.getAnnounce();
         try {
             if (matcher.match(announce)) {
                 setChanged();

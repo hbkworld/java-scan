@@ -70,7 +70,7 @@ public class ConfigureParams {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         if (device != null) {
             sb.append(device);
         }

@@ -47,7 +47,7 @@ public class FamilytypeMatch implements Matcher {
 
     @Override
     public boolean match(Announce a) throws MissingDataException {
-        String ft = a.getParams().getDevice().getFamilyType();
+        final String ft = a.getParams().getDevice().getFamilyType();
         for (int i = 0; i < familyTypes.length; i++) {
             if (familyTypes[i].equals(ft)) {
                 return true;

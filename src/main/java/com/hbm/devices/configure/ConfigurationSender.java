@@ -85,7 +85,7 @@ public class ConfigurationSender extends Observable {
             queryID = forcedQueryID;
         }
 
-        Configure config = new Configure(configParams, queryID);
+        final Configure config = new Configure(configParams, queryID);
 
         return new ConfigQuery(queryID, config, callback, timeout);
     }

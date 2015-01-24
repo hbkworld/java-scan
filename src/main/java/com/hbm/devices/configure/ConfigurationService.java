@@ -195,10 +195,10 @@ public class ConfigurationService implements Observer, Noticeable {
         if (!(arg instanceof Response))  {
             return;
         }
-        Response response = (Response)arg;
+        final Response response = (Response)arg;
 
         if (awaitingResponses.containsKey(response.getId())) {
-            ConfigQuery configQuery = awaitingResponses.get(response.getId());
+            final ConfigQuery configQuery = awaitingResponses.get(response.getId());
             awaitingResponses.remove(response.getId());
             // if a response is received within timeout,
             // the timeoutTask is cancelled
@@ -254,7 +254,7 @@ public class ConfigurationService implements Observer, Noticeable {
             configSender.generateConfigQuery(configParams, callback, timeout);
         // save the QueryID in the hashmap and start timeoutTimer BEFORE sending the query
         awaitingResponses.put(query.getQueryID(), query);
-        TimeoutTimerTask task = new TimeoutTimerTask(query);
+        final TimeoutTimerTask task = new TimeoutTimerTask(query);
         executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
         configSender.sendQuery(query);

@@ -53,7 +53,7 @@ public class Announce extends JsonRpc {
         if (!(o instanceof Announce)) {
             return false;
         }
-        Announce rhs = (Announce)o;
+        final Announce rhs = (Announce)o;
         return this.getJSONString().equals(rhs.getJSONString());
     }
 

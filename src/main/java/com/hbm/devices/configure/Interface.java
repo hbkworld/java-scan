@@ -96,7 +96,7 @@ public class Interface {
 
     @Override
     public String toString() {
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
         result.append("\t  name: ").append(name).append('\n');
         result.append("\t  method: ").append(configurationMethod).append('\n');
         result.append("\t  ip: ").append(ipv4).append('\n');

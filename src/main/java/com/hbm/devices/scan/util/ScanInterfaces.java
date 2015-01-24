@@ -48,11 +48,11 @@ public class ScanInterfaces {
 
     public ScanInterfaces() throws SocketException {
         interfaces = new LinkedList<NetworkInterface>();
-        Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
+        final Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
 
         if (ifs != null) {
             while (ifs.hasMoreElements()) {
-                NetworkInterface iface = ifs.nextElement();
+                final NetworkInterface iface = ifs.nextElement();
                 if (willScan(iface)) {
                     interfaces.add(iface);
                 }
@@ -81,11 +81,11 @@ public class ScanInterfaces {
     }
 
     private static boolean hasConfiguredIPv4Address(NetworkInterface iface) {
-        Enumeration<InetAddress> addrs = iface.getInetAddresses();
+        final Enumeration<InetAddress> addrs = iface.getInetAddresses();
         while (addrs.hasMoreElements()) {
-            InetAddress addr = addrs.nextElement();
+            final InetAddress addr = addrs.nextElement();
             if (addr instanceof Inet4Address) {
-                Inet4Address addr4 = (Inet4Address) addr;
+                final Inet4Address addr4 = (Inet4Address)addr;
                 if (!addr4.isAnyLocalAddress()) {
                     return true;
                 }

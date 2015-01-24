@@ -70,7 +70,7 @@ public class DefaultGateway {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("Gateway: ");
+        final StringBuilder sb = new StringBuilder("Gateway: ");
         if (ipv4Address != null) {
             sb.append("IPv4: ").append(ipv4Address);
         }

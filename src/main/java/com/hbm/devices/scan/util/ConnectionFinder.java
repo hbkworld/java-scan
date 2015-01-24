@@ -58,14 +58,14 @@ public class ConnectionFinder {
 
     public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         if (preferIPv6) {
-            InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
+            final InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
             if (address != null) {
                 return address;
             } else {
                 return ipv4ConnectionFinder.getConnectableAddress(announce);
             }
         } else {
-            InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
+            final InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
             if (address != null) {
                 return address;
             } else {

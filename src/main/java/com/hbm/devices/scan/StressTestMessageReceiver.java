@@ -82,7 +82,7 @@ public class StressTestMessageReceiver extends Observable implements MessageRece
         this.startNanoTime = System.nanoTime();
 
         for (int i = 0; i < loopAmount; i++) {
-            for (String s : this.deviceUuidList) {
+            for (final String s : this.deviceUuidList) {
                 setChanged();
                 notifyObservers(s);
             }

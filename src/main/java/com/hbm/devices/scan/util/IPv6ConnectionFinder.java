@@ -51,12 +51,12 @@ class IPv6ConnectionFinder {
 
     IPv6ConnectionFinder(Collection<NetworkInterface> interfaces) {
 
-        List<InterfaceAddress> addressList = new LinkedList<InterfaceAddress>();
+        final List<InterfaceAddress> addressList = new LinkedList<InterfaceAddress>();
 
-        for (NetworkInterface iface : interfaces) {
-            List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
-            for (InterfaceAddress niAddress : niAddresses) {
-                InetAddress interfaceAddress = niAddress.getAddress();
+        for (final NetworkInterface iface : interfaces) {
+            final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
+            for (final InterfaceAddress niAddress : niAddresses) {
+                final InetAddress interfaceAddress = niAddress.getAddress();
                 if (interfaceAddress instanceof Inet6Address) {
                     addressList.add(niAddress);
                 }
@@ -67,8 +67,8 @@ class IPv6ConnectionFinder {
     }
 
     InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
-        for (InterfaceAddress niAddress : ipv6Addresses) {
-            InetAddress address = getConnectAddress(niAddress, announce);
+        for (final InterfaceAddress niAddress : ipv6Addresses) {
+            final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {
                 return address;
             }
@@ -78,12 +78,12 @@ class IPv6ConnectionFinder {
 
     private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
             Announce announce) throws MissingDataException {
-        List<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
+        final List<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv6();
         if (announceAddresses == null) {
             return null;
         }
-        for (IPv6Entry address : announceAddresses) {
+        for (final IPv6Entry address : announceAddresses) {
             InetAddress announceAddress;
             try {
                 announceAddress = InetAddress.getByName(address.getAddress());
@@ -110,8 +110,8 @@ class IPv6ConnectionFinder {
             return false;
         }
 
-        byte[] announceAddr = announceAddress.getAddress();
-        byte[] interfaceAddr = interfaceAddress.getAddress();
+        final byte[] announceAddr = announceAddress.getAddress();
+        final byte[] interfaceAddr = interfaceAddress.getAddress();
 
         if (announceAddr.length < (announcePrefixLength / 8)
                 || interfaceAddr.length < (announcePrefixLength / 8)) {

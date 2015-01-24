@@ -80,8 +80,8 @@ public class DeviceMonitor extends Observable implements Observer {
 
     @Override
     public void update(Observable o, Object arg) {
-        CommunicationPath ap = (CommunicationPath) arg;
-        Announce announce = ap.getAnnounce();
+        final CommunicationPath ap = (CommunicationPath) arg;
+        final Announce announce = ap.getAnnounce();
 
         synchronized (deviceMap) {
             if (deviceMap.containsKey(ap)) {
@@ -89,7 +89,7 @@ public class DeviceMonitor extends Observable implements Observer {
                 sf.cancel(false);
                 deviceMap.remove(ap);
                 AnnounceTimerTask task = futureMap.remove(sf);
-                Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
+                final Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
                 if (!oldAnnounce.equals(announce)) {
                     setChanged();
                     notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), ap));
@@ -99,8 +99,8 @@ public class DeviceMonitor extends Observable implements Observer {
                 deviceMap.put(ap, sf);
                 futureMap.put(sf, task);
             } else {
-                AnnounceTimerTask task = new AnnounceTimerTask(ap);
-                ScheduledFuture<Void> sf = executor.schedule(task, getExpiration(announce),
+                final AnnounceTimerTask task = new AnnounceTimerTask(ap);
+                final ScheduledFuture<Void> sf = executor.schedule(task, getExpiration(announce),
                         TimeUnit.MILLISECONDS);
                 deviceMap.put(ap, sf);
                 futureMap.put(sf, task);

@@ -61,8 +61,8 @@ public class FakeDeviceEmulator extends Observable implements Observer {
     @Override
     public void update(Observable o, Object obj) {
         if (obj instanceof String) {
-            String msg = (String) obj;
-            JsonElement received = parser.parse(msg);
+            final String msg = (String)obj;
+            final JsonElement received = parser.parse(msg);
 
             if (shouldReceive.equals(received)) {
                 setChanged();

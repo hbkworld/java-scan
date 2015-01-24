@@ -72,7 +72,7 @@ public class AnnounceCache {
         if (availablePaths.containsKey(comPath.hashCode())) {
             // device has send an announce earlier, but it has changed its announce content (e.g.
             // its running services changed)
-            String lastAnnounceString = availablePaths.get(comPath.hashCode());
+            final String lastAnnounceString = availablePaths.get(comPath.hashCode());
             parsedMessages.remove(lastAnnounceString);
             parsedMessages.put(announceString, comPath.getAnnounce());
             availablePaths.put(comPath.hashCode(), announceString);
