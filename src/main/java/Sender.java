@@ -45,6 +45,7 @@ public final class Sender {
     }
 
     public static void main(String... args) {
+		/*
         try {
 
             final ConfigurationService service = new ConfigurationService();
@@ -62,5 +63,6 @@ public final class Sender {
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
         }
+		*/
     }
 }
