@@ -35,6 +35,6 @@ package com.hbm.devices.scan;
  * @since 1.0
  */
 public interface MessageReceiver {
-    abstract void start();
-    abstract void stop();
+    void start();
+    void stop();
 }
