@@ -42,30 +42,26 @@ public interface ConfigCallback {
      * This is the callback method which is called, when the query was received and processed
      * successfully by the device.
      * 
-     * @param configQuery
-     *            This parameter contains the query, which is sent to the device
      * @param response
      *            This parameter contains the response, which is received from the device
      */
-    void onSuccess(ConfigQuery configQuery, Response response);
+    void onSuccess(Response response);
 
     /**
      * This is the callback method which is called, when an error occurred processing the query by
      * the device.
      * 
-     * @param configQuery
-     *            This parameter contains the query, which is sent to the device
      * @param response
      *            This parameter contains the response, which is received from the device
      */
-    void onError(ConfigQuery configQuery, Response response);
+    void onError(Response response);
 
     /**
      * This is the callback method which is called, if the device does not send a response within
      * the timeout.
      * 
-     * @param configQuery
-     *            This parameter contains the query, which is sent to the device
+     * @param timeout
+     *            The timeout in seconds that has been expired.
      */
-    void onTimeout(ConfigQuery configQuery);
+    void onTimeout(int timeout);
 }

@@ -40,7 +40,6 @@ import org.junit.Test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.configure.ConfigCallback;
-import com.hbm.devices.configure.ConfigQuery;
 import com.hbm.devices.configure.ConfigurationService;
 import com.hbm.devices.configure.Device;
 import com.hbm.devices.configure.FakeDeviceEmulator;

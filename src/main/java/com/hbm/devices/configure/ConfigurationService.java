@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -42,6 +43,7 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.ScanConstants;
+import com.hbm.devices.scan.messages.Configure;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
@@ -52,10 +54,10 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  *
  * It sends the configuration settings and listen to responses. If no
  * response is received within a certain time, a callback method ({@link
- * ConfigCallback#onTimeout(ConfigQuery)}) is called.  Otherwise if a
+ * ConfigCallback#onTimeout(int timeout)}) is called.  Otherwise if a
  * response is received, either {@link
- * ConfigCallback#onSuccess(ConfigQuery, Response)} or {@link
- * ConfigCallback#onError(ConfigQuery, Response)} is called accordingly
+ * ConfigCallback#onSuccess(Response)} or {@link
+ * ConfigCallback#onError(Response)} is called accordingly
  * to the response.<p>
  *
  * The main method, which is used to transmit configuration settings, is
@@ -74,10 +76,10 @@ public class ConfigurationService implements Observer {
     private final Map<String, ConfigQuery> awaitingResponses;
 
     // private MulticastSender multicastSender;
-    // private final ResponseListener responseListener;
+    private final ResponseListener responseListener;
     // private Thread responseListenerThread;
 
-    // private final ConfigurationSender configSender;
+    private final ConfigurationSender configSender;
     // private final ConfigParser configParser;
 
     private final ScheduledThreadPoolExecutor executor;
@@ -93,36 +95,24 @@ public class ConfigurationService implements Observer {
      * the devices, the message parsers to convert incoming JSON Strings
      * into objects or outgoing objects into JSON Strings.
      *
-     * @throws IOException if the multicast sockets cannot be started.
      */
-    public ConfigurationService() throws IOException {
+    public ConfigurationService(ConfigurationSender sender, ResponseListener listener) {
         executor = new ScheduledThreadPoolExecutor(1);
         awaitingResponses = new HashMap<String, ConfigQuery>();
-
-        // configSender = new ConfigurationSender();
-        // configParser = new ConfigParser(this);
-
-        // multicastSender = new MulticastSender(
-        //     new ScanInterfaces().getInterfaces(), this);
-        // configSender.addObserver(configParser);
-        // configParser.addObserver(multicastSender);
-
-        // responseListener = new ResponseListener();
-        // responseListener.addObserver(this);
-        // responseListenerThread = new Thread(responseListener);
-        // responseListenerThread.start();
+        configSender = sender;
+        responseListener = listener;
+        responseListener.addObserver(this);
     }
 
     public void shutdown() {
-    //    multicastSender.shutdown();
-    //    responseListener.stop();
+        responseListener.deleteObserver(this);
 
-    //    executor.shutdownNow();
-    //    try {
-    //        executor.awaitTermination(1, TimeUnit.SECONDS);
-    //    } catch (InterruptedException e) {
-    //        // Ignore
-    //    }
+        executor.shutdownNow();
+        try {
+            executor.awaitTermination(1, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            LOGGER.info("Interrupted while waiting for termination of timer tasks!\n");
+        }
     }
 
     /**
@@ -146,29 +136,29 @@ public class ConfigurationService implements Observer {
      */
     @Override
 	public void update(Observable o, Object arg) {
-    //     if (!(arg instanceof Response))  {
-    //         return;
-    //     }
-    //     final Response response = (Response)arg;
+        if (!(arg instanceof Response))  {
+            return;
+        }
+        final Response response = (Response)arg;
 
-    //     if (awaitingResponses.containsKey(response.getId())) {
-    //         final ConfigQuery configQuery = awaitingResponses.get(response.getId());
-    //         awaitingResponses.remove(response.getId());
-    //         if (response.getError() == null) {
-    //             configQuery.getConfigCallback().onSuccess(configQuery, response);
-    //         } else {
-    //             configQuery.getConfigCallback().onError(configQuery, response);
-    //         }
-    //     }
+        if (awaitingResponses.containsKey(response.getId())) {
+            final ConfigQuery configQuery = awaitingResponses.get(response.getId());
+            awaitingResponses.remove(response.getId());
+            if (response.getError() == null) {
+                configQuery.getConfigCallback().onSuccess(response);
+            } else {
+                configQuery.getConfigCallback().onError(response);
+            }
+        }
     }
 
     /**
      *
      * This method sends a configuration via multicast. If no response
      * is received within the timeout, the callback method {@link
-     * ConfigCallback#onTimeout(ConfigQuery)} is called. If a response
-     * is received, either {@link ConfigCallback#onSuccess(ConfigQuery,
-     * Response)} or {@link ConfigCallback#onError(ConfigQuery,
+     * ConfigCallback#onTimeout(int timeout)} is called. If a response
+     * is received, either {@link ConfigCallback#onSuccess(
+     * Response)} or {@link ConfigCallback#onError(
      * Response)} is called.
      * 
      * @param configParams
@@ -179,33 +169,29 @@ public class ConfigurationService implements Observer {
      *              handling
      * @param timeout
      *              the time in ms, the service waits for a response
-     * @throws MissingDataException
-     *              if some information in {@code configParams} is
-     *              missing according to the specification.
      */
     public void sendConfiguration(final ConfigureParams configParams,
-        final ConfigCallback callback, int timeout) throws MissingDataException {
+        final ConfigCallback callback, int timeout) {
 
-    //     if (configParams == null) {
-    //         throw new IllegalArgumentException("configParams must not be null");
-    //     }
-    //     if (timeout <= 0) {
-    //         throw new IllegalArgumentException("timeout must be greater than 0");
-    //     }
-    //     if (callback == null) {
-    //         throw new IllegalArgumentException("the callback parameter must not be null");
-    //     }
+        if (configParams == null) {
+            throw new IllegalArgumentException("configParams must not be null");
+        }
+        if (timeout <= 0) {
+            throw new IllegalArgumentException("timeout must be greater/equal than 0");
+        }
+        if (callback == null) {
+            throw new IllegalArgumentException("the callback parameter must not be null");
+        }
 
-    //     ConfigureParams.checkForErrors(configParams);
+        final String queryID = UUID.randomUUID().toString();
+        final Configure config = new Configure(configParams, queryID);
+        ConfigQuery configQuery = new ConfigQuery(config, callback, timeout);
 
-    //     final ConfigQuery query =
-    //         configSender.generateConfigQuery(configParams, callback, timeout);
-    //     // save the QueryID in the hashmap and start timeoutTimer BEFORE sending the query
-    //     awaitingResponses.put(query.getQueryID(), query);
-    //     final TimeoutTimerTask task = new TimeoutTimerTask(query);
-    //     executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
+        awaitingResponses.put(queryID, configQuery);
+        final TimeoutTimerTask task = new TimeoutTimerTask(configQuery);
+        executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
-    //     configSender.sendQuery(query);
+        configSender.sendQuery(config);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
@@ -220,10 +206,40 @@ public class ConfigurationService implements Observer {
             synchronized (awaitingResponses) {
                 if (awaitingResponses.containsKey(configQuery.getQueryID())) {
                     awaitingResponses.remove(configQuery.getQueryID());
-                    configQuery.getConfigCallback().onTimeout(configQuery);
+                    configQuery.getConfigCallback().onTimeout(configQuery.getTimeout());
                 }
             }
             return null;
         }
+    }
+}
+
+class ConfigQuery {
+
+    private Configure config;
+    private int timeout;
+
+    private ConfigCallback callback;
+
+    ConfigQuery(Configure config, ConfigCallback callback, int timeout) {
+        this.config = config;
+        this.timeout = timeout;
+        this.callback = callback;
+    }
+
+    String getQueryID() {
+        return config.getQueryId();
+    }
+
+    Configure getConfiguration() {
+        return this.config;
+    }
+
+    int getTimeout() {
+        return this.timeout;
+    }
+
+    ConfigCallback getConfigCallback() {
+        return callback;
     }
 }
