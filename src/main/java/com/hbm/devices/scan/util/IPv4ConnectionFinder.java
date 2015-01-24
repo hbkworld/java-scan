@@ -127,7 +127,7 @@ class IPv4ConnectionFinder {
         return announceInteger == interfaceInteger;
     }
 
-    private static int convertToInteger(byte[] address) {
+    private static int convertToInteger(byte... address) {
         int value = ((int)address[0] & 0xff) << 24;
         value |= ((int)address[1] & 0xff) << 16;
         value |= ((int)address[2] & 0xff) << 8;

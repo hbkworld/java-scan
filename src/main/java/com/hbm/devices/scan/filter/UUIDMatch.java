@@ -41,7 +41,7 @@ public class UUIDMatch implements Matcher {
 
     private final String[] uuids;
 
-    public UUIDMatch(String[] uuids) {
+    public UUIDMatch(String... uuids) {
         this.uuids = uuids.clone();
     }
 

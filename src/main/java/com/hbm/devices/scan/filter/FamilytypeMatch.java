@@ -41,7 +41,7 @@ public class FamilytypeMatch implements Matcher {
 
     private final String[] familyTypes;
 
-    public FamilytypeMatch(String[] familyTypes) {
+    public FamilytypeMatch(String... familyTypes) {
         this.familyTypes = familyTypes.clone();
     }
 

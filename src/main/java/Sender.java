@@ -44,7 +44,7 @@ public final class Sender {
     private Sender() {
     }
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         try {
 
             final ConfigurationService service = new ConfigurationService();

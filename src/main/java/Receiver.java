@@ -66,7 +66,7 @@ public class Receiver implements Observer {
         connectionFinder = new ConnectionFinder(scanInterfaces, false);
     }
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         try {
             final MessageParser jf = new MessageParser();
             MessageReceiver mr;

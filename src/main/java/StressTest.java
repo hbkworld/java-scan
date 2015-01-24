@@ -40,7 +40,7 @@ public final class StressTest {
     private StressTest() {
     }
 
-    public static void main(String[] args) {
+    public static void main(String... args) {
         LOGGER.info("Test without Cache:\n");
         final StressTestMessageReceiver mr = new StressTestMessageReceiver(53, 50000);
         final MessageParser mp = new MessageParser(false);
