@@ -29,7 +29,6 @@
 package com.hbm.devices.configure;
 
 import java.util.Observable;
-import java.util.UUID;
 
 import com.hbm.devices.scan.messages.Configure;
 
