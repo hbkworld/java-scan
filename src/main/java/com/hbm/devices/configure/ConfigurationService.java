@@ -28,26 +28,20 @@
 
 package com.hbm.devices.configure;
 
-import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Configure;
 import com.hbm.devices.scan.messages.ConfigureParams;
-import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
-import com.hbm.devices.scan.util.ScanInterfaces;
 
 /** 
  *This is the main service which is used to configure a device.<p>
@@ -64,10 +58,6 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  * {@link ConfigurationService#sendConfiguration(ConfigureParams,
  * ConfigCallback, int)}.<p>
  *
- * The {@link ConfigureParams} are also checked if they conform to the
- * HBM network discovery and configuration protocol and the user will be
- * notified if the configuration parameters are not valid.
- * 
  * @since 1.0
  *
  */
@@ -75,12 +65,9 @@ public class ConfigurationService implements Observer {
 
     private final Map<String, ConfigQuery> awaitingResponses;
 
-    // private MulticastSender multicastSender;
     private final ResponseListener responseListener;
-    // private Thread responseListenerThread;
 
     private final ConfigurationSender configSender;
-    // private final ConfigParser configParser;
 
     private final ScheduledThreadPoolExecutor executor;
 
