@@ -28,20 +28,20 @@
 
 package com.hbm.devices.configure;
 
+import java.util.concurrent.Callable;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
+import java.util.logging.Logger;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 
-import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Configure;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Response;
+import com.hbm.devices.scan.ScanConstants;
 
 /** 
  *This is the main service which is used to configure a device.<p>
