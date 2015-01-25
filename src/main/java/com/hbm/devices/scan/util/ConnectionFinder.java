@@ -59,17 +59,17 @@ public class ConnectionFinder {
     public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         if (preferIPv6) {
             final InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
-            if (address != null) {
-                return address;
-            } else {
+            if (address == null) {
                 return ipv4ConnectionFinder.getConnectableAddress(announce);
+            } else {
+                return address;
             }
         } else {
             final InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
-            if (address != null) {
-                return address;
-            } else {
+            if (address == null) {
                 return ipv6ConnectionFinder.getConnectableAddress(announce);
+            } else {
+                return address;
             }
         }
     }
