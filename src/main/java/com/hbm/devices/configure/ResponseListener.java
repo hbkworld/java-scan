@@ -69,18 +69,6 @@ public class ResponseListener extends Observable implements Observer, Runnable {
     }
 
     /**
-     * Don't use this constructor. It is only used for the JUnit tests
-     * 
-     */
-    @SuppressWarnings("unused")
-    private ResponseListener(Observable receiver) {
-        final MessageParser messageParser = new MessageParser();
-
-        receiver.addObserver(messageParser);
-        messageParser.addObserver(this);
-    }
-
-    /**
      * This method starts the listening socket to receive incoming responses
      */
     @Override
