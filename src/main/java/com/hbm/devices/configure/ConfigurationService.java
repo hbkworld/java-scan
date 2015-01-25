@@ -212,9 +212,9 @@ public class ConfigurationService implements Observer {
 
 class ConfigQuery {
 
-    final private Configure config;
-    final private int timeout;
-    final private ConfigCallback callback;
+    private final Configure config;
+    private final int timeout;
+    private final ConfigCallback callback;
 
     ConfigQuery(Configure config, ConfigCallback callback, int timeout) {
         this.config = config;
