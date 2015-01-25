@@ -30,6 +30,7 @@ package com.hbm.devices.scan.messages;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
@@ -54,14 +55,14 @@ public class AnnounceCacheTest {
     @Test
     public void AddDeviceToCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
-        assertTrue(parser.getCache().getCacheAmount() == 1);
-        assertTrue(parser.getCache().getPathsAmount() == 1);
+        assertSame(parser.getCache().getCacheAmount(), 1);
+        assertSame(parser.getCache().getPathsAmount(), 1);
         assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
 
         fakeReceiver.emitSingleCorrectMessageDifferentDevice();
 
-        assertTrue(parser.getCache().getCacheAmount() == 2);
-        assertTrue(parser.getCache().getPathsAmount() == 2);
+        assertSame(parser.getCache().getCacheAmount(), 2);
+        assertSame(parser.getCache().getPathsAmount(), 2);
         assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
         assertTrue(parser.getCache().hasStringInCache(
                 FakeMessageReceiver.CORRECT_MESSAGE_DIFFERENT_DEVICE));
@@ -77,8 +78,8 @@ public class AnnounceCacheTest {
     public void DontAddTwiceTest() {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessage();
-        assertTrue(parser.getCache().getCacheAmount() == 1);
-        assertTrue(parser.getCache().getPathsAmount() == 1);
+        assertSame(parser.getCache().getCacheAmount(), 1);
+        assertSame(parser.getCache().getPathsAmount(), 1);
     }
 
     @Test
@@ -86,8 +87,8 @@ public class AnnounceCacheTest {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessageDifferentServices();
 
-        assertTrue(parser.getCache().getCacheAmount() == 1);
-        assertTrue(parser.getCache().getPathsAmount() == 1);
+        assertSame(parser.getCache().getCacheAmount(), 1);
+        assertSame(parser.getCache().getPathsAmount(), 1);
         assertFalse(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
         assertTrue(parser.getCache().hasStringInCache(
                 FakeMessageReceiver.CORRECT_MESSAGE_DIFFERENT_SERVICES));
