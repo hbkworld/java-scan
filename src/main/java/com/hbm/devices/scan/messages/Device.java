@@ -42,6 +42,7 @@ public class Device {
     private String type;
     private String familyType;
     private String firmwareVersion;
+
     @SerializedName("isRouter")
     private final boolean router = false;
 
