@@ -50,7 +50,7 @@ public class ConfigurationSender {
     }
 
     public void sendConfiguration(Configure configuration) throws IOException {
-        String message = getJsonString(configuration);
+        final String message = getJsonString(configuration);
         sender.sendMessage(message);
     }
 
