@@ -30,8 +30,8 @@ package com.hbm.devices.scan.messages;
 
 public class IPv4EntryManual {
 
-    private String manualAddress;
-    private String manualNetmask;
+    private final String manualAddress;
+    private final String manualNetmask;
 
     public IPv4EntryManual(String address, String netmask) {
         this.manualAddress = address;
