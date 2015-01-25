@@ -38,6 +38,11 @@ import java.io.IOException;
  */
 public class AnnounceReceiver extends MulticastMessageReceiver {
 
+    /**
+     * Constructs an {@code AnnounceReceiver} object.
+     *
+     * @since 1.0
+     */
     public AnnounceReceiver() throws IOException {
         super(ScanConstants.ANNOUNCE_ADDRESS, ScanConstants.ANNOUNCE_PORT);
     }
