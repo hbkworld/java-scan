@@ -56,13 +56,12 @@ import com.hbm.devices.scan.util.ScanInterfaces;
 
 public class Receiver implements Observer {
 
-    private final Collection<NetworkInterface> scanInterfaces;
     private final ConnectionFinder connectionFinder;
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public Receiver() throws SocketException {
-        scanInterfaces = new ScanInterfaces().getInterfaces();
+        final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
         connectionFinder = new ConnectionFinder(scanInterfaces, false);
     }
 
