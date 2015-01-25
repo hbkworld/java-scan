@@ -38,7 +38,6 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import com.hbm.devices.configure.Noticeable;
 import com.hbm.devices.scan.ScanConstants;
 
 /**
@@ -56,9 +55,8 @@ public class MulticastSender {
     private final Collection<NetworkInterface> interfaces;
     private final Charset charset;
     private final InetAddress configureAddress;
-    private final Noticeable noticeable;
 
-    public MulticastSender(Collection<NetworkInterface> ifs, Noticeable noticeable) throws IOException {
+    public MulticastSender(Collection<NetworkInterface> ifs) throws IOException {
         charset = Charset.forName("UTF-8");
         configureAddress = InetAddress.getByName(ScanConstants.CONFIGURATION_ADDRESS);
         socket = new MulticastSocket(null);
@@ -67,8 +65,6 @@ public class MulticastSender {
         
         interfaces = new LinkedList<NetworkInterface>();
         interfaces.addAll(ifs);
-        this.noticeable = noticeable;
-        // TODO: join all interfaces
     }
 
     public void sendMessage(String msg) throws IOException {
@@ -82,7 +78,6 @@ public class MulticastSender {
     }
 
     public void shutdown() {
-        // TODO: leave all interfaces
         socket.close();
     }
 }
