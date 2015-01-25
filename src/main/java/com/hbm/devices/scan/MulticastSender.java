@@ -37,8 +37,6 @@ import java.net.NetworkInterface;
 import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Observable;
-import java.util.Observer;
 
 import com.hbm.devices.configure.Noticeable;
 import com.hbm.devices.scan.ScanConstants;
@@ -49,12 +47,10 @@ import com.hbm.devices.scan.ScanConstants;
  * All network interfaces that are eligible to receive IPv4 multicast messages (see
  * {@link com.hbm.devices.scan.util.ScanInterfaces}) are joined.
  * <p>
- * This class is an observer, so an {@link java.util.Observable} has to register an instance of this
- * class with addObserver(), in order to send a message.
  * 
  * @since 1.0
  */
-public class MulticastSender implements Observer {
+public class MulticastSender {
 
     private final MulticastSocket socket;
     private final Collection<NetworkInterface> interfaces;
@@ -86,22 +82,7 @@ public class MulticastSender implements Observer {
     }
 
     public void shutdown() {
+        // TODO: leave all interfaces
         socket.close();
-    }
-
-    /**
-     * This method receives a String and transmits it via the multicast socket
-     */
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg instanceof String) {
-            try {
-                this.sendMessage((String) arg);
-            } catch (Exception e) {
-                if (this.noticeable != null) {
-                    this.noticeable.onException(e);
-                }
-            }
-        }
     }
 }

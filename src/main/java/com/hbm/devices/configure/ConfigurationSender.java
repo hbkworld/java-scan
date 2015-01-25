@@ -28,28 +28,37 @@
 
 package com.hbm.devices.configure;
 
-import java.util.Observable;
+import java.io.IOException;
 
+import com.google.gson.Gson;
+import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.messages.Configure;
 
 /**
- * This class is used to send a configuration to a device. Its main task is to generate an unique
- * query id. When the device receives the query, it sends a response. This response contains this
- * query id, so the service can match the response to the query.
  * 
  * @since 1.0
  *
  */
-public class ConfigurationSender extends Observable {
+public class ConfigurationSender {
 
-    private final String forcedQueryID;
+    private final MulticastSender sender;
+    private final Gson gson;
 
-    public ConfigurationSender() {
-        this.forcedQueryID = null;
+    public ConfigurationSender(MulticastSender sender) {
+        this.sender = sender;
+        gson = new Gson();
     }
 
-    public void sendQuery(Configure configuration) {
-        setChanged();
-        notifyObservers();
+    public void sendConfiguration(Configure configuration) throws IOException {
+        String message = getJsonString(configuration);
+        sender.sendMessage(message);
+    }
+
+    public void shutdown() {
+        sender.shutdown();
+    }
+
+    private String getJsonString(Configure configuration) {
+        return gson.toJson(configuration);
     }
 }

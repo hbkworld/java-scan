@@ -28,6 +28,7 @@
 
 package com.hbm.devices.configure;
 
+import java.io.IOException;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -48,7 +49,7 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * It sends the configuration settings and listen to responses. If no
  * response is received within a certain time, a callback method ({@link
- * ConfigCallback#onTimeout(int timeout)}) is called.  Otherwise if a
+ * ConfigCallback#onTimeout(int timeout)}) is called. Otherwise if a
  * response is received, either {@link
  * ConfigCallback#onSuccess(Response)} or {@link
  * ConfigCallback#onError(Response)} is called accordingly
@@ -100,6 +101,7 @@ public class ConfigurationService implements Observer {
         } catch (InterruptedException e) {
             LOGGER.info("Interrupted while waiting for termination of timer tasks!\n");
         }
+        configSender.shutdown();
     }
 
     /**
@@ -155,16 +157,17 @@ public class ConfigurationService implements Observer {
      *              the interface with the callback methods for error
      *              handling
      * @param timeout
-     *              the time in ms, the service waits for a response
+     *              the time in ms, the service waits for a response.
+     *              Must be greater than 0.
      */
     public void sendConfiguration(final ConfigureParams configParams,
-        final ConfigCallback callback, int timeout) {
+        final ConfigCallback callback, int timeout) throws IOException {
 
         if (configParams == null) {
             throw new IllegalArgumentException("configParams must not be null");
         }
         if (timeout <= 0) {
-            throw new IllegalArgumentException("timeout must be greater/equal than 0");
+            throw new IllegalArgumentException("timeout must be greater than 0");
         }
         if (callback == null) {
             throw new IllegalArgumentException("the callback parameter must not be null");
@@ -178,7 +181,7 @@ public class ConfigurationService implements Observer {
         final TimeoutTimerTask task = new TimeoutTimerTask(configQuery);
         executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
-        configSender.sendQuery(config);
+        configSender.sendConfiguration(config);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
