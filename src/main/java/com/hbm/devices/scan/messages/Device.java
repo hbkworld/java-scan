@@ -55,7 +55,6 @@ public class Device {
      *            uuid itself must be gathered from an announce datagram.
      */
     public Device(String uuid) {
-        this();
         this.uuid = uuid;
     }
 
