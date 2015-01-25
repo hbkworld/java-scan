@@ -26,43 +26,71 @@
  * SOFTWARE.
  */
 
+import java.net.NetworkInterface;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hbm.devices.configure.ConfigCallback;
+import com.hbm.devices.configure.ConfigurationSender;
 import com.hbm.devices.configure.ConfigurationService;
 import com.hbm.devices.configure.Device;
 import com.hbm.devices.configure.Interface;
 import com.hbm.devices.configure.NetSettings;
+import com.hbm.devices.configure.ResponseListener;
+import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
+import com.hbm.devices.scan.messages.Response;
+import com.hbm.devices.scan.util.ScanInterfaces;
 
-public final class Sender {
+
+public final class Sender implements ConfigCallback {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    private Sender() {
+    private final ConfigurationService service;
+
+    private Sender() throws IOException {
+        final ResponseListener listener = new ResponseListener();
+        final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
+        final MulticastSender sender = new MulticastSender(scanInterfaces);
+        final ConfigurationSender parser = new ConfigurationSender(sender);
+        service = new ConfigurationService(parser, listener);
+    }
+
+    @Override
+    public void onSuccess(Response response) {
+        LOGGER.info("Success:\n");
+        LOGGER.info(" result: " + response.getResult() + "\n");
+    }
+
+    @Override
+    public void onError(Response response) {
+        LOGGER.info("Error:\n");
+        LOGGER.info(" code: " + response.getError().getCode() + "\n");
+        LOGGER.info(" message: " + response.getError().getMessage() + "\n");
+        LOGGER.info(" data: " + response.getError().getData() + "\n");
+    }
+
+    @Override
+    public void onTimeout(int timeout) {
+        LOGGER.info("No response is received in " + timeout + "ms\n");
+        service.shutdown();
     }
 
     public static void main(String... args) {
-		/*
-        try {
 
-            final ConfigurationService service = new ConfigurationService();
+        try {
+            final Sender s = new Sender();
             final Device device = new Device("0009E5001571");
             final NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
             final ConfigureParams configParams = new ConfigureParams(device, settings);
-
-            try {
-                service.sendConfiguration(configParams, new SimpleCallback(), 5000);
-                service.shutdown();
-            } catch (Exception e) {
-                LOGGER.log(Level.SEVERE, "Can't send device configuration!", e);
-            }
-
-        } catch (Exception e) {
+            s.service.sendConfiguration(configParams, s, 5000);
+        } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
         }
-		*/
-    }
+     }
 }
