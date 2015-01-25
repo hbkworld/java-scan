@@ -1,0 +1,2 @@
+Test shutdown of ConfigurationService if outstanding responses (timers) are set.
+eleminate checkForErrors. check in Constructor.
