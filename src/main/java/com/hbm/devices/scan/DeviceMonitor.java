@@ -48,10 +48,13 @@ import com.hbm.devices.scan.messages.CommunicationPath;
 /**
  * This class provides the concept of posting new/lost device events.
  * <p>
- * The class reads {@link CommunicationPath} objects, looks the up in a private hashmap and notifies
- * a {@link NewDeviceEvent} if the announce describes a devices that wasn't known upto now.
- * Furthermore, it notifies a {@link LostDeviceEvent} if no new announce for a particular device was
- * received during the expiration period.
+
+ * The class gets{@link CommunicationPath} objects via the {@link
+ * Observer#update} method and notifies a {@link NewDeviceEvent} if the
+ * {@link CommunicationPath} object wasn't known upto now.
+ * Furthermore, it notifies a {@link LostDeviceEvent} if no new {@link
+ * CommunicationPath} object was received during the expiration period
+ * of the enclosed {@link Announce} object.
  *
  * @since 1.0
  */
@@ -63,12 +66,25 @@ public class DeviceMonitor extends Observable implements Observer {
     private static final Logger LOGGER = 
         Logger.getLogger(ScanConstants.LOGGER_NAME);
 
+    /**
+     * Constructs a new {@code DeviceMonitor} object.
+     *
+     * @since 1.0
+     */
     public DeviceMonitor() {
         deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(100);
         futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(100);
         executor = new ScheduledThreadPoolExecutor(1);
     }
 
+    /**
+     * Stops the {@code DeviceMonitor}.
+     *
+     * There is no guarantee that connected {@link Observer}s will be
+     * notified.
+     *
+     * @since 1.0
+     */
     public void stop() {
         executor.shutdown();
         try {
@@ -125,7 +141,7 @@ public class DeviceMonitor extends Observable implements Observer {
         return expiration * 1000;
     }
 
-    class AnnounceTimerTask implements Callable<Void> {
+    private class AnnounceTimerTask implements Callable<Void> {
         private final CommunicationPath communicationPath;
 
         AnnounceTimerTask(CommunicationPath ap) {
