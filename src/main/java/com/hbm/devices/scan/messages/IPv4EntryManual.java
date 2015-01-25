@@ -33,11 +33,7 @@ public class IPv4EntryManual {
     private String manualAddress;
     private String manualNetmask;
 
-    protected IPv4EntryManual() {
-    }
-
     public IPv4EntryManual(String address, String netmask) {
-        this();
         this.manualAddress = address;
         this.manualNetmask = netmask;
     }

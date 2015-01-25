@@ -45,9 +45,6 @@ public class FakeMulticastSender implements Observer {
 
     private String lastSent;
 
-    public FakeMulticastSender() {
-    }
-
     public String getLastSent() {
         return this.lastSent;
     }

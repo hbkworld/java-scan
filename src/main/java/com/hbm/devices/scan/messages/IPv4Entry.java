@@ -33,9 +33,6 @@ public class IPv4Entry {
     private String address;
     private String netmask;
 
-    protected IPv4Entry() {
-    }
-        
     public String getAddress() {
         return address;
     }
