@@ -200,8 +200,9 @@ public class ConfigurationService implements Observer {
         @Override
         public Void call() throws Exception {
             synchronized (awaitingResponses) {
-                if (awaitingResponses.containsKey(configQuery.getQueryID())) {
-                    awaitingResponses.remove(configQuery.getQueryID());
+                String queryID = configQuery.getQueryID();
+                if (awaitingResponses.containsKey(queryID)) {
+                    awaitingResponses.remove(queryID);
                     configQuery.getConfigCallback().onTimeout(configQuery.getTimeout());
                 }
             }
