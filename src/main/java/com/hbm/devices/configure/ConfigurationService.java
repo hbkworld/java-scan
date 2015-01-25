@@ -29,15 +29,16 @@
 package com.hbm.devices.configure;
 
 import java.io.IOException;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.HashMap;
-import java.util.logging.Logger;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.messages.Configure;
 import com.hbm.devices.scan.messages.ConfigureParams;
@@ -95,13 +96,18 @@ public class ConfigurationService implements Observer {
     public void shutdown() {
         responseListener.deleteObserver(this);
 
-        executor.shutdownNow();
+        executor.shutdown();
         try {
-            executor.awaitTermination(1, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            LOGGER.info("Interrupted while waiting for termination of timer tasks!\n");
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+                if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                    LOGGER.log(Level.SEVERE, "Interrupted while waiting for termination of timer tasks!\n");
+                }
+            }
+        } catch (InterruptedException ie) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
         }
-        configSender.shutdown();
     }
 
     /**
