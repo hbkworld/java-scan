@@ -36,6 +36,8 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.hbm.devices.scan.events.LostDeviceEvent;
 import com.hbm.devices.scan.events.NewDeviceEvent;
@@ -58,6 +60,8 @@ public class DeviceMonitor extends Observable implements Observer {
     private final Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
     private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
     private final ScheduledThreadPoolExecutor executor;
+    private static final Logger LOGGER = 
+        Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public DeviceMonitor() {
         deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(100);
@@ -66,11 +70,17 @@ public class DeviceMonitor extends Observable implements Observer {
     }
 
     public void stop() {
-        executor.shutdownNow();
+        executor.shutdown();
         try {
-            executor.awaitTermination(1, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            // Ignore
+            if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                executor.shutdownNow();
+                if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
+                    LOGGER.log(Level.SEVERE, "Interrupted while waiting for termination of timer tasks!\n");
+                }
+            }
+        } catch (InterruptedException ie) {
+            executor.shutdownNow();
+            Thread.currentThread().interrupt();
         }
     }
 
