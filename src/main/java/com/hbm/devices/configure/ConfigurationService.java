@@ -181,7 +181,7 @@ public class ConfigurationService implements Observer {
 
         final String queryID = UUID.randomUUID().toString();
         final Configure config = new Configure(configParams, queryID);
-        ConfigQuery configQuery = new ConfigQuery(config, callback, timeout);
+        final ConfigQuery configQuery = new ConfigQuery(config, callback, timeout);
 
         awaitingResponses.put(queryID, configQuery);
         final TimeoutTimerTask task = new TimeoutTimerTask(configQuery);
