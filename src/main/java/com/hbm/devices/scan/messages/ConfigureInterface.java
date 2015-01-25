@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.configure;
+package com.hbm.devices.scan.messages;
 
 import com.hbm.devices.scan.messages.IPv4EntryManual;
 import com.hbm.devices.scan.messages.Interface.Method;
@@ -38,18 +38,18 @@ import com.hbm.devices.scan.messages.MissingDataException;
  * @since 1.0
  *
  */
-public class Interface {
+public class ConfigureInterface {
 
     private String name;
     private IPv4EntryManual ipv4;
     private String configurationMethod;
 
     /**
-     * This constructor is used to instantiate an {@link Interface} object.
+     * This constructor is used to instantiate an {@link ConfigureInterface} object.
      * <p>
      * Note: The parameter {@code configMethod} must not be {@link Method#MANUAL}. If you want to
      * set a manual ipv4 use the constructor
-     * {@link #Interface(String, com.hbm.devices.scan.messages.Interface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
+     * {@link #ConfigureInterface(String, com.hbm.devices.scan.messages.Interface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
      * <p>
      * 
      * @param interfaceName
@@ -58,12 +58,12 @@ public class Interface {
      *            this parameter specifies the ip configuration method.
      * 
      */
-    public Interface(String interfaceName, Method configMethod) {
+    public ConfigureInterface(String interfaceName, Method configMethod) {
         this(interfaceName, configMethod, null);
     }
 
     /**
-     * This constructor is used to instantiate an {@link Interface} object.
+     * This constructor is used to instantiate an {@link ConfigureInterface} object.
      * 
      * @param interfaceName
      *            this parameter specifies the interface
@@ -72,7 +72,7 @@ public class Interface {
      * @param ipv4
      *            this parameter specifies the ip address which is set to this interface
      */
-    public Interface(String interfaceName, Method configMethod, IPv4EntryManual ipv4) {
+    public ConfigureInterface(String interfaceName, Method configMethod, IPv4EntryManual ipv4) {
         this.name = interfaceName;
         this.configurationMethod = configMethod.toString();
         this.ipv4 = ipv4;
@@ -105,28 +105,28 @@ public class Interface {
     }
 
     /**
-     * This method checks the {@link Interface} object for errors and if it conforms to the HBM
+     * This method checks the {@link ConfigureInterface} object for errors and if it conforms to the HBM
      * network discovery and configuration protocol.
      * 
      * @param iface
-     *            the {@link Interface} object, which should be checked for errors
+     *            the {@link ConfigureInterface} object, which should be checked for errors
      * @throws MissingDataException
      *          if some information required by the specification is not
      *          included  in {@code iface.}
      * @throws IllegalArgumentException
      *          if {@code iface} is null.
      */
-    public static void checkForErrors(Interface iface) throws MissingDataException {
+    public static void checkForErrors(ConfigureInterface iface) throws MissingDataException {
         if (iface == null) {
             throw new IllegalArgumentException("interface object must not be null");
         }
 
         if ((iface.name == null) || (iface.name.length() == 0)) {
-            throw new MissingDataException("No name in Interface");
+            throw new MissingDataException("No name in ConfigureInterface");
         }
 
         if (iface.configurationMethod == null) {
-            throw new MissingDataException("No configuration method in Interface");
+            throw new MissingDataException("No configuration method in ConfigureInterface");
         }
 
         if (iface.configurationMethod.equals(Method.MANUAL.toString()) && iface.ipv4 == null) {

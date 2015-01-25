@@ -30,32 +30,26 @@ package com.hbm.devices.scan.messages;
 
 public class ConfigureParams {
 
-    private com.hbm.devices.configure.Device device;
-    private com.hbm.devices.configure.NetSettings netSettings;
+    private ConfigureDevice device;
+    private ConfigureNetSettings netSettings;
     private int ttl;
 
-    private ConfigureParams() {
-    }
-
-    public ConfigureParams(com.hbm.devices.configure.Device device,
-            com.hbm.devices.configure.NetSettings netSettings) {
-        this();
+    public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings) {
         this.device = device;
         this.netSettings = netSettings;
         this.ttl = 1;
     }
 
-    public ConfigureParams(com.hbm.devices.configure.Device device,
-            com.hbm.devices.configure.NetSettings netSettings, int ttl) {
+    public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings, int ttl) {
         this(device, netSettings);
         this.ttl = ttl;
     }
 
-    public com.hbm.devices.configure.Device getDevice() {
+    public ConfigureDevice getDevice() {
         return device;
     }
 
-    public com.hbm.devices.configure.NetSettings getNetSettings() {
+    public ConfigureNetSettings getNetSettings() {
         return netSettings;
     }
 
@@ -95,11 +89,11 @@ public class ConfigureParams {
         if (params.device == null) {
             throw new IllegalArgumentException("No device in ConfigureParams");
         }
-        com.hbm.devices.configure.Device.checkForErrors(params.device);
+        ConfigureDevice.checkForErrors(params.device);
 
         if (params.netSettings == null) {
             throw new IllegalArgumentException("No net settings in ConfigureParams");
         }
-        com.hbm.devices.configure.NetSettings.checkForErrors(params.netSettings);
+        ConfigureNetSettings.checkForErrors(params.netSettings);
     }
 }

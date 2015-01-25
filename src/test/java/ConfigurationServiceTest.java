@@ -41,15 +41,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.configure.ConfigCallback;
 import com.hbm.devices.configure.ConfigurationService;
-import com.hbm.devices.configure.Device;
 import com.hbm.devices.configure.FakeDeviceEmulator;
 import com.hbm.devices.configure.FakeMulticastSender;
-import com.hbm.devices.configure.Interface;
-import com.hbm.devices.configure.NetSettings;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.MissingDataException;
+import com.hbm.devices.scan.messages.ConfigureDevice;
+import com.hbm.devices.scan.messages.ConfigureInterface;
+import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
+import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {

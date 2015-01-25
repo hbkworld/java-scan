@@ -35,12 +35,12 @@ import java.util.logging.Logger;
 import com.hbm.devices.configure.ConfigCallback;
 import com.hbm.devices.configure.ConfigurationSender;
 import com.hbm.devices.configure.ConfigurationService;
-import com.hbm.devices.configure.Device;
-import com.hbm.devices.configure.Interface;
-import com.hbm.devices.configure.NetSettings;
+import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.configure.ResponseListener;
 import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.ScanConstants;
+import com.hbm.devices.scan.messages.ConfigureDevice;
+import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
 import com.hbm.devices.scan.messages.Response;
@@ -85,8 +85,8 @@ public final class Sender implements ConfigCallback {
 
         try {
             final Sender s = new Sender();
-            final Device device = new Device("0009E5001571");
-            final NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
+            final ConfigureDevice device = new ConfigureDevice("0009E5001571");
+            final ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
             final ConfigureParams configParams = new ConfigureParams(device, settings);
             s.service.sendConfiguration(configParams, s, 5000);
         } catch (IOException e) {

@@ -26,11 +26,9 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.configure;
+package com.hbm.devices.scan.messages;
 
 import com.google.gson.annotations.SerializedName;
-import com.hbm.devices.scan.messages.MissingDataException;
-import com.hbm.devices.scan.messages.DefaultGateway;
 
 /**
  * This class stores the network properties which are send in a configuration request
@@ -38,37 +36,33 @@ import com.hbm.devices.scan.messages.DefaultGateway;
  * @since 1.0
  *
  */
-public class NetSettings {
+public class ConfigureNetSettings {
 
     private DefaultGateway defaultGateway;
 
     @SerializedName("interface")
-    private Interface iface;
-
-    private NetSettings() {
-    }
+    private ConfigureInterface iface;
 
     /**
-     * This constructor is used to instantiate a {@link NetSettings} object. The default Gateway is
+     * This constructor is used to instantiate a {@link ConfigureNetSettings} object. The default Gateway is
      * not changed.
      * 
      * @param iface
      *            the interface settings
      */
-    public NetSettings(Interface iface) {
+    public ConfigureNetSettings(ConfigureInterface iface) {
         this(iface, null);
     }
 
     /**
-     * This constructor is used to instantiate a {@link NetSettings} object.
+     * This constructor is used to instantiate a {@link ConfigureNetSettings} object.
      * 
      * @param iface
      *            the interface settings
      * @param defaultGateway
      *            the new defaultGateway
      */
-    public NetSettings(Interface iface, DefaultGateway defaultGateway) {
-        this();
+    public ConfigureNetSettings(ConfigureInterface iface, DefaultGateway defaultGateway) {
         this.iface = iface;
         this.defaultGateway = defaultGateway;
     }
@@ -85,7 +79,7 @@ public class NetSettings {
      * 
      * @return returns the interface settings
      */
-    public Interface getInterface() {
+    public ConfigureInterface getInterface() {
         return iface;
     }
 
@@ -103,24 +97,24 @@ public class NetSettings {
     }
 
     /**
-     * This method checks the {@link NetSettings} object for errors and if it conforms to the HBM
+     * This method checks the {@link ConfigureNetSettings} object for errors and if it conforms to the HBM
      * network discovery and configuration protocol.
      * 
      * @param settings
-     *          the {@link NetSettings} object, which should be checked for errors
+     *          the {@link ConfigureNetSettings} object, which should be checked for errors
      * @throws MissingDataException
      *          if some information required by the specification is missing in {@code settings}.
      * @throws IllegalArgumentException
      *          if {@code settings} is null.
      */
-    public static void checkForErrors(NetSettings settings) throws MissingDataException {
+    public static void checkForErrors(ConfigureNetSettings settings) throws MissingDataException {
         if (settings == null) {
             throw new IllegalArgumentException("settings object must not be null");
         }
 
         if (settings.iface == null) {
-            throw new MissingDataException("No interface in NetSettings");
+            throw new MissingDataException("No interface in ConfigureNetSettings");
         }
-        Interface.checkForErrors(settings.iface);
+        ConfigureInterface.checkForErrors(settings.iface);
     }
 }

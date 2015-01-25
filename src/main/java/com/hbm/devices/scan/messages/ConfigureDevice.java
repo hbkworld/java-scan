@@ -26,9 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.configure;
-
-import com.hbm.devices.scan.messages.MissingDataException;
+package com.hbm.devices.scan.messages;
 
 /**
  * The device class specifies which device should be configured.
@@ -36,11 +34,11 @@ import com.hbm.devices.scan.messages.MissingDataException;
  * @since 1.0
  *
  */
-public class Device {
+public class ConfigureDevice {
 
     private final String uuid;
 
-    public Device(String uuid) {
+    public ConfigureDevice(String uuid) {
         this.uuid = uuid;
     }
 
@@ -54,27 +52,27 @@ public class Device {
 
     @Override
     public String toString() {
-        return "Device:\n\t uuid: " + uuid + "\n";
+        return "ConfigureDevice:\n\t uuid: " + uuid + "\n";
     }
 
     /**
-     * This method checks the {@link Device} object for errors and if it conforms to the HBM network
+     * This method checks the {@link ConfigureDevice} object for errors and if it conforms to the HBM network
      * discovery and configuration protocol.
      * 
      * @param device
-     *          the {@link Device} object, which should be checked for errors
+     *          the {@link ConfigureDevice} object, which should be checked for errors
      * @throws MissingDataException
      *          if information required by the specification is mssing in {@code device}.
      * @throws IllegalArgumentException
      *          if {@code device} is null.
      */
-    public static void checkForErrors(Device device) throws MissingDataException {
+    public static void checkForErrors(ConfigureDevice device) throws MissingDataException {
         if (device == null) {
             throw new IllegalArgumentException("device object must not be null");
         }
 
         if ((device.uuid == null) || (device.uuid.length() == 0)) {
-            throw new MissingDataException("No uuid in Device");
+            throw new MissingDataException("No uuid in ConfigureDevice");
         }
     }
 
