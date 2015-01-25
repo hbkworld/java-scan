@@ -46,9 +46,6 @@ public class Device {
     @SerializedName("isRouter")
     private final boolean router = false;
 
-    private Device() {
-    }
-
     /**
      * @param uuid
      *            This string contains the unique ID of the device that should be configured. The
