@@ -35,13 +35,12 @@ public class ConfigureParams {
     private int ttl;
 
     public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings) {
-        this.device = device;
-        this.netSettings = netSettings;
-        this.ttl = 1;
+        this(device, netSettings, 1);
     }
 
     public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings, int ttl) {
-        this(device, netSettings);
+        this.device = device;
+        this.netSettings = netSettings;
         this.ttl = ttl;
     }
 
@@ -53,11 +52,6 @@ public class ConfigureParams {
         return netSettings;
     }
 
-    /**
-     * @return An optional key which limits the number of router hops a configure request/response
-     *         can cross. Leaving out this key should default to a ttl (Time to live) of 1 when
-     *         sending datagrams, so no router boundary is crossed.
-     */
     public int getTtl() {
         return ttl;
     }
