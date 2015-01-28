@@ -61,8 +61,12 @@ public class ConfigureNetSettings {
      *            the interface settings
      * @param defaultGateway
      *            the new defaultGateway
+     * @throws IllegalArgumentException if interface is {@code null}.
      */
     public ConfigureNetSettings(ConfigureInterface iface, DefaultGateway defaultGateway) {
+        if (iface == null) {
+            throw new IllegalArgumentException("No interface given!");
+        }
         this.iface = iface;
         this.defaultGateway = defaultGateway;
     }
@@ -94,27 +98,5 @@ public class ConfigureNetSettings {
         }
 
         return sb.toString();
-    }
-
-    /**
-     * This method checks the {@link ConfigureNetSettings} object for errors and if it conforms to the HBM
-     * network discovery and configuration protocol.
-     * 
-     * @param settings
-     *          the {@link ConfigureNetSettings} object, which should be checked for errors
-     * @throws MissingDataException
-     *          if some information required by the specification is missing in {@code settings}.
-     * @throws IllegalArgumentException
-     *          if {@code settings} is null.
-     */
-    public static void checkForErrors(ConfigureNetSettings settings) throws MissingDataException {
-        if (settings == null) {
-            throw new IllegalArgumentException("settings object must not be null");
-        }
-
-        if (settings.iface == null) {
-            throw new MissingDataException("No interface in ConfigureNetSettings");
-        }
-        ConfigureInterface.checkForErrors(settings.iface);
     }
 }

@@ -67,14 +67,26 @@ public class ConfigureInterface {
      * 
      * @param interfaceName
      *            this parameter specifies the interface
-     * @param configMethod
+     * @param configurationMethod
      *            this parameter specifies the ip configuration method.
      * @param ipv4
      *            this parameter specifies the ip address which is set to this interface
+     * @throws IllegalArgumentException if no interface name given of no
+     * configuration method given or if the configuration method is
+     * {@code manual} but no IP address given.
      */
-    public ConfigureInterface(String interfaceName, Method configMethod, IPv4EntryManual ipv4) {
+    public ConfigureInterface(String interfaceName, Method configurationMethod, IPv4EntryManual ipv4) {
+        if ((interfaceName == null) || (interfaceName.length() == 0)) {
+            throw new IllegalArgumentException("No interface name given!");
+        }
+        if (configurationMethod == null) {
+            throw new IllegalArgumentException("No configuration method given!");
+        }
+        if (configurationMethod.equals(Method.MANUAL.toString()) && ipv4 == null) {
+            throw new IllegalArgumentException("Manual interface configuration but no IP given!");
+        }
         this.name = interfaceName;
-        this.configurationMethod = configMethod.toString();
+        this.configurationMethod = configurationMethod.toString();
         this.ipv4 = ipv4;
     }
 
@@ -102,39 +114,5 @@ public class ConfigureInterface {
             .append(configurationMethod).append("\n\t  ip: ")
             .append(ipv4).append('\n');
         return result.toString();
-    }
-
-    /**
-     * This method checks the {@link ConfigureInterface} object for errors and if it conforms to the HBM
-     * network discovery and configuration protocol.
-     * 
-     * @param iface
-     *            the {@link ConfigureInterface} object, which should be checked for errors
-     * @throws MissingDataException
-     *          if some information required by the specification is not
-     *          included  in {@code iface.}
-     * @throws IllegalArgumentException
-     *          if {@code iface} is null.
-     */
-    public static void checkForErrors(ConfigureInterface iface) throws MissingDataException {
-        if (iface == null) {
-            throw new IllegalArgumentException("interface object must not be null");
-        }
-
-        if ((iface.name == null) || (iface.name.length() == 0)) {
-            throw new MissingDataException("No name in ConfigureInterface");
-        }
-
-        if (iface.configurationMethod == null) {
-            throw new MissingDataException("No configuration method in ConfigureInterface");
-        }
-
-        if (iface.configurationMethod.equals(Method.MANUAL.toString()) && iface.ipv4 == null) {
-            throw new MissingDataException("No ipv4 in Interface");
-        }
-        if (iface.configurationMethod.equals(Method.MANUAL.toString())) {
-            // only check if there has to be a ipv4
-            IPv4EntryManual.checkForErrors(iface.ipv4);
-        }
     }
 }

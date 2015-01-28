@@ -34,6 +34,12 @@ public class IPv4EntryManual {
     private final String manualNetmask;
 
     public IPv4EntryManual(String address, String netmask) {
+        if (address == null) {
+            throw new IllegalArgumentException("address parameter must not be null");
+        }
+        if (netmask == null) {
+            throw new IllegalArgumentException("netmask parameter must not be null");
+        }
         this.manualAddress = address;
         this.manualNetmask = netmask;
     }
@@ -50,14 +56,4 @@ public class IPv4EntryManual {
     public String toString() {
         return manualAddress + "/" + manualNetmask;
     }
-
-    public static void checkForErrors(IPv4EntryManual ip) throws MissingDataException {
-        if (ip == null) {
-            throw new IllegalArgumentException("ip object must not be null");
-        }
-
-        // TODO: hier weiß ich nicht genau ob ipaddress & netmask vorhanden sein muss, oder nur
-        // (mind.) eins
-    }
-
 }
