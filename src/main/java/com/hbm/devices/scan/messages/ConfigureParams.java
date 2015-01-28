@@ -28,20 +28,46 @@
 
 package com.hbm.devices.scan.messages;
 
+/**
+ * This class holt all information to configure a device via the HBM
+ * Network Discovery and Configuration Protocol for Embedded Devices.
+ */
 public class ConfigureParams {
 
     private ConfigureDevice device;
     private ConfigureNetSettings netSettings;
     private int ttl;
 
-    public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings) {
-        this(device, netSettings, 1);
-    }
-
+    /**
+     * Construct an object holding all information to configure a
+     * device.
+     * 
+     * @param device the device to be configured.
+     * @param netSettings the network settings which shal be configured.
+     * @param ttl Time-To-Live. Limits how long multicast traffic will
+     * expand across routers.
+     *
+     * @throws IllegalArgumentException if the ttl is smaller then 1.
+     */
     public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings, int ttl) {
+        if (ttl < 1) {
+            throw new IllegalArgumentException("ttl must be greater than zero");
+        }
         this.device = device;
         this.netSettings = netSettings;
         this.ttl = ttl;
+    }
+
+    /**
+     * Construct an object holding all information to configure a
+     * device with a ttl of 1.
+     * 
+     * @param device the device to be configured.
+     * @param netSettings the network settings which shal be configured.
+     *
+     */
+    public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings) {
+        this(device, netSettings, 1);
     }
 
     public ConfigureDevice getDevice() {
