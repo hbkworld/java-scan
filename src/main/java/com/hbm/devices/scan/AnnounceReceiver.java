@@ -41,6 +41,10 @@ public class AnnounceReceiver extends MulticastMessageReceiver {
     /**
      * Constructs an {@code AnnounceReceiver} object.
      *
+     * @throws java.io.IOException if the AnnounceReceiver can't
+     * created. This might happen if the underlying socket can't be
+     * created or the multicast join was not successful.
+     *
      * @since 1.0
      */
     public AnnounceReceiver() throws IOException {
