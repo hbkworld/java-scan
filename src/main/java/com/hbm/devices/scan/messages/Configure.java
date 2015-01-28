@@ -85,31 +85,4 @@ public class Configure extends JsonRpc {
     public String getQueryId() {
         return id;
     }
-
-    /**
-     * This method checks a {@link Configure} object for errors; especially it checks if the
-     * {@link Configure} object conforms the specification.
-     * 
-     * @param config
-     *          the {@link Configure} object, which should be checked for errors
-     * @throws MissingDataException
-     *          if some information required by the specification is not in {@code config}.
-     * @throws IllegalArgumentException
-     *          if {@code settings} is null.
-     */
-    public static void checkForErrors(Configure config) throws MissingDataException {
-        if (config == null) {
-            throw new IllegalArgumentException("config object must not be null");
-        }
-
-        if ((config.id == null) || (config.id.length() == 0)) {
-            throw new MissingDataException("no queryId in configure");
-        }
-
-        if (config.params == null) {
-            throw new MissingDataException("no params in configure");
-        }
-
-        ConfigureParams.checkForErrors(config.params);
-    }
 }

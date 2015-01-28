@@ -47,9 +47,17 @@ public class ConfigureParams {
      * @param ttl Time-To-Live. Limits how long multicast traffic will
      * expand across routers.
      *
-     * @throws IllegalArgumentException if the ttl is smaller then 1.
+     * @throws IllegalArgumentException if {@code ttl} is smaller then 1 or
+     * {@code device} is {@code null} or {@code netSettings} is {@code
+     * null}.
      */
     public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings, int ttl) {
+        if (device == null) {
+            throw new IllegalArgumentException("device must not be null");
+        }
+        if (netSettings == null) {
+            throw new IllegalArgumentException("netSettings must not be null");
+        }
         if (ttl < 1) {
             throw new IllegalArgumentException("ttl must be greater than zero");
         }
@@ -94,26 +102,5 @@ public class ConfigureParams {
         sb.append("ttl: ").append(ttl).append("\n\n");
 
         return sb.toString();
-    }
-
-    public static void checkForErrors(ConfigureParams params) throws MissingDataException {
-        if (params == null) {
-            throw new IllegalArgumentException("params object must not be null");
-        }
-
-        if (params.ttl < 1) {
-            throw new MissingDataException(
-                    "time-to-live must be greater or equals 1 in ConfigureParams");
-        }
-
-        if (params.device == null) {
-            throw new IllegalArgumentException("No device in ConfigureParams");
-        }
-        ConfigureDevice.checkForErrors(params.device);
-
-        if (params.netSettings == null) {
-            throw new IllegalArgumentException("No net settings in ConfigureParams");
-        }
-        ConfigureNetSettings.checkForErrors(params.netSettings);
     }
 }
