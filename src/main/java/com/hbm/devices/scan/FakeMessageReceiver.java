@@ -45,10 +45,10 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private boolean shallRun = true;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    public static final String CORRECT_MESSAGE;
+    private static final String CORRECT_MESSAGE;
     private static final String CORRECT_MESSAGE_DIFFERENT_IP;
-    public static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
-    public static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
+    private static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
+    private static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
     private static final String INVALID_JSON_MESSAGE;
     private static final String MISSING_DEVICE_MESSAGE;
     private static final String MISSING_DEVICE_UUID_MESSAGE;
