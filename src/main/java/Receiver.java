@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.AnnounceReceiver;
 import com.hbm.devices.scan.DeviceMonitor;
-import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.events.LostDeviceEvent;
@@ -69,15 +68,9 @@ public class Receiver implements Observer {
         try {
             final MessageParser jf = new MessageParser();
             MessageReceiver mr;
-            if ((args.length > 0) && (args[0].compareTo("fake") == 0)) {
-                final FakeMessageReceiver fmr = new FakeMessageReceiver();
-                fmr.addObserver(jf);
-                mr = fmr;
-            } else {
-                final AnnounceReceiver ar = new AnnounceReceiver();
-                ar.addObserver(jf);
-                mr = ar;
-            }
+            final AnnounceReceiver ar = new AnnounceReceiver();
+            ar.addObserver(jf);
+            mr = ar;
 
             final String[] families = { "QuantumX" };
             final Filter ftFilter = new Filter(new FamilytypeMatch(families));
