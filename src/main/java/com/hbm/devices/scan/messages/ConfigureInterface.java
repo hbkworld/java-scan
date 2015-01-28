@@ -82,7 +82,7 @@ public class ConfigureInterface {
         if (configurationMethod == null) {
             throw new IllegalArgumentException("No configuration method given!");
         }
-        if (configurationMethod.equals(Method.MANUAL.toString()) && ipv4 == null) {
+        if (configurationMethod.equals(Method.MANUAL) && ipv4 == null) {
             throw new IllegalArgumentException("Manual interface configuration but no IP given!");
         }
         this.name = interfaceName;
