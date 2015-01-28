@@ -35,6 +35,7 @@ import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.messages.Configure;
 
 /**
+ * This class is able to send {@link Configure} messages via multicast.
  * 
  * @since 1.0
  *
@@ -44,16 +45,36 @@ public class ConfigurationSender {
     private final MulticastSender sender;
     private final Gson gson;
 
+    /**
+     * Constructs a ConfigurationSender object.
+     *
+     * @param sender The multicast sender that will be used when calling
+     * {@link #sendConfiguration}.
+     */
     public ConfigurationSender(MulticastSender sender) {
         this.sender = sender;
         gson = new Gson();
     }
 
+    /**
+     * Sends a network configuration via multicast.
+     *
+     * @param configuration The network configuration which shall be
+     * send.
+     *
+     * @throws IOException If sending of the configuration fails.
+     */
     public void sendConfiguration(Configure configuration) throws IOException {
         final String message = getJsonString(configuration);
         sender.sendMessage(message);
     }
 
+    /**
+     * Shuts down the underlying multicast sender.
+     *
+     * This involves multicast leave IGMP messagesfor the configuration
+     * address.
+     */
     public void shutdown() {
         sender.shutdown();
     }
