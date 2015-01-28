@@ -46,6 +46,7 @@ public class StressTestMessageReceiver extends Observable implements MessageRece
     private long startNanoTime;
 
     public StressTestMessageReceiver(int deviceAmount, int loopAmount) {
+        super();
         this.loopAmount = loopAmount;
         this.deviceUuidList = new LinkedList<String>();
 
