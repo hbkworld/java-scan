@@ -84,6 +84,8 @@ public class ConfigurationService implements Observer {
      * the devices, the message parsers to convert incoming JSON Strings
      * into objects or outgoing objects into JSON Strings.
      *
+     * @param sender the ConfigurationSender the ConfigurationService shall use.
+     * @param listener the ResponseListener the ConfigurationService shall use.
      */
     public ConfigurationService(ConfigurationSender sender, ResponseListener listener) {
         executor = new ScheduledThreadPoolExecutor(1);
@@ -165,6 +167,8 @@ public class ConfigurationService implements Observer {
      * @param timeout
      *              the time in ms, the service waits for a response.
      *              Must be greater than 0.
+     * @throws IOException
+     *              if the underlying socket send does not succeed.
      */
     public void sendConfiguration(final ConfigureParams configParams,
         final ConfigCallback callback, int timeout) throws IOException {
