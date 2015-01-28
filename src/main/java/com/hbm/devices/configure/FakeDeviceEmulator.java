@@ -54,6 +54,8 @@ public class FakeDeviceEmulator extends Observable implements Observer {
     private final JsonElement shouldReceive;
 
     public FakeDeviceEmulator() {
+        super();
+
         this.parser = new JsonParser();
         shouldReceive = this.parser.parse(receivingString);
     }

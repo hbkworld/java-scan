@@ -66,6 +66,8 @@ public class MessageParser extends Observable implements Observer {
     }
 
     public MessageParser(boolean useCache) {
+        super();
+
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
         gson = builder.create();

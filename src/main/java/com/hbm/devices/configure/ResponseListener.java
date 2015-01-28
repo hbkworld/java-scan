@@ -55,6 +55,8 @@ public class ResponseListener extends Observable implements Observer, Runnable {
      * This is the default constructor to instantiate a ReponseListener
      */
     public ResponseListener() {
+        super();
+
         try {
             responseReceiver = new ResponseReceiver();
 

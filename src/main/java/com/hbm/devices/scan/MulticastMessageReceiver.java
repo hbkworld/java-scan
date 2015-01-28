@@ -72,6 +72,8 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     }
 
     public MulticastMessageReceiver(InetAddress multicastIP, int port) throws IOException {
+        super();
+
         this.multicastIP = multicastIP;
         this.port = port;
         this.socket = setupMulticastSocket();

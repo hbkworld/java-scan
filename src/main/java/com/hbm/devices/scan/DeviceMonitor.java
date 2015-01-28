@@ -72,6 +72,8 @@ public class DeviceMonitor extends Observable implements Observer {
      * @since 1.0
      */
     public DeviceMonitor() {
+        super();
+
         deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(100);
         futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(100);
         executor = new ScheduledThreadPoolExecutor(1);

@@ -52,6 +52,8 @@ public class Filter extends Observable implements Observer {
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public Filter(Matcher m) {
+        super();
+
         this.matcher = m;
     }
 
