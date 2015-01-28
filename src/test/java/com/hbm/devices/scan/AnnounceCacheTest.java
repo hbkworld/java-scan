@@ -33,6 +33,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
+import java.io.InputStream;
+import java.io.IOException;
+import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -40,6 +43,10 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.MessageParser;
 
 public class AnnounceCacheTest {
+
+    private static final String CORRECT_MESSAGE;
+    private static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
+    private static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
 
     private FakeMessageReceiver fakeReceiver;
     private MessageParser parser;
@@ -57,21 +64,21 @@ public class AnnounceCacheTest {
         fakeReceiver.emitSingleCorrectMessage();
         assertSame(parser.getCache().getCacheAmount(), 1);
         assertSame(parser.getCache().getPathsAmount(), 1);
-        assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
+        assertTrue(parser.getCache().hasStringInCache(CORRECT_MESSAGE));
 
         fakeReceiver.emitSingleCorrectMessageDifferentDevice();
 
         assertSame(parser.getCache().getCacheAmount(), 2);
         assertSame(parser.getCache().getPathsAmount(), 2);
-        assertTrue(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
+        assertTrue(parser.getCache().hasStringInCache(CORRECT_MESSAGE));
         assertTrue(parser.getCache().hasStringInCache(
-                FakeMessageReceiver.CORRECT_MESSAGE_DIFFERENT_DEVICE));
+                CORRECT_MESSAGE_DIFFERENT_DEVICE));
     }
 
     @Test
     public void GetFromCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
-        assertNotNull(parser.getCache().getAnnounceByString(FakeMessageReceiver.CORRECT_MESSAGE));
+        assertNotNull(parser.getCache().getAnnounceByString(CORRECT_MESSAGE));
     }
 
     @Test
@@ -89,9 +96,22 @@ public class AnnounceCacheTest {
 
         assertSame(parser.getCache().getCacheAmount(), 1);
         assertSame(parser.getCache().getPathsAmount(), 1);
-        assertFalse(parser.getCache().hasStringInCache(FakeMessageReceiver.CORRECT_MESSAGE));
+        assertFalse(parser.getCache().hasStringInCache(CORRECT_MESSAGE));
         assertTrue(parser.getCache().hasStringInCache(
-                FakeMessageReceiver.CORRECT_MESSAGE_DIFFERENT_SERVICES));
+                CORRECT_MESSAGE_DIFFERENT_SERVICES));
     }
 
+    static {
+        try {
+            final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            final InputStream is = classloader.getResourceAsStream("fakemessages.properties");
+            final Properties props = new Properties();
+            props.load(is);
+            CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
+            CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
+            CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");
+        } catch (IOException e) {
+            throw new ExceptionInInitializerError(e);
+        }
+    }
 }
