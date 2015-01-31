@@ -48,7 +48,12 @@ import com.hbm.devices.scan.messages.Interface.Method;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
-
+/**
+ * Example class to show configuration of a device.
+ * <p>
+ *
+ * @since 1.0
+ */
 public final class Sender implements ConfigurationCallback {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
@@ -83,8 +88,12 @@ public final class Sender implements ConfigurationCallback {
         service.shutdown();
     }
 
+    /**
+     * main method for an executable
+     *
+     * @param  args An array of command line paramters. Not used in the method.
+     */
     public static void main(String... args) {
-
         try {
             final Sender s = new Sender();
             final ConfigureDevice device = new ConfigureDevice("0009E5001571");
