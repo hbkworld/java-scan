@@ -55,17 +55,33 @@ import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
+/**
+ * Example class to show handling of announce messages.
+ * <p>
+ *
+ * @since 1.0
+ */
 public class Receiver implements Observer {
 
     private final ConnectionFinder connectionFinder;
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
+    /**
+     * Constructs a new {@link Receiver} object.
+     *
+     * @throws SocketException if an I/O error occurs.
+     */
     public Receiver() throws SocketException {
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
         connectionFinder = new ConnectionFinder(scanInterfaces, false);
     }
 
+    /**
+     * main method for an executable
+     *
+     * @param  args An array of command line paramters. Not used in the method.
+     */
     public static void main(String... args) {
         try {
             final MessageParser jf = new MessageParser();
