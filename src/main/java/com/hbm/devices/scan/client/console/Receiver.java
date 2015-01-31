@@ -67,12 +67,7 @@ public class Receiver implements Observer {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    /**
-     * Constructs a new {@link Receiver} object.
-     *
-     * @throws SocketException if an I/O error occurs.
-     */
-    public Receiver() throws SocketException {
+    private Receiver() throws SocketException {
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
         connectionFinder = new ConnectionFinder(scanInterfaces, false);
     }
