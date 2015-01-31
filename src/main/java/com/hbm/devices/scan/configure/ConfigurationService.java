@@ -70,7 +70,7 @@ public class ConfigurationService implements Observer {
 
     private final ResponseListener responseListener;
 
-    private final ConfigurationSender configSender;
+    private final ConfigurationSender sender;
 
     private final ScheduledThreadPoolExecutor executor;
 
@@ -91,11 +91,17 @@ public class ConfigurationService implements Observer {
     public ConfigurationService(ConfigurationSender sender, ResponseListener listener) {
         executor = new ScheduledThreadPoolExecutor(1);
         awaitingResponses = new HashMap<String, ConfigQuery>();
-        configSender = sender;
+        this.sender = sender;
         responseListener = listener;
         responseListener.addObserver(this);
     }
 
+    /**
+     * Shuts down the {@link ConfigurationService}.
+     *
+     * Timers for outstanding {@link Response}s are cancelled and the
+     * {@link ConfigurationSender} is shut down.
+     */
     public void shutdown() {
         responseListener.deleteObserver(this);
 
@@ -111,6 +117,8 @@ public class ConfigurationService implements Observer {
             executor.shutdownNow();
             Thread.currentThread().interrupt();
         }
+
+        sender.shutdown();
     }
 
     /**
@@ -209,7 +217,7 @@ public class ConfigurationService implements Observer {
         final TimeoutTimerTask task = new TimeoutTimerTask(configQuery);
         executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
-        configSender.sendConfiguration(config);
+        sender.sendConfiguration(config);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {

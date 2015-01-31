@@ -28,6 +28,9 @@
 
 package com.hbm.devices.scan.messages;
 
+/**
+ * Class encapsulating the router information of an announced device.
+ */
 public final class Router {
 
     private String uuid;
