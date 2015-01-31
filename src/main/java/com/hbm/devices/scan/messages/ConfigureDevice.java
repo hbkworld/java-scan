@@ -38,7 +38,19 @@ public class ConfigureDevice {
 
     private final String uuid;
 
+    /**
+     * This method checks the {@link ConfigureDevice} object for errors and if it conforms to the HBM network
+     * discovery and configuration protocol.
+     * 
+     * @param uuid
+     *          the unique ID of the device to be configured
+     * @throws IllegalArgumentException
+     *          if {@code uuid} is null of {@code uuid.length() == 0}.
+     */
     public ConfigureDevice(String uuid) {
+        if ((uuid == null) || (uuid.length() == 0)) {
+            throw new IllegalArgumentException("No uuid in ConfigureDevice");
+        }
         this.uuid = uuid;
     }
 
@@ -54,26 +66,4 @@ public class ConfigureDevice {
     public String toString() {
         return "ConfigureDevice:\n\t uuid: " + uuid + "\n";
     }
-
-    /**
-     * This method checks the {@link ConfigureDevice} object for errors and if it conforms to the HBM network
-     * discovery and configuration protocol.
-     * 
-     * @param device
-     *          the {@link ConfigureDevice} object, which should be checked for errors
-     * @throws MissingDataException
-     *          if information required by the specification is mssing in {@code device}.
-     * @throws IllegalArgumentException
-     *          if {@code device} is null.
-     */
-    public static void checkForErrors(ConfigureDevice device) throws MissingDataException {
-        if (device == null) {
-            throw new IllegalArgumentException("device object must not be null");
-        }
-
-        if ((device.uuid == null) || (device.uuid.length() == 0)) {
-            throw new MissingDataException("No uuid in ConfigureDevice");
-        }
-    }
-
 }
