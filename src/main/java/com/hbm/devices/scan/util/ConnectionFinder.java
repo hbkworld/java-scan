@@ -50,12 +50,34 @@ public class ConnectionFinder {
     private final IPv4ConnectionFinder ipv4ConnectionFinder;
     private final IPv6ConnectionFinder ipv6ConnectionFinder;
 
+    /**
+     * Constructs a new {@link ConnectionFinder} object.
+     *
+     * @param interfaces A {@link Collection} of {@link
+     * NetworkInterface}s used to check {@link Announce} objects against
+     * in {@link #getConnectableAddress(Announce)}.
+     *
+     * @param preferIPv6 Set true if {@link #getConnectableAddress}
+     * returns IPv6 addresses preferentially.
+     */
     public ConnectionFinder(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
         this.preferIPv6 = preferIPv6;
         this.ipv4ConnectionFinder = new IPv4ConnectionFinder(interfaces);
         this.ipv6ConnectionFinder = new IPv6ConnectionFinder(interfaces);
     }
 
+    /**
+     * This method looks for a connectable IP address.
+     *
+     * @param announce The {@link Announce} containing the device we
+     * want to communicate with.
+     *
+     * @return An {@link InetAddress} if a connectable IP address was
+     * found, null otherwise.
+     *
+     * @throws MissingDataException if  the Announce object doesn't
+     * contain any IP addresses.
+     */
     public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         if (preferIPv6) {
             final InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
