@@ -111,9 +111,9 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
         while (shallRun) {
             try {
                 socket.receive(packet);
-                final String s = new String(buffer, 0, packet.getLength(), charset);
+                final String message = new String(buffer, 0, packet.getLength(), charset);
                 setChanged();
-                notifyObservers(s);
+                notifyObservers(message);
             } catch (IOException e) {
                 /*
                  * No error handling by intention. Receiving announce datagrams is a best effort
@@ -144,28 +144,28 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     }
 
     private MulticastSocket setupMulticastSocket() throws IOException {
-        final InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
-        final MulticastSocket s = new MulticastSocket(null);
-        s.setReuseAddress(true);
-        s.bind(sa);
+        final InetSocketAddress socketAddress = new InetSocketAddress(multicastIP, port);
+        final MulticastSocket socket = new MulticastSocket(null);
+        socket.setReuseAddress(true);
+        socket.bind(socketAddress);
 
-        joinOnAllInterfaces(s);
-        return s;
+        joinOnAllInterfaces(socket);
+        return socket;
     }
 
-    private void joinOnAllInterfaces(MulticastSocket s) throws IOException {
-        final InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
+    private void joinOnAllInterfaces(MulticastSocket socket) throws IOException {
+        final InetSocketAddress socketAddress = new InetSocketAddress(multicastIP, port);
         final Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
         for (final NetworkInterface ni : interfaces) {
-            s.joinGroup(sa, ni);
+            socket.joinGroup(socketAddress, ni);
         }
     }
 
-    private void leaveOnAllInterfaces(MulticastSocket s) throws IOException {
+    private void leaveOnAllInterfaces(MulticastSocket socket) throws IOException {
         final Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
-        final InetSocketAddress sa = new InetSocketAddress(multicastIP, port);
+        final InetSocketAddress socketAddress = new InetSocketAddress(multicastIP, port);
         for (final NetworkInterface ni : interfaces) {
-            s.leaveGroup(sa, ni);
+            socket.leaveGroup(socketAddress, ni);
         }
     }
 }
