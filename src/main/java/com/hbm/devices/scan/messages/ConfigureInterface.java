@@ -30,7 +30,6 @@ package com.hbm.devices.scan.messages;
 
 import com.hbm.devices.scan.messages.IPv4EntryManual;
 import com.hbm.devices.scan.messages.Interface.Method;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * The interface describes the properties and settings of an network interface which are configured.
