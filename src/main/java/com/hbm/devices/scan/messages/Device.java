@@ -37,7 +37,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public class Device {
 
-    private String uuid;
+    private final String uuid;
     private String name;
     private String type;
     private String familyType;
