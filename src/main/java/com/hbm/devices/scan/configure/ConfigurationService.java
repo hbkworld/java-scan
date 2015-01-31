@@ -139,12 +139,12 @@ public class ConfigurationService implements Observer {
         }
         final Response response = (Response)arg;
 
-        String id = response.getId();
+        final String id = response.getId();
         if (id == null || id.length() <= 0) {
             return;
         }
-        String result = response.getResult();
-        ErrorObject error = response.getError();
+        final String result = response.getResult();
+        final ErrorObject error = response.getError();
         if (result == null && error == null) {
             return;
         }
@@ -158,7 +158,7 @@ public class ConfigurationService implements Observer {
             if (error == null) {
                 configQuery.getConfigCallback().onSuccess(response);
             } else {
-                String message = error.getMessage();
+                final String message = error.getMessage();
                 if (message == null || message.length() == 0) {
                     return;
                 }
