@@ -60,6 +60,9 @@ public class MessageParser extends Observable implements Observer {
     private AnnounceCache announceCache;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
+    /**
+     * Constructs a {@link MessageParser} object.
+     */
     public MessageParser() {
         super();
 
