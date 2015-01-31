@@ -45,15 +45,4 @@ public class ErrorObject {
     public String getData() {
         return data;
     }
-
-    public static void checkForErrors(ErrorObject error) throws MissingDataException {
-        if (error == null) {
-            return;
-        }
-
-        if (error.message == null || error.message.length() == 0) {
-            throw new MissingDataException("no message in responseError");
-        }
-    }
-
 }

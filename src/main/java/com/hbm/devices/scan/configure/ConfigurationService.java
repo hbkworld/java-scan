@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.messages.Configure;
 import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.ErrorObject;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.ScanConstants;
 
@@ -138,12 +139,29 @@ public class ConfigurationService implements Observer {
         }
         final Response response = (Response)arg;
 
+        String id = response.getId();
+        if (id == null || id.length() <= 0) {
+            return;
+        }
+        String result = response.getResult();
+        ErrorObject error = response.getError();
+        if (result == null && error == null) {
+           return;
+        }
+        if (result != null && error != null) {
+           return;
+        }
+
         if (awaitingResponses.containsKey(response.getId())) {
             final ConfigQuery configQuery = awaitingResponses.get(response.getId());
             awaitingResponses.remove(response.getId());
-            if (response.getError() == null) {
+            if (error == null) {
                 configQuery.getConfigCallback().onSuccess(response);
             } else {
+                String message = error.getMessage();
+                if (message == null || message.length() == 0) {
+                    return;
+                }
                 configQuery.getConfigCallback().onError(response);
             }
         }

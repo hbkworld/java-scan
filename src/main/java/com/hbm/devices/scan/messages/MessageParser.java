@@ -106,8 +106,6 @@ public class MessageParser extends Observable implements Observer {
                 notifyObservers(ap);
             } else if (json instanceof Response) {
                 final Response response = (Response)json;
-                Response.checkForErrors(response);
-
                 setChanged();
                 notifyObservers(response);
             }

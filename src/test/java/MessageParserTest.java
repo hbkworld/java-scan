@@ -131,10 +131,6 @@ public class MessageParserTest {
         assertNull(ap);
     }
 
-    /*
-     * TESTING RESPONSE
-     */
-
     @Test
     public void parseCorrectSuccessReponseMessage() {
         fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
@@ -145,12 +141,6 @@ public class MessageParserTest {
     public void parseCorrectErrorReponseMessage() {
         fsmmr.emitSingleCorrectErrorResponseMessage();
         assertNotNull(res);
-    }
-
-    @Test
-    public void parseInvalidSuccessErrorReponseMessage() {
-        fsmmr.emitInvalidErrorSuccessReponseMessage();
-        assertNull(res);
     }
 
     @Test
@@ -172,19 +162,8 @@ public class MessageParserTest {
     }
 
     @Test
-    public void parseMissingErrorMessageReponseMessage() {
-        fsmmr.emitMissingErrorMessageReponseMessage();
-        assertNull(res);
-    }
-
-    @Test
     public void parseNoErrorMessageResponseMessage() {
         fsmmr.emitNoErrorMessageResponseMessage();
         assertNull(res);
     }
-
-    // @Test(expected = IndexOutOfBoundsException.class)
-    // public void parseBLA() {
-    //
-    // }
 }
