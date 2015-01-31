@@ -31,7 +31,8 @@ package com.hbm.devices.scan.messages;
 import java.util.List;
 
 /**
- * The interface describes the properties of an network interface.
+ * Objects of this class hold the inforamtion describing the properties
+ * of an network interface.
  * 
  * @since 1.0
  */
@@ -150,6 +151,9 @@ public class Interface {
         return sb.toString();
     }
 
+    /**
+     * Network interface configuration methods that can be used.
+     */
     public enum Method {
         MANUAL {
             @Override
@@ -169,17 +173,5 @@ public class Interface {
                 return "routerSolicitation";
             }
         };
-
-        public static Method fromString(String s) {
-            if ("manual".equals(s)) {
-                return MANUAL;
-            } else if ("dhcp".equals(s)) {
-                return DHCP;
-            } else if ("routerSolicitation".equals(s)) {
-                return ROUTER_SOLICITATION;
-            } else {
-                return null;
-            }
-        }
     }
 }
