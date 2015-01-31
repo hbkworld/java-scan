@@ -54,7 +54,7 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public class MessageParser extends Observable implements Observer {
+public final class MessageParser extends Observable implements Observer {
 
     private Gson gson;
     private AnnounceCache announceCache;

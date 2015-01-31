@@ -34,7 +34,7 @@ package com.hbm.devices.scan.messages;
  * @since 1.0
  *
  */
-public class ConfigureDevice {
+public final class ConfigureDevice {
 
     private final String uuid;
 

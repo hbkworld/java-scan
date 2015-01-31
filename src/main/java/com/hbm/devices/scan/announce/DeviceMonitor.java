@@ -56,7 +56,7 @@ import com.hbm.devices.scan.messages.CommunicationPath;
  *
  * @since 1.0
  */
-public class DeviceMonitor extends Observable implements Observer {
+public final class DeviceMonitor extends Observable implements Observer {
 
     private final Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
     private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;

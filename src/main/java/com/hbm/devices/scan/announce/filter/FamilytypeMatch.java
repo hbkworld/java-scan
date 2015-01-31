@@ -37,7 +37,7 @@ import com.hbm.devices.scan.messages.MissingDataException;
  *
  * @since 1.0
  */
-public class FamilytypeMatch implements Matcher {
+public final class FamilytypeMatch implements Matcher {
 
     private final String[] familyTypes;
 

@@ -31,7 +31,7 @@ package com.hbm.devices.scan.messages;
 /**
  * A class holding an IPv4 address and IPv4 network mask.
  */
-public class IPv4Entry {
+public final class IPv4Entry {
     
     private String address;
     private String netmask;

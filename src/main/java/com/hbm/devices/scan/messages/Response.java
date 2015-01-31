@@ -32,10 +32,10 @@ package com.hbm.devices.scan.messages;
  * The Response contains the information, a device sent back, after it received a configuration
  * request
  * 
- * @author rene
+ * @since 1.0
  *
  */
-public class Response extends JsonRpc {
+public final class Response extends JsonRpc {
 
     private String result;
     private ErrorObject error;

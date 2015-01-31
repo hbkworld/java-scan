@@ -45,7 +45,7 @@ import com.hbm.devices.scan.messages.Response;
  * @since 1.0
  *
  */
-public class ResponseListener extends Observable implements Observer, Runnable {
+public final class ResponseListener extends Observable implements Observer, Runnable {
 
     private ConfigureResponseReceiver responseReceiver;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);

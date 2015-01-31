@@ -61,7 +61,7 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  *
  * @since 1.0
  */
-public class Receiver implements Observer {
+public final class Receiver implements Observer {
 
     private final ConnectionFinder connectionFinder;
 

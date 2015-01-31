@@ -44,7 +44,7 @@ import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.MissingDataException;
 
-class IPv4ConnectionFinder {
+final class IPv4ConnectionFinder {
 
     private final Iterable<InterfaceAddress> ipv4Addresses;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);

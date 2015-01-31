@@ -39,7 +39,7 @@ import com.hbm.devices.scan.messages.Configure;
  * @since 1.0
  *
  */
-public class ConfigurationSender {
+public final class ConfigurationSender {
 
     private final ConfigurationMulticastSender sender;
     private final Gson gson;

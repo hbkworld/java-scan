@@ -38,7 +38,7 @@ import com.hbm.devices.scan.messages.CommunicationPath;
  * @since 1.0
  */
 
-public class LostDeviceEvent {
+public final class LostDeviceEvent {
 
     private final CommunicationPath communicationPath;
 

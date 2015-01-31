@@ -42,7 +42,7 @@ package com.hbm.devices.scan.messages;
  *
  * @since 1.0
  */
-public class CommunicationPath {
+public final class CommunicationPath {
 
     private final Announce announce;
     private final int hash;

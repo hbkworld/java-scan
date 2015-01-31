@@ -39,7 +39,7 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public class AnnounceReceiver extends MulticastMessageReceiver {
+public final class AnnounceReceiver extends MulticastMessageReceiver {
 
     /**
      * Constructs an {@code AnnounceReceiver} object.

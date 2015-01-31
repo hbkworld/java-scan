@@ -44,7 +44,7 @@ import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.IPv6Entry;
 import com.hbm.devices.scan.messages.MissingDataException;
 
-class IPv6ConnectionFinder {
+final class IPv6ConnectionFinder {
 
     private final Iterable<InterfaceAddress> ipv6Addresses;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);

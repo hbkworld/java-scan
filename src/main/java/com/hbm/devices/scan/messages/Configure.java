@@ -34,7 +34,7 @@ package com.hbm.devices.scan.messages;
  * 
  * @since 1.0
  */
-public class Configure extends JsonRpc {
+public final class Configure extends JsonRpc {
 
     private String id;
     private ConfigureParams params;

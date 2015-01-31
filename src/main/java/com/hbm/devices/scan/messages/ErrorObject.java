@@ -28,7 +28,7 @@
 
 package com.hbm.devices.scan.messages;
 
-public class ErrorObject {
+public final class ErrorObject {
 
     private int code;
     private String message;

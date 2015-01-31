@@ -37,7 +37,7 @@ import com.hbm.devices.scan.messages.Interface.Method;
  * @since 1.0
  *
  */
-public class ConfigureInterface {
+public final class ConfigureInterface {
 
     private String name;
     private IPv4EntryManual ipv4;

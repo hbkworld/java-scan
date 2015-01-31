@@ -32,7 +32,7 @@ package com.hbm.devices.scan.messages;
  * This class holt all information to configure a device via the HBM
  * Network Discovery and Configuration Protocol for Embedded Devices.
  */
-public class ConfigureParams {
+public final class ConfigureParams {
 
     private ConfigureDevice device;
     private ConfigureNetSettings netSettings;

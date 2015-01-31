@@ -36,7 +36,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 1.0
  *
  */
-public class ConfigureNetSettings {
+public final class ConfigureNetSettings {
 
     private DefaultGateway defaultGateway;
 

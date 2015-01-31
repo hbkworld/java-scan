@@ -31,7 +31,7 @@ package com.hbm.devices.scan.messages;
 /**
  * A class holding the information for manual IP interface configuration an a device.
  */
-public class IPv4EntryManual {
+public final class IPv4EntryManual {
 
     private final String manualAddress;
     private final String manualNetmask;

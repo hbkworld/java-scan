@@ -39,7 +39,7 @@ import com.hbm.devices.scan.messages.CommunicationPath;
  *
  * @since 1.0
  */
-public class UpdateDeviceEvent {
+public final class UpdateDeviceEvent {
 
     private final CommunicationPath oldCommunicationPath;
     private final CommunicationPath newCommunicationPath;

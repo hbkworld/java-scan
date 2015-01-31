@@ -49,7 +49,7 @@ import com.hbm.devices.scan.ScanConstants;
  * 
  * @since 1.0
  */
-public class ConfigurationMulticastSender {
+public final class ConfigurationMulticastSender {
 
     private final MulticastSocket socket;
     private final Collection<NetworkInterface> interfaces;

@@ -37,7 +37,7 @@ import com.hbm.devices.scan.messages.Announce;
  * @since 1.0
  *
  */
-public class UUIDMatch implements Matcher {
+public final class UUIDMatch implements Matcher {
 
     private final String[] uuids;
 

@@ -31,7 +31,7 @@ package com.hbm.devices.scan.messages;
 /**
  * A class holding the IPv6 address and IPv6 prefix.
  */
-public class IPv6Entry {
+public final class IPv6Entry {
 
     private String address;
     private String prefix;
