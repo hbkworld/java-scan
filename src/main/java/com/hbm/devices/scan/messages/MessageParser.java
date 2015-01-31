@@ -58,24 +58,16 @@ public class MessageParser extends Observable implements Observer {
 
     private Gson gson;
     private AnnounceCache announceCache;
-    private boolean useCache;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     public MessageParser() {
-        this(true);
-    }
-
-    public MessageParser(boolean useCache) {
         super();
 
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
         gson = builder.create();
 
-        this.useCache = useCache;
-        if (useCache) {
-            this.announceCache = new AnnounceCache();
-        }
+        this.announceCache = new AnnounceCache();
     }
 
     AnnounceCache getCache() {
@@ -88,7 +80,7 @@ public class MessageParser extends Observable implements Observer {
         try {
             JsonRpc json;
             boolean newParsedString;
-            if (useCache && announceCache.hasStringInCache(s)) {
+            if (announceCache.hasStringInCache(s)) {
                 newParsedString = false;
                 json = announceCache.getAnnounceByString(s);
             } else {
@@ -99,7 +91,7 @@ public class MessageParser extends Observable implements Observer {
                 final CommunicationPath ap = new CommunicationPath((Announce) json);
                 // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
                 // Only cache Announce objects!
-                if (useCache && newParsedString) {
+                if (newParsedString) {
                     announceCache.addCommunicationPath(s, ap);
                 }
                 setChanged();
