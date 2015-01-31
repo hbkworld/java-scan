@@ -26,6 +26,8 @@
  * SOFTWARE.
  */
 
+package com.hbm.devices.scan.client.console;
+
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
