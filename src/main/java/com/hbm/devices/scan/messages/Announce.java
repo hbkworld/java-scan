@@ -28,6 +28,10 @@
 
 package com.hbm.devices.scan.messages;
 
+/**
+ * This class hold all information required to implement the HBM network
+ * discovery and configuration protocol.
+ */
 public final class Announce extends JsonRpc {
 
     private AnnounceParams params;
