@@ -31,7 +31,7 @@ package com.hbm.devices.scan.messages;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class AnnounceCache {
+class AnnounceCache {
 
     private final LRUCache<String, Announce> parsedMessages;
     private final LRUCache<Integer, String> availablePaths;
