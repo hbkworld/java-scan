@@ -41,6 +41,11 @@ public final class UUIDMatch implements Matcher {
 
     private final String[] uuids;
 
+    /**
+     * Constructs a {@link Matcher} object for matching device UUIDs.
+     *
+     * @param uuids An array of Strings containing device' UUIDs to match against.
+     */
     public UUIDMatch(String... uuids) {
         this.uuids = uuids.clone();
     }

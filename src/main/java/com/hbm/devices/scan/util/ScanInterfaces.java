@@ -46,6 +46,12 @@ public final class ScanInterfaces {
 
     private final List<NetworkInterface> interfaces;
 
+    /**
+     * Constructs an object containing all network interfaces eligible
+     * for multicast scanning @amp; sending.
+     *
+     * @throws SocketException if an I/O error occurs.
+     */
     public ScanInterfaces() throws SocketException {
         interfaces = new LinkedList<NetworkInterface>();
         final Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
