@@ -35,6 +35,13 @@ package com.hbm.devices.scan;
  * @since 1.0
  */
 public interface MessageReceiver {
+    /**
+     * Start a {@link MessageReceiver}.
+     */
     void start();
+
+    /**
+     * Stops a {@link MessageReceiver}.
+     */
     void stop();
 }
