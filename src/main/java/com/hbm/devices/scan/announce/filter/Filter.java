@@ -51,10 +51,16 @@ public class Filter extends Observable implements Observer {
     private final Matcher matcher;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    public Filter(Matcher m) {
+    /**
+     * Constructs a {@link Filter} object.
+     *
+     * @param matcher The matcher object that decides if a message is
+     * filtered out or not.
+     */
+    public Filter(Matcher matcher) {
         super();
 
-        this.matcher = m;
+        this.matcher = matcher;
     }
 
     public Matcher getMatcher() {
