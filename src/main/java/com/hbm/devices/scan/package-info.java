@@ -28,7 +28,7 @@
 
 
 /**
- * Provides classes implementing the 
+ * Provides some common classes useful for implementing the 
  * <a href="http://www.hbm.com/" target="_blank">HBM (Hottinger Baldwin Messtechnik GmbH)</a>
  * device scan.
  *

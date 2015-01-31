@@ -29,10 +29,9 @@
 package com.hbm.devices.scan.announce.events;
 
 import com.hbm.devices.scan.messages.CommunicationPath;
-import com.hbm.devices.scan.DeviceMonitor;
 
 /**
- * This event is emitted by an {@link DeviceMonitor}.
+ * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor}.
  * <p>
  * The event is notified when an announce method from a device that is known, but has changed some
  * data in the announce message, is received. The event contains the old and the new announce

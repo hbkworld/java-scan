@@ -29,10 +29,9 @@
 package com.hbm.devices.scan.announce.events;
 
 import com.hbm.devices.scan.messages.CommunicationPath;
-import com.hbm.devices.scan.DeviceMonitor;
 
 /**
- * This event is emitted by an {@link DeviceMonitor} when an annouce
+ * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor} when an annouce
  * messages wasn't refreshed during the expiration time.
  * <p>
  *

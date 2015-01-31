@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.announce;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,6 +39,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.announce.events.LostDeviceEvent;
 import com.hbm.devices.scan.announce.events.NewDeviceEvent;
 import com.hbm.devices.scan.announce.events.UpdateDeviceEvent;
