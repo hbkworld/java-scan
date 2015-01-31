@@ -39,7 +39,7 @@ import org.junit.Test;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.hbm.devices.scan.configure.ConfigCallback;
+import com.hbm.devices.scan.configure.ConfigurationCallback;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
@@ -112,7 +112,7 @@ public class ConfigurationServiceTest {
     public void sendingAndReceivingTest() {
         received = false;
 
-        ConfigCallback cb = new ConfigCallback() {
+        ConfigurationCallback cb = new ConfigurationCallback() {
 
             @Override
             public void onSuccess(ConfigQuery configQuery, Response response) {
@@ -150,7 +150,7 @@ public class ConfigurationServiceTest {
         received = false;
         timeout = false;
 
-        ConfigCallback cb = new ConfigCallback() {
+        ConfigurationCallback cb = new ConfigurationCallback() {
 
             @Override
             public void onSuccess(ConfigQuery configQuery, Response response) {
@@ -189,7 +189,7 @@ public class ConfigurationServiceTest {
         received = false;
         timeout = false;
 
-        ConfigCallback cb = new ConfigCallback() {
+        ConfigurationCallback cb = new ConfigurationCallback() {
 
             @Override
             public void onTimeout(ConfigQuery configQuery) {
@@ -244,7 +244,7 @@ public class ConfigurationServiceTest {
         received = false;
         timeout = false;
 
-        ConfigCallback cb = new ConfigCallback() {
+        ConfigurationCallback cb = new ConfigurationCallback() {
 
             @Override
             public void onTimeout(ConfigQuery configQuery) {

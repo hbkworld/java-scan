@@ -50,15 +50,15 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * It sends the configuration settings and listen to responses. If no
  * response is received within a certain time, a callback method ({@link
- * ConfigCallback#onTimeout(int timeout)}) is called. Otherwise if a
+ * ConfigurationCallback#onTimeout(int timeout)}) is called. Otherwise if a
  * response is received, either {@link
- * ConfigCallback#onSuccess(Response)} or {@link
- * ConfigCallback#onError(Response)} is called accordingly
+ * ConfigurationCallback#onSuccess(Response)} or {@link
+ * ConfigurationCallback#onError(Response)} is called accordingly
  * to the response.<p>
  *
  * The main method, which is used to transmit configuration settings, is
  * {@link ConfigurationService#sendConfiguration(ConfigureParams,
- * ConfigCallback, int)}.<p>
+ * ConfigurationCallback, int)}.<p>
  *
  * @since 1.0
  *
@@ -153,9 +153,9 @@ public class ConfigurationService implements Observer {
      *
      * This method sends a configuration via multicast. If no response
      * is received within the timeout, the callback method {@link
-     * ConfigCallback#onTimeout(int timeout)} is called. If a response
-     * is received, either {@link ConfigCallback#onSuccess(
-     * Response)} or {@link ConfigCallback#onError(
+     * ConfigurationCallback#onTimeout(int timeout)} is called. If a response
+     * is received, either {@link ConfigurationCallback#onSuccess(
+     * Response)} or {@link ConfigurationCallback#onError(
      * Response)} is called.
      * 
      * @param configParams
@@ -171,7 +171,7 @@ public class ConfigurationService implements Observer {
      *              if the underlying socket send does not succeed.
      */
     public void sendConfiguration(final ConfigureParams configParams,
-        final ConfigCallback callback, int timeout) throws IOException {
+        final ConfigurationCallback callback, int timeout) throws IOException {
 
         if (configParams == null) {
             throw new IllegalArgumentException("configParams must not be null");
@@ -219,9 +219,9 @@ class ConfigQuery {
 
     private final Configure config;
     private final int timeout;
-    private final ConfigCallback callback;
+    private final ConfigurationCallback callback;
 
-    ConfigQuery(Configure config, ConfigCallback callback, int timeout) {
+    ConfigQuery(Configure config, ConfigurationCallback callback, int timeout) {
         this.config = config;
         this.timeout = timeout;
         this.callback = callback;
@@ -239,7 +239,7 @@ class ConfigQuery {
         return this.timeout;
     }
 
-    ConfigCallback getConfigCallback() {
+    ConfigurationCallback getConfigCallback() {
         return callback;
     }
 }

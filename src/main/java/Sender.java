@@ -32,7 +32,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.configure.ConfigCallback;
+import com.hbm.devices.scan.configure.ConfigurationCallback;
 import com.hbm.devices.scan.configure.ConfigurationSender;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.messages.ConfigureInterface;
@@ -47,7 +47,7 @@ import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
 
-public final class Sender implements ConfigCallback {
+public final class Sender implements ConfigurationCallback {
 
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 

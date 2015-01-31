@@ -36,7 +36,7 @@ import com.hbm.devices.scan.messages.Response;
  * @since 1.0
  *
  */
-public interface ConfigCallback {
+public interface ConfigurationCallback {
 
     /**
      * This is the callback method which is called, when the query was received and processed
