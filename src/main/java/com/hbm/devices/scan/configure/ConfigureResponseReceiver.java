@@ -26,19 +26,22 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.configure;
 
 import java.io.IOException;
 
+import com.hbm.devices.scan.MulticastMessageReceiver;
+import com.hbm.devices.scan.ScanConstants;
+
 /**
- * Convenience class to receive response multicast messages.
+ * Convenience class to receive configure response multicast messages.
  * <p>
  *
  * @since 1.0
  */
-public class ResponseReceiver extends MulticastMessageReceiver {
+public class ConfigureResponseReceiver extends MulticastMessageReceiver {
 
-    public ResponseReceiver() throws IOException {
+    public ConfigureResponseReceiver() throws IOException {
         super(ScanConstants.CONFIGURATION_ADDRESS, ScanConstants.CONFIGURATION_PORT);
     }
 }

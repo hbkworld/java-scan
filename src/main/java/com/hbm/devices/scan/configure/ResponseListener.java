@@ -33,7 +33,6 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.ResponseReceiver;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
@@ -48,7 +47,7 @@ import com.hbm.devices.scan.messages.Response;
  */
 public class ResponseListener extends Observable implements Observer, Runnable {
 
-    private ResponseReceiver responseReceiver;
+    private ConfigureResponseReceiver responseReceiver;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
@@ -58,7 +57,7 @@ public class ResponseListener extends Observable implements Observer, Runnable {
         super();
 
         try {
-            responseReceiver = new ResponseReceiver();
+            responseReceiver = new ConfigureResponseReceiver();
 
             final MessageParser messageParser = new MessageParser();
 
