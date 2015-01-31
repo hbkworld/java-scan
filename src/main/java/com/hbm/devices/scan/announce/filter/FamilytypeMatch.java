@@ -41,6 +41,14 @@ public class FamilytypeMatch implements Matcher {
 
     private final String[] familyTypes;
 
+    /**
+     * Creates a {@link Matcher} object that matches the familyType
+     * member of an {@link Announce} object againts an array of
+     * {@link String}s.
+     *
+     * @param familyTypes An array of {@link String}s used to match
+     * against the familyType in {@link Announce} objects.
+     */
     public FamilytypeMatch(String... familyTypes) {
         this.familyTypes = familyTypes.clone();
     }
