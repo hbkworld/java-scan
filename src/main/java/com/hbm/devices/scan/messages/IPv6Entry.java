@@ -36,17 +36,7 @@ public class IPv6Entry {
     private String address;
     private String prefix;
 
-    private IPv6Entry() {
-    }
-
-    /**
-     * Constructs an {@link IPv6Entry} object.
-     *
-     * @param address the IPv6 address
-     * @param prefix the IPv6 prefix
-     */
-    public IPv6Entry(String address, String prefix) {
-        this();
+    IPv6Entry(String address, String prefix) {
         this.address = address;
         this.prefix = prefix;
     }

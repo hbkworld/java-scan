@@ -44,26 +44,7 @@ public class Interface {
     private List<IPv4Entry> ipv4;
     private List<IPv6Entry> ipv6;
 
-    private Interface() {
-    }
-
-    /**
-     * @param name
-     *      A string containing the interface name that should be
-     *      configured. The interface name must be gathered from
-     *      an announce datagram.
-     * @param method
-     *      A string enumeration describing how the network
-     *      settings configured on the device during the startup.
-     *      Currently the values *manual*, *dhcp* and
-     *      *RouterSolicitation* are valid.
-     * @param ipv4
-     *      A List containing all valid IPv4 addresses for the interface.
-     * @param ipv6
-     *      A List containing all valid IPv6 addresses for the interface.
-     */
-    public Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
-        this();
+    Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
         this.name = name;
         this.configurationMethod = method.toString();
         this.ipv4 = ipv4;

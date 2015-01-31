@@ -41,7 +41,7 @@ public class Response extends JsonRpc {
     private ErrorObject error;
     private String id;
 
-    protected Response() {
+    Response() {
         super("response");
     }
 

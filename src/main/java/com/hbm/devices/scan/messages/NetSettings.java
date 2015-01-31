@@ -37,10 +37,7 @@ public class NetSettings {
     @SerializedName("interface")
     private Interface iface;
 
-    private NetSettings() {
-    }
-    
-    public NetSettings(Interface iface) {
+    NetSettings(Interface iface) {
         this.iface = iface;
     }
 

@@ -46,12 +46,7 @@ public class Device {
     @SerializedName("isRouter")
     private final boolean router = false;
 
-    /**
-     * @param uuid
-     *            This string contains the unique ID of the device that should be configured. The
-     *            uuid itself must be gathered from an announce datagram.
-     */
-    public Device(String uuid) {
+    Device(String uuid) {
         this.uuid = uuid;
     }
 
