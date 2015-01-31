@@ -26,52 +26,32 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.configure;
+package com.hbm.devices.scan.configure;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
 /**
- * This class is used to simulate a device.
+ * This class simulates a multicast sender. But it does not send any message via the network, it
+ * only stores the last send message, so the a test routine can easy check, which message would be
+ * sent.
  * <p>
- * When this class receives a specific configuration message, it responses instantly with a success
- * message.
- * <p>
- * This class is only used for the JUnit tests.
+ * This is a class is only used for the JUnit tests.
  * 
  * @since 1.0
  *
  */
-public class FakeDeviceEmulator extends Observable implements Observer {
+public class FakeMulticastSender implements Observer {
 
-    private static String receivingString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
-    private static String sendingString = "{\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"result\":0}";
+    private String lastSent;
 
-    private final JsonParser parser;
-    private final JsonElement shouldReceive;
-
-    public FakeDeviceEmulator() {
-        super();
-
-        this.parser = new JsonParser();
-        shouldReceive = this.parser.parse(receivingString);
+    public String getLastSent() {
+        return this.lastSent;
     }
 
     @Override
-    public void update(Observable o, Object obj) {
-        if (obj instanceof String) {
-            final String msg = (String)obj;
-            final JsonElement received = parser.parse(msg);
-
-            if (shouldReceive.equals(received)) {
-                setChanged();
-                notifyObservers(sendingString);
-            }
-        }
-
+    public void update(Observable o, Object arg) {
+        this.lastSent = (String) arg;
     }
 
 }

@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.configure;
+package com.hbm.devices.scan.configure;
 
 import com.hbm.devices.scan.messages.Response;
 

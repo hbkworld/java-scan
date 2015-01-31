@@ -32,11 +32,11 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.configure.ConfigCallback;
-import com.hbm.devices.configure.ConfigurationSender;
-import com.hbm.devices.configure.ConfigurationService;
+import com.hbm.devices.scan.configure.ConfigCallback;
+import com.hbm.devices.scan.configure.ConfigurationSender;
+import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.messages.ConfigureInterface;
-import com.hbm.devices.configure.ResponseListener;
+import com.hbm.devices.scan.configure.ResponseListener;
 import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureDevice;

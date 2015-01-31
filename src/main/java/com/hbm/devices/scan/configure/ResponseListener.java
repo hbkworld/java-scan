@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.configure;
+package com.hbm.devices.scan.configure;
 
 import java.util.Observable;
 import java.util.Observer;

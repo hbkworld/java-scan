@@ -32,5 +32,5 @@
  * configuration.
  *
  */
-package com.hbm.devices.configure;
+package com.hbm.devices.scan.configure;
 
