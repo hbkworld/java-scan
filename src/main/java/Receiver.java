@@ -35,21 +35,21 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.AnnounceReceiver;
+import com.hbm.devices.scan.announce.AnnounceReceiver;
+import com.hbm.devices.scan.announce.events.LostDeviceEvent;
+import com.hbm.devices.scan.announce.events.NewDeviceEvent;
+import com.hbm.devices.scan.announce.events.UpdateDeviceEvent;
+import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
+import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.DeviceMonitor;
 import com.hbm.devices.scan.MessageReceiver;
-import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.events.LostDeviceEvent;
-import com.hbm.devices.scan.events.NewDeviceEvent;
-import com.hbm.devices.scan.events.UpdateDeviceEvent;
-import com.hbm.devices.scan.filter.FamilytypeMatch;
-import com.hbm.devices.scan.filter.Filter;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.IPv6Entry;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.ServiceEntry;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 

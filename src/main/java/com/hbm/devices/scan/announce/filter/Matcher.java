@@ -26,36 +26,40 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.events;
+package com.hbm.devices.scan.announce.filter;
 
-import com.hbm.devices.scan.messages.CommunicationPath;
-import com.hbm.devices.scan.DeviceMonitor;
+import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
- * This event is emitted by an {@link DeviceMonitor}.
- * <p>
- * The event is notified when an announce method from a device that is known, but has changed some
- * data in the announce message, is received. The event contains the old and the new announce
- * information stored in a {@link CommunicationPath}
+ * An object able to match information in {@link Announce} objects.
  *
  * @since 1.0
  */
-public class UpdateDeviceEvent {
+public interface Matcher {
+    /**
+     * @param announce
+     *            {@link Announce} packet to be investigated.
+     * @return <code>true</code> if the information is in the {@link Announce} object,
+     *         <code>false</code> otherwise.
+     * @throws MissingDataException
+     *             if some information in the JSON packet ist missing for a comparison.
+     */
+    boolean match(Announce announce) throws MissingDataException;
 
-    private final CommunicationPath oldCommunicationPath;
-    private final CommunicationPath newCommunicationPath;
+    /**
+     * This method is used to get the name of the matcher. This simplifies displaying the filter
+     * settings.
+     * 
+     * @return the name of the Mather.
+     */
+    String getMatcherName();
 
-    public UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
-        this.oldCommunicationPath = oldPath;
-        this.newCommunicationPath = newPath;
-    }
-
-    public CommunicationPath getOldCommunicationPath() {
-        return this.oldCommunicationPath;
-    }
-
-    public CommunicationPath getNewCommunicationPath() {
-        return this.newCommunicationPath;
-    }
-
+    /**
+     * This method returns all strings the filter allows. This simplifies displaying the filter
+     * settings.
+     * 
+     * @return an array containing all filter strings.
+     */
+    String[] getFilterStrings();
 }

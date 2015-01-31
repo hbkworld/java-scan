@@ -26,28 +26,43 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.events;
+package com.hbm.devices.scan.announce.filter;
 
-import com.hbm.devices.scan.messages.CommunicationPath;
-import com.hbm.devices.scan.DeviceMonitor;
+import com.hbm.devices.scan.messages.MissingDataException;
+import com.hbm.devices.scan.messages.Announce;
 
 /**
- * This event is emitted by an {@link DeviceMonitor} when an annouce
- * messages wasn't refreshed during the expiration time.
- * <p>
- *
+ * This class matches device uuids in Announce objects.
+ * 
  * @since 1.0
+ *
  */
+public class UUIDMatch implements Matcher {
 
-public class LostDeviceEvent {
+    private final String[] uuids;
 
-    private final CommunicationPath communicationPath;
-
-    public LostDeviceEvent(CommunicationPath ap) {
-        communicationPath = ap;
+    public UUIDMatch(String... uuids) {
+        this.uuids = uuids.clone();
     }
 
-    public CommunicationPath getAnnouncePath() {
-        return communicationPath;
+    @Override
+    public boolean match(Announce announce) throws MissingDataException {
+        final String deviceUUID = announce.getParams().getDevice().getUuid();
+        for (final String s : uuids) {
+            if (s.equals(deviceUUID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String getMatcherName() {
+        return "UUID";
+    }
+
+    @Override
+    public String[] getFilterStrings() {
+        return uuids.clone();
     }
 }

@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.filter;
+package com.hbm.devices.scan.announce.filter;
 
 import java.util.Observable;
 import java.util.Observer;

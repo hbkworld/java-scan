@@ -34,8 +34,8 @@ import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.MessageParser;
-import com.hbm.devices.scan.filter.FamilytypeMatch;
-import com.hbm.devices.scan.filter.Filter;
+import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
+import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.messages.CommunicationPath;
 
 public class FilterTest {

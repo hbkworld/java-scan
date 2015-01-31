@@ -26,43 +26,31 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.filter;
+package com.hbm.devices.scan.announce;
 
-import com.hbm.devices.scan.messages.MissingDataException;
-import com.hbm.devices.scan.messages.Announce;
+import java.io.IOException;
+
+import com.hbm.devices.scan.MulticastMessageReceiver;
+import com.hbm.devices.scan.ScanConstants;
 
 /**
- * This class matches device uuids in Announce objects.
- * 
- * @since 1.0
+ * Convenience class to receive announce multicast messages.
+ * <p>
  *
+ * @since 1.0
  */
-public class UUIDMatch implements Matcher {
+public class AnnounceReceiver extends MulticastMessageReceiver {
 
-    private final String[] uuids;
-
-    public UUIDMatch(String... uuids) {
-        this.uuids = uuids.clone();
-    }
-
-    @Override
-    public boolean match(Announce announce) throws MissingDataException {
-        final String deviceUUID = announce.getParams().getDevice().getUuid();
-        for (final String s : uuids) {
-            if (s.equals(deviceUUID)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public String getMatcherName() {
-        return "UUID";
-    }
-
-    @Override
-    public String[] getFilterStrings() {
-        return uuids.clone();
+    /**
+     * Constructs an {@code AnnounceReceiver} object.
+     *
+     * @throws java.io.IOException if the AnnounceReceiver can't
+     * created. This might happen if the underlying socket can't be
+     * created or the multicast join was not successful.
+     *
+     * @since 1.0
+     */
+    public AnnounceReceiver() throws IOException {
+        super(ScanConstants.ANNOUNCE_ADDRESS, ScanConstants.ANNOUNCE_PORT);
     }
 }

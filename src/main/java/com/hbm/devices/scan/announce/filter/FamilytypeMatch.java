@@ -26,8 +26,43 @@
  * SOFTWARE.
  */
 
-/**
- * Provides framework for filtering scan messages.
- */
-package com.hbm.devices.scan.filter;
+package com.hbm.devices.scan.announce.filter;
 
+import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.MissingDataException;
+
+/**
+ * This class matches family type information in Announce objects.
+ * <p>
+ *
+ * @since 1.0
+ */
+public class FamilytypeMatch implements Matcher {
+
+    private final String[] familyTypes;
+
+    public FamilytypeMatch(String... familyTypes) {
+        this.familyTypes = familyTypes.clone();
+    }
+
+    @Override
+    public boolean match(Announce a) throws MissingDataException {
+        final String ft = a.getParams().getDevice().getFamilyType();
+        for (int i = 0; i < familyTypes.length; i++) {
+            if (familyTypes[i].equals(ft)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public String getMatcherName() {
+        return "Famility type";
+    }
+
+    @Override
+    public String[] getFilterStrings() {
+        return familyTypes.clone();
+    }
+}

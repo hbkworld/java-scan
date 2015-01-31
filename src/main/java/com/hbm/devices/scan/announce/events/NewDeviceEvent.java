@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.events;
+package com.hbm.devices.scan.announce.events;
 
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.DeviceMonitor;

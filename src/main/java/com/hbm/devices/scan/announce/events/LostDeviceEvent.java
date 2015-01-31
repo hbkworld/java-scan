@@ -26,40 +26,28 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.filter;
+package com.hbm.devices.scan.announce.events;
 
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.MissingDataException;
+import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.DeviceMonitor;
 
 /**
- * An object able to match information in {@link Announce} objects.
+ * This event is emitted by an {@link DeviceMonitor} when an annouce
+ * messages wasn't refreshed during the expiration time.
+ * <p>
  *
  * @since 1.0
  */
-public interface Matcher {
-    /**
-     * @param announce
-     *            {@link Announce} packet to be investigated.
-     * @return <code>true</code> if the information is in the {@link Announce} object,
-     *         <code>false</code> otherwise.
-     * @throws MissingDataException
-     *             if some information in the JSON packet ist missing for a comparison.
-     */
-    boolean match(Announce announce) throws MissingDataException;
 
-    /**
-     * This method is used to get the name of the matcher. This simplifies displaying the filter
-     * settings.
-     * 
-     * @return the name of the Mather.
-     */
-    String getMatcherName();
+public class LostDeviceEvent {
 
-    /**
-     * This method returns all strings the filter allows. This simplifies displaying the filter
-     * settings.
-     * 
-     * @return an array containing all filter strings.
-     */
-    String[] getFilterStrings();
+    private final CommunicationPath communicationPath;
+
+    public LostDeviceEvent(CommunicationPath ap) {
+        communicationPath = ap;
+    }
+
+    public CommunicationPath getAnnouncePath() {
+        return communicationPath;
+    }
 }

@@ -26,28 +26,8 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan;
-
-import java.io.IOException;
-
 /**
- * Convenience class to receive announce multicast messages.
- * <p>
- *
- * @since 1.0
+ * Provides framework for filtering announce messages.
  */
-public class AnnounceReceiver extends MulticastMessageReceiver {
+package com.hbm.devices.scan.announce.filter;
 
-    /**
-     * Constructs an {@code AnnounceReceiver} object.
-     *
-     * @throws java.io.IOException if the AnnounceReceiver can't
-     * created. This might happen if the underlying socket can't be
-     * created or the multicast join was not successful.
-     *
-     * @since 1.0
-     */
-    public AnnounceReceiver() throws IOException {
-        super(ScanConstants.ANNOUNCE_ADDRESS, ScanConstants.ANNOUNCE_PORT);
-    }
-}

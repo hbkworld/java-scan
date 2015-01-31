@@ -26,43 +26,36 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.filter;
+package com.hbm.devices.scan.announce.events;
 
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.MissingDataException;
+import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.DeviceMonitor;
 
 /**
- * This class matches family type information in Announce objects.
+ * This event is emitted by an {@link DeviceMonitor}.
  * <p>
+ * The event is notified when an announce method from a device that is known, but has changed some
+ * data in the announce message, is received. The event contains the old and the new announce
+ * information stored in a {@link CommunicationPath}
  *
  * @since 1.0
  */
-public class FamilytypeMatch implements Matcher {
+public class UpdateDeviceEvent {
 
-    private final String[] familyTypes;
+    private final CommunicationPath oldCommunicationPath;
+    private final CommunicationPath newCommunicationPath;
 
-    public FamilytypeMatch(String... familyTypes) {
-        this.familyTypes = familyTypes.clone();
+    public UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
+        this.oldCommunicationPath = oldPath;
+        this.newCommunicationPath = newPath;
     }
 
-    @Override
-    public boolean match(Announce a) throws MissingDataException {
-        final String ft = a.getParams().getDevice().getFamilyType();
-        for (int i = 0; i < familyTypes.length; i++) {
-            if (familyTypes[i].equals(ft)) {
-                return true;
-            }
-        }
-        return false;
+    public CommunicationPath getOldCommunicationPath() {
+        return this.oldCommunicationPath;
     }
 
-    @Override
-    public String getMatcherName() {
-        return "Famility type";
+    public CommunicationPath getNewCommunicationPath() {
+        return this.newCommunicationPath;
     }
 
-    @Override
-    public String[] getFilterStrings() {
-        return familyTypes.clone();
-    }
 }
