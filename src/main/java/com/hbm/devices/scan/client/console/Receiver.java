@@ -44,7 +44,6 @@ import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
-import com.hbm.devices.scan.MessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.IPv6Entry;
@@ -79,22 +78,20 @@ public final class Receiver implements Observer {
      */
     public static void main(String... args) {
         try {
-            final MessageParser jf = new MessageParser();
-            MessageReceiver mr;
-            final AnnounceReceiver ar = new AnnounceReceiver();
-            ar.addObserver(jf);
-            mr = ar;
+            final MessageParser messageParser = new MessageParser();
+            final AnnounceReceiver announceReceiver = new AnnounceReceiver();
+            announceReceiver.addObserver(messageParser);
 
             final String[] families = { "QuantumX" };
             final Filter ftFilter = new Filter(new FamilytypeMatch(families));
-            jf.addObserver(ftFilter);
+            messageParser.addObserver(ftFilter);
 
-            final DeviceMonitor af = new DeviceMonitor();
-            ftFilter.addObserver(af);
+            final DeviceMonitor deviceMonitor = new DeviceMonitor();
+            ftFilter.addObserver(deviceMonitor);
 
-            final Receiver r = new Receiver();
-            af.addObserver(r);
-            mr.start();
+            final Receiver receiver = new Receiver();
+            deviceMonitor.addObserver(receiver);
+            announceReceiver.start();
         } catch (Exception e) {
             LOGGER.log(Level.SEVERE, "Error instantiating announce receiver chain!", e);
         }
