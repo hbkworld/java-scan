@@ -33,7 +33,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Objects of this class hold the information of a devices network settings.
  */
-public class NetSettings {
+public final class NetSettings {
 
     private DefaultGateway defaultGateway;
 
