@@ -28,11 +28,22 @@
 
 package com.hbm.devices.scan.messages;
 
+/**
+ * A class holding the information for manual IP interface configuration an a device.
+ */
 public class IPv4EntryManual {
 
     private final String manualAddress;
     private final String manualNetmask;
 
+    /**
+     * Constructs a {@link IPv4EntryManual} object.
+     *
+     * @param address The IP address for the manual interface
+     * configuration of a device.
+     * @param netmask The network mask for the manual interface
+     * configuration of a device.
+     */
     public IPv4EntryManual(String address, String netmask) {
         if (address == null) {
             throw new IllegalArgumentException("address parameter must not be null");
@@ -44,10 +55,18 @@ public class IPv4EntryManual {
         this.manualNetmask = netmask;
     }
 
+    /**
+     * @return the IP address for the manual interface configuration of
+     * a device.
+     */
     public String getAddress() {
         return manualAddress;
     }
 
+    /**
+     * @return the IP network mask for the manual interface configuration of
+     * a device.
+     */
     public String getNetmask() {
         return manualNetmask;
     }
