@@ -44,7 +44,7 @@ public final class UpdateDeviceEvent {
     private final CommunicationPath oldCommunicationPath;
     private final CommunicationPath newCommunicationPath;
 
-    public UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
+    UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
         this.oldCommunicationPath = oldPath;
         this.newCommunicationPath = newPath;
     }

@@ -42,7 +42,7 @@ public final class LostDeviceEvent {
 
     private final CommunicationPath communicationPath;
 
-    public LostDeviceEvent(CommunicationPath ap) {
+    LostDeviceEvent(CommunicationPath ap) {
         communicationPath = ap;
     }
 

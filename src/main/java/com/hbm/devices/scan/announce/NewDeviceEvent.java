@@ -43,7 +43,7 @@ public final class NewDeviceEvent {
 
     private final CommunicationPath communicationPath;
 
-    public NewDeviceEvent(CommunicationPath ap) {
+    NewDeviceEvent(CommunicationPath ap) {
         communicationPath = ap;
     }
 
