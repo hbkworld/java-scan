@@ -43,7 +43,7 @@ import com.hbm.devices.scan.ScanConstants;
 /**
  * This class receives {@link java.lang.String} messages and sends them via multicast UDP sockets
  * <p>
- * All network interfaces that are eligible to receive IPv4 multicast messages (see
+ * All network interfaces that are eligible to handle multicast messages (see
  * {@link com.hbm.devices.scan.util.ScanInterfaces}) are joined.
  * <p>
  * 
@@ -56,6 +56,16 @@ public class MulticastSender {
     private final Charset charset;
     private final InetAddress configureAddress;
 
+    /**
+     * Creates a {@link MulticastSender} object for sending
+     * configuration messages to a device. 
+     *
+     * @param ifs A {@link Collection} of {@link NetworkInterface}s over
+     * which the multicast messages wild be send if {@link #sendMessage}
+     * is called.
+     * 
+     * @throws IOException if creating the underlying socket fails.
+     */
     public MulticastSender(Collection<NetworkInterface> ifs) throws IOException {
         charset = Charset.forName("UTF-8");
         configureAddress = InetAddress.getByName(ScanConstants.CONFIGURATION_ADDRESS);
@@ -67,8 +77,15 @@ public class MulticastSender {
         interfaces.addAll(ifs);
     }
 
-    public void sendMessage(String msg) throws IOException {
-        final byte[] bytes = msg.getBytes(charset);
+    /**
+     * Sends a multicast message over the {@link NetworkInterface}s
+     * specified in {@link #MulticastSender(Collection)}.
+     *
+     * @param message The JSON string to be send.
+     * @throws IOException if the underlying socket send fails.
+     */
+    public void sendMessage(String message) throws IOException {
+        final byte[] bytes = message.getBytes(charset);
         final DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
             ScanConstants.CONFIGURATION_PORT);
         for (final NetworkInterface iface : interfaces) {
@@ -77,6 +94,11 @@ public class MulticastSender {
         }
     }
 
+    /**
+     * Shuts down the multicast sender.
+     *
+     * The underlying socket is closed and IGMP leave messages are send.
+     */
     public void shutdown() {
         socket.close();
     }

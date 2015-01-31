@@ -67,10 +67,28 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     private MulticastSocket socket;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
+    /**
+     * Creates a {@link MulticastMessageReceiver} for receiving
+     * multicast messsages
+     *
+     * @param multicastIP The multicast IP the {@link MulticastMessageReceiver} will listen to.
+     * @param port The port for listening to multicast packets.
+     * 
+     * @throws IOException if creating the underlying socket fails.
+     */
     public MulticastMessageReceiver(String multicastIP, int port) throws IOException {
         this(InetAddress.getByName(multicastIP), port);
     }
 
+    /**
+     * Creates a {@link MulticastMessageReceiver} for receiving
+     * multicast messsages
+     *
+     * @param multicastIP The multicast IP the {@link MulticastMessageReceiver} will listen to.
+     * @param port The port for listening to multicast packets.
+     * 
+     * @throws IOException if creating the underlying socket fails.
+     */
     public MulticastMessageReceiver(InetAddress multicastIP, int port) throws IOException {
         super();
 
@@ -80,7 +98,9 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     }
 
     /**
-     * This method starts the listening socket. In an infinite loop this method waits for incoming
+     * This method starts the listening socket.
+     *
+     * In an infinite loop this method waits for incoming
      * messages, converts them into strings and forwards them to all observers.
      */
     @Override
@@ -107,7 +127,7 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     }
 
     /**
-     * This method stops the listening socket and cancels the infinite receiving loop
+     * This method stops the listening socket and cancels the infinite receiving loop.
      */
     @Override
     public void stop() {
