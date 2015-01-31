@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan;
+package com.hbm.devices.scan.configure;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -49,7 +49,7 @@ import com.hbm.devices.scan.ScanConstants;
  * 
  * @since 1.0
  */
-public class MulticastSender {
+public class ConfigurationMulticastSender {
 
     private final MulticastSocket socket;
     private final Collection<NetworkInterface> interfaces;
@@ -57,7 +57,7 @@ public class MulticastSender {
     private final InetAddress configureAddress;
 
     /**
-     * Creates a {@link MulticastSender} object for sending
+     * Creates a {@link ConfigurationMulticastSender} object for sending
      * configuration messages to a device. 
      *
      * @param ifs A {@link Collection} of {@link NetworkInterface}s over
@@ -66,7 +66,7 @@ public class MulticastSender {
      * 
      * @throws IOException if creating the underlying socket fails.
      */
-    public MulticastSender(Collection<NetworkInterface> ifs) throws IOException {
+    public ConfigurationMulticastSender(Collection<NetworkInterface> ifs) throws IOException {
         charset = Charset.forName("UTF-8");
         configureAddress = InetAddress.getByName(ScanConstants.CONFIGURATION_ADDRESS);
         socket = new MulticastSocket(null);
@@ -79,7 +79,7 @@ public class MulticastSender {
 
     /**
      * Sends a multicast message over the {@link NetworkInterface}s
-     * specified in {@link #MulticastSender(Collection)}.
+     * specified in {@link #ConfigurationMulticastSender(Collection)}.
      *
      * @param message The JSON string to be send.
      * @throws IOException if the underlying socket send fails.

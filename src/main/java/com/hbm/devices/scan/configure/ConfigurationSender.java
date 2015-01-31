@@ -31,7 +31,6 @@ package com.hbm.devices.scan.configure;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.hbm.devices.scan.MulticastSender;
 import com.hbm.devices.scan.messages.Configure;
 
 /**
@@ -42,7 +41,7 @@ import com.hbm.devices.scan.messages.Configure;
  */
 public class ConfigurationSender {
 
-    private final MulticastSender sender;
+    private final ConfigurationMulticastSender sender;
     private final Gson gson;
 
     /**
@@ -51,7 +50,7 @@ public class ConfigurationSender {
      * @param sender The multicast sender that will be used when calling
      * {@link #sendConfiguration}.
      */
-    public ConfigurationSender(MulticastSender sender) {
+    public ConfigurationSender(ConfigurationMulticastSender sender) {
         this.sender = sender;
         gson = new Gson();
     }

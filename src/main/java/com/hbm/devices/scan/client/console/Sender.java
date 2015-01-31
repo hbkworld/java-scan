@@ -39,7 +39,7 @@ import com.hbm.devices.scan.configure.ConfigurationSender;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.configure.ResponseListener;
-import com.hbm.devices.scan.MulticastSender;
+import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
@@ -58,7 +58,7 @@ public final class Sender implements ConfigurationCallback {
     private Sender() throws IOException {
         final ResponseListener listener = new ResponseListener();
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
-        final MulticastSender sender = new MulticastSender(scanInterfaces);
+        final ConfigurationMulticastSender sender = new ConfigurationMulticastSender(scanInterfaces);
         final ConfigurationSender parser = new ConfigurationSender(sender);
         service = new ConfigurationService(parser, listener);
     }
