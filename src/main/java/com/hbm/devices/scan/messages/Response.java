@@ -29,8 +29,9 @@
 package com.hbm.devices.scan.messages;
 
 /**
- * The Response contains the information, a device sent back, after it received a configuration
- * request
+ * Response object according to <a
+ * href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>
+ * specification.
  * 
  * @since 1.0
  *

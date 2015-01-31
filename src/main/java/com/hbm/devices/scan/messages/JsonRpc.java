@@ -31,7 +31,7 @@ package com.hbm.devices.scan.messages;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Super class for all JSON-RPC 2.0 messages.
+ * Super class for all <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> messages.
  */
 public abstract class JsonRpc {
     

@@ -28,6 +28,9 @@
 
 package com.hbm.devices.scan.messages;
 
+/**
+ * Class for error objects in <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>.
+ */
 public final class ErrorObject {
 
     private int code;
