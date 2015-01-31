@@ -26,23 +26,24 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.announce.events;
+package com.hbm.devices.scan.announce;
 
 import com.hbm.devices.scan.messages.CommunicationPath;
 
 /**
- * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor} when an annouce
- * messages wasn't refreshed during the expiration time.
+ * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor}.
  * <p>
+ * The event is notified when an announce method from a device that is unknown upto now is received.
+ * This event is not fired when the device was already announced but some data in the announce
+ * message has changed. In this case {@link UpdateDeviceEvent} is fired.
  *
  * @since 1.0
  */
-
-public class LostDeviceEvent {
+public class NewDeviceEvent {
 
     private final CommunicationPath communicationPath;
 
-    public LostDeviceEvent(CommunicationPath ap) {
+    public NewDeviceEvent(CommunicationPath ap) {
         communicationPath = ap;
     }
 

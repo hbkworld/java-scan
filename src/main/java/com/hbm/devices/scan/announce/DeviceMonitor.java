@@ -40,9 +40,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.announce.events.LostDeviceEvent;
-import com.hbm.devices.scan.announce.events.NewDeviceEvent;
-import com.hbm.devices.scan.announce.events.UpdateDeviceEvent;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.CommunicationPath;
 
