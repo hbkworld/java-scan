@@ -28,6 +28,9 @@
 
 package com.hbm.devices.scan.messages;
 
+/**
+ * A class holding the IPv6 address and IPv6 prefix.
+ */
 public class IPv6Entry {
 
     private String address;
@@ -36,6 +39,12 @@ public class IPv6Entry {
     private IPv6Entry() {
     }
 
+    /**
+     * Constructs an {@link IPv6Entry} object.
+     *
+     * @param address the IPv6 address
+     * @param prefix the IPv6 prefix
+     */
     public IPv6Entry(String address, String prefix) {
         this();
         this.address = address;
