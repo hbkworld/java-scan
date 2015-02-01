@@ -164,7 +164,7 @@ public class ConfigurationService implements Observer {
                 configQuery.getConfigCallback().onSuccess(response);
             } else {
                 final String message = error.getMessage();
-                if (message == null || message.length() == 0) {
+                if (errorMessageNotValid(message)){
                     return;
                 }
                 configQuery.getConfigCallback().onError(response);
@@ -223,6 +223,10 @@ public class ConfigurationService implements Observer {
 
     private static boolean responseNotValid(ErrorObject error, String result) {
         return (result == null && error == null) || (result != null && error != null);
+    }
+
+    private static boolean errorMessageNotValid(String message) {
+        return (message == null || message.length() == 0);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
