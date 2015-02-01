@@ -40,7 +40,7 @@ import com.hbm.devices.scan.messages.CommunicationPath;
 
 public class FilterTest {
 
-    private CommunicationPath ap;
+    private CommunicationPath cp;
     private FakeMessageReceiver fsmmr;
 
     @Before
@@ -53,7 +53,7 @@ public class FilterTest {
         jf.addObserver(ftFilter);
         ftFilter.addObserver(new Observer(){
             public void update(Observable o, Object arg) {
-                ap = (CommunicationPath)arg;
+                cp = (CommunicationPath)arg;
             }
         });
     }
@@ -61,7 +61,7 @@ public class FilterTest {
     @Test
     public void parseMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath object despite missing family type", cp);
     }
 }
 
