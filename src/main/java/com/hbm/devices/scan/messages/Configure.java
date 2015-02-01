@@ -28,15 +28,17 @@
 
 package com.hbm.devices.scan.messages;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
- * Network configuration request datagrams are dedicated requests, so only the device addressed by
- * request/configure/device/uuid must answer with a network configuration response datagram.
+ * This class hold a complete configuration request packet according to the specification.
  * 
  * @since 1.0
  */
 public final class Configure extends JsonRpc {
 
-    private String id;
+    @SerializedName("id")
+    private String queryID;
     private ConfigureParams params;
 
     private Configure() {
@@ -50,10 +52,10 @@ public final class Configure extends JsonRpc {
      *            A value of any type, which is used to match the response with the request that it
      *            is replying to.
      */
-    public Configure(ConfigureParams params, String queryId) {
+    public Configure(ConfigureParams params, String queryID) {
         this();
         this.params = params;
-        this.id = queryId;
+        this.queryID = queryID;
     }
 
     public ConfigureParams getParams() {
@@ -66,14 +68,14 @@ public final class Configure extends JsonRpc {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof Configure)) {
+        if (!(obj instanceof Configure)) {
             return false;
         }
-        final Configure rhs = (Configure)o;
+        final Configure rhs = (Configure)obj;
         return this.getJSONString().equals(rhs.getJSONString());
     }
 
@@ -83,6 +85,6 @@ public final class Configure extends JsonRpc {
     }
 
     public String getQueryId() {
-        return id;
+        return queryID;
     }
 }
