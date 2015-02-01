@@ -98,39 +98,39 @@ public final class Receiver implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable observable, Object arg) {
         try {
-            CommunicationPath ap;
+            CommunicationPath communicationPath;
             if (arg instanceof NewDeviceEvent) {
-                ap = ((NewDeviceEvent) arg).getAnnouncePath();
-                final Announce a = ap.getAnnounce();
-                final InetAddress connectAddress = connectionFinder.getConnectableAddress(a);
+                communicationPath = ((NewDeviceEvent) arg).getAnnouncePath();
+                final Announce announce = communicationPath.getAnnounce();
+                final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
                 LOGGER.info("New Device:\n");
                 if (connectAddress != null) {
                     LOGGER.info("Connectable: " + connectAddress + "\n");
                 }
             } else if (arg instanceof LostDeviceEvent) {
-                ap = ((LostDeviceEvent) arg).getAnnouncePath();
+                communicationPath = ((LostDeviceEvent) arg).getAnnouncePath();
                 LOGGER.info("Lost Device:\n");
             } else if (arg instanceof UpdateDeviceEvent) {
                 final UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
-                ap = event.getNewCommunicationPath();
+                communicationPath = event.getNewCommunicationPath();
                 LOGGER.info("Update Device:\n");
             } else {
                 LOGGER.info("unknown\n");
                 return;
             }
 
-            final Announce a = ap.getAnnounce();
-            LOGGER.info(a.getParams().getDevice().toString());
+            final Announce announce = communicationPath.getAnnounce();
+            LOGGER.info(announce.getParams().getDevice().toString());
 
             LOGGER.info("\tIP-Addresses:\n");
             LOGGER.info("\t interfaceName: "
-                    + a.getParams().getNetSettings().getInterface().getName() + "\n");
+                    + announce.getParams().getNetSettings().getInterface().getName() + "\n");
             LOGGER.info("\t method:"
-                    + a.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
-            final Iterable<?> ipv4 = (Iterable<?>) a.getParams().getNetSettings().getInterface().getIPv4();
-            final Iterable<IPv6Entry> ipv6 = a.getParams().getNetSettings().getInterface().getIPv6();
+                    + announce.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
+            final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
+            final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
             if (ipv4 != null) {
                 for (final Object entry : ipv4) {
                     LOGGER.info("\t " + entry + "\n");
@@ -143,7 +143,7 @@ public final class Receiver implements Observer {
             }
 
             LOGGER.info("\tServices:\n");
-            final Iterable<ServiceEntry> services = a.getParams().getServices();
+            final Iterable<ServiceEntry> services = announce.getParams().getServices();
             for (final ServiceEntry entry : services) {
                 LOGGER.info("\t " + entry + "\n");
             }
