@@ -121,34 +121,35 @@ public final class MessageParser extends Observable implements Observer {
             LOGGER.log(Level.INFO, "Some information is missing in JSON!", e);
         }
     }
-}
 
-class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
-
-    JsonRpcDeserializer() {
-    }
-
-    @Override
-    public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
-
-        JsonRpc rpcObject = null;
-        final JsonObject jsonObject = json.getAsJsonObject();
-
-        if (jsonObject.has("method")) {
-            final String type = jsonObject.get("method").getAsString();
-            if ("announce".compareTo(type) == 0) {
-                rpcObject = context.deserialize(json, Announce.class);
+    class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
+    
+        private JsonRpcDeserializer() {
+        }
+    
+        @Override
+        public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+    
+            JsonRpc rpcObject = null;
+            final JsonObject jsonObject = json.getAsJsonObject();
+    
+            if (jsonObject.has("method")) {
+                final String type = jsonObject.get("method").getAsString();
+                if ("announce".compareTo(type) == 0) {
+                    rpcObject = context.deserialize(json, Announce.class);
+                    if (rpcObject != null) {
+                        rpcObject.setJSONString(jsonObject.toString());
+                    }
+                }
+            } else if (jsonObject.has("result") || jsonObject.has("error")) {
+                // is a response object
+                rpcObject = context.deserialize(json, Response.class);
                 if (rpcObject != null) {
                     rpcObject.setJSONString(jsonObject.toString());
                 }
             }
-        } else if (jsonObject.has("result") || jsonObject.has("error")) {
-            // is a response object
-            rpcObject = context.deserialize(json, Response.class);
-            if (rpcObject != null) {
-                rpcObject.setJSONString(jsonObject.toString());
-            }
+            return rpcObject;
         }
-        return rpcObject;
     }
 }
+
