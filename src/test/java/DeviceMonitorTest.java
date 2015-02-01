@@ -71,23 +71,22 @@ public class DeviceMonitorTest {
     @Test
     public void NewDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue(newDevice);
-        assertFalse(updateDevice);
+        assertTrue("No new device event fired", newDevice);
+        assertFalse("Update device event fired", updateDevice);
     }
 
     @Test
     public void UpdateDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue(newDevice);
+        assertTrue("No new device event fired", newDevice);
         newDevice = false;
 
         fsmmr.emitSingleCorrentMessageDifferentIP();
-        assertTrue(updateDevice && !newDevice);
+        assertTrue("No update device event fired", updateDevice && !newDevice);
         updateDevice = false;
 
         // Check if the event is not fired again
         fsmmr.emitSingleCorrentMessageDifferentIP();
-        assertFalse(updateDevice || newDevice);
+        assertFalse("Update device event fired twice", updateDevice || newDevice);
     }
-
 }
