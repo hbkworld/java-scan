@@ -42,6 +42,9 @@ public final class ServiceEntry {
     private String type;
     private int port;
 
+    private ServiceEntry() {
+    }
+
     /**
      * @return Name of the service.
      */

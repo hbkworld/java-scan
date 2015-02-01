@@ -35,7 +35,10 @@ public final class ErrorObject {
 
     private int code;
     private String message;
-    private String data; // optional
+    private String data;
+
+    private ErrorObject() {
+    }
 
     public int getCode() {
         return code;

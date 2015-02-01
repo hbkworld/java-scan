@@ -35,6 +35,9 @@ public final class Router {
 
     private String uuid;
 
+    private Router() {
+    }
+
     /**
      * @return     A string containing the unique ID of the router the device is connected to.
      */

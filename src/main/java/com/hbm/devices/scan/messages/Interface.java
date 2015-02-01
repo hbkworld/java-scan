@@ -45,6 +45,9 @@ public final class Interface {
     private List<IPv4Entry> ipv4;
     private List<IPv6Entry> ipv6;
 
+    private Interface() {
+    }
+
     /**
      * @return
      *      A string containing the name of the interface. For

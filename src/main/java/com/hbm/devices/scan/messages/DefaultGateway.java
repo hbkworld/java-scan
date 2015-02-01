@@ -41,6 +41,9 @@ public final class DefaultGateway {
     private String ipv4Address;
     private String ipv6Address;
 
+    private DefaultGateway() {
+    }
+
     /**
      * @return
      *      A string containing the IPv4 address of the configured
