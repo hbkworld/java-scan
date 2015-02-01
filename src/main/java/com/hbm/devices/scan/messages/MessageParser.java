@@ -78,27 +78,27 @@ public final class MessageParser extends Observable implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        final String s = (String) arg;
+    public void update(Observable observable, Object arg) {
+        final String message = (String)arg;
         try {
             JsonRpc json;
             boolean newParsedString;
-            if (announceCache.hasStringInCache(s)) {
+            if (announceCache.hasStringInCache(message)) {
                 newParsedString = false;
-                json = announceCache.getAnnounceByString(s);
+                json = announceCache.getAnnounceByString(message);
             } else {
                 newParsedString = true;
-                json = gson.fromJson(s, JsonRpc.class);
+                json = gson.fromJson(message, JsonRpc.class);
             }
             if (json instanceof Announce) {
-                final CommunicationPath ap = new CommunicationPath((Announce) json);
+                final CommunicationPath communicationPath = new CommunicationPath((Announce) json);
                 // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
                 // Only cache Announce objects!
                 if (newParsedString) {
-                    announceCache.addCommunicationPath(s, ap);
+                    announceCache.addCommunicationPath(message, communicationPath);
                 }
                 setChanged();
-                notifyObservers(ap);
+                notifyObservers(communicationPath);
             } else if (json instanceof Response) {
                 final Response response = (Response)json;
                 setChanged();
