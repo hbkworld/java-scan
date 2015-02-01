@@ -124,7 +124,7 @@ public final class Receiver implements Observer {
             }
 
             final Announce announce = communicationPath.getAnnounce();
-            logBuilder.append(announce.getParams().getDevice().toString());
+            logBuilder.append(announce.getParams().getDevice());
 
             logBuilder.append("\tIP-Addresses:\n\t interfaceName: ")
                 .append(announce.getParams().getNetSettings().getInterface().getName())
