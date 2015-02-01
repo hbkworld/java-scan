@@ -153,10 +153,8 @@ public class ConfigurationService implements Observer {
         }
         final String result = response.getResult();
         final ErrorObject error = response.getError();
-        if (result == null && error == null) {
-            return;
-        }
-        if (result != null && error != null) {
+        if ((result == null && error == null) ||
+            (result != null && error != null)) {
             return;
         }
 
