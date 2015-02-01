@@ -46,7 +46,7 @@ import com.hbm.devices.scan.messages.ErrorObject;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.ScanConstants;
 
-/** 
+/**
  *This is the main service which is used to configure a device.<p>
  *
  * It sends the configuration settings and listen to responses. If no
@@ -74,7 +74,7 @@ public class ConfigurationService implements Observer {
 
     private final ScheduledThreadPoolExecutor executor;
 
-    private static final Logger LOGGER = 
+    private static final Logger LOGGER =
         Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
@@ -123,7 +123,7 @@ public class ConfigurationService implements Observer {
 
     /**
      * This method checks, if the service is waiting for a response.
-     * 
+     *
      * @return returns if the service is waiting for a response
      */
     public boolean awaitingResponse() {
@@ -131,17 +131,17 @@ public class ConfigurationService implements Observer {
     }
 
     /**
-     * 
+     *
      * This method is called when any response packet is received. It
      * checks if the received response corresponds to an earlier sent
      * configuration query. If not, the response is dropped, otherwise
      * either the onSucess or onError callback function of the
      * corresponding query object is called.
-     * 
+     *
      * @param arg the received response
      */
     @Override
-	public void update(Observable observable, Object arg) {
+    public void update(Observable observable, Object arg) {
         if (!(arg instanceof Response))  {
             return;
         }
