@@ -123,7 +123,7 @@ public final class MessageParser extends Observable implements Observer {
     }
 
     private static final class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
-        /*
+        /**
          * This constructor is only use by the outer class.
          * So there is no need to make it public.
          */
