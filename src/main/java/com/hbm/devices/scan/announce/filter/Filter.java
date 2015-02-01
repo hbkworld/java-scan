@@ -68,13 +68,13 @@ public final class Filter extends Observable implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        final CommunicationPath ap = (CommunicationPath) arg;
-        final Announce announce = ap.getAnnounce();
+    public void update(Observable observable, Object arg) {
+        final CommunicationPath communicationPath = (CommunicationPath)arg;
+        final Announce announce = communicationPath.getAnnounce();
         try {
             if (matcher.match(announce)) {
                 setChanged();
-                notifyObservers(ap);
+                notifyObservers(communicationPath);
             }
         } catch (MissingDataException e) {
             LOGGER.log(Level.INFO, "Some information is missing in announce!", e);
