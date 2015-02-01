@@ -80,19 +80,17 @@ public final class ConnectionFinder {
      */
     public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         if (preferIPv6) {
-            final InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
+            InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
             if (address == null) {
-                return ipv4ConnectionFinder.getConnectableAddress(announce);
-            } else {
-                return address;
+                address = ipv4ConnectionFinder.getConnectableAddress(announce);
             }
+            return address;
         } else {
-            final InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
+            InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
             if (address == null) {
-                return ipv6ConnectionFinder.getConnectableAddress(announce);
-            } else {
-                return address;
+                address = ipv6ConnectionFinder.getConnectableAddress(announce);
             }
+            return address;
         }
     }
 }
