@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.client.console;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -92,7 +93,7 @@ public final class Receiver implements Observer {
             final Receiver receiver = new Receiver();
             deviceMonitor.addObserver(receiver);
             announceReceiver.start();
-        } catch (Exception e) {
+        } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error instantiating announce receiver chain!", e);
         }
     }
