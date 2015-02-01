@@ -122,7 +122,7 @@ public final class MessageParser extends Observable implements Observer {
         }
     }
 
-    class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
+    private final class JsonRpcDeserializer implements JsonDeserializer<JsonRpc> {
     
         private JsonRpcDeserializer() {
         }
