@@ -56,8 +56,8 @@ import com.hbm.devices.scan.ScanConstants;
  */
 public final class MessageParser extends Observable implements Observer {
 
-    private Gson gson;
-    private AnnounceCache announceCache;
+    private final Gson gson;
+    private final AnnounceCache announceCache;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
