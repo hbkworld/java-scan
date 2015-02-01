@@ -148,13 +148,12 @@ public class ConfigurationService implements Observer {
         final Response response = (Response)arg;
 
         final String responseID = response.getId();
-        if (responseID == null || responseID.length() <= 0) {
+        if (responseIDnotValid(responseID)) {
             return;
         }
         final String result = response.getResult();
         final ErrorObject error = response.getError();
-        if ((result == null && error == null) ||
-            (result != null && error != null)) {
+        if (responseNotValid(error, result)) {
             return;
         }
 
@@ -216,6 +215,23 @@ public class ConfigurationService implements Observer {
         executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
         sender.sendConfiguration(config);
+    }
+
+    private static boolean responseIDnotValid(String responseID) {
+        if (responseID == null || responseID.length() <= 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private static boolean responseNotValid(ErrorObject error, String result) {
+        if ((result == null && error == null) ||
+            (result != null && error != null)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
