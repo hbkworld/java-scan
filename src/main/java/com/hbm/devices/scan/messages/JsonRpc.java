@@ -33,7 +33,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Super class for all <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> messages.
  */
-public abstract class JsonRpc {
+public class JsonRpc {
     
     @SerializedName("jsonrpc")
     private final String jsonrpcVersion;
