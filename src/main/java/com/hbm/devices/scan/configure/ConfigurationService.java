@@ -158,17 +158,7 @@ public class ConfigurationService implements Observer {
         }
 
         if (awaitingResponses.containsKey(response.getId())) {
-            final ConfigQuery configQuery = awaitingResponses.get(response.getId());
-            awaitingResponses.remove(response.getId());
-            if (error == null) {
-                configQuery.getConfigCallback().onSuccess(response);
-            } else {
-                final String message = error.getMessage();
-                if (errorMessageNotValid(message)){
-                    return;
-                }
-                configQuery.getConfigCallback().onError(response);
-            }
+            handleCallbacks(response, error);
         }
     }
 
@@ -217,6 +207,20 @@ public class ConfigurationService implements Observer {
         sender.sendConfiguration(config);
     }
 
+    private void handleCallbacks(Response response, ErrorObject error) {
+        final ConfigQuery configQuery = awaitingResponses.get(response.getId());
+        awaitingResponses.remove(response.getId());
+        if (error == null) {
+            configQuery.getConfigCallback().onSuccess(response);
+        } else {
+            final String message = error.getMessage();
+            if (errorMessageNotValid(message)){
+                return;
+            }
+            configQuery.getConfigCallback().onError(response);
+        }
+    }
+
     private static boolean responseIDnotValid(String responseID) {
         return (responseID == null) || (responseID.length() <= 0);
     }
@@ -226,7 +230,7 @@ public class ConfigurationService implements Observer {
     }
 
     private static boolean errorMessageNotValid(String message) {
-        return (message == null || message.length() == 0);
+        return (message == null) || (message.length() == 0);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
