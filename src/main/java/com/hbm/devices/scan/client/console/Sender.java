@@ -70,21 +70,21 @@ public final class Sender implements ConfigurationCallback {
 
     @Override
     public void onSuccess(Response response) {
-        LOGGER.info("Success:\n");
-        LOGGER.info(" result: " + response.getResult() + "\n");
+        LOGGER.log(Level.INFO, "Success:\n");
+        LOGGER.log(Level.INFO, " result: " + response.getResult() + "\n");
     }
 
     @Override
     public void onError(Response response) {
-        LOGGER.info("Error:\n");
-        LOGGER.info(" code: " + response.getError().getCode() + "\n");
-        LOGGER.info(" message: " + response.getError().getMessage() + "\n");
-        LOGGER.info(" data: " + response.getError().getData() + "\n");
+        LOGGER.log(Level.INFO, "Error:\n");
+        LOGGER.log(Level.INFO, " code: " + response.getError().getCode() + "\n");
+        LOGGER.log(Level.INFO, " message: " + response.getError().getMessage() + "\n");
+        LOGGER.log(Level.INFO, " data: " + response.getError().getData() + "\n");
     }
 
     @Override
     public void onTimeout(int timeout) {
-        LOGGER.info("No response is received in " + timeout + "ms\n");
+        LOGGER.log(Level.INFO, "No response is received in " + timeout + "ms\n");
         service.shutdown();
     }
 
