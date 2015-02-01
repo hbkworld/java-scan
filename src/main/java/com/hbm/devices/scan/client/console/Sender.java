@@ -70,21 +70,27 @@ public final class Sender implements ConfigurationCallback {
 
     @Override
     public void onSuccess(Response response) {
-        LOGGER.log(Level.INFO, "Success:\n");
-        LOGGER.log(Level.INFO, " result: " + response.getResult() + "\n");
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, "Success:\n");
+            LOGGER.log(Level.INFO, " result: " + response.getResult() + "\n");
+        }
     }
 
     @Override
     public void onError(Response response) {
-        LOGGER.log(Level.INFO, "Error:\n");
-        LOGGER.log(Level.INFO, " code: " + response.getError().getCode() + "\n");
-        LOGGER.log(Level.INFO, " message: " + response.getError().getMessage() + "\n");
-        LOGGER.log(Level.INFO, " data: " + response.getError().getData() + "\n");
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, "Error:\n");
+            LOGGER.log(Level.INFO, " code: " + response.getError().getCode() + "\n");
+            LOGGER.log(Level.INFO, " message: " + response.getError().getMessage() + "\n");
+            LOGGER.log(Level.INFO, " data: " + response.getError().getData() + "\n");
+        }
     }
 
     @Override
     public void onTimeout(int timeout) {
-        LOGGER.log(Level.INFO, "No response is received in " + timeout + "ms\n");
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, "No response is received in " + timeout + "ms\n");
+        }
         service.shutdown();
     }
 
@@ -101,7 +107,9 @@ public final class Sender implements ConfigurationCallback {
             final ConfigureParams configParams = new ConfigureParams(device, settings);
             sender.service.sendConfiguration(configParams, sender, 5000);
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
+            if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
+            }
         }
      }
 }
