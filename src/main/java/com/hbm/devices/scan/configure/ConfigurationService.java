@@ -218,20 +218,11 @@ public class ConfigurationService implements Observer {
     }
 
     private static boolean responseIDnotValid(String responseID) {
-        if (responseID == null || responseID.length() <= 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return (responseID == null) || (responseID.length() <= 0);
     }
 
     private static boolean responseNotValid(ErrorObject error, String result) {
-        if ((result == null && error == null) ||
-            (result != null && error != null)) {
-            return true;
-        } else {
-            return false;
-        }
+        return (result == null && error == null) || (result != null && error != null);
     }
 
     private class TimeoutTimerTask implements Callable<Void> {
