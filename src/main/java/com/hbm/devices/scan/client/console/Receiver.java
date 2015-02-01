@@ -99,59 +99,61 @@ public final class Receiver implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        if (LOGGER.isLoggable(Level.INFO)) {
-            try {
-                CommunicationPath communicationPath;
-                if (arg instanceof NewDeviceEvent) {
-                    communicationPath = ((NewDeviceEvent) arg).getAnnouncePath();
-                    final Announce announce = communicationPath.getAnnounce();
-                    final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
-                    LOGGER.log(Level.INFO, "New Device:\n");
-                    if (connectAddress != null) {
-                        LOGGER.log(Level.INFO, "Connectable: " + connectAddress + "\n");
-                    }
-                } else if (arg instanceof LostDeviceEvent) {
-                    communicationPath = ((LostDeviceEvent) arg).getAnnouncePath();
-                    LOGGER.log(Level.INFO, "Lost Device:\n");
-                } else if (arg instanceof UpdateDeviceEvent) {
-                    final UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
-                    communicationPath = event.getNewCommunicationPath();
-                    LOGGER.log(Level.INFO, "Update Device:\n");
-                } else {
-                    LOGGER.log(Level.INFO, "unknown\n");
-                    return;
-                }
-
+        StringBuilder logBuilder = new StringBuilder();
+        try {
+            CommunicationPath communicationPath;
+            if (arg instanceof NewDeviceEvent) {
+                communicationPath = ((NewDeviceEvent) arg).getAnnouncePath();
                 final Announce announce = communicationPath.getAnnounce();
-                LOGGER.log(Level.INFO, announce.getParams().getDevice().toString());
-
-                LOGGER.log(Level.INFO, "\tIP-Addresses:\n");
-                LOGGER.log(Level.INFO, "\t interfaceName: "
-                        + announce.getParams().getNetSettings().getInterface().getName() + "\n");
-                LOGGER.log(Level.INFO, "\t method:"
-                        + announce.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
-                final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
-                final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
-                if (ipv4 != null) {
-                    for (final Object entry : ipv4) {
-                        LOGGER.log(Level.INFO, "\t " + entry + "\n");
-                    }
+                final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
+                logBuilder.append("New Device:\n");
+                if (connectAddress != null) {
+                    logBuilder.append("Connectable: " + connectAddress + "\n");
                 }
-                if (ipv6 != null) {
-                    for (final IPv6Entry e : ipv6) {
-                        LOGGER.log(Level.INFO, "\t " + e + "\n");
-                    }
-                }
-
-                LOGGER.log(Level.INFO, "\tServices:\n");
-                final Iterable<ServiceEntry> services = announce.getParams().getServices();
-                for (final ServiceEntry entry : services) {
-                    LOGGER.log(Level.INFO, "\t " + entry + "\n");
-                }
-                LOGGER.log(Level.INFO, "\n");
-            } catch (MissingDataException e) {
-                LOGGER.log(Level.INFO, "Some data missing in Announce: " + e);
+            } else if (arg instanceof LostDeviceEvent) {
+                communicationPath = ((LostDeviceEvent) arg).getAnnouncePath();
+                logBuilder.append("Lost Device:\n");
+            } else if (arg instanceof UpdateDeviceEvent) {
+                final UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
+                communicationPath = event.getNewCommunicationPath();
+                logBuilder.append("Update Device:\n");
+            } else {
+                logBuilder.append("unknown\n");
+                return;
             }
+
+            final Announce announce = communicationPath.getAnnounce();
+            logBuilder.append(announce.getParams().getDevice().toString());
+
+            logBuilder.append("\tIP-Addresses:\n");
+            logBuilder.append("\t interfaceName: "
+                    + announce.getParams().getNetSettings().getInterface().getName() + "\n");
+            logBuilder.append("\t method:"
+                    + announce.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
+            final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
+            final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
+            if (ipv4 != null) {
+                for (final Object entry : ipv4) {
+                    logBuilder.append("\t " + entry + "\n");
+                }
+            }
+            if (ipv6 != null) {
+                for (final IPv6Entry e : ipv6) {
+                    logBuilder.append("\t " + e + "\n");
+                }
+            }
+
+            logBuilder.append("\tServices:\n");
+            final Iterable<ServiceEntry> services = announce.getParams().getServices();
+            for (final ServiceEntry entry : services) {
+                logBuilder.append("\t " + entry + "\n");
+            }
+            logBuilder.append("\n");
+        } catch (MissingDataException e) {
+            logBuilder.append("Some data missing in Announce: " + e);
+        }
+        if (LOGGER.isLoggable(Level.INFO)) {
+            LOGGER.log(Level.INFO, logBuilder.toString());
         }
     }
 }
