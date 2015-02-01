@@ -63,13 +63,11 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  */
 public final class Receiver implements Observer {
 
-    private final ConnectionFinder connectionFinder;
-
+    private final EventLogger eventLogger;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     private Receiver() throws SocketException {
-        final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
-        connectionFinder = new ConnectionFinder(scanInterfaces, false);
+        eventLogger = new EventLogger();
     }
 
     /**
@@ -100,23 +98,39 @@ public final class Receiver implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
+        eventLogger.logEvent(arg);
+    }
+}
+
+class EventLogger {
+
+    private final ConnectionFinder connectionFinder;
+
+    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
+
+    EventLogger() throws SocketException {
+        final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
+        connectionFinder = new ConnectionFinder(scanInterfaces, false);
+    }
+
+    void logEvent(Object event) {
         final StringBuilder logBuilder = new StringBuilder(200);
         try {
             CommunicationPath communicationPath;
-            if (arg instanceof NewDeviceEvent) {
-                communicationPath = ((NewDeviceEvent) arg).getAnnouncePath();
+            if (event instanceof NewDeviceEvent) {
+                communicationPath = ((NewDeviceEvent) event).getAnnouncePath();
                 final Announce announce = communicationPath.getAnnounce();
                 final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
                 logBuilder.append("New Device:\n");
                 if (connectAddress != null) {
                     logBuilder.append("Connectable: ").append(connectAddress).append('\n');
                 }
-            } else if (arg instanceof LostDeviceEvent) {
-                communicationPath = ((LostDeviceEvent) arg).getAnnouncePath();
+            } else if (event instanceof LostDeviceEvent) {
+                communicationPath = ((LostDeviceEvent) event).getAnnouncePath();
                 logBuilder.append("Lost Device:\n");
-            } else if (arg instanceof UpdateDeviceEvent) {
-                final UpdateDeviceEvent event = (UpdateDeviceEvent) arg;
-                communicationPath = event.getNewCommunicationPath();
+            } else if (event instanceof UpdateDeviceEvent) {
+                final UpdateDeviceEvent updateEvent = (UpdateDeviceEvent) event;
+                communicationPath = updateEvent.getNewCommunicationPath();
                 logBuilder.append("Update Device:\n");
             } else {
                 logBuilder.append("unknown\n");
@@ -131,7 +145,7 @@ public final class Receiver implements Observer {
         }
     }
 
-    private void fillDeviceInformation(CommunicationPath communicationPath, StringBuilder logBuilder)
+    private static void fillDeviceInformation(CommunicationPath communicationPath, StringBuilder logBuilder)
         throws MissingDataException {
         final Announce announce = communicationPath.getAnnounce();
         logBuilder.append(announce.getParams().getDevice());
