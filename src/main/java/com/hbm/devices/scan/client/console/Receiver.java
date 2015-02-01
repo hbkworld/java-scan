@@ -148,7 +148,7 @@ public final class Receiver implements Observer {
             for (final ServiceEntry entry : services) {
                 logBuilder.append("\t ").append(entry).append('\n');
             }
-            logBuilder.append("\n");
+            logBuilder.append('\n');
         } catch (MissingDataException e) {
             logBuilder.append("Some data missing in Announce: ").append(e);
         }
