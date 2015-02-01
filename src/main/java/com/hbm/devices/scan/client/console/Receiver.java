@@ -109,7 +109,7 @@ public final class Receiver implements Observer {
                 final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
                 logBuilder.append("New Device:\n");
                 if (connectAddress != null) {
-                    logBuilder.append("Connectable: " + connectAddress + "\n");
+                    logBuilder.append("Connectable: ").append(connectAddress).append('\n');
                 }
             } else if (arg instanceof LostDeviceEvent) {
                 communicationPath = ((LostDeviceEvent) arg).getAnnouncePath();
