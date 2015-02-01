@@ -57,8 +57,8 @@ public final class CommunicationPath {
             throw new MissingDataException("No device UUID in announce object!");
         }
 
-        final StringBuilder sb = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
-        sb.append(deviceUuid);
+        final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
+        hashBuilder.append(deviceUuid);
 
         final Router router = announce.getParams().getRouter();
         if (router != null) {
@@ -66,19 +66,19 @@ public final class CommunicationPath {
             if (routerUuid == null) {
                 throw new MissingDataException("No router UUID in announce object!");
             }
-            sb.append(routerUuid);
+            hashBuilder.append(routerUuid);
         }
 
         final String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
         if (deviceInterfaceName == null) {
             throw new MissingDataException("No network interface name in announce object!");
         }
-        sb.append(deviceInterfaceName);
-        hash = sb.toString().hashCode();
+        hashBuilder.append(deviceInterfaceName);
+        hash = hashBuilder.toString().hashCode();
     }
 
-    public void setCookie(Object c) {
-        cookie = c;
+    public void setCookie(Object cookie) {
+        this.cookie = cookie;
     }
 
     public Object getCookie() {
@@ -97,15 +97,15 @@ public final class CommunicationPath {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof CommunicationPath)) {
+        if (!(obj instanceof CommunicationPath)) {
             return false;
         }
 
-        return hash == o.hashCode();
+        return hash == obj.hashCode();
     }
     
     public Announce getAnnounce() {
