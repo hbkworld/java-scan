@@ -85,12 +85,11 @@ final class AnnounceCache {
 
 class LRUCache<K, V> extends LinkedHashMap<K, V> {
 
-    private static final long serialVersionUID = -1131809227943539842L;
-
     /**
      * By default the cache size is 100.
      */
     private static final int DEFAULT_CACHE_SIZE = 100;
+    private static final float LOAD_FACTOR = 0.75f;
 
     private int maxSize;
 
@@ -99,7 +98,7 @@ class LRUCache<K, V> extends LinkedHashMap<K, V> {
     }
 
     LRUCache(int maxSize) {
-        super(maxSize + 1, .75f, true);
+        super(maxSize + 1, LOAD_FACTOR, true);
         this.maxSize = maxSize;
     }
 
