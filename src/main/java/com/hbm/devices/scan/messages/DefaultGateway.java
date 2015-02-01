@@ -41,11 +41,6 @@ public final class DefaultGateway {
     private String ipv4Address;
     private String ipv6Address;
 
-    DefaultGateway(String ipv4Address, String ipv6Address) {
-        this.ipv4Address = ipv4Address;
-        this.ipv6Address = ipv6Address;
-    }
-
     /**
      * @return
      *      A string containing the IPv4 address of the configured

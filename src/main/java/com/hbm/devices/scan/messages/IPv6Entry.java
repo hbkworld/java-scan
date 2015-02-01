@@ -36,11 +36,6 @@ public final class IPv6Entry {
     private String address;
     private String prefix;
 
-    IPv6Entry(String address, String prefix) {
-        this.address = address;
-        this.prefix = prefix;
-    }
-    
     public String getAddress() {
         return address;
     }

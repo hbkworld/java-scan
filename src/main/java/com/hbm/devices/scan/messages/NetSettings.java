@@ -40,10 +40,6 @@ public final class NetSettings {
     @SerializedName("interface")
     private Interface iface;
 
-    NetSettings(Interface iface) {
-        this.iface = iface;
-    }
-
     public DefaultGateway getDefaultGateway() {
         return defaultGateway;
     }

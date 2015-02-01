@@ -45,13 +45,6 @@ public final class Interface {
     private List<IPv4Entry> ipv4;
     private List<IPv6Entry> ipv6;
 
-    Interface(String name, Method method, List<IPv4Entry> ipv4, List<IPv6Entry> ipv6) {
-        this.name = name;
-        this.configurationMethod = method.toString();
-        this.ipv4 = ipv4;
-        this.ipv6 = ipv6;
-    }
-
     /**
      * @return
      *      A string containing the name of the interface. For
