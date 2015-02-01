@@ -106,7 +106,7 @@ public final class Sender implements ConfigurationCallback {
             final ConfigureDevice device = new ConfigureDevice("0009E5001571");
             final ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
             final ConfigureParams configParams = new ConfigureParams(device, settings);
-            sender.service.sendConfiguration(configParams, sender, TimeUnit.SECONDS.toMillis(5000));
+            sender.service.sendConfiguration(configParams, sender, TimeUnit.SECONDS.toMillis(5));
         } catch (IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
