@@ -97,7 +97,6 @@ final class IPv6ConnectionFinder {
 
             } catch (UnknownHostException e) {
                 LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address!", e);
-                continue;
             }
 
         }

@@ -100,7 +100,6 @@ final class IPv4ConnectionFinder {
                 }
             } catch (UnknownHostException e) {
                 LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address!", e);
-                continue;
             }
         }
 
