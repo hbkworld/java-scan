@@ -42,7 +42,7 @@ import com.hbm.devices.scan.messages.Response;
 
 public class MessageParserTest {
 
-    private CommunicationPath ap;
+    private CommunicationPath cp;
     private Response res;
     private FakeMessageReceiver fsmmr;
 
@@ -54,7 +54,7 @@ public class MessageParserTest {
         jf.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 if (arg instanceof CommunicationPath) {
-                    ap = (CommunicationPath) arg;
+                    cp = (CommunicationPath) arg;
                 } else if (arg instanceof Response) {
                     res = (Response) arg;
                 }
@@ -68,102 +68,102 @@ public class MessageParserTest {
     @Test
     public void parseCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull(ap);
+        assertNotNull("No CommunictionPath object after correct message", cp);
     }
 
     @Test
     public void parseInvalidJsonMessage() {
         fsmmr.emitInvalidJsonMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath object after invalid message", cp);
     }
 
     @Test
     public void parseEmptyMessage() {
         fsmmr.emitEmptyString();
-        assertNull(ap);
+        assertNull("Got CommunicationPath object after empty message", cp);
     }
 
     @Test
     public void parseNullMessage() {
         fsmmr.emitNull();
-        assertNull(ap);
+        assertNull("Got CommunicationPath object after null", cp);
     }
 
     @Test
     public void parseMissingDeviceMessage() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without device", cp);
     }
 
     @Test
     public void parseMissingDeviceUuidMessage() {
         fsmmr.emitMissingDeviceUuidMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without UUID", cp);
     }
 
     @Test
     public void parseMissingParamsMessage() {
         fsmmr.emitMissingParamsMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without params", cp);
     }
 
     @Test
     public void parseNoInterfaceNameMessage() {
         fsmmr.emitNoInterfaceNameMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without interface name", cp);
     }
 
     @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without interface", cp);
     }
 
     @Test
     public void parseNoNetSettingsMessage() {
         fsmmr.emitNoNetSettingsMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without network settings", cp);
     }
 
     @Test
     public void parseMissingRouterUuidMessage() {
         fsmmr.emitMissingRouterUuidMessage();
-        assertNull(ap);
+        assertNull("Got CommunicationPath from message without router UUID", cp);
     }
 
     @Test
     public void parseCorrectSuccessReponseMessage() {
         fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
-        assertNotNull(res);
+        assertNotNull("No result object after correct success response", res);
     }
 
     @Test
     public void parseCorrectErrorReponseMessage() {
         fsmmr.emitSingleCorrectErrorResponseMessage();
-        assertNotNull(res);
+        assertNotNull("No result object after correct error response", res);
     }
 
     @Test
     public void parseNoSuccessIdResponseMessage() {
         fsmmr.emitNoSuccessIdResponseMessage();
-        assertNull(res);
+        assertNull("Got result object from response without ID", res);
     }
 
     @Test
     public void parseMissingErrorObjectResponseMessage() {
         fsmmr.emitMissingErrorObjectResponseMessage();
-        assertNull(res);
+        assertNull("Got result object from response without error object", res);
     }
 
     @Test
     public void parseNoErrorCodeResponseMessage() {
         fsmmr.emitNoErrorCodeResponseMessage();
-        assertNull(res);
+        assertNull("Got result object from response without error code", res);
     }
 
     @Test
     public void parseNoErrorMessageResponseMessage() {
         fsmmr.emitNoErrorMessageResponseMessage();
-        assertNull(res);
+        assertNull("Got result object from response without error message", res);
     }
 }
