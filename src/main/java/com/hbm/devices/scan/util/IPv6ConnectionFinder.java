@@ -112,12 +112,12 @@ final class IPv6ConnectionFinder {
         final byte[] announceAddr = announceAddress.getAddress();
         final byte[] interfaceAddr = interfaceAddress.getAddress();
 
-        if (announceAddr.length < (announcePrefixLength / 8)
-                || interfaceAddr.length < (announcePrefixLength / 8)) {
+        if (announceAddr.length < (announcePrefixLength / Byte.SIZE)
+                || interfaceAddr.length < (announcePrefixLength / Byte.SIZE)) {
             return false;
         }
 
-        for (int i = 0; i < (announcePrefixLength / 8); i++) {
+        for (int i = 0; i < (announcePrefixLength / Byte.SIZE); i++) {
             if (announceAddr[i] != interfaceAddr[i]) {
                 return false;
             }
