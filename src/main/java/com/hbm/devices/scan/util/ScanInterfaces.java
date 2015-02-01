@@ -71,19 +71,13 @@ public final class ScanInterfaces {
     }
 
     private static boolean willScan(NetworkInterface iface) throws SocketException {
-        if (iface.isLoopback()) {
+        if (iface.isLoopback() ||
+            !iface.isUp() ||
+            !hasConfiguredIPv4Address(iface) ||
+            !iface.supportsMulticast()) {
             return false;
         }
-        if (!iface.isUp()) {
-            return false;
-        }
-        if (!hasConfiguredIPv4Address(iface)) {
-            return false;
-        }
-        if (iface.supportsMulticast()) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     private static boolean hasConfiguredIPv4Address(NetworkInterface iface) {
