@@ -108,8 +108,9 @@ final class IPv4ConnectionFinder {
 
     private static int calculatePrefix(InetAddress announceNetmask) {
         final byte[] address = announceNetmask.getAddress();
+        final int length = address.length;
         int prefix = 0;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < length; i++) {
             prefix += Integer.bitCount(address[i] & 0xff);
         }
         return prefix;
@@ -127,10 +128,14 @@ final class IPv4ConnectionFinder {
     }
 
     private static int convertToInteger(byte... address) {
-        int value = ((int)address[0] & 0xff) << 24;
-        value |= ((int)address[1] & 0xff) << 16;
-        value |= ((int)address[2] & 0xff) << 8;
-        value |= (((int) address[3]) & 0xff) << 0;
+        int value = 0;
+        int length = address.length;
+        int arrayBitLength = length * Byte.SIZE;
+        int shift = arrayBitLength - Byte.SIZE;
+        for (int i = 0; i < length; i++) {
+            value |= ((int)address[i] & 0xff) << shift;
+            shift -= Byte.SIZE;
+        }
         return value;
     }
 }
