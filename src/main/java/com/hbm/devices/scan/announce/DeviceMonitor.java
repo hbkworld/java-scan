@@ -101,33 +101,33 @@ public final class DeviceMonitor extends Observable implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        final CommunicationPath ap = (CommunicationPath) arg;
-        final Announce announce = ap.getAnnounce();
+    public void update(Observable observable, Object arg) {
+        final CommunicationPath communicationPath = (CommunicationPath)arg;
+        final Announce announce = communicationPath.getAnnounce();
 
         synchronized (deviceMap) {
-            if (deviceMap.containsKey(ap)) {
-                ScheduledFuture<Void> sf = deviceMap.get(ap);
-                sf.cancel(false);
-                deviceMap.remove(ap);
-                AnnounceTimerTask task = futureMap.remove(sf);
+            if (deviceMap.containsKey(communicationPath)) {
+                ScheduledFuture<Void> future = deviceMap.get(communicationPath);
+                future.cancel(false);
+                deviceMap.remove(communicationPath);
+                AnnounceTimerTask task = futureMap.remove(future);
                 final Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
                 if (!oldAnnounce.equals(announce)) {
                     setChanged();
-                    notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), ap));
+                    notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), communicationPath));
                 }
-                task = new AnnounceTimerTask(ap);
-                sf = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
-                deviceMap.put(ap, sf);
-                futureMap.put(sf, task);
+                task = new AnnounceTimerTask(communicationPath);
+                future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+                deviceMap.put(communicationPath, future);
+                futureMap.put(future, task);
             } else {
-                final AnnounceTimerTask task = new AnnounceTimerTask(ap);
-                final ScheduledFuture<Void> sf = executor.schedule(task, getExpiration(announce),
+                final AnnounceTimerTask task = new AnnounceTimerTask(communicationPath);
+                final ScheduledFuture<Void> future = executor.schedule(task, getExpiration(announce),
                         TimeUnit.MILLISECONDS);
-                deviceMap.put(ap, sf);
-                futureMap.put(sf, task);
+                deviceMap.put(communicationPath, future);
+                futureMap.put(future, task);
                 setChanged();
-                notifyObservers(new NewDeviceEvent(ap));
+                notifyObservers(new NewDeviceEvent(communicationPath));
             }
         }
     }
@@ -144,8 +144,8 @@ public final class DeviceMonitor extends Observable implements Observer {
     private class AnnounceTimerTask implements Callable<Void> {
         private final CommunicationPath communicationPath;
 
-        AnnounceTimerTask(CommunicationPath ap) {
-            communicationPath = ap;
+        AnnounceTimerTask(CommunicationPath communicationPath) {
+            this.communicationPath = communicationPath;
         }
 
         @Override
