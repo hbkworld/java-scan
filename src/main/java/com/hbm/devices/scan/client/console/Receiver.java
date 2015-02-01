@@ -100,7 +100,7 @@ public final class Receiver implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        final StringBuilder logBuilder = new StringBuilder();
+        final StringBuilder logBuilder = new StringBuilder(200);
         try {
             CommunicationPath communicationPath;
             if (arg instanceof NewDeviceEvent) {
