@@ -44,7 +44,7 @@ public class FilterTest {
     private FakeMessageReceiver fsmmr;
 
     @Before
-    public void setup() {
+    public void setUp() {
         fsmmr = new FakeMessageReceiver();
         MessageParser jf = new MessageParser();
         fsmmr.addObserver(jf);

@@ -52,7 +52,7 @@ public class AnnounceCacheTest {
     private MessageParser parser;
 
     @Before
-    public void setup() {
+    public void setUp() {
         this.fakeReceiver = new FakeMessageReceiver();
         this.parser = new MessageParser();
         fakeReceiver.addObserver(parser);

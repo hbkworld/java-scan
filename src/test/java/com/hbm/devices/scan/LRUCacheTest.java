@@ -41,7 +41,7 @@ public class LRUCacheTest {
     private LRUCache<Integer, Integer> cache;
 
     @Before
-    public void setup() {
+    public void setUp() {
         this.cache = new LRUCache<Integer, Integer>(3);
     }
 

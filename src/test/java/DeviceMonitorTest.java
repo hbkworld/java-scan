@@ -49,7 +49,7 @@ public class DeviceMonitorTest {
     private boolean updateDevice;
 
     @Before
-    public void setup() {
+    public void setUp() {
         this.newDevice = false;
         this.updateDevice = false;
         fsmmr = new FakeMessageReceiver();
