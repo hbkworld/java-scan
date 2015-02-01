@@ -99,7 +99,7 @@ public final class Receiver implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        StringBuilder logBuilder = new StringBuilder();
+        final StringBuilder logBuilder = new StringBuilder();
         try {
             CommunicationPath communicationPath;
             if (arg instanceof NewDeviceEvent) {
@@ -125,32 +125,32 @@ public final class Receiver implements Observer {
             final Announce announce = communicationPath.getAnnounce();
             logBuilder.append(announce.getParams().getDevice().toString());
 
-            logBuilder.append("\tIP-Addresses:\n");
-            logBuilder.append("\t interfaceName: "
-                    + announce.getParams().getNetSettings().getInterface().getName() + "\n");
-            logBuilder.append("\t method:"
-                    + announce.getParams().getNetSettings().getInterface().getConfigurationMethod() + "\n");
+            logBuilder.append("\tIP-Addresses:\n\t interfaceName: ")
+                .append(announce.getParams().getNetSettings().getInterface().getName())
+                .append("\n\t method:")
+                .append(announce.getParams().getNetSettings().getInterface().getConfigurationMethod())
+                .append('\n');
             final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
             final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
             if (ipv4 != null) {
                 for (final Object entry : ipv4) {
-                    logBuilder.append("\t " + entry + "\n");
+                    logBuilder.append("\t ").append(entry).append('\n');
                 }
             }
             if (ipv6 != null) {
                 for (final IPv6Entry e : ipv6) {
-                    logBuilder.append("\t " + e + "\n");
+                    logBuilder.append("\t ").append(e).append('\n');
                 }
             }
 
             logBuilder.append("\tServices:\n");
             final Iterable<ServiceEntry> services = announce.getParams().getServices();
             for (final ServiceEntry entry : services) {
-                logBuilder.append("\t " + entry + "\n");
+                logBuilder.append("\t ").append(entry).append('\n');
             }
             logBuilder.append("\n");
         } catch (MissingDataException e) {
-            logBuilder.append("Some data missing in Announce: " + e);
+            logBuilder.append("Some data missing in Announce: ").append(e);
         }
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, logBuilder.toString());
