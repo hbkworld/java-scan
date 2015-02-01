@@ -44,7 +44,7 @@ public final class Device {
     private String firmwareVersion;
 
     @SerializedName("isRouter")
-    private final boolean router = false;
+    private boolean router;
 
     Device(String uuid) {
         this.uuid = uuid;
