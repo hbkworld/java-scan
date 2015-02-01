@@ -50,14 +50,14 @@ public final class Announce extends JsonRpc {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof Announce)) {
+        if (!(obj instanceof Announce)) {
             return false;
         }
-        final Announce rhs = (Announce)o;
+        final Announce rhs = (Announce)obj;
         return this.getJSONString().equals(rhs.getJSONString());
     }
 

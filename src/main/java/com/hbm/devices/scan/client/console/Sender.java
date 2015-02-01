@@ -95,11 +95,11 @@ public final class Sender implements ConfigurationCallback {
      */
     public static void main(String... args) {
         try {
-            final Sender s = new Sender();
+            final Sender sender = new Sender();
             final ConfigureDevice device = new ConfigureDevice("0009E5001571");
             final ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
             final ConfigureParams configParams = new ConfigureParams(device, settings);
-            s.service.sendConfiguration(configParams, s, 5000);
+            sender.service.sendConfiguration(configParams, sender, 5000);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);
         }

@@ -43,8 +43,8 @@ public final class NewDeviceEvent {
 
     private final CommunicationPath communicationPath;
 
-    NewDeviceEvent(CommunicationPath ap) {
-        communicationPath = ap;
+    NewDeviceEvent(CommunicationPath communicationPath) {
+        this.communicationPath = communicationPath;
     }
 
     public CommunicationPath getAnnouncePath() {

@@ -66,13 +66,13 @@ public final class DefaultGateway {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Gateway: ");
+        final StringBuilder builder = new StringBuilder("Gateway: ");
         if (ipv4Address != null) {
-            sb.append("IPv4: ").append(ipv4Address);
+            builder.append("IPv4: ").append(ipv4Address);
         }
         if (ipv6Address != null) {
-            sb.append("IPv6: ").append(ipv6Address);
+            builder.append("IPv6: ").append(ipv6Address);
         }
-        return sb.toString();
+        return builder.toString();
     }
 }

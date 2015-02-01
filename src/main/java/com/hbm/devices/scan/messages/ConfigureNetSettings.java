@@ -89,14 +89,14 @@ public final class ConfigureNetSettings {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Network settings:\n");
+        final StringBuilder builder = new StringBuilder("Network settings:\n");
         if (defaultGateway != null) {
-            sb.append("\t defaultGateway: ").append(defaultGateway).append('\n');
+            builder.append("\t defaultGateway: ").append(defaultGateway).append('\n');
         }
         if (iface != null) {
-            sb.append("\t interface: \n").append(iface).append('\n');
+            builder.append("\t interface: \n").append(iface).append('\n');
         }
 
-        return sb.toString();
+        return builder.toString();
     }
 }

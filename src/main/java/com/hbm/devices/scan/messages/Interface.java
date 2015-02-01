@@ -123,32 +123,32 @@ public final class Interface {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Interface:");
+        final StringBuilder builder = new StringBuilder("Interface:");
         if (name != null) {
-            sb.append("\n\t\tname: ").append(name);
+            builder.append("\n\t\tname: ").append(name);
         }
         if (type != null) {
-            sb.append("\n\t\ttype: ").append(type);
+            builder.append("\n\t\ttype: ").append(type);
         }
         if (description != null) {
-            sb.append("\n\t\tdescription: ").append(description);
+            builder.append("\n\t\tdescription: ").append(description);
         }
         if (configurationMethod != null) {
-            sb.append("\n\t\tconfigurationMethod: ").append(configurationMethod);
+            builder.append("\n\t\tconfigurationMethod: ").append(configurationMethod);
         }
         if (ipv4 != null) {
-            sb.append("\n\t\tIPv4 addresses:");
+            builder.append("\n\t\tIPv4 addresses:");
             for (final Object e : ipv4) {
-                sb.append("\n\t\t\t").append(e);
+                builder.append("\n\t\t\t").append(e);
             }
         }
         if (ipv6 != null) {
-            sb.append("\n\t\tIPv6 addresses:");
+            builder.append("\n\t\tIPv6 addresses:");
             for (final Object e : ipv6) {
-                sb.append("\n\t\t\t").append(e);
+                builder.append("\n\t\t\t").append(e);
             }
         }
-        return sb.toString();
+        return builder.toString();
     }
 
     /**

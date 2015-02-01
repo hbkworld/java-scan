@@ -48,7 +48,7 @@ public final class Configure extends JsonRpc {
     /**
      * @param params
      *            the configuration parameters, which should be sent to a device
-     * @param queryId
+     * @param queryID
      *            A value of any type, which is used to match the response with the request that it
      *            is replying to.
      */

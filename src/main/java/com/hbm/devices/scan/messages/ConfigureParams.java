@@ -92,15 +92,15 @@ public final class ConfigureParams {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
+        final StringBuilder builder = new StringBuilder();
         if (device != null) {
-            sb.append(device);
+            builder.append(device);
         }
         if (netSettings != null) {
-            sb.append(netSettings);
+            builder.append(netSettings);
         }
-        sb.append("ttl: ").append(ttl).append("\n\n");
+        builder.append("ttl: ").append(ttl).append("\n\n");
 
-        return sb.toString();
+        return builder.toString();
     }
 }

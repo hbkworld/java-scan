@@ -77,24 +77,24 @@ public final class AnnounceParams {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder(20);
+        final StringBuilder builder = new StringBuilder(20);
         if (device != null) {
-            sb.append(device);
+            builder.append(device);
         }
         if (netSettings != null) {
-            sb.append(netSettings);
+            builder.append(netSettings);
         }
         if (router != null) {
-            sb.append(router);
+            builder.append(router);
         }
         if (services != null) {
-            sb.append("Services:");
+            builder.append("Services:");
             for (final ServiceEntry se : services) {
-                sb.append("\n\t").append(se);
+                builder.append("\n\t").append(se);
             }
         }
-        sb.append("\nexpiration: ").append(expiration).append("\n\n");
+        builder.append("\nexpiration: ").append(expiration).append("\n\n");
 
-        return sb.toString();
+        return builder.toString();
     }
 }

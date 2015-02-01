@@ -89,7 +89,7 @@ public final class ResponseListener extends Observable implements Observer, Runn
      * forwarded.
      */
     @Override
-    public void update(Observable o, Object obj) {
+    public void update(Observable observable, Object obj) {
         if (obj instanceof Response) {
             final Response response = (Response) obj;
 

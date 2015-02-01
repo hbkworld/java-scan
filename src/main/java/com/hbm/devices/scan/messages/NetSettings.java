@@ -57,15 +57,15 @@ public final class NetSettings {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Network settings:\n");
+        final StringBuilder builder = new StringBuilder("Network settings:\n");
         if (defaultGateway != null) {
-            sb.append('\t').append(defaultGateway).append('\n');
+            builder.append('\t').append(defaultGateway).append('\n');
         }
         if (iface != null) {
-            sb.append('\t').append(iface).append('\n');
+            builder.append('\t').append(iface).append('\n');
         }
 
-        return sb.toString();
+        return builder.toString();
     }
 }
 

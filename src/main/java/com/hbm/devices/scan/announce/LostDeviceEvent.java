@@ -42,8 +42,8 @@ public final class LostDeviceEvent {
 
     private final CommunicationPath communicationPath;
 
-    LostDeviceEvent(CommunicationPath ap) {
-        communicationPath = ap;
+    LostDeviceEvent(CommunicationPath communicationPath) {
+        this.communicationPath = communicationPath;
     }
 
     public CommunicationPath getAnnouncePath() {

@@ -28,6 +28,8 @@
 
 package com.hbm.devices.scan.messages;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Response object according to <a
  * href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>
@@ -40,7 +42,9 @@ public final class Response extends JsonRpc {
 
     private String result;
     private ErrorObject error;
-    private String id;
+
+    @SerializedName("id")
+    private String responseID;
 
     Response() {
         super("response");
@@ -55,6 +59,6 @@ public final class Response extends JsonRpc {
     }
 
     public String getId() {
-        return id;
+        return responseID;
     }
 }
