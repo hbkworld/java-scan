@@ -55,38 +55,35 @@ public class AnnounceCacheTest {
     public void setup() {
         this.fakeReceiver = new FakeMessageReceiver();
         this.parser = new MessageParser();
-
         fakeReceiver.addObserver(parser);
     }
 
     @Test
     public void AddDeviceToCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
-        assertSame(parser.getCache().getCacheAmount(), 1);
-        assertSame(parser.getCache().getPathsAmount(), 1);
-        assertTrue(parser.getCache().hasStringInCache(CORRECT_MESSAGE));
+        assertSame("Entries in cache != 1", parser.getCache().getCacheAmount(), 1);
+        assertSame("Paths in cache != 1", parser.getCache().getPathsAmount(), 1);
+        assertTrue("JSON message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE));
 
         fakeReceiver.emitSingleCorrectMessageDifferentDevice();
-
-        assertSame(parser.getCache().getCacheAmount(), 2);
-        assertSame(parser.getCache().getPathsAmount(), 2);
-        assertTrue(parser.getCache().hasStringInCache(CORRECT_MESSAGE));
-        assertTrue(parser.getCache().hasStringInCache(
-                CORRECT_MESSAGE_DIFFERENT_DEVICE));
+        assertSame("Entries in cache != 2", parser.getCache().getCacheAmount(), 2);
+        assertSame("Paths in cache != 2", parser.getCache().getPathsAmount(), 2);
+        assertTrue("JSON message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE));
+        assertTrue("JSON message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE_DIFFERENT_DEVICE));
     }
 
     @Test
     public void GetFromCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
-        assertNotNull(parser.getCache().getAnnounceByString(CORRECT_MESSAGE));
+        assertNotNull("Correct message not in cache", parser.getCache().getAnnounceByString(CORRECT_MESSAGE));
     }
 
     @Test
     public void DontAddTwiceTest() {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessage();
-        assertSame(parser.getCache().getCacheAmount(), 1);
-        assertSame(parser.getCache().getPathsAmount(), 1);
+        assertSame("Message was added more than once", parser.getCache().getCacheAmount(), 1);
+        assertSame("Message was added more than once", parser.getCache().getPathsAmount(), 1);
     }
 
     @Test
@@ -94,11 +91,10 @@ public class AnnounceCacheTest {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessageDifferentServices();
 
-        assertSame(parser.getCache().getCacheAmount(), 1);
-        assertSame(parser.getCache().getPathsAmount(), 1);
-        assertFalse(parser.getCache().hasStringInCache(CORRECT_MESSAGE));
-        assertTrue(parser.getCache().hasStringInCache(
-                CORRECT_MESSAGE_DIFFERENT_SERVICES));
+        assertSame("Correct message not in cache", parser.getCache().getCacheAmount(), 1);
+        assertSame("Correct message not in cache", parser.getCache().getPathsAmount(), 1);
+        assertFalse("Original message still in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE));
+        assertTrue("New message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE_DIFFERENT_SERVICES));
     }
 
     static {
