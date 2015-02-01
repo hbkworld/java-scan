@@ -52,10 +52,10 @@ public class LRUCacheTest {
         cache.put(3, 3);
         cache.put(4, 4);
 
-        assertFalse(cache.containsKey(1));
-        assertTrue(cache.containsKey(2));
-        assertTrue(cache.containsKey(3));
-        assertTrue(cache.containsKey(4));
+        assertFalse("Eldest element still in cache", cache.containsKey(1));
+        assertTrue("New element not in cache", cache.containsKey(2));
+        assertTrue("New element not in cache", cache.containsKey(3));
+        assertTrue("New element not in cache", cache.containsKey(4));
     }
 
     @Test
@@ -66,10 +66,10 @@ public class LRUCacheTest {
         cache.get(1);
         cache.put(4, 4);
         
-        assertFalse(cache.containsKey(2));
-        assertTrue(cache.containsKey(1));
-        assertTrue(cache.containsKey(3));
-        assertTrue(cache.containsKey(4));
+        assertFalse("Eldest element still in cache", cache.containsKey(2));
+        assertTrue("Younger element not in cache", cache.containsKey(1));
+        assertTrue("Younger element not in cache", cache.containsKey(3));
+        assertTrue("Younger element not in cache", cache.containsKey(4));
     }
-
 }
+
