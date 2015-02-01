@@ -106,7 +106,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
 
     public void emitNull() {
         setChanged();
-        notifyObservers("");
+        notifyObservers(null);
     }
 
     public void emitMissingDeviceMessage() {
