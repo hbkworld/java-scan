@@ -122,39 +122,43 @@ public final class Receiver implements Observer {
                 logBuilder.append("unknown\n");
                 return;
             }
-
-            final Announce announce = communicationPath.getAnnounce();
-            logBuilder.append(announce.getParams().getDevice());
-
-            logBuilder.append("\tIP-Addresses:\n\t interfaceName: ")
-                .append(announce.getParams().getNetSettings().getInterface().getName())
-                .append("\n\t method:")
-                .append(announce.getParams().getNetSettings().getInterface().getConfigurationMethod())
-                .append('\n');
-            final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
-            final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
-            if (ipv4 != null) {
-                for (final Object entry : ipv4) {
-                    logBuilder.append("\t ").append(entry).append('\n');
-                }
-            }
-            if (ipv6 != null) {
-                for (final IPv6Entry e : ipv6) {
-                    logBuilder.append("\t ").append(e).append('\n');
-                }
-            }
-
-            logBuilder.append("\tServices:\n");
-            final Iterable<ServiceEntry> services = announce.getParams().getServices();
-            for (final ServiceEntry entry : services) {
-                logBuilder.append("\t ").append(entry).append('\n');
-            }
-            logBuilder.append('\n');
+            fillDeviceInformation(communicationPath, logBuilder);
         } catch (MissingDataException e) {
             logBuilder.append("Some data missing in Announce: ").append(e);
         }
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, logBuilder.toString());
         }
+    }
+
+    private void fillDeviceInformation(CommunicationPath communicationPath, StringBuilder logBuilder)
+        throws MissingDataException {
+        final Announce announce = communicationPath.getAnnounce();
+        logBuilder.append(announce.getParams().getDevice());
+
+        logBuilder.append("\tIP-Addresses:\n\t interfaceName: ")
+            .append(announce.getParams().getNetSettings().getInterface().getName())
+            .append("\n\t method:")
+            .append(announce.getParams().getNetSettings().getInterface().getConfigurationMethod())
+            .append('\n');
+        final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
+        final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
+        if (ipv4 != null) {
+            for (final Object entry : ipv4) {
+                logBuilder.append("\t ").append(entry).append('\n');
+            }
+        }
+        if (ipv6 != null) {
+            for (final IPv6Entry e : ipv6) {
+                logBuilder.append("\t ").append(e).append('\n');
+            }
+        }
+
+        logBuilder.append("\tServices:\n");
+        final Iterable<ServiceEntry> services = announce.getParams().getServices();
+        for (final ServiceEntry entry : services) {
+            logBuilder.append("\t ").append(entry).append('\n');
+        }
+        logBuilder.append('\n');
     }
 }
