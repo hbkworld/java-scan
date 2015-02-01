@@ -51,7 +51,7 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * It sends the configuration settings and listen to responses. If no
  * response is received within a certain time, a callback method ({@link
- * ConfigurationCallback#onTimeout(int timeout)}) is called. Otherwise if a
+ * ConfigurationCallback#onTimeout(long timeout)}) is called. Otherwise if a
  * response is received, either {@link
  * ConfigurationCallback#onSuccess(Response)} or {@link
  * ConfigurationCallback#onError(Response)} is called accordingly
@@ -59,7 +59,7 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * The main method, which is used to transmit configuration settings, is
  * {@link ConfigurationService#sendConfiguration(ConfigureParams,
- * ConfigurationCallback, int)}.<p>
+ * ConfigurationCallback, long)}.<p>
  *
  * @since 1.0
  *
@@ -166,7 +166,7 @@ public class ConfigurationService implements Observer {
      *
      * This method sends a configuration via multicast. If no response
      * is received within the timeout, the callback method {@link
-     * ConfigurationCallback#onTimeout(int timeout)} is called. If a response
+     * ConfigurationCallback#onTimeout(long timeout)} is called. If a response
      * is received, either {@link ConfigurationCallback#onSuccess(
      * Response)} or {@link ConfigurationCallback#onError(
      * Response)} is called.
