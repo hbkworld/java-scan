@@ -105,8 +105,8 @@ public final class Receiver implements Observer {
 class EventLogger {
 
     private final ConnectionFinder connectionFinder;
-
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
+    private static final int INITIAL_BUFFER_SIZE = 200;
 
     EventLogger() throws SocketException {
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
@@ -114,7 +114,7 @@ class EventLogger {
     }
 
     void logEvent(Object event) {
-        final StringBuilder logBuilder = new StringBuilder(200);
+        final StringBuilder logBuilder = new StringBuilder(INITIAL_BUFFER_SIZE);
         try {
             CommunicationPath communicationPath;
             if (event instanceof NewDeviceEvent) {

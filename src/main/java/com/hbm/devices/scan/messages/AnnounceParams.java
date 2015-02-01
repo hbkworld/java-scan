@@ -45,6 +45,7 @@ public final class AnnounceParams {
     private Router router;
     private List<ServiceEntry> services;
     private int expiration;
+    private static final int INITIAL_BUFFER_SIZE = 100;
 
     private AnnounceParams() {
     }
@@ -77,7 +78,7 @@ public final class AnnounceParams {
 
     @Override
     public String toString() {
-        final StringBuilder builder = new StringBuilder(20);
+        final StringBuilder builder = new StringBuilder(INITIAL_BUFFER_SIZE);
         if (device != null) {
             builder.append(device);
         }

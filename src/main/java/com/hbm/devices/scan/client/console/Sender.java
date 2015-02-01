@@ -28,9 +28,10 @@
 
 package com.hbm.devices.scan.client.console;
 
-import java.net.NetworkInterface;
 import java.io.IOException;
+import java.net.NetworkInterface;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -87,7 +88,7 @@ public final class Sender implements ConfigurationCallback {
     }
 
     @Override
-    public void onTimeout(int timeout) {
+    public void onTimeout(long timeout) {
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, "No response is received in " + timeout + "ms\n");
         }
@@ -105,7 +106,7 @@ public final class Sender implements ConfigurationCallback {
             final ConfigureDevice device = new ConfigureDevice("0009E5001571");
             final ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
             final ConfigureParams configParams = new ConfigureParams(device, settings);
-            sender.service.sendConfiguration(configParams, sender, 5000);
+            sender.service.sendConfiguration(configParams, sender, TimeUnit.SECONDS.toMillis(5000));
         } catch (IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {
                 LOGGER.log(Level.SEVERE, "Can't create configuration service!", e);

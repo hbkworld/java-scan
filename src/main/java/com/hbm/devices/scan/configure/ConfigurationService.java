@@ -184,7 +184,7 @@ public class ConfigurationService implements Observer {
      *              if the underlying socket send does not succeed.
      */
     public void sendConfiguration(final ConfigureParams configParams,
-        final ConfigurationCallback callback, int timeout) throws IOException {
+        final ConfigurationCallback callback, long timeout) throws IOException {
 
         if (configParams == null) {
             throw new IllegalArgumentException("configParams must not be null");
@@ -257,10 +257,10 @@ public class ConfigurationService implements Observer {
 class ConfigQuery {
 
     private final Configure config;
-    private final int timeout;
+    private final long timeout;
     private final ConfigurationCallback callback;
 
-    ConfigQuery(Configure config, ConfigurationCallback callback, int timeout) {
+    ConfigQuery(Configure config, ConfigurationCallback callback, long timeout) {
         this.config = config;
         this.timeout = timeout;
         this.callback = callback;
@@ -274,7 +274,7 @@ class ConfigQuery {
         return this.config;
     }
 
-    int getTimeout() {
+    long getTimeout() {
         return this.timeout;
     }
 

@@ -66,6 +66,7 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     private boolean shallRun = true;
     private MulticastSocket socket;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
+    private static final int MAX_UDP_SIZE = 65507;
 
     /**
      * Creates a {@link MulticastMessageReceiver} for receiving
@@ -105,7 +106,7 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
      */
     @Override
     public void start() {
-        final byte[] buffer = new byte[65536];
+        final byte[] buffer = new byte[MAX_UDP_SIZE];
         final Charset charset = Charset.forName("UTF-8");
         final DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
         while (shallRun) {

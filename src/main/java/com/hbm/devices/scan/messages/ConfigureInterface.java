@@ -42,6 +42,7 @@ public final class ConfigureInterface {
     private String name;
     private IPv4EntryManual ipv4;
     private String configurationMethod;
+    private static final int INITIAL_BUFFER_SIZE = 40;
 
     /**
      * This constructor is used to instantiate an {@link ConfigureInterface} object.
@@ -107,7 +108,7 @@ public final class ConfigureInterface {
 
     @Override
     public String toString() {
-        final StringBuilder result = new StringBuilder(40);
+        final StringBuilder result = new StringBuilder(INITIAL_BUFFER_SIZE);
         result.append("\t  name: ")
             .append(name).append("\n\t  method: ")
             .append(configurationMethod).append("\n\t  ip: ")

@@ -63,5 +63,5 @@ public interface ConfigurationCallback {
      * @param timeout
      *            The timeout in seconds that has been expired.
      */
-    void onTimeout(int timeout);
+    void onTimeout(long timeout);
 }
