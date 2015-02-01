@@ -63,6 +63,8 @@ public final class DeviceMonitor extends Observable implements Observer {
     private final ScheduledThreadPoolExecutor executor;
     private static final Logger LOGGER = 
         Logger.getLogger(ScanConstants.LOGGER_NAME);
+    private static final int INITIAL_ENTRIES = 100;
+    private static final int DEFAULT_EXPIRATION_S = 6;
 
     /**
      * Constructs a new {@code DeviceMonitor} object.
@@ -71,9 +73,8 @@ public final class DeviceMonitor extends Observable implements Observer {
      */
     public DeviceMonitor() {
         super();
-
-        deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(100);
-        futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(100);
+        deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(INITIAL_ENTRIES);
+        futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(INITIAL_ENTRIES);
         executor = new ScheduledThreadPoolExecutor(1);
     }
 
@@ -132,13 +133,13 @@ public final class DeviceMonitor extends Observable implements Observer {
         }
     }
 
-    private int getExpiration(Announce announce) {
+    private long getExpiration(Announce announce) {
         int expiration;
         expiration = announce.getParams().getExpiration();
         if (expiration == 0) {
-            expiration = 6;
+            expiration = DEFAULT_EXPIRATION_S;
         }
-        return expiration * 1000;
+        return TimeUnit.SECONDS.toMillis(expiration);
     }
 
     private class AnnounceTimerTask implements Callable<Void> {
