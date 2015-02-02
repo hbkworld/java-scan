@@ -28,8 +28,7 @@
 
 package com.hbm.devices.scan.configure;
 
-import java.util.Observable;
-import java.util.Observer;
+import java.io.IOException;
 
 /**
  * This class simulates a multicast sender. But it does not send any message via the network, it
@@ -41,7 +40,7 @@ import java.util.Observer;
  * @since 1.0
  *
  */
-public class FakeMulticastSender implements Observer {
+public class FakeMulticastSender implements MulticastSender {
 
     private String lastSent;
 
@@ -50,8 +49,11 @@ public class FakeMulticastSender implements Observer {
     }
 
     @Override
-    public void update(Observable o, Object arg) {
-        this.lastSent = (String) arg;
+    public void sendMessage(String message) throws IOException {
+        lastSent = message;
     }
 
+    @Override
+    public void shutdown() {
+    }
 }

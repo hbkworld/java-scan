@@ -31,9 +31,12 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
+import java.io.IOException;
 // import com.google.gson.JsonElement;
-// import com.google.gson.JsonParser;
+import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationSender;
 // import com.hbm.devices.configure.Device;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
@@ -41,29 +44,24 @@ import com.hbm.devices.scan.configure.FakeMulticastSender;
 // import com.hbm.devices.configure.NetSettings;
 // import com.hbm.devices.configure.Noticeable;
 // import com.hbm.devices.scan.messages.MissingDataException;
-// import com.hbm.devices.scan.messages.Configure;
+import com.hbm.devices.scan.messages.Configure;
 // import com.hbm.devices.scan.messages.ConfigureParams;
 // import com.hbm.devices.scan.messages.Interface.Method;
 
 public class ConfigParserTest {
 
     private FakeMulticastSender fs;
- 
     private ConfigurationSender cs;
- 
-    //private JsonParser parser;
- 
-    private Exception exception;
+    private JsonParser parser;
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
  
     @Before
     public void setup() {
         fs = new FakeMulticastSender();
- 
-        //cs = new ConfigurationSender(fs);
- 
-        //parser = new JsonParser();
- 
-        this.exception = null;
+        cs = new ConfigurationSender(fs);
+        parser = new JsonParser();
     }
 // 
 //     @Test
@@ -80,18 +78,21 @@ public class ConfigParserTest {
 //         assertTrue(sent.equals(correct));
 //     }
 // 
-//     @Test
-//     public void parseNullConfigure() {
-//         cp.update(null, null);
-//         assertTrue(this.exception instanceof NullPointerException);
-//     }
-// 
-//     @Test
-//     public void parseNullParams() {
-//         Configure conf = new Configure(null, "TEST-UUID");
-//         cp.update(null, conf);
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
+    @Test
+    public void parseNullConfigure() {
+        try {
+            exception.expect(IllegalArgumentException.class);
+            cs.sendConfiguration(null);
+        } catch (IOException e) {
+        }
+    }
+
+    @Test
+    public void createConfigureNullParams() {
+        exception.expect(IllegalArgumentException.class);
+        Configure conf = new Configure(null, "1234");
+    }
+
 // 
 //     @Test
 //     public void parseNullUUID() {
