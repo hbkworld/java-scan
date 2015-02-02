@@ -54,6 +54,12 @@ public final class Configure extends JsonRpc {
      */
     public Configure(ConfigureParams params, String queryID) {
         this();
+        if (params == null) {
+            throw new IllegalArgumentException("params == null");
+        }
+        if ((queryID == null) || (queryID.length() == 0)) {
+            throw new IllegalArgumentException("No queryID given");
+        }
         this.params = params;
         this.queryID = queryID;
     }
