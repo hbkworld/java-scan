@@ -49,7 +49,7 @@ import com.hbm.devices.scan.ScanConstants;
  * 
  * @since 1.0
  */
-public final class ConfigurationMulticastSender {
+public final class ConfigurationMulticastSender implements MulticastSender {
 
     private final MulticastSocket socket;
     private final Collection<NetworkInterface> interfaces;
@@ -84,6 +84,7 @@ public final class ConfigurationMulticastSender {
      * @param message The JSON string to be send.
      * @throws IOException if the underlying socket send fails.
      */
+    @Override
     public void sendMessage(String message) throws IOException {
         final byte[] bytes = message.getBytes(charset);
         final DatagramPacket packet = new DatagramPacket(bytes, bytes.length, configureAddress,
@@ -99,6 +100,7 @@ public final class ConfigurationMulticastSender {
      *
      * The underlying socket is closed and IGMP leave messages are send.
      */
+    @Override
     public void shutdown() {
         socket.close();
     }

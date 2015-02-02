@@ -30,55 +30,18 @@ package com.hbm.devices.scan.configure;
 
 import java.io.IOException;
 
-import com.google.gson.Gson;
-import com.hbm.devices.scan.messages.Configure;
-
-/**
- * This class is able to send {@link Configure} messages via multicast.
- * 
- * @since 1.0
- *
- */
-public final class ConfigurationSender {
-
-    private final MulticastSender sender;
-    private final Gson gson;
+public interface MulticastSender {
 
     /**
-     * Constructs a ConfigurationSender object.
+     * Sends a multicast message
      *
-     * @param sender The multicast sender that will be used when calling
-     * {@link #sendConfiguration}.
+     * @param message The JSON string to be send.
+     * @throws IOException if the underlying socket send fails.
      */
-    public ConfigurationSender(MulticastSender sender) {
-        this.sender = sender;
-        gson = new Gson();
-    }
+    void sendMessage(String message) throws IOException;
 
     /**
-     * Sends a network configuration via multicast.
-     *
-     * @param configuration The network configuration which shall be
-     * send.
-     *
-     * @throws IOException If sending of the configuration fails.
+     * Shuts down the multicast sender.
      */
-    public void sendConfiguration(Configure configuration) throws IOException {
-        final String message = getJsonString(configuration);
-        sender.sendMessage(message);
-    }
-
-    /**
-     * Shuts down the underlying multicast sender.
-     *
-     * This involves multicast leave IGMP messagesfor the configuration
-     * address.
-     */
-    public void shutdown() {
-        sender.shutdown();
-    }
-
-    private String getJsonString(Configure configuration) {
-        return gson.toJson(configuration);
-    }
+    void shutdown();
 }
