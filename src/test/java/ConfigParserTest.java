@@ -34,9 +34,9 @@ import org.junit.Test;
 
 // import com.google.gson.JsonElement;
 // import com.google.gson.JsonParser;
-// import com.hbm.devices.configure.ConfigParser;
+import com.hbm.devices.scan.configure.ConfigurationSender;
 // import com.hbm.devices.configure.Device;
-// import com.hbm.devices.configure.FakeMulticastSender;
+import com.hbm.devices.scan.configure.FakeMulticastSender;
 // import com.hbm.devices.configure.Interface;
 // import com.hbm.devices.configure.NetSettings;
 // import com.hbm.devices.configure.Noticeable;
@@ -47,29 +47,24 @@ import org.junit.Test;
 
 public class ConfigParserTest {
 
-//     private FakeMulticastSender fs;
-// 
-//     private ConfigParser cp;
-// 
-//     private JsonParser parser;
-// 
-//     private Exception exception;
-// 
-//     @Before
-//     public void setup() {
-//         fs = new FakeMulticastSender();
-// 
-//         cp = new ConfigParser(new Noticeable() {
-//             public void onException(Exception e) {
-//                 exception = e;
-//             }
-//         });
-//         cp.addObserver(fs);
-// 
-//         parser = new JsonParser();
-// 
-//         this.exception = null;
-//     }
+    private FakeMulticastSender fs;
+ 
+    private ConfigurationSender cs;
+ 
+    //private JsonParser parser;
+ 
+    private Exception exception;
+ 
+    @Before
+    public void setup() {
+        fs = new FakeMulticastSender();
+ 
+        //cs = new ConfigurationSender(fs);
+ 
+        //parser = new JsonParser();
+ 
+        this.exception = null;
+    }
 // 
 //     @Test
 //     public void parseCorrectConfig() {
