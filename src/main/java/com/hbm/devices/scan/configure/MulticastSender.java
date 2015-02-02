@@ -30,6 +30,9 @@ package com.hbm.devices.scan.configure;
 
 import java.io.IOException;
 
+/**
+ * Interface all multicast sender have to implement.
+ */
 public interface MulticastSender {
 
     /**
