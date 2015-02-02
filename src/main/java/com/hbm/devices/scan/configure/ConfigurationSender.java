@@ -61,9 +61,13 @@ public final class ConfigurationSender {
      * @param configuration The network configuration which shall be
      * send.
      *
-     * @throws IOException If sending of the configuration fails.
+     * @throws IOException if sending of the configuration fails.
+     * @throws IllegalArgumentException if configuration == null
      */
     public void sendConfiguration(Configure configuration) throws IOException {
+        if (configuration == null) {
+            throw new IllegalArgumentException("configuration == null");
+        }
         final String message = getJsonString(configuration);
         sender.sendMessage(message);
     }
