@@ -98,86 +98,57 @@ public class ConfigParserTest {
         ConfigurationRequest conf = new ConfigurationRequest(null, "1234");
     }
 
-// 
-//     @Test
-//     public void parseNullUUID() {
-//         Device device = new Device("0009E5001571");
-//         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
-//         cp.update(null, conf);
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
-// 
-//     @Test
-//     public void parseNullDevice() {
-//         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-//         ConfigureParams configParams = new ConfigureParams(null, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
-//         cp.update(null, conf);
-//         assertTrue(this.exception instanceof IllegalArgumentException);
-//     }
-// 
-//     @Test
-//     public void parseNoDevice() {
-//         Device device = new Device("");
-//         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
-//         cp.update(null, conf);
-//         assertNull(fs.getLastSent());
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
-// 
-//     @Test
-//     public void parseNullNetSettings() {
-//         Device device = new Device("0009E5001571");
-//         ConfigureParams configParams = new ConfigureParams(device, null);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
-//         cp.update(null, conf);
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
-// 
-//     @Test
-//     public void parseNullInterface() {
-//         Device device = new Device("0009E5001571");
-//         NetSettings settings = new NetSettings(null);
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
-//         cp.update(null, conf);
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
-// 
-//     @Test
-//     public void parseNullInterfaceName() {
-//         Device device = new Device("0009E5001571");
-//         NetSettings settings = new NetSettings(new Interface(null, Method.DHCP, null));
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
-//         cp.update(null, conf);
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
-// 
-//     @Test
-//     public void parseNoInterfaceName() {
-//         Device device = new Device("0009E5001571");
-//         NetSettings settings = new NetSettings(new Interface("", Method.DHCP, null));
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
-//         cp.update(null, conf);
-//         assertNull(fs.getLastSent());
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
-// 
-//     @Test
-//     public void parseManualAndNoIp() {
-//         Device device = new Device("0009E5001571");
-//         NetSettings settings = new NetSettings(new Interface("eth0", Method.MANUAL, null));
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
-//         cp.update(null, conf);
-//         System.out.println(this.exception);
-//         assertTrue(this.exception instanceof MissingDataException);
-//     }
 
+    @Test
+    public void parseNullUUID() {
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureParams configParams = new ConfigureParams(device, settings);
+        exception.expect(IllegalArgumentException.class);
+        ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
+    }
+
+    @Test
+    public void parseNullDevice() {
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        exception.expect(IllegalArgumentException.class);
+        ConfigureParams configParams = new ConfigureParams(null, settings);
+    }
+
+    @Test
+    public void parseEmptyDevice() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureDevice device = new ConfigureDevice("");
+    }
+
+    @Test
+    public void parseNullNetSettings() {
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        exception.expect(IllegalArgumentException.class);
+        ConfigureParams configParams = new ConfigureParams(device, null);
+    }
+
+    @Test
+    public void parseNullInterface() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureNetSettings settings = new ConfigureNetSettings(null);
+    }
+
+    @Test
+    public void parseNullInterfaceName() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface(null, Method.DHCP, null);
+    }
+
+    @Test
+    public void parseNoInterfaceName() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface("", Method.DHCP, null);
+    }
+
+    @Test
+    public void parseManualAndNoIp() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, null);
+    }
 }
