@@ -28,6 +28,7 @@
 
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,18 +36,17 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
-// import com.google.gson.JsonElement;
+
+import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationSender;
-// import com.hbm.devices.configure.Device;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
-// import com.hbm.devices.configure.Interface;
-// import com.hbm.devices.configure.NetSettings;
-// import com.hbm.devices.configure.Noticeable;
-// import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Configure;
-// import com.hbm.devices.scan.messages.ConfigureParams;
-// import com.hbm.devices.scan.messages.Interface.Method;
+import com.hbm.devices.scan.messages.ConfigureDevice;
+import com.hbm.devices.scan.messages.ConfigureInterface;
+import com.hbm.devices.scan.messages.ConfigureNetSettings;
+import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.Interface.Method;
 
 public class ConfigParserTest {
 
@@ -63,21 +63,25 @@ public class ConfigParserTest {
         cs = new ConfigurationSender(fs);
         parser = new JsonParser();
     }
-// 
-//     @Test
-//     public void parseCorrectConfig() {
-//         Device device = new Device("0009E5001571");
-//         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-//         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
-// 
-//         cp.update(null, conf);
-//         String correctOutParsed = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
-//         JsonElement correct = parser.parse(correctOutParsed);
-//         JsonElement sent = parser.parse(fs.getLastSent());
-//         assertTrue(sent.equals(correct));
-//     }
-// 
+
+    @Test
+    public void parseCorrectConfig() {
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureParams configParams = new ConfigureParams(device, settings);
+        Configure conf = new Configure(configParams, "TEST-UUID");
+ 
+        try {
+            cs.sendConfiguration(conf);
+        } catch (IOException e) {
+            fail("Got IOException during test: " + e);
+        }
+        String correctOutParsed = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
+        JsonElement correct = parser.parse(correctOutParsed);
+        JsonElement sent = parser.parse(fs.getLastSent());
+        assertTrue(sent.equals(correct));
+    }
+
     @Test
     public void parseNullConfigure() {
         try {
