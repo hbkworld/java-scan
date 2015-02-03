@@ -49,7 +49,7 @@ import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
 
-public class ConfigParserTest {
+public class ConfigurationSenderTest {
 
     private FakeMulticastSender fs;
     private ConfigurationSender cs;
