@@ -40,7 +40,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.messages.Configure;
+import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.ErrorObject;
 import com.hbm.devices.scan.messages.Response;
@@ -197,7 +197,7 @@ public class ConfigurationService implements Observer {
         }
 
         final String queryID = UUID.randomUUID().toString();
-        final Configure config = new Configure(configParams, queryID);
+        final ConfigurationRequest config = new ConfigurationRequest(configParams, queryID);
         final ConfigQuery configQuery = new ConfigQuery(config, callback, timeout);
 
         awaitingResponses.put(queryID, configQuery);
@@ -256,11 +256,11 @@ public class ConfigurationService implements Observer {
 
 class ConfigQuery {
 
-    private final Configure config;
+    private final ConfigurationRequest config;
     private final long timeout;
     private final ConfigurationCallback callback;
 
-    ConfigQuery(Configure config, ConfigurationCallback callback, long timeout) {
+    ConfigQuery(ConfigurationRequest config, ConfigurationCallback callback, long timeout) {
         this.config = config;
         this.timeout = timeout;
         this.callback = callback;
@@ -270,7 +270,7 @@ class ConfigQuery {
         return config.getQueryId();
     }
 
-    Configure getConfiguration() {
+    ConfigurationRequest getConfiguration() {
         return this.config;
     }
 

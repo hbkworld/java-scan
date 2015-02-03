@@ -31,10 +31,10 @@ package com.hbm.devices.scan.configure;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.hbm.devices.scan.messages.Configure;
+import com.hbm.devices.scan.messages.ConfigurationRequest;
 
 /**
- * This class is able to send {@link Configure} messages via multicast.
+ * This class is able to send {@link ConfigurationRequest} messages via multicast.
  * 
  * @since 1.0
  *
@@ -64,7 +64,7 @@ public final class ConfigurationSender {
      * @throws IOException if sending of the configuration fails.
      * @throws IllegalArgumentException if configuration == null
      */
-    public void sendConfiguration(Configure configuration) throws IOException {
+    public void sendConfiguration(ConfigurationRequest configuration) throws IOException {
         if (configuration == null) {
             throw new IllegalArgumentException("configuration == null");
         }
@@ -82,7 +82,7 @@ public final class ConfigurationSender {
         sender.shutdown();
     }
 
-    private String getJsonString(Configure configuration) {
+    private String getJsonString(ConfigurationRequest configuration) {
         return gson.toJson(configuration);
     }
 }

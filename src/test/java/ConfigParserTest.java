@@ -42,7 +42,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationSender;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
-import com.hbm.devices.scan.messages.Configure;
+import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
@@ -70,7 +70,7 @@ public class ConfigParserTest {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
         ConfigureParams configParams = new ConfigureParams(device, settings);
-        Configure conf = new Configure(configParams, "TEST-UUID");
+        ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
  
         try {
             cs.sendConfiguration(conf);
@@ -95,7 +95,7 @@ public class ConfigParserTest {
     @Test
     public void createConfigureNullParams() {
         exception.expect(IllegalArgumentException.class);
-        Configure conf = new Configure(null, "1234");
+        ConfigurationRequest conf = new ConfigurationRequest(null, "1234");
     }
 
 // 
@@ -104,7 +104,7 @@ public class ConfigParserTest {
 //         Device device = new Device("0009E5001571");
 //         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 //         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, null);
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
 //         cp.update(null, conf);
 //         assertTrue(this.exception instanceof MissingDataException);
 //     }
@@ -113,7 +113,7 @@ public class ConfigParserTest {
 //     public void parseNullDevice() {
 //         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 //         ConfigureParams configParams = new ConfigureParams(null, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
 //         cp.update(null, conf);
 //         assertTrue(this.exception instanceof IllegalArgumentException);
 //     }
@@ -123,7 +123,7 @@ public class ConfigParserTest {
 //         Device device = new Device("");
 //         NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
 //         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
 //         cp.update(null, conf);
 //         assertNull(fs.getLastSent());
 //         assertTrue(this.exception instanceof MissingDataException);
@@ -133,7 +133,7 @@ public class ConfigParserTest {
 //     public void parseNullNetSettings() {
 //         Device device = new Device("0009E5001571");
 //         ConfigureParams configParams = new ConfigureParams(device, null);
-//         Configure conf = new Configure(configParams, null);
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
 //         cp.update(null, conf);
 //         assertTrue(this.exception instanceof MissingDataException);
 //     }
@@ -143,7 +143,7 @@ public class ConfigParserTest {
 //         Device device = new Device("0009E5001571");
 //         NetSettings settings = new NetSettings(null);
 //         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
 //         cp.update(null, conf);
 //         assertTrue(this.exception instanceof MissingDataException);
 //     }
@@ -153,7 +153,7 @@ public class ConfigParserTest {
 //         Device device = new Device("0009E5001571");
 //         NetSettings settings = new NetSettings(new Interface(null, Method.DHCP, null));
 //         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
 //         cp.update(null, conf);
 //         assertTrue(this.exception instanceof MissingDataException);
 //     }
@@ -163,7 +163,7 @@ public class ConfigParserTest {
 //         Device device = new Device("0009E5001571");
 //         NetSettings settings = new NetSettings(new Interface("", Method.DHCP, null));
 //         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
 //         cp.update(null, conf);
 //         assertNull(fs.getLastSent());
 //         assertTrue(this.exception instanceof MissingDataException);
@@ -174,7 +174,7 @@ public class ConfigParserTest {
 //         Device device = new Device("0009E5001571");
 //         NetSettings settings = new NetSettings(new Interface("eth0", Method.MANUAL, null));
 //         ConfigureParams configParams = new ConfigureParams(device, settings);
-//         Configure conf = new Configure(configParams, "TEST-UUID");
+//         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
 //         cp.update(null, conf);
 //         System.out.println(this.exception);
 //         assertTrue(this.exception instanceof MissingDataException);

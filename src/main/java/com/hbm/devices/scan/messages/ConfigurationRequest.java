@@ -35,13 +35,13 @@ import com.google.gson.annotations.SerializedName;
  * 
  * @since 1.0
  */
-public final class Configure extends JsonRpc {
+public final class ConfigurationRequest extends JsonRpc {
 
     @SerializedName("id")
     private String queryID;
     private ConfigureParams params;
 
-    private Configure() {
+    private ConfigurationRequest() {
         super("configure");
     }
 
@@ -52,7 +52,7 @@ public final class Configure extends JsonRpc {
      *            A value of any type, which is used to match the response with the request that it
      *            is replying to.
      */
-    public Configure(ConfigureParams params, String queryID) {
+    public ConfigurationRequest(ConfigureParams params, String queryID) {
         this();
         if (params == null) {
             throw new IllegalArgumentException("params == null");
@@ -78,10 +78,10 @@ public final class Configure extends JsonRpc {
         if (this == obj) {
             return true;
         }
-        if (!(obj instanceof Configure)) {
+        if (!(obj instanceof ConfigurationRequest)) {
             return false;
         }
-        final Configure rhs = (Configure)obj;
+        final ConfigurationRequest rhs = (ConfigurationRequest)obj;
         return this.getJSONString().equals(rhs.getJSONString());
     }
 
