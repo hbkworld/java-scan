@@ -27,19 +27,11 @@
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
-import java.io.IOException;
-
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.hbm.devices.scan.configure.ConfigurationSender;
-import com.hbm.devices.scan.configure.FakeMulticastSender;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
@@ -47,46 +39,67 @@ import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
 
-public class ConfigurationSenderTest {
-
-    private FakeMulticastSender fs;
-    private ConfigurationSender cs;
-    private JsonParser parser;
+public class ConfigMessagesTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
  
-    @Before
-    public void setup() {
-        fs = new FakeMulticastSender();
-        cs = new ConfigurationSender(fs);
-        parser = new JsonParser();
+    @Test
+    public void createConfigureNullParams() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigurationRequest conf = new ConfigurationRequest(null, "1234");
     }
 
     @Test
-    public void parseCorrectConfig() {
+    public void parseNullUUID() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
         ConfigureParams configParams = new ConfigureParams(device, settings);
-        ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
- 
-        try {
-            cs.sendConfiguration(conf);
-        } catch (IOException e) {
-            fail("Got IOException during test: " + e);
-        }
-        String correctOutParsed = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
-        JsonElement correct = parser.parse(correctOutParsed);
-        JsonElement sent = parser.parse(fs.getLastSent());
-        assertEquals("Configuration request and check string are not equal", sent, correct);
+        exception.expect(IllegalArgumentException.class);
+        ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
     }
 
     @Test
-    public void parseNullConfigure() {
-        try {
-            exception.expect(IllegalArgumentException.class);
-            cs.sendConfiguration(null);
-        } catch (IOException e) {
-        }
+    public void parseNullDevice() {
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        exception.expect(IllegalArgumentException.class);
+        ConfigureParams configParams = new ConfigureParams(null, settings);
+    }
+
+    @Test
+    public void parseEmptyDevice() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureDevice device = new ConfigureDevice("");
+    }
+
+    @Test
+    public void parseNullNetSettings() {
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        exception.expect(IllegalArgumentException.class);
+        ConfigureParams configParams = new ConfigureParams(device, null);
+    }
+
+    @Test
+    public void parseNullInterface() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureNetSettings settings = new ConfigureNetSettings(null);
+    }
+
+    @Test
+    public void parseNullInterfaceName() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface(null, Method.DHCP, null);
+    }
+
+    @Test
+    public void parseNoInterfaceName() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface("", Method.DHCP, null);
+    }
+
+    @Test
+    public void parseManualAndNoIp() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, null);
     }
 }
