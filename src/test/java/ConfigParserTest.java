@@ -26,6 +26,7 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -79,7 +80,7 @@ public class ConfigParserTest {
         String correctOutParsed = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
         JsonElement correct = parser.parse(correctOutParsed);
         JsonElement sent = parser.parse(fs.getLastSent());
-        assertTrue(sent.equals(correct));
+        assertEquals("Configuration request and check string are not equal", sent, correct);
     }
 
     @Test
