@@ -34,11 +34,12 @@ package com.hbm.devices.scan;
  *
  * @since 1.0
  */
-public interface MessageReceiver {
+public interface MessageReceiver extends Runnable{
     /**
      * Start receiving multicast messages.
      */
-    void receive();
+    @Override
+    void run();
 
     /**
      * Stops receiveing multicast messages.
