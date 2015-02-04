@@ -36,12 +36,12 @@ package com.hbm.devices.scan;
  */
 public interface MessageReceiver {
     /**
-     * Start a {@link MessageReceiver}.
+     * Start receiving multicast messages.
      */
-    void start();
+    void receive();
 
     /**
-     * Stops a {@link MessageReceiver}.
+     * Stops receiveing multicast messages.
      */
     void stop();
 }

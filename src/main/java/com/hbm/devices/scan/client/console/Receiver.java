@@ -90,7 +90,7 @@ public final class Receiver implements Observer {
 
             final Receiver receiver = new Receiver();
             deviceMonitor.addObserver(receiver);
-            announceReceiver.start();
+            announceReceiver.receive();
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Error instantiating announce receiver chain!", e);
         }

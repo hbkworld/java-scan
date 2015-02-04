@@ -75,7 +75,7 @@ public final class ResponseListener extends Observable implements Observer, Runn
      */
     @Override
     public void run() {
-        responseReceiver.start();
+        responseReceiver.receive();
     }
 
     /**

@@ -78,7 +78,7 @@ public class StressTestMessageReceiver extends Observable implements MessageRece
     }
 
     @Override
-    public void start() {
+    public void receive() {
         LOGGER.info("Starting Test: " + loopAmount + " x " + deviceUuidList.size() + " Announces\n");
         this.startNanoTime = System.nanoTime();
 

@@ -49,8 +49,8 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  * All network interfaces that are eligible to receive IPv4 multicast messages (see
  * {@link com.hbm.devices.scan.util.ScanInterfaces}) are joined.
  * <p>
- * Receiving messages is done infinitely when calling {@link #start() start()} method. After calling
- * {@link #stop() stop()}, {@link #start() start()} returns.
+ * Receiving messages is done infinitely when calling {@link #receive() receive()}. After calling
+ * {@link #stop() stop()}, {@link #receive() receive()} returns.
  * <p>
  * In addition, via {@link com.hbm.devices.scan.MessageReceiver} this class is also an
  * {@link java.util.Observable}. So objects which are interested in String multicast messages have
@@ -105,7 +105,7 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
      * messages, converts them into strings and forwards them to all observers.
      */
     @Override
-    public void start() {
+    public void receive() {
         final byte[] buffer = new byte[MAX_UDP_SIZE];
         final Charset charset = Charset.forName("UTF-8");
         final DatagramPacket packet = new DatagramPacket(buffer, buffer.length);

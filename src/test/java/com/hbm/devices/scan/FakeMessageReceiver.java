@@ -202,7 +202,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     }
 
     @Override
-    public void start() {
+    public void receive() {
         setChanged();
         notifyObservers(FAKE_DEVICE_1);
         setChanged();
