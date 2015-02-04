@@ -40,6 +40,7 @@ import org.junit.Test;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationCallback;
+import com.hbm.devices.scan.configure.ConfigurationSender;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
@@ -53,7 +54,6 @@ import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {
-/*
     private FakeMulticastSender fakeSender;
     private FakeMessageReceiver fakeReceiver;
 
@@ -65,21 +65,16 @@ public class ConfigurationServiceTest {
     private JsonParser parser;
 
     @Before
-    public void setup() {
+    public void setUp() {
         this.fakeSender = new FakeMulticastSender();
         this.fakeReceiver = new FakeMessageReceiver();
 
         this.emulator = new FakeDeviceEmulator();
 
         try {
-            // get the private constructor
-            Constructor<ConfigurationService> configurationServiceConstructor = ConfigurationService.class
-                    .getDeclaredConstructor(Observer.class, Observable.class, String.class);
-            configurationServiceConstructor.setAccessible(true);
-            this.service = configurationServiceConstructor.newInstance(fakeSender, fakeReceiver,
-                    "TEST_UUID");
-            this.service2 = configurationServiceConstructor.newInstance(emulator, emulator,
-                    "TEST_UUID");
+            ConfigurationSender sender = new ConfigurationSender(fakeSender);
+            //this.service = new ConfigurationService(sender, fakeReceiver);
+            //this.service2 = configurationServiceConstructor.newInstance(emulator, emulator, "TEST_UUID");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,6 +82,7 @@ public class ConfigurationServiceTest {
         this.parser = new JsonParser();
     }
 
+/*
     public boolean received;
     public boolean timeout;
 
