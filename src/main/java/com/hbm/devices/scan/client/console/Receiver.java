@@ -84,7 +84,7 @@ public final class Receiver implements Observer {
             final AnnounceReceiver announceReceiver = new AnnounceReceiver();
             announceReceiver.addObserver(messageParser);
 
-            final String[] families = { "QuantumX" };
+            final String[] families = {"QuantumX"};
             final Filter ftFilter = new Filter(new FamilytypeMatch(families));
             messageParser.addObserver(ftFilter);
 
