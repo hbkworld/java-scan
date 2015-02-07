@@ -40,11 +40,12 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.ErrorObject;
+import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
-import com.hbm.devices.scan.ScanConstants;
 
 /**
  *This is the main service which is used to configure a device.<p>
@@ -68,7 +69,7 @@ public class ConfigurationService implements Observer {
 
     private final Map<String, ConfigQuery> awaitingResponses;
 
-    private final ResponseListener responseListener;
+    private final MessageParser responseParser;
 
     private final ConfigurationSender sender;
 
@@ -86,14 +87,14 @@ public class ConfigurationService implements Observer {
      * into objects or outgoing objects into JSON Strings.
      *
      * @param sender the ConfigurationSender the ConfigurationService shall use.
-     * @param listener the ResponseListener the ConfigurationService shall use.
+     * @param parser the MessageParser the ConfigurationService shall use.
      */
-    public ConfigurationService(ConfigurationSender sender, ResponseListener listener) {
+    public ConfigurationService(ConfigurationSender sender, MessageParser parser) {
         executor = new ScheduledThreadPoolExecutor(1);
         awaitingResponses = new HashMap<String, ConfigQuery>();
         this.sender = sender;
-        responseListener = listener;
-        responseListener.addObserver(this);
+        responseParser = parser;
+        responseParser.addObserver(this);
     }
 
     /**
@@ -103,7 +104,7 @@ public class ConfigurationService implements Observer {
      * {@link ConfigurationSender} is shut down.
      */
     public void shutdown() {
-        responseListener.deleteObserver(this);
+        responseParser.deleteObserver(this);
 
         executor.shutdown();
         try {

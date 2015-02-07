@@ -35,17 +35,18 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.configure.ConfigurationCallback;
+import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
 import com.hbm.devices.scan.configure.ConfigurationSender;
 import com.hbm.devices.scan.configure.ConfigurationService;
-import com.hbm.devices.scan.messages.ConfigureInterface;
-import com.hbm.devices.scan.configure.ResponseListener;
-import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
-import com.hbm.devices.scan.ScanConstants;
+import com.hbm.devices.scan.configure.ConfigureResponseReceiver;
 import com.hbm.devices.scan.messages.ConfigureDevice;
+import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
+import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
@@ -62,11 +63,14 @@ public final class Sender implements ConfigurationCallback {
     private static final int RESPONSE_TIMEOUT_S = 5;
 
     private Sender() throws IOException {
-        final ResponseListener listener = new ResponseListener();
+        final ConfigureResponseReceiver responseReceiver = new ConfigureResponseReceiver();
+        final MessageParser responseParser = new MessageParser();
+
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
-        final ConfigurationMulticastSender sender = new ConfigurationMulticastSender(scanInterfaces);
-        final ConfigurationSender parser = new ConfigurationSender(sender);
-        service = new ConfigurationService(parser, listener);
+        final ConfigurationMulticastSender multicastSender = new ConfigurationMulticastSender(scanInterfaces);
+        final ConfigurationSender sender = new ConfigurationSender(multicastSender);
+
+        service = new ConfigurationService(sender, responseParser);
     }
 
     @Override
