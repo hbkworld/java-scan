@@ -92,9 +92,15 @@ public class FilterTest {
     }
 
     @Test
-    public void ftFilterMissingServiceMessage() {
+    public void stFilterEmptyServiceMessage() {
+        fsmmr.emitEmptyServiceMessage();
+        assertNull("Got CommunicationPath object despite empty service section", serviceTypeCp);
+    }
+
+    @Test
+    public void stFilterMissingServiceMessage() {
         fsmmr.emitMissingServiceMessage();
-        assertNull("Got CommunicationPath object despite service section", serviceTypeCp);
+        assertNull("Got CommunicationPath object despite missing service section", serviceTypeCp);
     }
 
     @Test
