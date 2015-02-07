@@ -29,14 +29,14 @@
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Observable;
 import java.util.Observer;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -55,8 +55,6 @@ import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {
-    private FakeMulticastSender fakeSender;
-    private FakeMessageReceiver fakeReceiver;
     private MessageParser messageParser;
 
     //private FakeDeviceEmulator emulator;
@@ -65,16 +63,11 @@ public class ConfigurationServiceTest {
 
     @Before
     public void setUp() {
-        this.fakeSender = new FakeMulticastSender();
-        this.fakeReceiver = new FakeMessageReceiver();
         this.messageParser = new MessageParser();
-        fakeReceiver.addObserver(this.messageParser);
 
         //this.emulator = new FakeDeviceEmulator();
 
         try {
-            //ConfigurationSender sender = new ConfigurationSender(fakeSender);
-            //this.service = new ConfigurationService(sender, fakeReceiver);
             //this.service2 = configurationServiceConstructor.newInstance(emulator, emulator, "TEST_UUID");
         } catch (Exception e) {
             e.printStackTrace();
@@ -93,11 +86,13 @@ public class ConfigurationServiceTest {
             public void onTimeout(long timeout) {}
             public void onError(Response response) {}
         };
+
+        FakeMulticastSender fakeSender = new FakeMulticastSender();
+        ConfigurationSender sender = new ConfigurationSender(fakeSender);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
         try {
-            ConfigurationSender sender = new ConfigurationSender(fakeSender);
-            ConfigurationService service = new ConfigurationService(sender, messageParser);
             service.sendConfiguration(configParams, "TEST_UUID", callback, 5000);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         String testString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
