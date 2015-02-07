@@ -212,6 +212,6 @@ class EventLogger {
             .append(device.getFirmwareVersion())
             .append("\n  is router: ")
             .append(device.isRouter())
-            .append("\n");
+            .append('\n');
     }
 }
