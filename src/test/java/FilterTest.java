@@ -82,7 +82,7 @@ public class FilterTest {
     @Test
     public void checkServiceTypes() {
         assertArrayEquals("filter strings for ServicetypeMatcher are not correct", serviceTypes, serviceMatcher.getFilterStrings());
-        assertEquals(serviceMatcher, stFilter.getMatcher());
+        assertEquals("matchers are not equal", serviceMatcher, stFilter.getMatcher());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class FilterTest {
     @Test
     public void checkFamilyTypes() {
         assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, ftMatcher.getFilterStrings());
-        assertEquals(ftMatcher, ftFilter.getMatcher());
+        assertEquals("matcher are not equal", ftMatcher, ftFilter.getMatcher());
     }
 
     @Test
