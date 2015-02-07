@@ -65,6 +65,7 @@ public final class Sender implements ConfigurationCallback {
     private Sender() throws IOException {
         final ConfigureResponseReceiver responseReceiver = new ConfigureResponseReceiver();
         final MessageParser responseParser = new MessageParser();
+        responseReceiver.addObserver(responseParser);
 
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
         final ConfigurationMulticastSender multicastSender = new ConfigurationMulticastSender(scanInterfaces);
