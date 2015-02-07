@@ -127,48 +127,10 @@ public class ConfigurationServiceTest {
         }
 
         assertTrue("No response received", received);
+        assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
+
 /*
-    @Test
-    public void RemoveAwaitingEntryOnReceiveTest() {
-        // test if the HashMap entry is removed after a successful response
-        received = false;
-        timeout = false;
-
-        ConfigurationCallback cb = new ConfigurationCallback() {
-
-            @Override
-            public void onSuccess(ConfigQuery configQuery, Response response) {
-                received = true;
-            }
-
-            @Override
-            public void onError(ConfigQuery configQuery, Response response) {
-                received = true;
-            }
-
-            @Override
-            public void onTimeout(ConfigQuery configQuery) {
-                timeout = true;
-                this.notifyAll();
-            }
-
-        };
-
-        Device device = new Device("0009E5001571");
-        NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-        ConfigureParams configParams = new ConfigureParams(device, settings);
-
-        try {
-            service2.sendConfiguration(configParams, cb, 20);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        assertFalse(service2.awaitingResponse() && service2.hasResponseTimeoutTimer());
-    }
-
     @Test(timeout = 200)
     public void CheckTimeout() {
         received = false;
