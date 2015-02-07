@@ -94,7 +94,11 @@ public final class ConfigureInterface {
      * @return returns the name of the network interface
      */
     public String getInterfaceName() {
-        return this.name;
+        return name;
+    }
+
+    public String getConfigurationMethod() {
+        return configurationMethod;
     }
 
     /**
@@ -102,6 +106,6 @@ public final class ConfigureInterface {
      * @return returns the {@link IPv4EntryManual}
      */
     public IPv4EntryManual getIPv4() {
-        return this.ipv4;
+        return ipv4;
     }
 }
