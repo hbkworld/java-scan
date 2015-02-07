@@ -27,6 +27,7 @@
  */
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -53,13 +54,15 @@ public class FilterTest {
     private final String[] serviceTypes = {"http"};
     private final Matcher ftMatcher = new FamilytypeMatch(families);
     private final Matcher serviceMatcher = new ServicetypeMatch(serviceTypes);
+    private Filter ftFilter;
+    private Filter stFilter;
 
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         MessageParser jf = new MessageParser();
         fsmmr.addObserver(jf);
-        Filter ftFilter = new Filter(ftMatcher);
+        ftFilter = new Filter(ftMatcher);
         jf.addObserver(ftFilter);
         ftFilter.addObserver(new Observer(){
             public void update(Observable o, Object arg) {
@@ -67,9 +70,9 @@ public class FilterTest {
             }
         });
 
-        Filter serviceFilter = new Filter(serviceMatcher);
-        jf.addObserver(serviceFilter);
-        serviceFilter.addObserver(new Observer(){
+        stFilter = new Filter(serviceMatcher);
+        jf.addObserver(stFilter);
+        stFilter.addObserver(new Observer(){
             public void update(Observable o, Object arg) {
                 serviceTypeCp = (CommunicationPath)arg;
             }
@@ -79,6 +82,7 @@ public class FilterTest {
     @Test
     public void checkServiceTypes() {
         assertArrayEquals("filter strings for ServicetypeMatcher are not correct", serviceTypes, serviceMatcher.getFilterStrings());
+        assertEquals(serviceMatcher, stFilter.getMatcher());
     }
 
     @Test
@@ -96,6 +100,7 @@ public class FilterTest {
     @Test
     public void checkFamilyTypes() {
         assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, ftMatcher.getFilterStrings());
+        assertEquals(ftMatcher, ftFilter.getMatcher());
     }
 
     @Test
