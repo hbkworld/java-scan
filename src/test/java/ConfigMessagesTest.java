@@ -133,8 +133,8 @@ public class ConfigMessagesTest {
         final String address = "foo";
         final String netmask = "bar";
         IPv4EntryManual entry = new IPv4EntryManual(address, netmask);
-        assertEquals(address, entry.getAddress());
-        assertEquals(netmask, entry.getNetmask());
+        assertEquals("addresses do not match", address, entry.getAddress());
+        assertEquals("netmasks do not match", netmask, entry.getNetmask());
     }
 
     @Test
