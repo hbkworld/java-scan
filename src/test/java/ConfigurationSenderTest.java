@@ -86,6 +86,7 @@ public class ConfigurationSenderTest {
         try {
             exception.expect(IllegalArgumentException.class);
             cs.sendConfiguration(null);
+            fail("Method didn't throw expected IllegalArgumentException");
         } catch (IOException e) {
         }
     }

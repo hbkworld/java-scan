@@ -27,6 +27,7 @@
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.Rule;
@@ -48,6 +49,7 @@ public class ConfigMessagesTest {
     public void createConfigureNullParams() {
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(null, "1234");
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
@@ -57,6 +59,7 @@ public class ConfigMessagesTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
@@ -64,12 +67,14 @@ public class ConfigMessagesTest {
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
         exception.expect(IllegalArgumentException.class);
         ConfigureParams configParams = new ConfigureParams(null, settings);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
     public void parseEmptyDevice() {
         exception.expect(IllegalArgumentException.class);
         ConfigureDevice device = new ConfigureDevice("");
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
@@ -77,29 +82,34 @@ public class ConfigMessagesTest {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         exception.expect(IllegalArgumentException.class);
         ConfigureParams configParams = new ConfigureParams(device, null);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
     public void parseNullInterface() {
         exception.expect(IllegalArgumentException.class);
         ConfigureNetSettings settings = new ConfigureNetSettings(null);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
     public void parseNullInterfaceName() {
         exception.expect(IllegalArgumentException.class);
         ConfigureInterface iface = new ConfigureInterface(null, Method.DHCP, null);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
     public void parseNoInterfaceName() {
         exception.expect(IllegalArgumentException.class);
         ConfigureInterface iface = new ConfigureInterface("", Method.DHCP, null);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
     public void parseManualAndNoIp() {
         exception.expect(IllegalArgumentException.class);
         ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, null);
+        fail("Method didn't throw expected IllegalArgumentException");
     }
 }
