@@ -65,11 +65,6 @@ public final class FamilytypeMatch implements Matcher {
     }
 
     @Override
-    public String getMatcherName() {
-        return "Famility type";
-    }
-
-    @Override
     public String[] getFilterStrings() {
         return familyTypes.clone();
     }

@@ -48,14 +48,6 @@ public interface Matcher {
     boolean match(Announce announce) throws MissingDataException;
 
     /**
-     * This method is used to get the name of the matcher. This simplifies displaying the filter
-     * settings.
-     * 
-     * @return the name of the Mather.
-     */
-    String getMatcherName();
-
-    /**
      * This method returns all strings the filter allows. This simplifies displaying the filter
      * settings.
      * 

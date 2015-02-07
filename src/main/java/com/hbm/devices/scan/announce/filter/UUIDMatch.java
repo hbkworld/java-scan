@@ -62,11 +62,6 @@ public final class UUIDMatch implements Matcher {
     }
 
     @Override
-    public String getMatcherName() {
-        return "UUID";
-    }
-
-    @Override
     public String[] getFilterStrings() {
         return uuids.clone();
     }
