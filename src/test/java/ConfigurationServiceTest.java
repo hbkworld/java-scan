@@ -33,10 +33,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Observable;
-import java.util.Observer;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -45,7 +41,6 @@ import com.hbm.devices.scan.configure.ConfigurationSender;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
-import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
