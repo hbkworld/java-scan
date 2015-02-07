@@ -32,7 +32,6 @@ import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.Rule;
-import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 
@@ -53,11 +52,8 @@ public class ConfigurationSenderTest {
     private ConfigurationSender cs;
     private JsonParser parser;
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
- 
     @Before
-    public void setup() {
+    public void setUp() {
         fs = new FakeMulticastSender();
         cs = new ConfigurationSender(fs);
         parser = new JsonParser();
@@ -81,10 +77,9 @@ public class ConfigurationSenderTest {
         assertEquals("Configuration request and check string are not equal", sent, correct);
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void parseNullConfigure() {
         try {
-            exception.expect(IllegalArgumentException.class);
             cs.sendConfiguration(null);
             fail("Method didn't throw expected IllegalArgumentException");
         } catch (IOException e) {
