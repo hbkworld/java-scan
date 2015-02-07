@@ -47,6 +47,9 @@ import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Device;
+import com.hbm.devices.scan.messages.Interface;
+import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.IPv6Entry;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.MissingDataException;
@@ -148,31 +151,67 @@ class EventLogger {
     private static void fillDeviceInformation(CommunicationPath communicationPath, StringBuilder logBuilder)
         throws MissingDataException {
         final Announce announce = communicationPath.getAnnounce();
-        logBuilder.append(announce.getParams().getDevice());
+        logDevice(logBuilder, announce.getParams().getDevice());
+        logIpAddresses(logBuilder, announce);
+        logServices(logBuilder, announce);
+        logBuilder.append('\n');
+    }
 
-        logBuilder.append("\tIP-Addresses:\n\t interfaceName: ")
-            .append(announce.getParams().getNetSettings().getInterface().getName())
-            .append("\n\t method:")
-            .append(announce.getParams().getNetSettings().getInterface().getConfigurationMethod())
-            .append('\n');
-        final Iterable<?> ipv4 = (Iterable<?>) announce.getParams().getNetSettings().getInterface().getIPv4();
-        final Iterable<IPv6Entry> ipv6 = announce.getParams().getNetSettings().getInterface().getIPv6();
+    private static void logServices(StringBuilder logBuilder, Announce announce) throws MissingDataException {
+        final Iterable<ServiceEntry> services = announce.getParams().getServices();
+        logBuilder.append("  Services\n");
+        for (final ServiceEntry entry : services) {
+            logBuilder.append("    ")
+                .append(entry.getType())
+                .append(": ")
+                .append(entry.getPort())
+                .append('\n');
+        }
+    }
+
+    private static void logIpAddresses(StringBuilder logBuilder, Announce announce) throws MissingDataException {
+        Interface iface = announce.getParams().getNetSettings().getInterface();
+        logBuilder.append("  IP-Addresses:\n    interfaceName: ")
+        .append(iface.getName())
+        .append("\n    method: ")
+        .append(iface.getConfigurationMethod());
+
+        final Iterable<IPv4Entry> ipv4 = iface.getIPv4();
         if (ipv4 != null) {
-            for (final Object entry : ipv4) {
-                logBuilder.append("\t ").append(entry).append('\n');
+            for (final IPv4Entry entry : ipv4) {
+                logBuilder.append("    ")
+                    .append(entry.getAddress())
+                    .append('/')
+                    .append(entry.getNetmask())
+                    .append('\n');
             }
         }
+
+        final Iterable<IPv6Entry> ipv6 = iface.getIPv6();
         if (ipv6 != null) {
             for (final IPv6Entry e : ipv6) {
-                logBuilder.append("\t ").append(e).append('\n');
+                logBuilder.append("    ")
+                    .append(e.getAddress())
+                    .append('/')
+                    .append(e.getPrefix())
+                    .append('\n');
             }
         }
+    }
 
-        logBuilder.append("\tServices:\n");
-        final Iterable<ServiceEntry> services = announce.getParams().getServices();
-        for (final ServiceEntry entry : services) {
-            logBuilder.append("\t ").append(entry).append('\n');
-        }
-        logBuilder.append('\n');
+    private static void logDevice(StringBuilder logBuilder, Device device) throws MissingDataException{
+        logBuilder.append("Device:\n  UUID: ")
+            .append(device.getUuid())
+            .append("\n  name: ")
+            .append(device.getName())
+            .append("\n  family: ")
+            .append(device.getFamilyType())
+            .append("\n  type: ")
+            .append(device.getType())
+            .append("\n  firmware version: ")
+            .append(device.getFirmwareVersion())
+            .append("\n  is router: ")
+            .append(device.isRouter())
+            .append("\n");
     }
 }
