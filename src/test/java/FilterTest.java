@@ -27,6 +27,7 @@
  */
 
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +62,13 @@ public class FilterTest {
     }
 
     @Test
-    public void parseMissingFamilyTypeMessage() {
+    public void filterCorrectMessage() {
+        fsmmr.emitSingleCorrectMessage();
+        assertNotNull("Didn't got a CommunicationPath object", cp);
+    }
+
+    @Test
+    public void filterMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
         assertNull("Got CommunicationPath object despite missing family type", cp);
     }
