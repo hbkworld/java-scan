@@ -46,9 +46,4 @@ public final class IPv6Entry {
     public String getPrefix() {
         return prefix;
     }
-
-    @Override
-    public String toString() {
-        return address + "/" + prefix;
-    }
 }

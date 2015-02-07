@@ -61,16 +61,4 @@ public final class DefaultGateway {
     public String getIpv6Address() {
         return ipv6Address;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder("Gateway: ");
-        if (ipv4Address != null) {
-            builder.append("IPv4: ").append(ipv4Address);
-        }
-        if (ipv6Address != null) {
-            builder.append("IPv6: ").append(ipv6Address);
-        }
-        return builder.toString();
-    }
 }

@@ -89,18 +89,4 @@ public final class ConfigureParams {
     public int getTtl() {
         return ttl;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder();
-        if (device != null) {
-            builder.append(device);
-        }
-        if (netSettings != null) {
-            builder.append(netSettings);
-        }
-        builder.append("ttl: ").append(ttl).append("\n\n");
-
-        return builder.toString();
-    }
 }

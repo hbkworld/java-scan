@@ -61,9 +61,4 @@ public final class ConfigureDevice {
     public String getUUID() {
         return this.uuid;
     }
-
-    @Override
-    public String toString() {
-        return "ConfigureDevice:\n\t uuid: " + uuid + "\n";
-    }
 }

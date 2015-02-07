@@ -44,11 +44,5 @@ public final class Router {
     public String getUuid() {
         return uuid;
     }
-
-    @Override
-    public String toString() {
-        return "Router:\n" +
-        "\t uuid: " + uuid;
-    }
 }
 

@@ -46,9 +46,4 @@ public final class IPv4Entry {
     public String getNetmask() {
         return netmask;
     }
-
-    @Override
-    public String toString() {
-        return address + "/" + netmask;
-    }
 }

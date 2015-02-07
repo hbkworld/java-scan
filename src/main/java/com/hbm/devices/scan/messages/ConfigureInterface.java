@@ -105,14 +105,4 @@ public final class ConfigureInterface {
     public IPv4EntryManual getIPv4() {
         return this.ipv4;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder result = new StringBuilder(INITIAL_BUFFER_SIZE);
-        result.append("\t  name: ")
-            .append(name).append("\n\t  method: ")
-            .append(configurationMethod).append("\n\t  ip: ")
-            .append(ipv4).append('\n');
-        return result.toString();
-    }
 }

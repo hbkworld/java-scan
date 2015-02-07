@@ -86,17 +86,4 @@ public final class ConfigureNetSettings {
     public ConfigureInterface getInterface() {
         return iface;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder("Network settings:\n");
-        if (defaultGateway != null) {
-            builder.append("\t defaultGateway: ").append(defaultGateway).append('\n');
-        }
-        if (iface != null) {
-            builder.append("\t interface: \n").append(iface).append('\n');
-        }
-
-        return builder.toString();
-    }
 }

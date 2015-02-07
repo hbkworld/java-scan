@@ -75,27 +75,4 @@ public final class AnnounceParams {
     public int getExpiration() {
         return expiration;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder(INITIAL_BUFFER_SIZE);
-        if (device != null) {
-            builder.append(device);
-        }
-        if (netSettings != null) {
-            builder.append(netSettings);
-        }
-        if (router != null) {
-            builder.append(router);
-        }
-        if (services != null) {
-            builder.append("Services:");
-            for (final ServiceEntry se : services) {
-                builder.append("\n\t").append(se);
-            }
-        }
-        builder.append("\nexpiration: ").append(expiration).append("\n\n");
-
-        return builder.toString();
-    }
 }

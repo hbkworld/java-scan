@@ -117,36 +117,6 @@ public final class Interface {
         return ipv6;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder("Interface:");
-        if (name != null) {
-            builder.append("\n\t\tname: ").append(name);
-        }
-        if (type != null) {
-            builder.append("\n\t\ttype: ").append(type);
-        }
-        if (description != null) {
-            builder.append("\n\t\tdescription: ").append(description);
-        }
-        if (configurationMethod != null) {
-            builder.append("\n\t\tconfigurationMethod: ").append(configurationMethod);
-        }
-        if (ipv4 != null) {
-            builder.append("\n\t\tIPv4 addresses:");
-            for (final Object e : ipv4) {
-                builder.append("\n\t\t\t").append(e);
-            }
-        }
-        if (ipv6 != null) {
-            builder.append("\n\t\tIPv6 addresses:");
-            for (final Object e : ipv6) {
-                builder.append("\n\t\t\t").append(e);
-            }
-        }
-        return builder.toString();
-    }
-
     /**
      * Network interface configuration methods that can be used.
      */

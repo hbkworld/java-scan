@@ -53,18 +53,5 @@ public final class NetSettings {
         }
         return iface;
     }
-
-    @Override
-    public String toString() {
-        final StringBuilder builder = new StringBuilder("Network settings:\n");
-        if (defaultGateway != null) {
-            builder.append('\t').append(defaultGateway).append('\n');
-        }
-        if (iface != null) {
-            builder.append('\t').append(iface).append('\n');
-        }
-
-        return builder.toString();
-    }
 }
 

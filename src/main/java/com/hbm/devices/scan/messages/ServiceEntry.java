@@ -58,9 +58,4 @@ public final class ServiceEntry {
     public int getPort() {
         return port;
     }
-
-    @Override
-    public String toString() {
-        return "type: " + type + " port: " + port;
-    }
 }

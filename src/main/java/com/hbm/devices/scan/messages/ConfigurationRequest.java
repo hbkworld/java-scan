@@ -69,11 +69,6 @@ public final class ConfigurationRequest extends JsonRpc {
     }
 
     @Override
-    public String toString() {
-        return params.toString();
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;

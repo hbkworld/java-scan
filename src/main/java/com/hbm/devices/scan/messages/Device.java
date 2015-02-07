@@ -98,11 +98,4 @@ public final class Device {
     public boolean isRouter() {
         return router;
     }
-
-    @Override
-    public String toString() {
-        return "Device:\n" + "\tUUID: " + uuid + "\n" + "\tname: " + name + "\n" + "\tfamily: "
-                + familyType + "\n" + "\ttype: " + type + "\n" + "\tfirmware version: "
-                + firmwareVersion + "\n" + "\tisRouter: " + router + "\n";
-    }
 }
