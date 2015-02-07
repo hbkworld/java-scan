@@ -40,8 +40,4 @@ public final class MissingDataException extends Exception {
     MissingDataException(String message) {
         super(message);
     }
-
-    MissingDataException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }
