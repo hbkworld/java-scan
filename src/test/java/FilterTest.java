@@ -26,8 +26,10 @@
  * SOFTWARE.
  */
 
-import org.junit.*;
 import static org.junit.Assert.assertNull;
+
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.Observable;
 import java.util.Observer;
