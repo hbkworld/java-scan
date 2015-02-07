@@ -34,9 +34,12 @@ package com.hbm.devices.scan.messages;
  * 
  * @since 1.0
  */
-
 public final class MissingDataException extends Exception {
 
+    /**
+     * Constructs a new exception with the specified detail message.
+     * @param message the detail message.
+     */
     public MissingDataException(String message) {
         super(message);
     }
