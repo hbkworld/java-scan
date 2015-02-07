@@ -170,7 +170,7 @@ class EventLogger {
     }
 
     private static void logIpAddresses(StringBuilder logBuilder, Announce announce) throws MissingDataException {
-        Interface iface = announce.getParams().getNetSettings().getInterface();
+        final Interface iface = announce.getParams().getNetSettings().getInterface();
         logBuilder.append("  IP-Addresses:\n    interfaceName: ")
         .append(iface.getName())
         .append("\n    method: ")
