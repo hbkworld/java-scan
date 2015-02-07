@@ -104,6 +104,12 @@ public class FilterTest {
     }
 
     @Test
+    public void stFilterMissingHttpMessage() {
+        fsmmr.emitMissingHttpMessage();
+        assertNull("Got CommunicationPath object despite missing http entry", serviceTypeCp);
+    }
+
+    @Test
     public void checkFamilyTypes() {
         assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, ftMatcher.getFilterStrings());
         assertEquals(ftMatcher, ftFilter.getMatcher());
