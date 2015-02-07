@@ -129,6 +129,15 @@ public class ConfigMessagesTest {
     }
 
     @Test
+    public void parseIPv4ManualCorrect() {
+        final String address = "foo";
+        final String netmask = "bar";
+        IPv4EntryManual entry = new IPv4EntryManual(address, netmask);
+        assertEquals(address, entry.getAddress());
+        assertEquals(netmask, entry.getNetmask());
+    }
+
+    @Test
     public void parseIPv4ManualAndNoNetmask() {
         exception.expect(IllegalArgumentException.class);
         IPv4EntryManual entry = new IPv4EntryManual("bla", null);

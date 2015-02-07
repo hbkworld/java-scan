@@ -54,9 +54,18 @@ public final class IPv4EntryManual {
         this.manualAddress = address;
         this.manualNetmask = netmask;
     }
+    
+    /**
+     * @return the address used for manual interface configuration
+     */
+    public String getAddress() {
+        return manualAddress;
+    }
 
-    @Override
-    public String toString() {
-        return manualAddress + "/" + manualNetmask;
+    /**
+     * @return the netmask used for manual interface configuration
+     */
+    public String getNetmask() {
+        return manualNetmask;
     }
 }
