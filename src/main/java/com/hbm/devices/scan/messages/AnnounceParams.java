@@ -45,7 +45,6 @@ public final class AnnounceParams {
     private Router router;
     private List<ServiceEntry> services;
     private int expiration;
-    private static final int INITIAL_BUFFER_SIZE = 100;
 
     private AnnounceParams() {
     }

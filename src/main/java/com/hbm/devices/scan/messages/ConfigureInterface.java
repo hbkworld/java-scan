@@ -42,7 +42,6 @@ public final class ConfigureInterface {
     private String name;
     private IPv4EntryManual ipv4;
     private String configurationMethod;
-    private static final int INITIAL_BUFFER_SIZE = 40;
 
     /**
      * This constructor is used to instantiate an {@link ConfigureInterface} object.
