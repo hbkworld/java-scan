@@ -28,6 +28,7 @@
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -99,10 +100,10 @@ public class ConfigurationServiceTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String correctString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
-        JsonElement correct = parser.parse(correctString);
+        String testString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
+        JsonElement testMessage = parser.parse(testString);
         JsonElement sent = parser.parse(fakeSender.getLastSent());
-        assertTrue(sent.equals(correct));
+        assertEquals("Sent message and test message are not equal", sent, testMessage);
     }
 
 /*
