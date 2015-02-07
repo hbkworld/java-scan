@@ -55,22 +55,6 @@ public final class IPv4EntryManual {
         this.manualNetmask = netmask;
     }
 
-    /**
-     * @return the IP address for the manual interface configuration of
-     * a device.
-     */
-    public String getAddress() {
-        return manualAddress;
-    }
-
-    /**
-     * @return the IP network mask for the manual interface configuration of
-     * a device.
-     */
-    public String getNetmask() {
-        return manualNetmask;
-    }
-
     @Override
     public String toString() {
         return manualAddress + "/" + manualNetmask;
