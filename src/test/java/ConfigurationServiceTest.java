@@ -130,44 +130,39 @@ public class ConfigurationServiceTest {
         assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
 
-/*
     @Test(timeout = 200)
     public void CheckTimeout() {
-        received = false;
-        timeout = false;
 
         ConfigurationCallback cb = new ConfigurationCallback() {
-
-            @Override
-            public void onTimeout(ConfigQuery configQuery) {
-                synchronized (this) {
+            public void onTimeout(long t) {
+                synchronized(this) {
                     timeout = true;
                     this.notifyAll();
                 }
             }
-
-            @Override
-            public void onSuccess(ConfigQuery configQuery, Response response) {
-                synchronized (this) {
+            public void onSuccess(Response response) {
+                synchronized(this) {
                     received = true;
                     this.notifyAll();
                 }
             }
-
-            @Override
-            public void onError(ConfigQuery configQuery, Response response) {
-                synchronized (this) {
+            public void onError(Response response) {
+                synchronized(this) {
                     received = true;
                     this.notifyAll();
                 }
             }
         };
 
-        Device device = new Device("0009E5001571");
-        NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
         ConfigureParams configParams = new ConfigureParams(device, settings);
 
-        synchronized (cb) {
+        FakeMulticastSender fakeSender = new FakeMulticastSender();
+        ConfigurationSender sender = new ConfigurationSender(fakeSender);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        synchronized(cb) {
             try {
                 service.sendConfiguration(configParams, cb, 50);
             } catch (Exception e) {
@@ -181,62 +176,7 @@ public class ConfigurationServiceTest {
                 }
             }
         }
-        assertTrue(!received && timeout);
-
+        assertTrue("Haven't got timeout", !received && timeout);
+        assertFalse(service.awaitingResponse());
     }
-
-    @Test(timeout = 200)
-    public void RemoveAwaitingEntryOnTimeoutTest() {
-        // test if the HashMap entry is removed when no response is received within the timeout
-        received = false;
-        timeout = false;
-
-        ConfigurationCallback cb = new ConfigurationCallback() {
-
-            @Override
-            public void onTimeout(ConfigQuery configQuery) {
-                synchronized (this) {
-                    timeout = true;
-                    this.notifyAll();
-                }
-            }
-
-            @Override
-            public void onSuccess(ConfigQuery configQuery, Response response) {
-                synchronized (this) {
-                    received = true;
-                    this.notifyAll();
-                }
-            }
-
-            @Override
-            public void onError(ConfigQuery configQuery, Response response) {
-                synchronized (this) {
-                    received = true;
-                    this.notifyAll();
-                }
-            }
-        };
-
-        Device device = new Device("0009E5001571");
-        NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
-        ConfigureParams configParams = new ConfigureParams(device, settings);
-
-        synchronized (cb) {
-            try {
-                service.sendConfiguration(configParams, cb, 50);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            while (!timeout && !received) {
-                try {
-                    cb.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        assertFalse(service.awaitingResponse() && service.hasResponseTimeoutTimer());
-    }
-*/
 }
