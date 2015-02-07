@@ -38,7 +38,7 @@ import com.hbm.devices.scan.messages.ServiceEntry;
  *
  * @since 1.0
  */
-public final class ServiceFilter implements Matcher {
+public final class ServicetypeMatch implements Matcher {
 
     private final String[] serviceTypes;
 
@@ -49,7 +49,7 @@ public final class ServiceFilter implements Matcher {
      * @param serviceTypes An array of {@link String}s used to match
      * against the service entries in {@link Announce} objects.
      */
-    public ServiceFilter(String... serviceTypes) {
+    public ServicetypeMatch(String... serviceTypes) {
         this.serviceTypes = serviceTypes;
     }
 
