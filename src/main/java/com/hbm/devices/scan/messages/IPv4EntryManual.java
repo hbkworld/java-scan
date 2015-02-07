@@ -45,10 +45,10 @@ public final class IPv4EntryManual {
      * configuration of a device.
      */
     public IPv4EntryManual(String address, String netmask) {
-        if (address == null) {
+        if (address == null || address.length() == 0) {
             throw new IllegalArgumentException("address parameter must not be null");
         }
-        if (netmask == null) {
+        if (netmask == null || netmask.length() == 0) {
             throw new IllegalArgumentException("netmask parameter must not be null");
         }
         this.manualAddress = address;

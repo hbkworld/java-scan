@@ -38,6 +38,7 @@ import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.IPv4EntryManual;
 import com.hbm.devices.scan.messages.Interface.Method;
 
 public class ConfigMessagesTest {
@@ -110,6 +111,34 @@ public class ConfigMessagesTest {
     public void parseManualAndNoIp() {
         exception.expect(IllegalArgumentException.class);
         ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, null);
+        fail("Method didn't throw expected IllegalArgumentException");
+    }
+
+    @Test
+    public void parseIPv4ManualAndNoAddress() {
+        exception.expect(IllegalArgumentException.class);
+        IPv4EntryManual entry = new IPv4EntryManual(null, "bla");
+        fail("Method didn't throw expected IllegalArgumentException");
+    }
+
+    @Test
+    public void parseIPv4ManualAndEmtpyAddress() {
+        exception.expect(IllegalArgumentException.class);
+        IPv4EntryManual entry = new IPv4EntryManual("", "bla");
+        fail("Method didn't throw expected IllegalArgumentException");
+    }
+
+    @Test
+    public void parseIPv4ManualAndNoNetmask() {
+        exception.expect(IllegalArgumentException.class);
+        IPv4EntryManual entry = new IPv4EntryManual("bla", null);
+        fail("Method didn't throw expected IllegalArgumentException");
+    }
+
+    @Test
+    public void parseIPv4ManualAndEmptyNetmask() {
+        exception.expect(IllegalArgumentException.class);
+        IPv4EntryManual entry = new IPv4EntryManual("bla", "");
         fail("Method didn't throw expected IllegalArgumentException");
     }
 }
