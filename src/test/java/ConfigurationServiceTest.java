@@ -172,6 +172,6 @@ public class ConfigurationServiceTest {
             }
         }
         assertTrue("Haven't got timeout", !received && timeout);
-        assertFalse(service.awaitingResponse());
+        assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
 }
