@@ -56,6 +56,9 @@ public final class ServicetypeMatch implements Matcher {
     @Override
     public boolean match(Announce announce) throws MissingDataException {
         final Iterable<ServiceEntry> services = announce.getParams().getServices();
+        if (services == null) {
+            throw new MissingDataException("No service section in announce");
+        }
         for (final ServiceEntry entry : services) {
             for (int i = 0; i < serviceTypes.length; i++) {
                 if (serviceTypes[i].equals(entry.getType())) {

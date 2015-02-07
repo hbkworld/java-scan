@@ -37,7 +37,7 @@ package com.hbm.devices.scan.messages;
 
 public final class MissingDataException extends Exception {
 
-    MissingDataException(String message) {
+    public MissingDataException(String message) {
         super(message);
     }
 }

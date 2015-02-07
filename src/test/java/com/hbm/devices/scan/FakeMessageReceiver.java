@@ -58,6 +58,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String NO_NET_SETTINGS_MESSAGE;
     private static final String MISSING_ROUTER_UUID_MESSAGE;
     private static final String MISSING_FAMILY_TYPE_MESSAGE;
+    private static final String MISSING_SERVICE_MESSAGE;
     private static final String MISSING_TYPE_RESPONSE_MESSAGE;
     private static final String NO_SUCCESS_ID_RESPONSE_MESSAGE;
     private static final String CORRECT_ERROR_RESPONSE_MESSAGE;
@@ -154,6 +155,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
                 + "\",\"jsonrpc\":\"2.0\",\"result\":0}";
         setChanged();
         notifyObservers(correctSuccessResponseMessage);
+    }
+
+    public void emitMissingServiceMessage() {
+        setChanged();
+        notifyObservers(MISSING_SERVICE_MESSAGE);
     }
 
     public void emitMissingTypeResponseMessage() {
@@ -256,6 +262,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             NO_NET_SETTINGS_MESSAGE = props.getProperty("scan.announce.no_net_settings_message");
             MISSING_ROUTER_UUID_MESSAGE = props.getProperty("scan.announce.missing_router_uuid_message");
             MISSING_FAMILY_TYPE_MESSAGE = props.getProperty("scan.announce.missing_family_type_message");
+            MISSING_SERVICE_MESSAGE = props.getProperty("scan.announce.correct_message_missing_service");
             MISSING_TYPE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missing_type_response_message");
             NO_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_success_id_response_message");
             CORRECT_ERROR_RESPONSE_MESSAGE = props.getProperty("scan.configure.correct_error_response_message");

@@ -37,18 +37,22 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
+import com.hbm.devices.scan.announce.filter.ServicetypeMatch;
 import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.MessageParser;
 
 public class FilterTest {
 
-    private CommunicationPath cp;
+    private CommunicationPath familyTypeCp;
+    private CommunicationPath serviceTypeCp;
     private FakeMessageReceiver fsmmr;
     private final String[] families = {"QuantumX", "PMX"};
+    private final String[] serviceTypes = {"http"};
     private final Matcher ftMatcher = new FamilytypeMatch(families);
+    private final Matcher serviceMatcher = new ServicetypeMatch(serviceTypes);
 
     @Before
     public void setUp() {
@@ -59,9 +63,34 @@ public class FilterTest {
         jf.addObserver(ftFilter);
         ftFilter.addObserver(new Observer(){
             public void update(Observable o, Object arg) {
-                cp = (CommunicationPath)arg;
+                familyTypeCp = (CommunicationPath)arg;
             }
         });
+
+        Filter serviceFilter = new Filter(serviceMatcher);
+        jf.addObserver(serviceFilter);
+        serviceFilter.addObserver(new Observer(){
+            public void update(Observable o, Object arg) {
+                serviceTypeCp = (CommunicationPath)arg;
+            }
+        });
+    }
+
+    @Test
+    public void checkServiceTypes() {
+        assertArrayEquals("filter strings for ServicetypeMatcher are not correct", serviceTypes, serviceMatcher.getFilterStrings());
+    }
+
+    @Test
+    public void stFilterCorrectMessage() {
+        fsmmr.emitSingleCorrectMessage();
+        assertNotNull("Didn't got a CommunicationPath object", serviceTypeCp);
+    }
+
+    @Test
+    public void ftFilterMissingServiceMessage() {
+        fsmmr.emitMissingServiceMessage();
+        assertNull("Got CommunicationPath object despite service section", serviceTypeCp);
     }
 
     @Test
@@ -70,21 +99,21 @@ public class FilterTest {
     }
 
     @Test
-    public void filterCorrectMessage() {
+    public void ftFilterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a CommunicationPath object", cp);
+        assertNotNull("Didn't got a CommunicationPath object", familyTypeCp);
     }
 
     @Test
-    public void filterMissingFamilyTypeMessage() {
+    public void ftFilterMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
-        assertNull("Got CommunicationPath object despite missing family type", cp);
+        assertNull("Got CommunicationPath object despite missing family type", familyTypeCp);
     }
 
     @Test
-    public void filterMissingDeviceMessage() {
+    public void ftFilterMissingDeviceMessage() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull("Got CommunicationPath object despite missing family type", cp);
+        assertNull("Got CommunicationPath object despite missing family type", familyTypeCp);
     }
 }
 
