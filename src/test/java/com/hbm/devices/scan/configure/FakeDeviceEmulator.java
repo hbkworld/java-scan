@@ -29,10 +29,8 @@
 package com.hbm.devices.scan.configure;
 
 import java.util.Observable;
-import java.util.Observer;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
+import com.hbm.devices.scan.MessageReceiver; 
 
 /**
  * This class is used to simulate a device.
@@ -45,33 +43,19 @@ import com.google.gson.JsonParser;
  * @since 1.0
  *
  */
-public class FakeDeviceEmulator extends Observable implements Observer {
+public class FakeDeviceEmulator extends Observable implements MessageReceiver, MulticastSender {
 
-    private static String receivingString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
-    private static String sendingString = "{\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"result\":0}";
+    private String responseString;
 
-    private final JsonParser parser;
-    private final JsonElement shouldReceive;
-
-    public FakeDeviceEmulator() {
-        super();
-
-        this.parser = new JsonParser();
-        shouldReceive = this.parser.parse(receivingString);
+    public FakeDeviceEmulator(String queryID) {
+        responseString = "{\"id\":\"" + queryID + "\",\"jsonrpc\":\"2.0\",\"result\":0}";
     }
-
-    @Override
-    public void update(Observable o, Object obj) {
-        if (obj instanceof String) {
-            final String msg = (String)obj;
-            final JsonElement received = parser.parse(msg);
-
-            if (shouldReceive.equals(received)) {
-                setChanged();
-                notifyObservers(sendingString);
-            }
-        }
-
+    public void stop() {}
+    public void run() {}
+    public void shutdown() {}
+    public void sendMessage(String message) {
+        setChanged();
+        System.out.println("sending response: " + responseString);
+        notifyObservers(responseString);
     }
-
 }

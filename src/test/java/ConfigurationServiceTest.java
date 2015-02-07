@@ -56,24 +56,17 @@ import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {
     private MessageParser messageParser;
-
-    //private FakeDeviceEmulator emulator;
-
     private JsonParser parser;
+
+    private boolean received;
+    private boolean timeout;
 
     @Before
     public void setUp() {
         this.messageParser = new MessageParser();
-
-        //this.emulator = new FakeDeviceEmulator();
-
-        try {
-            //this.service2 = configurationServiceConstructor.newInstance(emulator, emulator, "TEST_UUID");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         this.parser = new JsonParser();
+        received = false;
+        timeout = false;
     }
 
     @Test
@@ -83,8 +76,8 @@ public class ConfigurationServiceTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         ConfigurationCallback callback = new ConfigurationCallback() {
             public void onSuccess(Response response) {}
-            public void onTimeout(long timeout) {}
             public void onError(Response response) {}
+            public void onTimeout(long timeout) {}
         };
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();
@@ -101,47 +94,41 @@ public class ConfigurationServiceTest {
         assertEquals("Sent message and test message are not equal", sent, testMessage);
     }
 
-/*
-
-    public boolean received;
-    public boolean timeout;
-
     @Test
     public void sendingAndReceivingTest() {
-        received = false;
 
         ConfigurationCallback cb = new ConfigurationCallback() {
-
-            @Override
-            public void onSuccess(ConfigQuery configQuery, Response response) {
+            public void onSuccess(Response response) {
                 received = true;
             }
-
-            @Override
-            public void onError(ConfigQuery configQuery, Response response) {
+            public void onError(Response response) {
                 received = true;
             }
-
-            @Override
-            public void onTimeout(ConfigQuery configQuery) {
+            public void onTimeout(long timeout) {
             }
-
         };
 
-        Device device = new Device("0009E5001571");
-        NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
+        final String queryID = "test-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSender sender = new ConfigurationSender(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
         ConfigureParams configParams = new ConfigureParams(device, settings);
 
         try {
-            service2.sendConfiguration(configParams, cb, 20);
-
-        } catch (Exception e) {
+            service.sendConfiguration(configParams, queryID, cb, 1000);
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
-        assertTrue(received);
+        assertTrue("No response received", received);
     }
-
+/*
     @Test
     public void RemoveAwaitingEntryOnReceiveTest() {
         // test if the HashMap entry is removed after a successful response
