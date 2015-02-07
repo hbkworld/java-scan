@@ -50,17 +50,15 @@ import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.Interface.Method;
-import com.hbm.devices.scan.messages.MissingDataException;
+import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {
     private FakeMulticastSender fakeSender;
     private FakeMessageReceiver fakeReceiver;
+    private MessageParser messageParser;
 
-    private ConfigurationService service;
-
-    private FakeDeviceEmulator emulator;
-    private ConfigurationService service2;
+    //private FakeDeviceEmulator emulator;
 
     private JsonParser parser;
 
@@ -68,11 +66,13 @@ public class ConfigurationServiceTest {
     public void setUp() {
         this.fakeSender = new FakeMulticastSender();
         this.fakeReceiver = new FakeMessageReceiver();
+        this.messageParser = new MessageParser();
+        fakeReceiver.addObserver(this.messageParser);
 
-        this.emulator = new FakeDeviceEmulator();
+        //this.emulator = new FakeDeviceEmulator();
 
         try {
-            ConfigurationSender sender = new ConfigurationSender(fakeSender);
+            //ConfigurationSender sender = new ConfigurationSender(fakeSender);
             //this.service = new ConfigurationService(sender, fakeReceiver);
             //this.service2 = configurationServiceConstructor.newInstance(emulator, emulator, "TEST_UUID");
         } catch (Exception e) {
@@ -82,17 +82,20 @@ public class ConfigurationServiceTest {
         this.parser = new JsonParser();
     }
 
-/*
-    public boolean received;
-    public boolean timeout;
-
     @Test
     public void sendingTest() {
-        Device device = new Device("0009E5001571");
-        NetSettings settings = new NetSettings(new Interface("eth0", Method.DHCP, null));
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
         ConfigureParams configParams = new ConfigureParams(device, settings);
+        ConfigurationCallback callback = new ConfigurationCallback() {
+            public void onSuccess(Response response) {}
+            public void onTimeout(long timeout) {}
+            public void onError(Response response) {}
+        };
         try {
-            service.sendConfiguration(configParams, new SimpleCallback(), 5000);
+            ConfigurationSender sender = new ConfigurationSender(fakeSender);
+            ConfigurationService service = new ConfigurationService(sender, messageParser);
+            service.sendConfiguration(configParams, "TEST_UUID", callback, 5000);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -100,9 +103,12 @@ public class ConfigurationServiceTest {
         JsonElement correct = parser.parse(correctString);
         JsonElement sent = parser.parse(fakeSender.getLastSent());
         assertTrue(sent.equals(correct));
-
-        // assertTrue(this.fakeSender.getLastSent().equals(correctString));
     }
+
+/*
+
+    public boolean received;
+    public boolean timeout;
 
     @Test
     public void sendingAndReceivingTest() {

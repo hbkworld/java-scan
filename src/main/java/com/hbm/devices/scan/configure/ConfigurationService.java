@@ -165,7 +165,8 @@ public class ConfigurationService implements Observer {
 
     /**
      *
-     * This method sends a configuration via multicast. If no response
+     * This method sends a configuration via multicast. 
+     * The method generates a queryID itself. If no response
      * is received within the timeout, the callback method {@link
      * ConfigurationCallback#onTimeout(long timeout)} is called. If a response
      * is received, either {@link ConfigurationCallback#onSuccess(
@@ -187,6 +188,36 @@ public class ConfigurationService implements Observer {
     public void sendConfiguration(final ConfigureParams configParams,
         final ConfigurationCallback callback, long timeout) throws IOException {
 
+        final String queryID = UUID.randomUUID().toString();
+        sendConfiguration(configParams, queryID, callback, timeout);
+    }
+
+    /**
+     *
+     * This method sends a configuration via multicast. If no response
+     * is received within the timeout, the callback method {@link
+     * ConfigurationCallback#onTimeout(long timeout)} is called. If a response
+     * is received, either {@link ConfigurationCallback#onSuccess(
+     * Response)} or {@link ConfigurationCallback#onError(
+     * Response)} is called.
+     * 
+     * @param configParams
+     *              the configuration parameters, which are send via
+     *              multicast
+     * @param queryID
+     *              the queryID to be sent via multicast
+     * @param callback
+     *              the interface with the callback methods for error
+     *              handling
+     * @param timeout
+     *              the time in ms, the service waits for a response.
+     *              Must be greater than 0.
+     * @throws IOException
+     *              if the underlying socket send does not succeed.
+     */
+    public void sendConfiguration(final ConfigureParams configParams, final String queryID,
+        final ConfigurationCallback callback, long timeout) throws IOException {
+
         if (configParams == null) {
             throw new IllegalArgumentException("configParams must not be null");
         }
@@ -196,8 +227,10 @@ public class ConfigurationService implements Observer {
         if (callback == null) {
             throw new IllegalArgumentException("the callback parameter must not be null");
         }
+        if (queryID == null) {
+            throw new IllegalArgumentException("no queryID given");
+        }
 
-        final String queryID = UUID.randomUUID().toString();
         final ConfigurationRequest config = new ConfigurationRequest(configParams, queryID);
         final ConfigQuery configQuery = new ConfigQuery(config, callback, timeout);
 
