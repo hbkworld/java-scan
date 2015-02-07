@@ -81,7 +81,6 @@ public class ConfigurationSenderTest {
     public void parseNullConfigure() {
         try {
             cs.sendConfiguration(null);
-            fail("Method didn't throw expected IllegalArgumentException");
         } catch (IOException e) {
         }
     }
