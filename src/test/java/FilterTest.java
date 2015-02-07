@@ -26,8 +26,9 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,26 +40,33 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
+import com.hbm.devices.scan.announce.filter.Matcher;
 import com.hbm.devices.scan.messages.CommunicationPath;
 
 public class FilterTest {
 
     private CommunicationPath cp;
     private FakeMessageReceiver fsmmr;
+    private final String[] families = {"QuantumX", "PMX"};
+    private final Matcher ftMatcher = new FamilytypeMatch(families);
 
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         MessageParser jf = new MessageParser();
         fsmmr.addObserver(jf);
-        String[] families = {"QuantumX"};
-        Filter ftFilter = new Filter(new FamilytypeMatch(families));
+        Filter ftFilter = new Filter(ftMatcher);
         jf.addObserver(ftFilter);
         ftFilter.addObserver(new Observer(){
             public void update(Observable o, Object arg) {
                 cp = (CommunicationPath)arg;
             }
         });
+    }
+
+    @Test
+    public void checkFamilyTypes() {
+        assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, ftMatcher.getFilterStrings());
     }
 
     @Test
