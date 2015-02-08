@@ -220,6 +220,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
         notifyObservers(ERROR_AND_RESULT_RESPONSE_MESSAGE);
     }
 
+    public void emitString(String message) {
+        setChanged();
+        notifyObservers(message);
+    }
+
     @Override
     public void run() {
         setChanged();
