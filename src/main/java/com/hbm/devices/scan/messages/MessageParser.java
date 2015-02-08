@@ -91,7 +91,7 @@ public final class MessageParser extends Observable implements Observer {
                 json = gson.fromJson(message, JsonRpc.class);
             }
             if (json instanceof Announce) {
-                final CommunicationPath communicationPath = new CommunicationPath((Announce) json);
+                final CommunicationPath communicationPath = new CommunicationPath((Announce)json);
                 // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
                 // Only cache Announce objects!
                 if (newParsedString) {
@@ -140,6 +140,8 @@ public final class MessageParser extends Observable implements Observer {
                     rpcObject = context.deserialize(json, Announce.class);
                     if (rpcObject != null) {
                         rpcObject.setJSONString(jsonObject.toString());
+                    } else {
+                        System.out.println("null object");
                     }
                 }
             } else if (jsonObject.has("result") ^ jsonObject.has("error")) {
@@ -147,6 +149,8 @@ public final class MessageParser extends Observable implements Observer {
                 rpcObject = context.deserialize(json, Response.class);
                 if (rpcObject != null) {
                     rpcObject.setJSONString(jsonObject.toString());
+                } else {
+                    System.out.println("null object");
                 }
             }
             return rpcObject;
