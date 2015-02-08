@@ -26,8 +26,10 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -40,8 +42,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.AnnounceParams;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Response;
 
 public class MessageParserTest {
@@ -185,9 +190,10 @@ public class MessageParserTest {
         final int streamPort = 7411;
         final String httpType = "http";
         final int httpPort = 80;
+        final String jsonRpcVersion = "2.0";
 
         final JsonObject root = new JsonObject();
-        root.addProperty("jsonrpc", "2.0");
+        root.addProperty("jsonrpc", jsonRpcVersion);
         root.addProperty("method", "announce");
         final JsonObject params = new JsonObject();
         root.add("params", params);
@@ -244,5 +250,12 @@ public class MessageParserTest {
         final Gson gson = new Gson();
         fsmmr.emitString(gson.toJson(root));
         assertNotNull("No CommunictionPath object after correct message", cp);
+        try {
+            Announce checkAnnounce = cp.getAnnounce();
+            assertEquals(checkAnnounce.getJsonrpc(), jsonRpcVersion);
+            AnnounceParams checkAnnounceParams = checkAnnounce.getParams();
+        } catch (MissingDataException e) {
+            fail("MissingDataException thrown" + e);
+        }
     }
 }
