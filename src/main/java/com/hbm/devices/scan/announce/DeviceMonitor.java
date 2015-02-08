@@ -42,6 +42,7 @@ import java.util.logging.Logger;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class provides the concept of posting new/lost device events.
@@ -105,35 +106,38 @@ public final class DeviceMonitor extends Observable implements Observer {
     public void update(Observable observable, Object arg) {
         final CommunicationPath communicationPath = (CommunicationPath)arg;
         final Announce announce = communicationPath.getAnnounce();
+        try {
+            synchronized (deviceMap) {
+                if (deviceMap.containsKey(communicationPath)) {
+                    ScheduledFuture<Void> future = deviceMap.get(communicationPath);
+                    future.cancel(false);
+                    deviceMap.remove(communicationPath);
+                    AnnounceTimerTask task = futureMap.remove(future);
+                    final Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
+                    task = new AnnounceTimerTask(communicationPath);
+                    future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+                    deviceMap.put(communicationPath, future);
+                    futureMap.put(future, task);
 
-        synchronized (deviceMap) {
-            if (deviceMap.containsKey(communicationPath)) {
-                ScheduledFuture<Void> future = deviceMap.get(communicationPath);
-                future.cancel(false);
-                deviceMap.remove(communicationPath);
-                AnnounceTimerTask task = futureMap.remove(future);
-                final Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
-                if (!oldAnnounce.equals(announce)) {
+                    if (!oldAnnounce.equals(announce)) {
+                        setChanged();
+                        notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), communicationPath));
+                    }
+                } else {
+                    final AnnounceTimerTask task = new AnnounceTimerTask(communicationPath);
+                    final ScheduledFuture<Void> future = executor.schedule(task, getExpiration(announce),
+                            TimeUnit.MILLISECONDS);
+                    deviceMap.put(communicationPath, future);
+                    futureMap.put(future, task);
                     setChanged();
-                    notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), communicationPath));
+                    notifyObservers(new NewDeviceEvent(communicationPath));
                 }
-                task = new AnnounceTimerTask(communicationPath);
-                future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
-                deviceMap.put(communicationPath, future);
-                futureMap.put(future, task);
-            } else {
-                final AnnounceTimerTask task = new AnnounceTimerTask(communicationPath);
-                final ScheduledFuture<Void> future = executor.schedule(task, getExpiration(announce),
-                        TimeUnit.MILLISECONDS);
-                deviceMap.put(communicationPath, future);
-                futureMap.put(future, task);
-                setChanged();
-                notifyObservers(new NewDeviceEvent(communicationPath));
             }
+        } catch (MissingDataException e) {
         }
     }
 
-    private long getExpiration(Announce announce) {
+    private long getExpiration(Announce announce) throws MissingDataException {
         int expiration;
         expiration = announce.getParams().getExpiration();
         if (expiration == 0) {

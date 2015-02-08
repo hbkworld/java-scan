@@ -40,7 +40,10 @@ public final class Announce extends JsonRpc {
         super("announce");
     }
 
-    public AnnounceParams getParams() {
+    public AnnounceParams getParams() throws MissingDataException {
+        if (params == null) {
+            throw new MissingDataException("No device section in announce params!");
+        }
         return params;
     }
 
