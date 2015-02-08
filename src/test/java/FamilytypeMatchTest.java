@@ -41,96 +41,53 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
-import com.hbm.devices.scan.announce.filter.ServicetypeMatch;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.MessageParser;
 
-public class FilterTest {
+public class FamilytypeMatchTest {
 
-    private CommunicationPath familyTypeCp;
-    private CommunicationPath serviceTypeCp;
+    private CommunicationPath cp;
     private FakeMessageReceiver fsmmr;
     private final String[] families = {"QuantumX", "PMX"};
-    private final String[] serviceTypes = {"http"};
-    private final Matcher ftMatcher = new FamilytypeMatch(families);
-    private final Matcher serviceMatcher = new ServicetypeMatch(serviceTypes);
-    private Filter ftFilter;
-    private Filter stFilter;
+    private final Matcher matcher = new FamilytypeMatch(families);
+    private Filter filter;
 
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         MessageParser jf = new MessageParser();
         fsmmr.addObserver(jf);
-        ftFilter = new Filter(ftMatcher);
-        jf.addObserver(ftFilter);
-        ftFilter.addObserver(new Observer(){
+        filter = new Filter(matcher);
+        jf.addObserver(filter);
+        filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                familyTypeCp = (CommunicationPath)arg;
+                cp = (CommunicationPath)arg;
             }
         });
-
-        stFilter = new Filter(serviceMatcher);
-        jf.addObserver(stFilter);
-        stFilter.addObserver(new Observer(){
-            public void update(Observable o, Object arg) {
-                serviceTypeCp = (CommunicationPath)arg;
-            }
-        });
-    }
-
-    @Test
-    public void checkServiceTypes() {
-        assertArrayEquals("filter strings for ServicetypeMatcher are not correct", serviceTypes, serviceMatcher.getFilterStrings());
-        assertEquals("matchers are not equal", serviceMatcher, stFilter.getMatcher());
-    }
-
-    @Test
-    public void stFilterCorrectMessage() {
-        fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a CommunicationPath object", serviceTypeCp);
-    }
-
-    @Test
-    public void stFilterEmptyServiceMessage() {
-        fsmmr.emitEmptyServiceMessage();
-        assertNull("Got CommunicationPath object despite empty service section", serviceTypeCp);
-    }
-
-    @Test
-    public void stFilterMissingServiceMessage() {
-        fsmmr.emitMissingServiceMessage();
-        assertNull("Got CommunicationPath object despite missing service section", serviceTypeCp);
-    }
-
-    @Test
-    public void stFilterMissingHttpMessage() {
-        fsmmr.emitMissingHttpMessage();
-        assertNull("Got CommunicationPath object despite missing http entry", serviceTypeCp);
     }
 
     @Test
     public void checkFamilyTypes() {
-        assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, ftMatcher.getFilterStrings());
-        assertEquals("matcher are not equal", ftMatcher, ftFilter.getMatcher());
+        assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, matcher.getFilterStrings());
+        assertEquals("matcher are not equal", matcher, filter.getMatcher());
     }
 
     @Test
     public void ftFilterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a CommunicationPath object", familyTypeCp);
+        assertNotNull("Didn't got a CommunicationPath object", cp);
     }
 
     @Test
     public void ftFilterMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
-        assertNull("Got CommunicationPath object despite missing family type", familyTypeCp);
+        assertNull("Got CommunicationPath object despite missing family type", cp);
     }
 
     @Test
     public void ftFilterMissingDeviceMessage() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull("Got CommunicationPath object despite missing family type", familyTypeCp);
+        assertNull("Got CommunicationPath object despite missing family type", cp);
     }
 }
 
