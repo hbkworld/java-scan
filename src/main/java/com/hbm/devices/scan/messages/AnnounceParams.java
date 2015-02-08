@@ -57,11 +57,11 @@ public final class AnnounceParams {
         return device;
     }
 
-    public Device getApiVersion() throws MissingDataException {
+    public String getApiVersion() throws MissingDataException {
         if (apiVersion == null || apiVersion.length() == 0) {
             throw new MissingDataException("No API version in announce params!");
         }
-        return device;
+        return apiVersion;
     }
 
     public NetSettings getNetSettings() throws MissingDataException {
