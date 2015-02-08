@@ -75,6 +75,12 @@ public class MessageParserTest {
     }
 
     @Test
+    public void parseNotAnnounceMethodMessage() {
+        fsmmr.emitNotAnnounceMessage();
+        assertNull("Got CommunicationPath object from message with method that's not an announce", cp);
+    }
+
+    @Test
     public void parseEmptyMessage() {
         fsmmr.emitEmptyString();
         assertNull("Got CommunicationPath object after empty message", cp);
