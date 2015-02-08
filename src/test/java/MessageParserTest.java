@@ -147,32 +147,14 @@ public class MessageParserTest {
     }
 
     @Test
-    public void parseNoSuccessIdResponseMessage() {
-        fsmmr.emitNoSuccessIdResponseMessage();
-        assertNull("Got result object from response without ID", res);
-    }
-
-    @Test
-    public void parseMissingErrorObjectResponseMessage() {
-        fsmmr.emitMissingErrorObjectResponseMessage();
-        assertNull("Got result object from response without error object", res);
-    }
-
-    @Test
-    public void parseNoErrorCodeResponseMessage() {
-        fsmmr.emitNoErrorCodeResponseMessage();
-        assertNull("Got result object from response without error code", res);
-    }
-
-    @Test
-    public void parseNoErrorMessageResponseMessage() {
-        fsmmr.emitNoErrorMessageResponseMessage();
-        assertNull("Got result object from response without error message", res);
-    }
-
-    @Test
     public void parseErrorAndResultResponseMessage() {
         fsmmr.emitErrorAndResultResponseMessage();
+        assertNull("Got result object from response with error and result", res);
+    }
+
+    @Test
+    public void parseMissingTypeMessage() {
+        fsmmr.emitMissingTypeResponseMessage();
         assertNull("Got result object from response with error and result", res);
     }
 }
