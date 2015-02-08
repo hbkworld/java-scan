@@ -169,4 +169,10 @@ public class MessageParserTest {
         fsmmr.emitNoErrorMessageResponseMessage();
         assertNull("Got result object from response without error message", res);
     }
+
+    @Test
+    public void parseErrorAndResultResponseMessage() {
+        fsmmr.emitErrorAndResultResponseMessage();
+        assertNull("Got result object from response with error and result", res);
+    }
 }

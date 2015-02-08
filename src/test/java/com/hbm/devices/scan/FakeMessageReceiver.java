@@ -71,6 +71,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String NO_ERROR_CODE_RESPONSE_MESSAGE;
     private static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE;
     private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE;
+    private static final String ERROR_AND_RESULT_RESPONSE_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -225,6 +226,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
         notifyObservers(NO_ERROR_MESSAGE_RESPONSE_MESSAGE);
     }
 
+    public void emitErrorAndResultResponseMessage() {
+        setChanged();
+        notifyObservers(ERROR_AND_RESULT_RESPONSE_MESSAGE);
+    }
+
     @Override
     public void run() {
         setChanged();
@@ -293,6 +299,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             NO_ERROR_CODE_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_error_code_response_message");
             MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = props.getProperty("scan.configure.missing_error_message_response_message");
             NO_ERROR_MESSAGE_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_error_message_response_message");
+            ERROR_AND_RESULT_RESPONSE_MESSAGE = props.getProperty("scan.configure.error_and_result_response_message");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
