@@ -142,7 +142,7 @@ public final class MessageParser extends Observable implements Observer {
                         rpcObject.setJSONString(jsonObject.toString());
                     }
                 }
-            } else if (jsonObject.has("result") || jsonObject.has("error")) {
+            } else if (jsonObject.has("result") ^ jsonObject.has("error")) {
                 // is a response object
                 rpcObject = context.deserialize(json, Response.class);
                 if (rpcObject != null) {
