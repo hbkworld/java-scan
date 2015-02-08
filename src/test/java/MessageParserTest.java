@@ -253,8 +253,8 @@ public class MessageParserTest {
         assertNotNull("No CommunictionPath object after correct message", cp);
         try {
             Announce checkAnnounce = cp.getAnnounce();
-            assertEquals(checkAnnounce.getJsonrpc(), jsonRpcVersion);
-            assertEquals(checkAnnounce.getMethod(), jsonRpcMethod);
+            assertEquals("JSON-RPC versions not equal", checkAnnounce.getJsonrpc(), jsonRpcVersion);
+            assertEquals("JSON-RPC methods not equal", checkAnnounce.getMethod(), jsonRpcMethod);
             AnnounceParams checkAnnounceParams = checkAnnounce.getParams();
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
