@@ -40,6 +40,7 @@ import java.util.List;
  */
 public final class AnnounceParams {
 
+    private String apiVersion;
     private Device device;
     private NetSettings netSettings;
     private Router router;
@@ -52,6 +53,13 @@ public final class AnnounceParams {
     public Device getDevice() throws MissingDataException {
         if (device == null) {
             throw new MissingDataException("No device section in announce params!");
+        }
+        return device;
+    }
+
+    public Device getApiVersion() throws MissingDataException {
+        if (apiVersion == null || apiVersion.length() == 0) {
+            throw new MissingDataException("No API version in announce params!");
         }
         return device;
     }
