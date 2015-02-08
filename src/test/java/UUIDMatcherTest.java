@@ -48,7 +48,7 @@ public class UUIDMatcherTest {
 
     private CommunicationPath cp;
     private FakeMessageReceiver fsmmr;
-    private final String[] uuids = {"0009E500123A", "blah"};
+    private final String[] uuids = {"fred", "0009E500123A", "blah"};
     private final Matcher matcher = new UUIDMatch(uuids);
     private Filter filter;
 
