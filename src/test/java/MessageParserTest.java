@@ -62,9 +62,6 @@ public class MessageParserTest {
         });
     }
 
-    /*
-     * TESTING ANNOUNCE
-     */
     @Test
     public void parseCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
