@@ -134,6 +134,7 @@ public final class DeviceMonitor extends Observable implements Observer {
                 }
             }
         } catch (MissingDataException e) {
+            LOGGER.log(Level.INFO, "Some information is missing in JSON!", e);
         }
     }
 
