@@ -191,10 +191,11 @@ public class MessageParserTest {
         final String httpType = "http";
         final int httpPort = 80;
         final String jsonRpcVersion = "2.0";
+        final String jsonRpcMethod = "announce";
 
         final JsonObject root = new JsonObject();
         root.addProperty("jsonrpc", jsonRpcVersion);
-        root.addProperty("method", "announce");
+        root.addProperty("method", jsonRpcMethod);
         final JsonObject params = new JsonObject();
         root.add("params", params);
         params.addProperty("expiration", expire);
@@ -253,6 +254,7 @@ public class MessageParserTest {
         try {
             Announce checkAnnounce = cp.getAnnounce();
             assertEquals(checkAnnounce.getJsonrpc(), jsonRpcVersion);
+            assertEquals(checkAnnounce.getMethod(), jsonRpcMethod);
             AnnounceParams checkAnnounceParams = checkAnnounce.getParams();
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
