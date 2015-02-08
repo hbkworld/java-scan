@@ -83,11 +83,5 @@ public class FamilytypeMatchTest {
         fsmmr.emitMissingFamilyTypeMessage();
         assertNull("Got CommunicationPath object despite missing family type", cp);
     }
-
-    @Test
-    public void ftFilterMissingDeviceMessage() {
-        fsmmr.emitMissingDeviceMessage();
-        assertNull("Got CommunicationPath object despite missing family type", cp);
-    }
 }
 
