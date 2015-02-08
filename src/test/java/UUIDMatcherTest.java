@@ -31,7 +31,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Observable;
@@ -49,36 +48,68 @@ public class UUIDMatcherTest {
     private CommunicationPath cp;
     private FakeMessageReceiver fsmmr;
     private final String[] uuids = {"fred", "0009E500123A", "blah"};
-    private final Matcher matcher = new UUIDMatch(uuids);
+    private final String[] noMatchingUuids = {"fred", "0009E500123B", "blah"};
+    private Matcher matcher;
     private Filter filter;
 
-    @Before
-    public void setUp() {
+    @Test
+    public void checkUUIDs() {
+        Matcher matcher = new UUIDMatch(uuids);
+        filter = new Filter(matcher);
+        assertArrayEquals("filter strings for ServicetypeMatcher are not correct", uuids, matcher.getFilterStrings());
+        assertEquals("matchers are not equal", matcher, filter.getMatcher());
+    }
+
+    @Test
+    public void filterCorrectMessage() {
+        Matcher matcher = new UUIDMatch(uuids);
+        filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
         MessageParser jf = new MessageParser();
         fsmmr.addObserver(jf);
-        filter = new Filter(matcher);
         jf.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 cp = (CommunicationPath)arg;
             }
         });
-    }
 
-    @Test
-    public void checkUUIDs() {
-        assertArrayEquals("filter strings for ServicetypeMatcher are not correct", uuids, matcher.getFilterStrings());
-        assertEquals("matchers are not equal", matcher, filter.getMatcher());
-    }
-    @Test
-    public void filterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
         assertNotNull("Didn't got a CommunicationPath object", cp);
     }
 
     @Test
+    public void filterCorrectMessageNoMatch() {
+        Matcher matcher = new UUIDMatch(noMatchingUuids);
+        filter = new Filter(matcher);
+        fsmmr = new FakeMessageReceiver();
+        MessageParser jf = new MessageParser();
+        fsmmr.addObserver(jf);
+        jf.addObserver(filter);
+        filter.addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                cp = (CommunicationPath)arg;
+            }
+        });
+
+        fsmmr.emitSingleCorrectMessage();
+        assertNull("Got CommunicationPath object despite not matching", cp);
+    }
+
+    @Test
     public void filterMissingUUIDMessage() {
+        Matcher matcher = new UUIDMatch(uuids);
+        filter = new Filter(matcher);
+        fsmmr = new FakeMessageReceiver();
+        MessageParser jf = new MessageParser();
+        fsmmr.addObserver(jf);
+        jf.addObserver(filter);
+        filter.addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                cp = (CommunicationPath)arg;
+            }
+        });
+
         fsmmr.emitMissingDeviceUuidMessage();
         assertNull("Got CommunicationPath object despite empty service section", cp);
     }
