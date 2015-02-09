@@ -37,7 +37,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public final class Device {
 
-    private final String uuid;
+    private String uuid;
     private String name;
     private String type;
     private String familyType;
@@ -47,8 +47,7 @@ public final class Device {
     @SerializedName("isRouter")
     private boolean router;
 
-    Device(String uuid) {
-        this.uuid = uuid;
+    private Device() {
     }
 
     /**
