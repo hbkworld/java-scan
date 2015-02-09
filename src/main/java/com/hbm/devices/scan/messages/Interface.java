@@ -101,19 +101,19 @@ public final class Interface {
 
     /**
      * @return
-     *      An array containig all IPv4 addresses of the interface
+     *      An Iterable containing all IPv4 addresses of the interface
      *      with their netmask.
      */
-    public List<IPv4Entry> getIPv4() {
+    public Iterable<IPv4Entry> getIPv4() {
         return ipv4;
     }
 
     /**
      * @return
-     *      An array containig all IPv6 addresses of the interface
+     *      An Iterable containing all IPv6 addresses of the interface
      *      with their prefix.
      */
-    public List<IPv6Entry> getIPv6() {
+    public Iterable<IPv6Entry> getIPv6() {
         return ipv6;
     }
 

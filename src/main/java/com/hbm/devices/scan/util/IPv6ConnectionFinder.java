@@ -78,7 +78,7 @@ final class IPv6ConnectionFinder {
 
     private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
             Announce announce) throws MissingDataException {
-        final List<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
+        final Iterable<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv6();
         if (announceAddresses == null) {
             return null;

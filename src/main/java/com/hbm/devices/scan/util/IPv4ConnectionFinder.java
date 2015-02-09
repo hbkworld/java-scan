@@ -76,7 +76,7 @@ final class IPv4ConnectionFinder {
 
     private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
             Announce announce) throws MissingDataException {
-        final Iterable<?> announceAddresses = (Iterable<?>) announce.getParams().getNetSettings()
+        final Iterable<IPv4Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv4();
         if (announceAddresses == null) {
             return null;
