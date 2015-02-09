@@ -45,9 +45,15 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParams;
 import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.DefaultGateway;
+import com.hbm.devices.scan.messages.Device;
+import com.hbm.devices.scan.messages.Interface;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.MissingDataException;
+import com.hbm.devices.scan.messages.NetSettings;
 import com.hbm.devices.scan.messages.Response;
+import com.hbm.devices.scan.messages.Router;
+import com.hbm.devices.scan.messages.ServiceEntry;
 
 public class MessageParserTest {
 
@@ -256,6 +262,31 @@ public class MessageParserTest {
             assertEquals("JSON-RPC versions not equal", checkAnnounce.getJsonrpc(), jsonRpcVersion);
             assertEquals("JSON-RPC methods not equal", checkAnnounce.getMethod(), jsonRpcMethod);
             AnnounceParams checkAnnounceParams = checkAnnounce.getParams();
+            
+            assertEquals("expiration does not match", checkAnnounceParams.getExpiration(), expire);
+            assertEquals("API version does not match", checkAnnounceParams.getApiVersion(), apiVersionString);
+
+            Device checkDevice = checkAnnounceParams.getDevice();
+            assertEquals("family type does not match", checkDevice.getFamilyType(), familyTypeString);
+            assertEquals("firmware version does not match", checkDevice.getFirmwareVersion(), fwVersionString);
+            assertEquals("Hardware ID does not match", checkDevice.getHardwareId(), hwIdString);
+            assertEquals("device name does not match", checkDevice.getName(), nameString);
+            assertEquals("device type does not match", checkDevice.getType(), typeString);
+            assertEquals("device uuid does not match", checkDevice.getUuid(), uuidString);
+
+            NetSettings checkNetSettings = checkAnnounceParams.getNetSettings();
+            DefaultGateway checkDefaultGateway = checkNetSettings.getDefaultGateway();
+            assertEquals("Gateway addres does not match", checkDefaultGateway.getIpv4Address(), gwAddressString);
+            Interface checkIface = checkNetSettings.getInterface();
+            assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
+            assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
+            assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
+            
+            Router checkRouter = checkAnnounceParams.getRouter();
+            assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
+
+            Iterable<ServiceEntry> checkServices = checkAnnounceParams.getServices();
+
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
         }
