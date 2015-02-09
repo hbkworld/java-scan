@@ -199,6 +199,7 @@ public class MessageParserTest {
         final int httpPort = 80;
         final String jsonRpcVersion = "2.0";
         final String jsonRpcMethod = "announce";
+        final String configMethodString = "routerSolicitation";
 
         final JsonObject root = new JsonObject();
         root.addProperty("jsonrpc", jsonRpcVersion);
@@ -225,6 +226,7 @@ public class MessageParserTest {
         defaultGW.addProperty("ipv4Address", gwAddressString);
         final JsonObject iface = new JsonObject();
         netSettings.add("interface", iface);
+        iface.addProperty("configurationMethod", configMethodString);
         iface.addProperty("name", ifaceNameString);
         iface.addProperty("type", ifaceType);
         iface.addProperty("description", ifDescriptionString);
@@ -281,6 +283,7 @@ public class MessageParserTest {
             DefaultGateway checkDefaultGateway = checkNetSettings.getDefaultGateway();
             assertEquals("Gateway addres does not match", checkDefaultGateway.getIpv4Address(), gwAddressString);
             Interface checkIface = checkNetSettings.getInterface();
+            assertEquals("Configuration method does not match", checkIface.getConfigurationMethod(), configMethodString);
             assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
             assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
             assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
