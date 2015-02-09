@@ -42,6 +42,7 @@ public final class Device {
     private String type;
     private String familyType;
     private String firmwareVersion;
+    private String hardwareId;
 
     @SerializedName("isRouter")
     private boolean router;
@@ -76,6 +77,13 @@ public final class Device {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * @return A string describing the hardware ID of a device.
+     */
+    public String getHardwareId() {
+        return hardwareId;
     }
 
     /**
