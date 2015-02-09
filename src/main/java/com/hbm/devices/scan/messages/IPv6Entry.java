@@ -34,7 +34,7 @@ package com.hbm.devices.scan.messages;
 public final class IPv6Entry {
 
     private String address;
-    private String prefix;
+    private int prefix;
 
     private IPv6Entry() {
     }
@@ -43,7 +43,7 @@ public final class IPv6Entry {
         return address;
     }
 
-    public String getPrefix() {
+    public int getPrefix() {
         return prefix;
     }
 }

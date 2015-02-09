@@ -90,7 +90,7 @@ final class IPv6ConnectionFinder {
                 if (!(announceAddress instanceof Inet6Address)) {
                     continue;
                 }
-                if (sameNet(announceAddress, Integer.parseInt(address.getPrefix()),
+                if (sameNet(announceAddress, address.getPrefix(),
                         interfaceAddress.getAddress(), interfaceAddress.getNetworkPrefixLength())) {
                     return announceAddress;
                 }
