@@ -182,6 +182,7 @@ public class MessageParserTest {
         final String nameString = "MX410 Matthias";
         final String typeString = "MX410";
         final String uuidString = "0009E500123A";
+        final boolean isRouter = true;
         final String ifaceNameString = "eth0";
         final String ifaceType = "ethernet";
         final String gwAddressString = "172.19.169.254";
@@ -215,6 +216,7 @@ public class MessageParserTest {
         device.addProperty("name", nameString);
         device.addProperty("type", typeString);
         device.addProperty("uuid", uuidString);
+        device.addProperty("isRouter", isRouter);
 
         final JsonObject netSettings = new JsonObject();
         params.add("netSettings", netSettings);
@@ -273,6 +275,7 @@ public class MessageParserTest {
             assertEquals("device name does not match", checkDevice.getName(), nameString);
             assertEquals("device type does not match", checkDevice.getType(), typeString);
             assertEquals("device uuid does not match", checkDevice.getUuid(), uuidString);
+            assertEquals("isRouter entry does not match", checkDevice.isRouter(), isRouter);
 
             NetSettings checkNetSettings = checkAnnounceParams.getNetSettings();
             DefaultGateway checkDefaultGateway = checkNetSettings.getDefaultGateway();
