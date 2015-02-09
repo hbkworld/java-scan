@@ -48,6 +48,8 @@ import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.DefaultGateway;
 import com.hbm.devices.scan.messages.Device;
 import com.hbm.devices.scan.messages.Interface;
+import com.hbm.devices.scan.messages.IPv4Entry;
+import com.hbm.devices.scan.messages.IPv6Entry;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.NetSettings;
@@ -287,6 +289,15 @@ public class MessageParserTest {
             assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
             assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
             assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
+            Iterable<IPv4Entry> checkIPv4Entries = checkIface.getIPv4();
+            IPv4Entry checkIPv4 = checkIPv4Entries.iterator().next();
+            assertEquals("IPv4 address does not match", checkIPv4.getAddress(), ipv4Address);
+            assertEquals("IPv4 netmask does not match", checkIPv4.getNetmask(), ipv4Mask);
+            Iterable<IPv6Entry> checkIPv6Entries = checkIface.getIPv6();
+            IPv6Entry checkIPv6 = checkIPv6Entries.iterator().next();
+            assertEquals("IPv6 address does not match", checkIPv6.getAddress(), ipv6Address);
+            System.out.println(checkIPv6.getPrefix() + " " + ipv6Prefix);
+            assertEquals("IPv6 prefix does not match", checkIPv6.getPrefix(), ipv6Prefix);
             
             Router checkRouter = checkAnnounceParams.getRouter();
             assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
