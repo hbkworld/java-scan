@@ -52,11 +52,12 @@ public final class CommunicationPath {
     CommunicationPath(Announce announce) throws MissingDataException {
         this.announce = announce;
 
-        final String deviceUuid = announce.getParams().getDevice().getUuid();
+        final AnnounceParams params = announce.getParams();
+        final String deviceUuid = params.getDevice().getUuid();
         final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
         hashBuilder.append(deviceUuid);
 
-        final Router router = announce.getParams().getRouter();
+        final Router router = params.getRouter();
         if (router != null) {
             final String routerUuid = router.getUuid();
             if (routerUuid == null) {
@@ -65,7 +66,7 @@ public final class CommunicationPath {
             hashBuilder.append(routerUuid);
         }
 
-        final String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
+        final String deviceInterfaceName = params.getNetSettings().getInterface().getName();
         hashBuilder.append(deviceInterfaceName);
         hash = hashBuilder.toString().hashCode();
     }
