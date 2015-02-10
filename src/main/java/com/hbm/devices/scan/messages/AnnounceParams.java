@@ -50,14 +50,11 @@ public final class AnnounceParams {
     private AnnounceParams() {
     }
 
-    public Device getDevice() throws MissingDataException {
+    public Device getDevice() {
         return device;
     }
 
-    public String getApiVersion() throws MissingDataException {
-        if (apiVersion == null || apiVersion.length() == 0) {
-            throw new MissingDataException("No API version in announce params!");
-        }
+    public String getApiVersion() {
         return apiVersion;
     }
 
