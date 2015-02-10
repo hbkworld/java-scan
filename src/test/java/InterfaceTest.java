@@ -40,6 +40,7 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.messages.Interface.Method;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 public class InterfaceTest {
@@ -67,7 +68,7 @@ public class InterfaceTest {
         assertNotNull("No CommunictionPath object after correct message", cp);
         try {
             String configMethod = cp.getAnnounce().getParams().getNetSettings().getInterface().getConfigurationMethod();
-            assertEquals(configMethod, "dhcp");
+            assertEquals("Configuration method is not dhcp", configMethod, Method.DHCP.toString());
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
         }
@@ -79,7 +80,7 @@ public class InterfaceTest {
         assertNotNull("No CommunictionPath object after correct message", cp);
         try {
             String configMethod = cp.getAnnounce().getParams().getNetSettings().getInterface().getConfigurationMethod();
-            assertEquals(configMethod, "manual");
+            assertEquals("Configuration method is not manual", configMethod, Method.MANUAL.toString());
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
         }
@@ -91,7 +92,7 @@ public class InterfaceTest {
         assertNotNull("No CommunictionPath object after correct message", cp);
         try {
             String configMethod = cp.getAnnounce().getParams().getNetSettings().getInterface().getConfigurationMethod();
-            assertEquals(configMethod, "routerSolicitation");
+            assertEquals("Configuration method is not router solicit", configMethod, Method.ROUTER_SOLICITATION.toString());
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
         }
