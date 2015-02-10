@@ -29,6 +29,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Observable;
@@ -303,7 +304,16 @@ public class MessageParserTest {
             assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
 
             Iterable<ServiceEntry> checkServices = checkAnnounceParams.getServices();
-
+            for (ServiceEntry s : checkServices) {
+                String serviceType = s.getType();
+                assertTrue("Service type neither http nor streaming", serviceType.equals(httpType) || serviceType.equals(streamType));
+                int port = s.getPort(); 
+                if (serviceType.equals(httpType)) {
+                    assertEquals("http port does not match", port, httpPort);
+                } else {
+                    assertEquals("streaming port does not match", port, streamPort);
+                }
+            }
         } catch (MissingDataException e) {
             fail("MissingDataException thrown" + e);
         }
