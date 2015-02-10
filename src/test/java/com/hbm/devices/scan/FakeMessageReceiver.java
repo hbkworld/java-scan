@@ -48,6 +48,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String CORRECT_MESSAGE;
     private static final String CORRECT_MESSAGE_MANUAL;
     private static final String CORRECT_MESSAGE_ROUTER_SOLICIT;
+    private static final String MISSING_VERSION_MESSAGE;
     private static final String MISSING_CONFIG_MESSAGE;
     private static final String CORRECT_MESSAGE_DIFFERENT_IP;
     private static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
@@ -94,6 +95,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitCorrectMessageRouterSolicit() {
         setChanged();
         notifyObservers(CORRECT_MESSAGE_ROUTER_SOLICIT);
+    }
+
+    public void emitMissingVersion() {
+        setChanged();
+        notifyObservers(MISSING_VERSION_MESSAGE);
     }
 
     public void emitMissingConfigurationMethod() {
@@ -288,6 +294,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
             CORRECT_MESSAGE_MANUAL = props.getProperty("scan.announce.correct_message_manual");
             CORRECT_MESSAGE_ROUTER_SOLICIT = props.getProperty("scan.announce.correct_message_router_solicitation");
+            MISSING_VERSION_MESSAGE = props.getProperty("scan.announce.mising_version");
             MISSING_CONFIG_MESSAGE = props.getProperty("scan.announce.missing_config_method");
             CORRECT_MESSAGE_DIFFERENT_IP = props.getProperty("scan.announce.correct_message_different_ip");
             CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
