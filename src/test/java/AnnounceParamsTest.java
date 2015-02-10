@@ -71,4 +71,10 @@ public class AnnounceParamsTest {
         fsmmr.emitMissingVersion();
         assertNull("Got CommunictionPath object after message without apiVersion", cp);
     }
+
+    @Test
+    public void parseVersion2() {
+        fsmmr.emitVersion2();
+        assertNull("Got CommunictionPath object form message version 2", cp);
+    }
 }
