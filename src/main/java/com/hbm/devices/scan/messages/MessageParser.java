@@ -40,6 +40,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
 import com.hbm.devices.scan.ScanConstants;
@@ -68,6 +69,7 @@ public final class MessageParser extends Observable implements Observer {
 
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
+        builder.registerTypeAdapter(AnnounceParams.class, new AnnounceParamsDeserializer());
         gson = builder.create();
 
         this.announceCache = new AnnounceCache();
@@ -129,7 +131,7 @@ public final class MessageParser extends Observable implements Observer {
         }
     
         @Override
-        public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+        public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
     
             JsonRpc rpcObject = null;
             final JsonObject jsonObject = json.getAsJsonObject();
@@ -146,6 +148,28 @@ public final class MessageParser extends Observable implements Observer {
                 rpcObject.setJSONString(jsonObject.toString());
             }
             return rpcObject;
+        }
+    }
+
+    private final class AnnounceParamsDeserializer implements JsonDeserializer<AnnounceParams> {
+
+        private final Gson gson;
+
+        AnnounceParamsDeserializer() {
+            // This constructor is only use by the outer class.
+            gson = new Gson();
+        }
+        @Override
+        public AnnounceParams deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            AnnounceParams params = null;
+            final JsonObject jsonObject = json.getAsJsonObject();
+            if (jsonObject.has("apiVersion")) {
+                final String version = jsonObject.get("apiVersion").getAsString();
+                if ("1.0".compareTo(version) == 0) {
+                    params = gson.fromJson(json, AnnounceParams.class);
+                }
+            }
+            return params;
         }
     }
 }
