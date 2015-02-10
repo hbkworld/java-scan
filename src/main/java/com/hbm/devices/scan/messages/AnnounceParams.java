@@ -51,9 +51,6 @@ public final class AnnounceParams {
     }
 
     public Device getDevice() throws MissingDataException {
-        if (device == null) {
-            throw new MissingDataException("No device section in announce params!");
-        }
         return device;
     }
 
