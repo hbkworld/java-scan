@@ -53,10 +53,6 @@ public final class CommunicationPath {
         this.announce = announce;
 
         final String deviceUuid = announce.getParams().getDevice().getUuid();
-        if (deviceUuid == null) {
-            throw new MissingDataException("No device UUID in announce object!");
-        }
-
         final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
         hashBuilder.append(deviceUuid);
 
@@ -70,9 +66,6 @@ public final class CommunicationPath {
         }
 
         final String deviceInterfaceName = announce.getParams().getNetSettings().getInterface().getName();
-        if (deviceInterfaceName == null) {
-            throw new MissingDataException("No network interface name in announce object!");
-        }
         hashBuilder.append(deviceInterfaceName);
         hash = hashBuilder.toString().hashCode();
     }
