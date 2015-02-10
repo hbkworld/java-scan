@@ -40,7 +40,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 
 import com.hbm.devices.scan.ScanConstants;
@@ -131,7 +130,7 @@ public final class MessageParser extends Observable implements Observer {
         }
     
         @Override
-        public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public JsonRpc deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
     
             JsonRpc rpcObject = null;
             final JsonObject jsonObject = json.getAsJsonObject();
@@ -151,7 +150,7 @@ public final class MessageParser extends Observable implements Observer {
         }
     }
 
-    private final class AnnounceParamsDeserializer implements JsonDeserializer<AnnounceParams> {
+    private static final class AnnounceParamsDeserializer implements JsonDeserializer<AnnounceParams> {
 
         private final Gson gson;
 
@@ -160,7 +159,7 @@ public final class MessageParser extends Observable implements Observer {
             gson = new Gson();
         }
         @Override
-        public AnnounceParams deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        public AnnounceParams deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
             AnnounceParams params = null;
             final JsonObject jsonObject = json.getAsJsonObject();
             if (jsonObject.has("apiVersion")) {
