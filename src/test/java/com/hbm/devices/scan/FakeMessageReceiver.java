@@ -46,6 +46,9 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     private static final String CORRECT_MESSAGE;
+    private static final String CORRECT_MESSAGE_MANUAL;
+    private static final String CORRECT_MESSAGE_ROUTER_SOLICIT;
+    private static final String MISSING_CONFIG_MESSAGE;
     private static final String CORRECT_MESSAGE_DIFFERENT_IP;
     private static final String CORRECT_MESSAGE_DIFFERENT_SERVICES;
     private static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
@@ -81,6 +84,21 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitSingleCorrectMessage() {
         setChanged();
         notifyObservers(CORRECT_MESSAGE);
+    }
+
+    public void emitCorrectMessageManual() {
+        setChanged();
+        notifyObservers(CORRECT_MESSAGE_MANUAL);
+    }
+
+    public void emitCorrectMessageRouterSolicit() {
+        setChanged();
+        notifyObservers(CORRECT_MESSAGE_ROUTER_SOLICIT);
+    }
+
+    public void emitMissingConfigurationMethod() {
+        setChanged();
+        notifyObservers(MISSING_CONFIG_MESSAGE);
     }
 
     public void emitSingleCorrentMessageDifferentIP() {
@@ -268,6 +286,9 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             FAKE_DEVICE_4 = props.getProperty("scan.announce.device4");
             FAKE_DEVICE_5 = props.getProperty("scan.announce.device5");
             CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
+            CORRECT_MESSAGE_MANUAL = props.getProperty("scan.announce.correct_message_manual");
+            CORRECT_MESSAGE_ROUTER_SOLICIT = props.getProperty("scan.announce.correct_message_router_solicitation");
+            MISSING_CONFIG_MESSAGE = props.getProperty("scan.announce.missing_config_method");
             CORRECT_MESSAGE_DIFFERENT_IP = props.getProperty("scan.announce.correct_message_different_ip");
             CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
             CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");
