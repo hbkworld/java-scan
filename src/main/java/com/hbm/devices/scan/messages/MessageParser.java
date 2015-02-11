@@ -167,7 +167,9 @@ public final class MessageParser extends Observable implements Observer {
                 if ("1.0".compareTo(version) == 0) {
                     params = gson.fromJson(json, AnnounceParams.class);
                 } else {
-                    LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version);
+                    if (LOGGER.isLoggable(Level.INFO)) {
+                        LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version);
+                    }
                 }
             } else {
                 LOGGER.log(Level.SEVERE, "No apiVersion set in announce packet!");
