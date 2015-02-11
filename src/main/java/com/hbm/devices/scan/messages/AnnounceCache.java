@@ -33,12 +33,13 @@ import java.util.Map;
 
 final class AnnounceCache {
 
+    private static final int DEFAULT_CACHE_SIZE = 100;
+
     private final LRUCache<String, Announce> parsedMessages;
     private final LRUCache<Integer, String> availablePaths;
 
     AnnounceCache() {
-        parsedMessages = new LRUCache<String, Announce>();
-        availablePaths = new LRUCache<Integer, String>();
+        this(DEFAULT_CACHE_SIZE);
     }
 
     AnnounceCache(int cacheSize) {
@@ -83,19 +84,14 @@ final class AnnounceCache {
     }
 }
 
-class LRUCache<K, V> extends LinkedHashMap<K, V> {
+final class LRUCache<K, V> extends LinkedHashMap<K, V> {
 
     /**
      * By default the cache size is 100.
      */
-    private static final int DEFAULT_CACHE_SIZE = 100;
     private static final float LOAD_FACTOR = 0.75f;
 
     private int maxSize;
-
-    LRUCache() {
-        this(DEFAULT_CACHE_SIZE);
-    }
 
     LRUCache(int maxSize) {
         super(maxSize + 1, LOAD_FACTOR, true);
