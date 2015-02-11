@@ -26,9 +26,10 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class CommunicationPathTest {
         Object object = new Object();
         cp.setCookie(object);
         Object checkObject = cp.getCookie();
-        assertTrue("Cookie object not same", object == checkObject);
+        assertSame("Cookie object not same", object, checkObject);
     }
 
     @Test
@@ -75,7 +76,7 @@ public class CommunicationPathTest {
         assertNotNull("Go not CommunicationPath object", cp);
         Object object = new Object();
         assertFalse("equals returns true for object !instanceof CommuncitionPath", cp.equals(object));
-        assertTrue("equals with same object returns false", cp.equals(cp));
+        assertEquals("equals with same object returns false", cp, cp);
     }
 
 
