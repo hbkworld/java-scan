@@ -31,8 +31,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -75,5 +73,7 @@ public class AnnounceTest {
 
         fsmmr.emitCorrectMessageManual();
         assertNotEquals("Both announce are different, but equals returns true", announce, cp.getAnnounce());
+        assertNotSame("Both announce are different, but hashCodes are the same", announce.hashCode(), cp.getAnnounce().hashCode());
+
     }
 }
