@@ -110,7 +110,7 @@ public final class MessageParser extends Observable implements Observer {
              * There is no error handling necessary in this case. If somebody sends us invalid JSON,
              * we just ignore the packet and go ahead.
              */
-            LOGGER.log(Level.INFO, "Can't parse JSON!", e);
+            LOGGER.log(Level.SEVERE, "Can't parse JSON!", e);
         } catch (MissingDataException e) {
             /*
              * During the creation of an CommunicationPath object it is required that some
@@ -119,7 +119,7 @@ public final class MessageParser extends Observable implements Observer {
              * 
              * Go ahead with the next packet.
              */
-            LOGGER.log(Level.INFO, "Some information is missing in JSON!", e);
+            LOGGER.log(Level.SEVERE, "Some information is missing in JSON!", e);
         }
     }
 
@@ -166,7 +166,11 @@ public final class MessageParser extends Observable implements Observer {
                 final String version = jsonObject.get("apiVersion").getAsString();
                 if ("1.0".compareTo(version) == 0) {
                     params = gson.fromJson(json, AnnounceParams.class);
+                } else {
+                    LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version);
                 }
+            } else {
+                LOGGER.log(Level.SEVERE, "No apiVersion set in announce packet!");
             }
             return params;
         }
