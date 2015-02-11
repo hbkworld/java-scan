@@ -77,6 +77,11 @@ public class CommunicationPathTest {
         Object object = new Object();
         assertFalse("equals returns true for object !instanceof CommuncitionPath", cp.equals(object));
         assertEquals("equals with same object returns false", cp, cp);
+
+        CommunicationPath oldCp = cp;
+        fsmmr.emitCorrectMessageManual();
+        assertEquals("Both CommunicationPath objects represent the same communication path, but return not equal", oldCp, cp);
+
     }
 
 
