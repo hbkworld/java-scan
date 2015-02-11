@@ -83,6 +83,6 @@ public class CommunicationPathTest {
         CommunicationPath oldCp = cp;
         fsmmr.emitCorrectMessageManual();
         assertNotSame("New object is same as old", oldCp, cp);
-        assertEquals("Both CommunicationPath objects represent the same communication path, but return not equal", oldCp, cp);
+        assertTrue("Both CommunicationPath objects represent the same communication path, but return not equal", oldCp.equals(cp));
     }
 }
