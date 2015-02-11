@@ -88,6 +88,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
         notifyObservers(CORRECT_MESSAGE);
     }
 
+    public void emitSingleCorrectMessageDevice2() {
+        setChanged();
+        notifyObservers(FAKE_DEVICE_2);
+    }
+
     public void emitCorrectMessageManual() {
         setChanged();
         notifyObservers(CORRECT_MESSAGE_MANUAL);

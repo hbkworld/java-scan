@@ -28,6 +28,7 @@
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
@@ -83,6 +84,9 @@ public class CommunicationPathTest {
         CommunicationPath oldCp = cp;
         fsmmr.emitCorrectMessageManual();
         assertNotSame("New object is same as old", oldCp, cp);
-        assertTrue("Both CommunicationPath objects represent the same communication path, but return not equal", oldCp.equals(cp));
+        assertEquals("Both CommunicationPath objects represent the same communication path, but return not equal", oldCp, cp);
+        fsmmr.emitSingleCorrectMessageDevice2();
+        assertNotSame("New object is same as old", oldCp, cp);
+        assertNotEquals("Both CommunicationPath objects represent the different communication path, but return equal", oldCp, cp);
     }
 }
