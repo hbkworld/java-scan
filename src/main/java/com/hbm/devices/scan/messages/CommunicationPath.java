@@ -46,7 +46,7 @@ public final class CommunicationPath {
 
     private final Announce announce;
     private final int hash;
-    private final String communicationPath;
+    private final String path;
     private Object cookie;
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
@@ -65,8 +65,8 @@ public final class CommunicationPath {
 
         final String deviceInterfaceName = params.getNetSettings().getInterface().getName();
         hashBuilder.append(deviceInterfaceName);
-        communicationPath = hashBuilder.toString();
-        hash = communicationPath.hashCode();
+        path = hashBuilder.toString();
+        hash = path.hashCode();
     }
 
     public void setCookie(Object cookie) {
@@ -96,7 +96,7 @@ public final class CommunicationPath {
         if (!(obj instanceof CommunicationPath)) {
             return false;
         }
-        return communicationPath.equals(((CommunicationPath)obj).communicationPath);
+        return path.equals(((CommunicationPath)obj).path);
     }
     
     public Announce getAnnounce() {
