@@ -41,6 +41,7 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.MissingDataException;
 
@@ -64,7 +65,8 @@ final class IPv4ConnectionFinder {
         ipv4Addresses = addressList;
     }
 
-    InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
+    InetAddress getConnectableAddress(CommunicationPath path) throws MissingDataException {
+        Announce announce = path.getAnnounce();
         for (final InterfaceAddress niAddress : ipv4Addresses) {
             final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {

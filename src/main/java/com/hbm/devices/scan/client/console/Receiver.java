@@ -122,8 +122,7 @@ class EventLogger {
             CommunicationPath communicationPath;
             if (event instanceof NewDeviceEvent) {
                 communicationPath = ((NewDeviceEvent) event).getAnnouncePath();
-                final Announce announce = communicationPath.getAnnounce();
-                final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
+                final InetAddress connectAddress = connectionFinder.getConnectableAddress(communicationPath);
                 logBuilder.append("New Device:\n");
                 if (connectAddress != null) {
                     logBuilder.append("Connectable: ").append(connectAddress).append('\n');
