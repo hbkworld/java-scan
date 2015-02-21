@@ -41,12 +41,12 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
+import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParser;
-import com.hbm.devices.scan.messages.CommunicationPath;
 
 public class FamilytypeMatchTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private FakeMessageReceiver fsmmr;
     private final String[] families = {"QuantumX", "PMX"};
     private final Matcher matcher = new FamilytypeMatch(families);
@@ -61,7 +61,7 @@ public class FamilytypeMatchTest {
         parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                cp = (CommunicationPath)arg;
+                announce = (Announce)arg;
             }
         });
     }
@@ -75,13 +75,13 @@ public class FamilytypeMatchTest {
     @Test
     public void ftFilterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a CommunicationPath object", cp);
+        assertNotNull("Didn't got a Announce object", announce);
     }
 
     @Test
     public void ftFilterMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
-        assertNull("Got CommunicationPath object despite missing family type", cp);
+        assertNull("Got Announce object despite missing family type", announce);
     }
 }
 

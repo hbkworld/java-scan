@@ -35,6 +35,9 @@ package com.hbm.devices.scan.messages;
 public final class Announce extends JsonRpc {
 
     private AnnounceParams params;
+    private String path;
+
+    private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
     private Announce() {
         super("announce");
@@ -62,5 +65,25 @@ public final class Announce extends JsonRpc {
     @Override
     public int hashCode() {
         return getJSONString().hashCode();
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    void identifyCommunicationPath() throws MissingDataException {
+        final AnnounceParams params = getParams();
+        final String deviceUuid = params.getDevice().getUuid();
+        final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
+        hashBuilder.append(deviceUuid);
+
+        final Router router = params.getRouter();
+        if (router != null) {
+            hashBuilder.append(router.getUuid());
+        }
+
+        final String deviceInterfaceName = params.getNetSettings().getInterface().getName();
+        hashBuilder.append(deviceInterfaceName);
+        path = hashBuilder.toString();
     }
 }

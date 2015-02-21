@@ -36,7 +36,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
 
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
@@ -54,8 +54,8 @@ public final class ConnectionFinder {
      * Constructs a new {@link ConnectionFinder} object.
      *
      * @param interfaces A {@link Collection} of {@link
-     * NetworkInterface}s used to check {@link CommunicationPath} objects against
-     * in {@link #getConnectableAddress(CommunicationPath)}.
+     * NetworkInterface}s used to check {@link Announce} objects against
+     * in {@link #getConnectableAddress(Announce)}.
      *
      * @param preferIPv6 Set true if {@link #getConnectableAddress}
      * returns IPv6 addresses preferentially.
@@ -69,26 +69,26 @@ public final class ConnectionFinder {
     /**
      * This method looks for a connectable IP address.
      *
-     * @param communicationPath The {@link CommunicationPath} containing the device we
+     * @param announce The {@link Announce} containing the device we
      * want to communicate with.
      *
      * @return An {@link InetAddress} if a connectable IP address was
      * found, null otherwise.
      *
-     * @throws MissingDataException if  the CommunicationPath object doesn't
+     * @throws MissingDataException if  the Announce object doesn't
      * contain any IP addresses.
      */
-    public InetAddress getConnectableAddress(CommunicationPath communicationPath) throws MissingDataException {
+    public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
         if (preferIPv6) {
-            InetAddress address = ipv6ConnectionFinder.getConnectableAddress(communicationPath);
+            InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
             if (address == null) {
-                address = ipv4ConnectionFinder.getConnectableAddress(communicationPath);
+                address = ipv4ConnectionFinder.getConnectableAddress(announce);
             }
             return address;
         } else {
-            InetAddress address = ipv4ConnectionFinder.getConnectableAddress(communicationPath);
+            InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
             if (address == null) {
-                address = ipv6ConnectionFinder.getConnectableAddress(communicationPath);
+                address = ipv6ConnectionFinder.getConnectableAddress(announce);
             }
             return address;
         }

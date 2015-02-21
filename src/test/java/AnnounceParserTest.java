@@ -46,7 +46,7 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParams;
 import com.hbm.devices.scan.messages.AnnounceParser;
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.DefaultGateway;
 import com.hbm.devices.scan.messages.Device;
 import com.hbm.devices.scan.messages.IPv4Entry;
@@ -60,7 +60,7 @@ import com.hbm.devices.scan.messages.ServiceEntry;
 
 public class AnnounceParserTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private Response res;
     private FakeMessageReceiver fsmmr;
 
@@ -71,8 +71,8 @@ public class AnnounceParserTest {
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                if (arg instanceof CommunicationPath) {
-                    cp = (CommunicationPath) arg;
+                if (arg instanceof Announce) {
+                    announce = (Announce) arg;
                 } else if (arg instanceof Response) {
                     res = (Response) arg;
                 }
@@ -83,105 +83,81 @@ public class AnnounceParserTest {
     @Test
     public void parseCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("No CommunictionPath object after correct message", cp);
+        assertNotNull("No CommunictionPath object after correct message", announce);
     }
 
     @Test
     public void parseInvalidJsonMessage() {
         fsmmr.emitInvalidJsonMessage();
-        assertNull("Got CommunicationPath object after invalid message", cp);
+        assertNull("Got Announce object after invalid message", announce);
     }
 
     @Test
     public void parseNotAnnounceMethodMessage() {
         fsmmr.emitNotAnnounceMessage();
-        assertNull("Got CommunicationPath object from message with method that's not an announce", cp);
+        assertNull("Got Announce object from message with method that's not an announce", announce);
     }
 
     @Test
     public void parseEmptyMessage() {
         fsmmr.emitEmptyString();
-        assertNull("Got CommunicationPath object after empty message", cp);
+        assertNull("Got Announce object after empty message", announce);
     }
 
     @Test
     public void parseNullMessage() {
         fsmmr.emitNull();
-        assertNull("Got CommunicationPath object after null", cp);
+        assertNull("Got Announce object after null", announce);
     }
 
     @Test
     public void parseMissingDeviceMessage() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull("Got CommunicationPath from message without device", cp);
+        assertNull("Got Announce from message without device", announce);
     }
 
     @Test
     public void parseMissingDeviceUuidMessage() {
         fsmmr.emitMissingDeviceUuidMessage();
-        assertNull("Got CommunicationPath from message without UUID", cp);
+        assertNull("Got Announce from message without UUID", announce);
     }
 
     @Test
     public void parseMissingParamsMessage() {
         fsmmr.emitMissingParamsMessage();
-        assertNull("Got CommunicationPath from message without params", cp);
+        assertNull("Got Announce from message without params", announce);
     }
 
     @Test
     public void parseNoInterfaceNameMessage() {
         fsmmr.emitNoInterfaceNameMessage();
-        assertNull("Got CommunicationPath from message without interface name", cp);
+        assertNull("Got Announce from message without interface name", announce);
     }
 
     @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
-        assertNull("Got CommunicationPath from message without interface", cp);
+        assertNull("Got Announce from message without interface", announce);
     }
 
     @Test
     public void parseNoNetSettingsMessage() {
         fsmmr.emitNoNetSettingsMessage();
-        assertNull("Got CommunicationPath from message without network settings", cp);
+        assertNull("Got Announce from message without network settings", announce);
     }
 
     @Test
     public void parseMissingRouterUuidMessage() {
         fsmmr.emitMissingRouterUuidMessage();
-        assertNull("Got CommunicationPath from message without router UUID", cp);
+        assertNull("Got Announce from message without router UUID", announce);
     }
 
     @Test
     public void parseMissingTypeMessage() {
         fsmmr.emitMissingTypeResponseMessage();
-        assertNull("Got CommunicationPath message without type", cp);
-    }
-/*
-    @Test
-    public void parseCorrectSuccessReponseMessage() {
-        fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
-        assertNotNull("No result object after correct success response", res);
+        assertNull("Got Announce message without type", announce);
     }
 
-    @Test
-    public void parseCorrectErrorReponseMessage() {
-        fsmmr.emitSingleCorrectErrorResponseMessage();
-        assertNotNull("No result object after correct error response", res);
-    }
-
-    @Test
-    public void parseErrorAndResultResponseMessage() {
-        fsmmr.emitErrorAndResultResponseMessage();
-        assertNull("Got result object from response with error and result", res);
-    }
-
-    @Test
-    public void parseMissingTypeMessage() {
-        fsmmr.emitMissingTypeResponseMessage();
-        assertNull("Got result object from response with error and result", res);
-    }
-*/
     @Test
     public void testGetters() {
         final String apiVersionString = "1.0";
@@ -267,12 +243,11 @@ public class AnnounceParserTest {
 
         final Gson gson = new Gson();
         fsmmr.emitString(gson.toJson(root));
-        assertNotNull("No CommunictionPath object after correct message", cp);
+        assertNotNull("No CommunictionPath object after correct message", announce);
         try {
-            Announce checkAnnounce = cp.getAnnounce();
-            assertEquals("JSON-RPC versions not equal", checkAnnounce.getJsonrpc(), jsonRpcVersion);
-            assertEquals("JSON-RPC methods not equal", checkAnnounce.getMethod(), jsonRpcMethod);
-            AnnounceParams checkAnnounceParams = checkAnnounce.getParams();
+            assertEquals("JSON-RPC versions not equal", announce.getJsonrpc(), jsonRpcVersion);
+            assertEquals("JSON-RPC methods not equal", announce.getMethod(), jsonRpcMethod);
+            AnnounceParams checkAnnounceParams = announce.getParams();
             
             assertEquals("expiration does not match", checkAnnounceParams.getExpiration(), expire);
             assertEquals("API version does not match", checkAnnounceParams.getApiVersion(), apiVersionString);

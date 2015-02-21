@@ -51,7 +51,7 @@ final class AnnounceCache {
     private static final int DEFAULT_CACHE_SIZE = 100;
 
     private final LRUCache<String, Announce> parsedMessages;
-    private final LRUCache<CommunicationPath, String> lastDeviceAnnounce;
+    private final LRUCache<String, String> lastDeviceAnnounce;
 
     AnnounceCache() {
         this(DEFAULT_CACHE_SIZE);
@@ -59,7 +59,7 @@ final class AnnounceCache {
 
     AnnounceCache(int cacheSize) {
         parsedMessages = new LRUCache<String, Announce>(cacheSize);
-        lastDeviceAnnounce = new LRUCache<CommunicationPath, String>(cacheSize);
+        lastDeviceAnnounce = new LRUCache<String, String>(cacheSize);
     }
 
     Announce get(String string) {
@@ -74,22 +74,23 @@ final class AnnounceCache {
         return lastDeviceAnnounce.size();
     }
 
-    void put(String announceString, CommunicationPath comPath) {
-        if (comPath.getAnnounce().equals(parsedMessages.get(announceString))) {
+    void put(String announceString, Announce announce) {
+        if (announce.equals(parsedMessages.get(announceString))) {
             return;
         }
-
-        if (lastDeviceAnnounce.containsKey(comPath)) {
+        
+        String path = announce.getPath();
+        if (lastDeviceAnnounce.containsKey(path)) {
             // device has send an announce earlier, but it has changed its announce content (e.g.
             // its running services changed)
-            final String lastAnnounceString = lastDeviceAnnounce.get(comPath);
+            final String lastAnnounceString = lastDeviceAnnounce.get(path);
             parsedMessages.remove(lastAnnounceString);
-            parsedMessages.put(announceString, comPath.getAnnounce());
-            lastDeviceAnnounce.put(comPath, announceString);
+            parsedMessages.put(announceString, announce);
+            lastDeviceAnnounce.put(path, announceString);
         } else {
             // the device has not sent an announce message earlier
-            lastDeviceAnnounce.put(comPath, announceString);
-            parsedMessages.put(announceString, comPath.getAnnounce());
+            lastDeviceAnnounce.put(path, announceString);
+            parsedMessages.put(announceString, announce);
         }
     }
 }

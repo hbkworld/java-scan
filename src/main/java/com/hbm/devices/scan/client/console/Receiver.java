@@ -46,7 +46,6 @@ import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.Device;
 import com.hbm.devices.scan.messages.Interface;
 import com.hbm.devices.scan.messages.IPv4Entry;
@@ -119,26 +118,26 @@ class EventLogger {
     void logEvent(Object event) {
         final StringBuilder logBuilder = new StringBuilder(INITIAL_BUFFER_SIZE);
         try {
-            CommunicationPath communicationPath;
+            Announce announce;
             if (event instanceof NewDeviceEvent) {
-                communicationPath = ((NewDeviceEvent) event).getAnnouncePath();
-                final InetAddress connectAddress = connectionFinder.getConnectableAddress(communicationPath);
+                announce = ((NewDeviceEvent)event).getAnnounce();
+                final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
                 logBuilder.append("New Device:\n");
                 if (connectAddress != null) {
                     logBuilder.append("Connectable: ").append(connectAddress).append('\n');
                 }
             } else if (event instanceof LostDeviceEvent) {
-                communicationPath = ((LostDeviceEvent) event).getAnnouncePath();
+                announce = ((LostDeviceEvent) event).getAnnounce();
                 logBuilder.append("Lost Device:\n");
             } else if (event instanceof UpdateDeviceEvent) {
                 final UpdateDeviceEvent updateEvent = (UpdateDeviceEvent) event;
-                communicationPath = updateEvent.getNewCommunicationPath();
+                announce = updateEvent.getNewAnnounce();
                 logBuilder.append("Update Device:\n");
             } else {
                 logBuilder.append("unknown\n");
                 return;
             }
-            fillDeviceInformation(communicationPath, logBuilder);
+            fillDeviceInformation(announce, logBuilder);
         } catch (MissingDataException e) {
             logBuilder.append("Some data missing in Announce: ").append(e);
         }
@@ -147,9 +146,8 @@ class EventLogger {
         }
     }
 
-    private static void fillDeviceInformation(CommunicationPath communicationPath, StringBuilder logBuilder)
+    private static void fillDeviceInformation(Announce announce, StringBuilder logBuilder)
         throws MissingDataException {
-        final Announce announce = communicationPath.getAnnounce();
         logDevice(logBuilder, announce.getParams().getDevice());
         logIpAddresses(logBuilder, announce);
         logServices(logBuilder, announce);

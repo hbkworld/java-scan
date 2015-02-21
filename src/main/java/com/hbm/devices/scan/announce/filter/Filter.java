@@ -35,13 +35,12 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
- * This class filters {@link CommunicationPath} objects with according to a {@link Matcher} object.
+ * This class filters {@link Announce} objects with according to a {@link Matcher} object.
  * <p>
- * The class reads {@link CommunicationPath} objects and notifies them if
+ * The class reads {@link Announce} objects and notifies them if
  * {@link Matcher#match(Announce)} method returns true.
  * 
  * @since 1.0
@@ -69,12 +68,11 @@ public final class Filter extends Observable implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        final CommunicationPath communicationPath = (CommunicationPath)arg;
-        final Announce announce = communicationPath.getAnnounce();
+        final Announce announce = (Announce)arg;
         try {
             if (matcher.match(announce)) {
                 setChanged();
-                notifyObservers(communicationPath);
+                notifyObservers(announce);
             }
         } catch (MissingDataException e) {
             LOGGER.log(Level.INFO, "Some information is missing in announce!", e);

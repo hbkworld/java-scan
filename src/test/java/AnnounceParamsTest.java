@@ -37,13 +37,12 @@ import java.util.Observer;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParser;
-import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.Device;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 public class AnnounceParamsTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private FakeMessageReceiver fsmmr;
 
     @Before
@@ -53,8 +52,8 @@ public class AnnounceParamsTest {
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                if (arg instanceof CommunicationPath) {
-                    cp = (CommunicationPath) arg;
+                if (arg instanceof Announce) {
+                    announce = (Announce)arg;
                 }
             }
         });
@@ -63,18 +62,18 @@ public class AnnounceParamsTest {
     @Test
     public void parseMissingDevice() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull("Got CommunictionPath object after message without device section", cp);
+        assertNull("Got Announce object after message without device section", announce);
     }
 
     @Test
     public void parseMissingVersion() {
         fsmmr.emitMissingVersion();
-        assertNull("Got CommunictionPath object after message without apiVersion", cp);
+        assertNull("Got Announce object after message without apiVersion", announce);
     }
 
     @Test
     public void parseVersion2() {
         fsmmr.emitVersion2();
-        assertNull("Got CommunictionPath object form message version 2", cp);
+        assertNull("Got Announce object form message version 2", announce);
     }
 }

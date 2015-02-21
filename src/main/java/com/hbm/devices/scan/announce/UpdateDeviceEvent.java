@@ -28,33 +28,32 @@
 
 package com.hbm.devices.scan.announce;
 
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 
 /**
  * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor}.
  * <p>
  * The event is notified when an announce method from a device that is known, but has changed some
  * data in the announce message, is received. The event contains the old and the new announce
- * information stored in a {@link CommunicationPath}
+ * objects.
  *
  * @since 1.0
  */
 public final class UpdateDeviceEvent {
 
-    private final CommunicationPath oldCommunicationPath;
-    private final CommunicationPath newCommunicationPath;
+    private final Announce oldAnnounce;
+    private final Announce newAnnounce;
 
-    UpdateDeviceEvent(CommunicationPath oldPath, CommunicationPath newPath) {
-        this.oldCommunicationPath = oldPath;
-        this.newCommunicationPath = newPath;
+    UpdateDeviceEvent(Announce oldAnnounce, Announce newAnnounce) {
+        this.oldAnnounce = oldAnnounce;
+        this.newAnnounce = newAnnounce;
     }
 
-    public CommunicationPath getOldCommunicationPath() {
-        return this.oldCommunicationPath;
+    public Announce getOldAnnounce() {
+        return this.oldAnnounce;
     }
 
-    public CommunicationPath getNewCommunicationPath() {
-        return this.newCommunicationPath;
+    public Announce getNewAnnounce() {
+        return this.newAnnounce;
     }
-
 }

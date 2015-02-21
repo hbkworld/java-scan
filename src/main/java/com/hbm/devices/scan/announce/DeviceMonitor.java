@@ -41,25 +41,24 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class provides the concept of posting new/lost device events.
  * <p>
 
- * The class gets{@link CommunicationPath} objects via the {@link
+ * The class gets{@link Announce} objects via the {@link
  * Observer#update} method and notifies a {@link NewDeviceEvent} if the
- * {@link CommunicationPath} object wasn't known upto now.
+ * {@link Announce} object wasn't known upto now.
  * Furthermore, it notifies a {@link LostDeviceEvent} if no new {@link
- * CommunicationPath} object was received during the expiration period
+ * Announce} object was received during the expiration period
  * of the enclosed {@link Announce} object.
  *
  * @since 1.0
  */
 public final class DeviceMonitor extends Observable implements Observer {
 
-    private final Map<CommunicationPath, ScheduledFuture<Void>> deviceMap;
+    private final Map<String, ScheduledFuture<Void>> deviceMap;
     private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
     private final ScheduledThreadPoolExecutor executor;
     private static final Logger LOGGER = 
@@ -74,7 +73,7 @@ public final class DeviceMonitor extends Observable implements Observer {
      */
     public DeviceMonitor() {
         super();
-        deviceMap = new HashMap<CommunicationPath, ScheduledFuture<Void>>(INITIAL_ENTRIES);
+        deviceMap = new HashMap<String, ScheduledFuture<Void>>(INITIAL_ENTRIES);
         futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(INITIAL_ENTRIES);
         executor = new ScheduledThreadPoolExecutor(1);
     }
@@ -104,33 +103,34 @@ public final class DeviceMonitor extends Observable implements Observer {
 
     @Override
     public void update(Observable observable, Object arg) {
-        final CommunicationPath communicationPath = (CommunicationPath)arg;
-        final Announce announce = communicationPath.getAnnounce();
+        final Announce announce = (Announce)arg;
         try {
             synchronized (deviceMap) {
-                if (deviceMap.containsKey(communicationPath)) {
-                    ScheduledFuture<Void> future = deviceMap.get(communicationPath);
+                String path = announce.getPath();
+                // TODO: don't call containsKey
+                if (deviceMap.containsKey(path)) {
+                    ScheduledFuture<Void> future = deviceMap.get(path);
                     future.cancel(false);
-                    deviceMap.remove(communicationPath);
+                    deviceMap.remove(path);
                     AnnounceTimerTask task = futureMap.remove(future);
-                    final Announce oldAnnounce = task.getCommunicationPath().getAnnounce();
-                    task = new AnnounceTimerTask(communicationPath);
+                    final Announce oldAnnounce = task.getAnnounce();
+                    task = new AnnounceTimerTask(announce);
                     future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
-                    deviceMap.put(communicationPath, future);
+                    deviceMap.put(path, future);
                     futureMap.put(future, task);
 
                     if (!oldAnnounce.equals(announce)) {
                         setChanged();
-                        notifyObservers(new UpdateDeviceEvent(task.getCommunicationPath(), communicationPath));
+                        notifyObservers(new UpdateDeviceEvent(oldAnnounce, announce));
                     }
                 } else {
-                    final AnnounceTimerTask task = new AnnounceTimerTask(communicationPath);
+                    final AnnounceTimerTask task = new AnnounceTimerTask(announce);
                     final ScheduledFuture<Void> future = executor.schedule(task, getExpiration(announce),
                             TimeUnit.MILLISECONDS);
-                    deviceMap.put(communicationPath, future);
+                    deviceMap.put(path, future);
                     futureMap.put(future, task);
                     setChanged();
-                    notifyObservers(new NewDeviceEvent(communicationPath));
+                    notifyObservers(new NewDeviceEvent(announce));
                 }
             }
         } catch (MissingDataException e) {
@@ -148,24 +148,24 @@ public final class DeviceMonitor extends Observable implements Observer {
     }
 
     private class AnnounceTimerTask implements Callable<Void> {
-        private final CommunicationPath communicationPath;
+        private final Announce announce;
 
-        AnnounceTimerTask(CommunicationPath communicationPath) {
-            this.communicationPath = communicationPath;
+        AnnounceTimerTask(Announce announce) {
+            this.announce = announce;
         }
 
         @Override
         public Void call() throws Exception {
             synchronized (deviceMap) {
-                deviceMap.remove(communicationPath);
+                deviceMap.remove(announce.getPath());
             }
             setChanged();
-            notifyObservers(new LostDeviceEvent(communicationPath));
+            notifyObservers(new LostDeviceEvent(announce));
             return null;
         }
 
-        CommunicationPath getCommunicationPath() {
-            return communicationPath;
+        Announce getAnnounce() {
+            return announce;
         }
     }
 }

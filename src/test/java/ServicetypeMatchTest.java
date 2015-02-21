@@ -41,12 +41,12 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
 import com.hbm.devices.scan.announce.filter.ServicetypeMatch;
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParser;
 
 public class ServicetypeMatchTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private FakeMessageReceiver fsmmr;
     private final String[] serviceTypes = {"http"};
     private final Matcher matcher = new ServicetypeMatch(serviceTypes);
@@ -62,7 +62,7 @@ public class ServicetypeMatchTest {
         parser.addObserver(filter);
         filter.addObserver(new Observer(){
             public void update(Observable o, Object arg) {
-                cp = (CommunicationPath)arg;
+                announce = (Announce)arg;
             }
         });
     }
@@ -76,25 +76,25 @@ public class ServicetypeMatchTest {
     @Test
     public void stFilterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a CommunicationPath object", cp);
+        assertNotNull("Didn't got a Announce object", announce);
     }
 
     @Test
     public void stFilterEmptyServiceMessage() {
         fsmmr.emitEmptyServiceMessage();
-        assertNull("Got CommunicationPath object despite empty service section", cp);
+        assertNull("Got Announce object despite empty service section", announce);
     }
 
     @Test
     public void stFilterMissingServiceMessage() {
         fsmmr.emitMissingServiceMessage();
-        assertNull("Got CommunicationPath object despite missing service section", cp);
+        assertNull("Got Announce object despite missing service section", announce);
     }
 
     @Test
     public void stFilterMissingHttpMessage() {
         fsmmr.emitMissingHttpMessage();
-        assertNull("Got CommunicationPath object despite missing http entry", cp);
+        assertNull("Got Announce object despite missing http entry", announce);
     }
 }
 

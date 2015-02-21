@@ -42,10 +42,10 @@ import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
 import com.hbm.devices.scan.announce.filter.UUIDMatch;
 import com.hbm.devices.scan.messages.AnnounceParser;
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 public class UUIDMatcherTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private FakeMessageReceiver fsmmr;
     private final String[] uuids = {"fred", "0009E500123A", "blah"};
     private final String[] noMatchingUuids = {"fred", "0009E500123B", "blah"};
@@ -70,12 +70,12 @@ public class UUIDMatcherTest {
         parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                cp = (CommunicationPath)arg;
+                announce = (Announce)arg;
             }
         });
 
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a CommunicationPath object", cp);
+        assertNotNull("Didn't got a Announce object", announce);
     }
 
     @Test
@@ -88,12 +88,12 @@ public class UUIDMatcherTest {
         parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                cp = (CommunicationPath)arg;
+                announce = (Announce)arg;
             }
         });
 
         fsmmr.emitSingleCorrectMessage();
-        assertNull("Got CommunicationPath object despite not matching", cp);
+        assertNull("Got Announce object despite not matching", announce);
     }
 
     @Test
@@ -106,12 +106,12 @@ public class UUIDMatcherTest {
         parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                cp = (CommunicationPath)arg;
+                announce = (Announce)arg;
             }
         });
 
         fsmmr.emitMissingDeviceUuidMessage();
-        assertNull("Got CommunicationPath object despite empty service section", cp);
+        assertNull("Got Announce object despite empty service section", announce);
     }
 }
 

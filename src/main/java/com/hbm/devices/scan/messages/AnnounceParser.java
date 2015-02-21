@@ -45,7 +45,7 @@ import com.google.gson.JsonSyntaxException;
 import com.hbm.devices.scan.ScanConstants;
 
 /**
- * This class gets JSON announce messages, parses them and notifies {@link CommunicationPath}
+ * This class gets JSON announce messages, parses them and notifies {@link Announce}
  * objects.
  * <p>
  * The whole class is designed as a best effort service. So invalid JSON messages, or messages that
@@ -83,22 +83,24 @@ public final class AnnounceParser extends Observable implements Observer {
         final String message = (String)arg;
         try {
             boolean newParsedString;
-            JsonRpc json = announceCache.get(message);
-            if (json == null) {
+            Announce announce = announceCache.get(message);
+            if (announce == null) {
                 newParsedString = true;
-                json = gson.fromJson(message, JsonRpc.class);
+                announce = (Announce)gson.fromJson(message, JsonRpc.class);
+                if (announce != null) {
+                    announce.identifyCommunicationPath();
+                }
             } else {
                 newParsedString = false;
             }
-            if (json != null) {
-                final CommunicationPath communicationPath = new CommunicationPath((Announce)json);
+            if (announce != null) {
                 // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
                 // Only cache Announce objects!
                 if (newParsedString) {
-                    announceCache.put(message, communicationPath);
+                    announceCache.put(message, announce);
                 }
                 setChanged();
-                notifyObservers(communicationPath);
+                notifyObservers(announce);
             }
         } catch (JsonSyntaxException e) {
             /*
@@ -108,9 +110,9 @@ public final class AnnounceParser extends Observable implements Observer {
             LOGGER.log(Level.SEVERE, "Can't parse JSON!", e);
         } catch (MissingDataException e) {
             /*
-             * During the creation of an CommunicationPath object it is required that some
+             * During the creation of an Announce object it is required that some
              * sub-objects are created in the parsed JSON object (i.e. the device's UUID). If these
-             * sub-objects are not created, the construction of the CommunicationPath object fails.
+             * sub-objects are not created, the construction of the Announce object fails.
              * 
              * Go ahead with the next packet.
              */

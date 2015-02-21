@@ -38,13 +38,13 @@ import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.AnnounceParser;
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.DefaultGateway;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 public class DefaultGatewayTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private FakeMessageReceiver fsmmr;
 
     @Before
@@ -54,8 +54,8 @@ public class DefaultGatewayTest {
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                if (arg instanceof CommunicationPath) {
-                    cp = (CommunicationPath) arg;
+                if (arg instanceof Announce) {
+                    announce = (Announce) arg;
                 }
             }
         });
@@ -64,9 +64,9 @@ public class DefaultGatewayTest {
     @Test
     public void getAddresses() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Go not CommunicationPath object", cp);
+        assertNotNull("Go not Announce object", announce);
         try {
-            DefaultGateway gateway = cp.getAnnounce().getParams().getNetSettings().getDefaultGateway();
+            DefaultGateway gateway = announce.getParams().getNetSettings().getDefaultGateway();
             String ipv4 = gateway.getIpv4Address();
             assertNotNull("IPv4 address is not set", ipv4);
             String ipv6 = gateway.getIpv6Address();

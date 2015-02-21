@@ -28,7 +28,7 @@
 
 package com.hbm.devices.scan.announce;
 
-import com.hbm.devices.scan.messages.CommunicationPath;
+import com.hbm.devices.scan.messages.Announce;
 
 /**
  * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor}.
@@ -41,13 +41,13 @@ import com.hbm.devices.scan.messages.CommunicationPath;
  */
 public final class NewDeviceEvent {
 
-    private final CommunicationPath communicationPath;
+    private final Announce announce;
 
-    NewDeviceEvent(CommunicationPath communicationPath) {
-        this.communicationPath = communicationPath;
+    NewDeviceEvent(Announce announce) {
+        this.announce = announce;
     }
 
-    public CommunicationPath getAnnouncePath() {
-        return communicationPath;
+    public Announce getAnnounce() {
+        return announce;
     }
 }

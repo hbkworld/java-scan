@@ -41,11 +41,10 @@ import java.util.Observer;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParser;
-import com.hbm.devices.scan.messages.CommunicationPath;
 
 public class AnnounceTest {
 
-    private CommunicationPath cp;
+    private Announce announce;
     private FakeMessageReceiver fsmmr;
 
     @Before
@@ -55,8 +54,8 @@ public class AnnounceTest {
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
-                if (arg instanceof CommunicationPath) {
-                    cp = (CommunicationPath) arg;
+                if (arg instanceof Announce) {
+                    announce = (Announce) arg;
                 }
             }
         });
@@ -65,15 +64,14 @@ public class AnnounceTest {
     @Test
     public void testEquals() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Go not CommunicationPath object", cp);
-        Announce announce = cp.getAnnounce();
+        assertNotNull("Got no Announce object", announce);
         Object object = new Object();
         assertFalse("equals returns true for object !instanceof Announce", announce.equals(object));
         assertEquals("equals with same object returns false", announce, announce);
+        Announce oldAnnounce = announce;
 
         fsmmr.emitCorrectMessageManual();
-        assertNotEquals("Both announce are different, but equals returns true", announce, cp.getAnnounce());
-        assertNotSame("Both announce are different, but hashCodes are the same", announce.hashCode(), cp.getAnnounce().hashCode());
-
+        assertNotEquals("Both announce are different, but equals returns true", oldAnnounce, announce);
+        assertNotSame("Both announce are different, but hashCodes are the same", oldAnnounce.hashCode(), announce.hashCode());
     }
 }
