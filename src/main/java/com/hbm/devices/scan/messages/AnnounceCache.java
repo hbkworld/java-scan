@@ -62,10 +62,6 @@ final class AnnounceCache {
         lastDeviceAnnounce = new LRUCache<CommunicationPath, String>(cacheSize);
     }
 
-    boolean hasStringInCache(String string) {
-        return parsedMessages.containsKey(string);
-    }
-
     Announce get(String string) {
         return parsedMessages.get(string);
     }

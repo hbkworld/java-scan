@@ -30,6 +30,7 @@ package com.hbm.devices.scan.messages;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
@@ -63,13 +64,13 @@ public class AnnounceCacheTest {
         fakeReceiver.emitSingleCorrectMessage();
         assertSame("Entries in cache != 1", parser.getCache().size(), 1);
         assertSame("Paths in cache != 1", parser.getCache().lastAnnounceSize(), 1);
-        assertTrue("JSON message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE));
+        assertNotNull("JSON message not in cache", parser.getCache().get(CORRECT_MESSAGE));
 
         fakeReceiver.emitSingleCorrectMessageDifferentDevice();
         assertSame("Entries in cache != 2", parser.getCache().size(), 2);
         assertSame("Paths in cache != 2", parser.getCache().lastAnnounceSize(), 2);
-        assertTrue("JSON message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE));
-        assertTrue("JSON message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE_DIFFERENT_DEVICE));
+        assertNotNull("JSON message not in cache", parser.getCache().get(CORRECT_MESSAGE));
+        assertNotNull("JSON message not in cache", parser.getCache().get(CORRECT_MESSAGE_DIFFERENT_DEVICE));
     }
 
     @Test
@@ -93,8 +94,8 @@ public class AnnounceCacheTest {
 
         assertSame("Correct message not in cache", parser.getCache().size(), 1);
         assertSame("Correct message not in cache", parser.getCache().lastAnnounceSize(), 1);
-        assertFalse("Original message still in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE));
-        assertTrue("New message not in cache", parser.getCache().hasStringInCache(CORRECT_MESSAGE_DIFFERENT_SERVICES));
+        assertNull("Original message still in cache", parser.getCache().get(CORRECT_MESSAGE));
+        assertNotNull("New message not in cache", parser.getCache().get(CORRECT_MESSAGE_DIFFERENT_SERVICES));
     }
 
     static {

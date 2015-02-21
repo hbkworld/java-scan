@@ -82,11 +82,10 @@ public final class AnnounceParser extends Observable implements Observer {
     public void update(Observable observable, Object arg) {
         final String message = (String)arg;
         try {
-            JsonRpc json;
             boolean newParsedString;
-            if (announceCache.hasStringInCache(message)) {
+            JsonRpc json = announceCache.get(message);
+            if (json != null) {
                 newParsedString = false;
-                json = announceCache.get(message);
             } else {
                 newParsedString = true;
                 json = gson.fromJson(message, JsonRpc.class);
