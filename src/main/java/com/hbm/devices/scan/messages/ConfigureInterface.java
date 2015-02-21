@@ -47,7 +47,7 @@ public final class ConfigureInterface {
      * <p>
      * Note: The parameter {@code configMethod} must not be {@link Method#MANUAL}. If you want to
      * set a manual ipv4 use the constructor
-     * {@link #ConfigureInterface(String, com.hbm.devices.scan.messages.Interface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
+     * {@link #ConfigureInterface(String, com.hbm.devices.scan.messages.ConfigureInterface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
      * <p>
      * 
      * @param interfaceName
