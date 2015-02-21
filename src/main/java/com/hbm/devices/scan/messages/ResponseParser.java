@@ -74,7 +74,7 @@ public final class ResponseParser extends Observable implements Observer {
     public void update(Observable observable, Object arg) {
         final String message = (String)arg;
         try {
-            JsonRpc json = gson.fromJson(message, JsonRpc.class);
+            final JsonRpc json = gson.fromJson(message, JsonRpc.class);
             if (json instanceof Response) {
                 setChanged();
                 notifyObservers(json);

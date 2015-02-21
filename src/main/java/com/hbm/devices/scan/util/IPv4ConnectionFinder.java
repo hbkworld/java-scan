@@ -66,7 +66,7 @@ final class IPv4ConnectionFinder {
     }
 
     InetAddress getConnectableAddress(CommunicationPath path) throws MissingDataException {
-        Announce announce = path.getAnnounce();
+        final Announce announce = path.getAnnounce();
         for (final InterfaceAddress niAddress : ipv4Addresses) {
             final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {
