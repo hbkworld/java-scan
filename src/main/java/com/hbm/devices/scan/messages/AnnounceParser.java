@@ -91,7 +91,7 @@ public final class AnnounceParser extends Observable implements Observer {
                 newParsedString = true;
                 json = gson.fromJson(message, JsonRpc.class);
             }
-            if (json instanceof Announce) {
+            if (json != null) {
                 final CommunicationPath communicationPath = new CommunicationPath((Announce)json);
                 // add the parsed AnnounceObject to the cache, if its a new, not yet cached String
                 // Only cache Announce objects!
