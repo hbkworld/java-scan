@@ -72,17 +72,17 @@ public final class Announce extends JsonRpc {
     }
 
     void identifyCommunicationPath() throws MissingDataException {
-        final AnnounceParams params = getParams();
-        final String deviceUuid = params.getDevice().getUuid();
+        final AnnounceParams parameters = getParams();
+        final String deviceUuid = parameters.getDevice().getUuid();
         final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
         hashBuilder.append(deviceUuid);
 
-        final Router router = params.getRouter();
+        final Router router = parameters.getRouter();
         if (router != null) {
             hashBuilder.append(router.getUuid());
         }
 
-        final String deviceInterfaceName = params.getNetSettings().getInterface().getName();
+        final String deviceInterfaceName = parameters.getNetSettings().getInterface().getName();
         hashBuilder.append(deviceInterfaceName);
         path = hashBuilder.toString();
     }
