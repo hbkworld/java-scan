@@ -173,8 +173,6 @@ class EventLogger {
         final Interface iface = announce.getParams().getNetSettings().getInterface();
         logBuilder.append("  IP-Addresses:\n    interfaceName: ")
         .append(iface.getName())
-        .append("\n    method: ")
-        .append(iface.getConfigurationMethod())
         .append('\n');
 
         final Iterable<IPv4Entry> ipv4 = iface.getIPv4();

@@ -41,7 +41,6 @@ public final class Interface {
     private String name;
     private String type;
     private String description;
-    private String configurationMethod;
     private List<IPv4Entry> ipv4;
     private List<IPv6Entry> ipv6;
 
@@ -81,22 +80,6 @@ public final class Interface {
      */
     public String getDescription() {
         return description;
-    }
-
-    /**
-     * @return
-     *      A string enumeration describing how the network settings
-     *      configured on the device during the startup. Currently
-     *      the values *manual*, *dhcp* and *RouterSolicitation* are
-     *      valid.
-     * @throws MissingDataException
-     *      if no configuration method is set
-     */
-    public String getConfigurationMethod() throws MissingDataException {
-        if (configurationMethod == null) {
-            throw new MissingDataException("No configuration method set in interface section!");
-        }
-        return configurationMethod;
     }
 
     /**
