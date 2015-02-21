@@ -312,7 +312,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
             CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");
             INVALID_JSON_MESSAGE = props.getProperty("scan.announce.invalid_json_message");
-            MISSING_DEVICE_MESSAGE = props.getProperty("scan.announce.scan.announce.missing_device_message");
+            MISSING_DEVICE_MESSAGE = props.getProperty("scan.announce.missing_device_message");
             MISSING_DEVICE_UUID_MESSAGE = props.getProperty("scan.announce.missing_device_uuid_message");
             MISSING_PARAMS_MESSAGE = props.getProperty("scan.announce.missing_params_message");
             NO_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.no_interface_name_message");
