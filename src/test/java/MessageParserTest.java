@@ -294,7 +294,6 @@ public class MessageParserTest {
             Iterable<IPv6Entry> checkIPv6Entries = checkIface.getIPv6();
             IPv6Entry checkIPv6 = checkIPv6Entries.iterator().next();
             assertEquals("IPv6 address does not match", checkIPv6.getAddress(), ipv6Address);
-            System.out.println(checkIPv6.getPrefix() + " " + ipv6Prefix);
             assertEquals("IPv6 prefix does not match", checkIPv6.getPrefix(), ipv6Prefix);
             
             Router checkRouter = checkAnnounceParams.getRouter();

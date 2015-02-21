@@ -55,7 +55,6 @@ public class FakeDeviceEmulator extends Observable implements MessageReceiver, M
     public void shutdown() {}
     public void sendMessage(String message) {
         setChanged();
-        System.out.println("sending response: " + responseString);
         notifyObservers(responseString);
     }
 }
