@@ -60,9 +60,6 @@ public final class CommunicationPath {
         final Router router = params.getRouter();
         if (router != null) {
             final String routerUuid = router.getUuid();
-            if (routerUuid == null) {
-                throw new MissingDataException("No router UUID in announce object!");
-            }
             hashBuilder.append(routerUuid);
         }
 

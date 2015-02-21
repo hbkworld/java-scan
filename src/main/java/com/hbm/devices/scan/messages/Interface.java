@@ -56,7 +56,7 @@ public final class Interface {
      *      if no name is set
      */
     public String getName() throws MissingDataException {
-        if (name == null) {
+        if (name == null || name.length() == 0) {
             throw new MissingDataException("Interface has no name!");
         }
         return name;

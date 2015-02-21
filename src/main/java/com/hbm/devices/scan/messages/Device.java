@@ -57,7 +57,7 @@ public final class Device {
      * @throws MissingDataException if no uuid was set in Device object
      */
     public String getUuid() throws MissingDataException {
-        if (uuid == null) {
+        if (uuid == null || uuid.length() == 0) {
             throw new MissingDataException("No UUID in device section!");
         }
         return uuid;
