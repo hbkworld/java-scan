@@ -79,7 +79,7 @@ final class AnnounceCache {
             return;
         }
         
-        String path = announce.getPath();
+        final String path = announce.getPath();
         if (lastDeviceAnnounce.containsKey(path)) {
             // device has send an announce earlier, but it has changed its announce content (e.g.
             // its running services changed)

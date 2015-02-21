@@ -106,9 +106,17 @@ public final class DeviceMonitor extends Observable implements Observer {
         final Announce announce = (Announce)arg;
         try {
             synchronized (deviceMap) {
-                String path = announce.getPath();
+                final String path = announce.getPath();
                 ScheduledFuture<Void> future = deviceMap.get(path);
-                if (future != null) {
+                if (future == null) {
+                    final AnnounceTimerTask task = new AnnounceTimerTask(announce);
+                    final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
+                            TimeUnit.MILLISECONDS);
+                    deviceMap.put(path, newFuture);
+                    futureMap.put(newFuture, task);
+                    setChanged();
+                    notifyObservers(new NewDeviceEvent(announce));
+                } else {
                     future.cancel(false);
                     deviceMap.remove(path);
                     AnnounceTimerTask task = futureMap.remove(future);
@@ -122,14 +130,6 @@ public final class DeviceMonitor extends Observable implements Observer {
                         setChanged();
                         notifyObservers(new UpdateDeviceEvent(oldAnnounce, announce));
                     }
-                } else {
-                    final AnnounceTimerTask task = new AnnounceTimerTask(announce);
-                    final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
-                            TimeUnit.MILLISECONDS);
-                    deviceMap.put(path, newFuture);
-                    futureMap.put(newFuture, task);
-                    setChanged();
-                    notifyObservers(new NewDeviceEvent(announce));
                 }
             }
         } catch (MissingDataException e) {
