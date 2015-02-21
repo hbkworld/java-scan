@@ -66,19 +66,19 @@ final class AnnounceCache {
         return parsedMessages.containsKey(string);
     }
 
-    Announce getAnnounceByString(String string) {
+    Announce get(String string) {
         return parsedMessages.get(string);
     }
 
-    int getCacheAmount() {
+    int size() {
         return parsedMessages.size();
     }
 
-    int getPathsAmount() {
+    int lastAnnounceSize() {
         return lastDeviceAnnounce.size();
     }
 
-    void addCommunicationPath(String announceString, CommunicationPath comPath) {
+    void put(String announceString, CommunicationPath comPath) {
         if (comPath.getAnnounce().equals(parsedMessages.get(announceString))) {
             return;
         }
