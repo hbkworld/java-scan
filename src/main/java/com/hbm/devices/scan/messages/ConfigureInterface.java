@@ -121,8 +121,6 @@ public final class ConfigureInterface {
         DHCP {
             @Override
             public String toString() {
-                StackTraceElement[] st = Thread.currentThread().getStackTrace();
-                System.out.println(st);
                 return "dhcp";
             }
         };
