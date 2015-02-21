@@ -84,11 +84,11 @@ public final class AnnounceParser extends Observable implements Observer {
         try {
             boolean newParsedString;
             JsonRpc json = announceCache.get(message);
-            if (json != null) {
-                newParsedString = false;
-            } else {
+            if (json == null) {
                 newParsedString = true;
                 json = gson.fromJson(message, JsonRpc.class);
+            } else {
+                newParsedString = false;
             }
             if (json != null) {
                 final CommunicationPath communicationPath = new CommunicationPath((Announce)json);
