@@ -115,12 +115,6 @@ public final class Interface {
             public String toString() {
                 return "dhcp";
             }
-        },
-        ROUTER_SOLICITATION {
-            @Override
-            public String toString() {
-                return "routerSolicitation";
-            }
         };
     }
 }
