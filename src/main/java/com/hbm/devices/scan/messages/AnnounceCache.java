@@ -31,12 +31,27 @@ package com.hbm.devices.scan.messages;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+/*
+ * This class caches parsed Announce messages to avoid unnecessary JSON
+ * parsing.
+ *
+ * To avoid infinite growth of the cache, the cache is realized as an
+ * LRU (least recently used) cache. So old announce messages will be
+ * removed if the capacity of the cache exceeds.
+ *
+ * Parsed JSON messages are stored in parsedMessages.
+ * 
+ * There is a second cache called lastDeviceAnnounce. This cache is used to
+ * check if a device already announced messages previously. This
+ * information is used to remove no longer valid announces as soon as
+ * possible from parsedMessages.
+ */
 final class AnnounceCache {
 
     private static final int DEFAULT_CACHE_SIZE = 100;
 
     private final LRUCache<String, Announce> parsedMessages;
-    private final LRUCache<Integer, String> availablePaths;
+    private final LRUCache<CommunicationPath, String> lastDeviceAnnounce;
 
     AnnounceCache() {
         this(DEFAULT_CACHE_SIZE);
@@ -44,7 +59,7 @@ final class AnnounceCache {
 
     AnnounceCache(int cacheSize) {
         parsedMessages = new LRUCache<String, Announce>(cacheSize);
-        availablePaths = new LRUCache<Integer, String>(cacheSize);
+        lastDeviceAnnounce = new LRUCache<CommunicationPath, String>(cacheSize);
     }
 
     boolean hasStringInCache(String string) {
@@ -60,7 +75,7 @@ final class AnnounceCache {
     }
 
     int getPathsAmount() {
-        return availablePaths.size();
+        return lastDeviceAnnounce.size();
     }
 
     void addCommunicationPath(String announceString, CommunicationPath comPath) {
@@ -68,16 +83,16 @@ final class AnnounceCache {
             return;
         }
 
-        if (availablePaths.containsKey(comPath.hashCode())) {
+        if (lastDeviceAnnounce.containsKey(comPath)) {
             // device has send an announce earlier, but it has changed its announce content (e.g.
             // its running services changed)
-            final String lastAnnounceString = availablePaths.get(comPath.hashCode());
+            final String lastAnnounceString = lastDeviceAnnounce.get(comPath);
             parsedMessages.remove(lastAnnounceString);
             parsedMessages.put(announceString, comPath.getAnnounce());
-            availablePaths.put(comPath.hashCode(), announceString);
+            lastDeviceAnnounce.put(comPath, announceString);
         } else {
             // the device has not sent an announce message earlier
-            availablePaths.put(comPath.hashCode(), announceString);
+            lastDeviceAnnounce.put(comPath, announceString);
             parsedMessages.put(announceString, comPath.getAnnounce());
         }
     }
