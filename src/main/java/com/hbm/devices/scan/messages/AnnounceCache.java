@@ -75,10 +75,6 @@ final class AnnounceCache {
     }
 
     void put(String announceString, Announce announce) {
-        if (announce.equals(parsedMessages.get(announceString))) {
-            return;
-        }
-        
         final String path = announce.getPath();
         if (lastDeviceAnnounce.containsKey(path)) {
             // device has send an announce earlier, but it has changed its announce content (e.g.
