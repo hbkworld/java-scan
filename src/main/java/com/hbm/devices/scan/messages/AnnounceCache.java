@@ -64,8 +64,7 @@ final class AnnounceCache {
     }
 
     void addCommunicationPath(String announceString, CommunicationPath comPath) {
-        if (hasStringInCache(announceString) && (parsedMessages.get(announceString).equals(comPath.getAnnounce()))) {
-            // don't need to re-add the announce, it is already cached
+        if (comPath.getAnnounce().equals(parsedMessages.get(announceString))) {
             return;
         }
 
