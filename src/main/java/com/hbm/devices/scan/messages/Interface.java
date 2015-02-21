@@ -99,22 +99,4 @@ public final class Interface {
     public Iterable<IPv6Entry> getIPv6() {
         return ipv6;
     }
-
-    /**
-     * Network interface configuration methods that can be used.
-     */
-    public enum Method {
-        MANUAL {
-            @Override
-            public String toString() {
-                return "manual";
-            }
-        },
-        DHCP {
-            @Override
-            public String toString() {
-                return "dhcp";
-            }
-        };
-    }
 }

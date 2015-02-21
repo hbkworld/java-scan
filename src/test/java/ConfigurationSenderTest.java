@@ -42,9 +42,9 @@ import com.hbm.devices.scan.configure.FakeMulticastSender;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
+import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
-import com.hbm.devices.scan.messages.Interface.Method;
 
 public class ConfigurationSenderTest {
 

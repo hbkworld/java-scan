@@ -43,9 +43,9 @@ import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
+import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
-import com.hbm.devices.scan.messages.Interface.Method;
 import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.Response;
 

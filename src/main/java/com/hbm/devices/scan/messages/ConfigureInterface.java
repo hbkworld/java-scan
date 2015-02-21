@@ -29,7 +29,6 @@
 package com.hbm.devices.scan.messages;
 
 import com.hbm.devices.scan.messages.IPv4EntryManual;
-import com.hbm.devices.scan.messages.Interface.Method;
 
 /**
  * The interface describes the properties and settings of an network interface which are configured.
@@ -107,5 +106,25 @@ public final class ConfigureInterface {
      */
     public IPv4EntryManual getIPv4() {
         return ipv4;
+    }
+
+    /**
+     * Network interface configuration methods that can be used.
+     */
+    public enum Method {
+        MANUAL {
+            @Override
+            public String toString() {
+                return "manual";
+            }
+        },
+        DHCP {
+            @Override
+            public String toString() {
+                StackTraceElement[] st = Thread.currentThread().getStackTrace();
+                System.out.println(st);
+                return "dhcp";
+            }
+        };
     }
 }
