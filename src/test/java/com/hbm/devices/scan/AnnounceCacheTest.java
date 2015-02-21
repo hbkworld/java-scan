@@ -60,7 +60,7 @@ public class AnnounceCacheTest {
     }
 
     @Test
-    public void AddDeviceToCacheTest() {
+    public void addDeviceToCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
         assertSame("Entries in cache != 1", parser.getCache().size(), 1);
         assertSame("Paths in cache != 1", parser.getCache().lastAnnounceSize(), 1);
@@ -74,13 +74,13 @@ public class AnnounceCacheTest {
     }
 
     @Test
-    public void GetFromCacheTest() {
+    public void getFromCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
         assertNotNull("Correct message not in cache", parser.getCache().get(CORRECT_MESSAGE));
     }
 
     @Test
-    public void DontAddTwiceTest() {
+    public void dontAddTwiceTest() {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessage();
         assertSame("Message was added more than once", parser.getCache().size(), 1);
@@ -88,7 +88,7 @@ public class AnnounceCacheTest {
     }
 
     @Test
-    public void UpdateDeviceEntry() {
+    public void updateDeviceEntry() {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessageDifferentServices();
 
