@@ -36,13 +36,13 @@ import org.junit.Test;
 import java.util.Observable;
 import java.util.Observer;
 
+
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
 import com.hbm.devices.scan.announce.filter.UUIDMatch;
+import com.hbm.devices.scan.messages.AnnounceParser;
 import com.hbm.devices.scan.messages.CommunicationPath;
-import com.hbm.devices.scan.messages.MessageParser;
-
 public class UUIDMatcherTest {
 
     private CommunicationPath cp;
@@ -65,9 +65,9 @@ public class UUIDMatcherTest {
         Matcher matcher = new UUIDMatch(uuids);
         filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
-        jf.addObserver(filter);
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
+        parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 cp = (CommunicationPath)arg;
@@ -83,9 +83,9 @@ public class UUIDMatcherTest {
         Matcher matcher = new UUIDMatch(noMatchingUuids);
         filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
-        jf.addObserver(filter);
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
+        parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 cp = (CommunicationPath)arg;
@@ -101,9 +101,9 @@ public class UUIDMatcherTest {
         Matcher matcher = new UUIDMatch(uuids);
         filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
-        jf.addObserver(filter);
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
+        parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 cp = (CommunicationPath)arg;

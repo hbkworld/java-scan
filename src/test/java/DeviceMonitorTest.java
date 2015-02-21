@@ -39,7 +39,7 @@ import com.hbm.devices.scan.announce.DeviceMonitor;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.messages.AnnounceParser;
 
 public class DeviceMonitorTest {
 
@@ -53,10 +53,10 @@ public class DeviceMonitorTest {
         this.newDevice = false;
         this.updateDevice = false;
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
         DeviceMonitor af = new DeviceMonitor();
-        jf.addObserver(af);
+        parser.addObserver(af);
         af.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 if (arg instanceof NewDeviceEvent) {

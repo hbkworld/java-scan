@@ -45,20 +45,20 @@ import com.google.gson.JsonObject;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParams;
+import com.hbm.devices.scan.messages.AnnounceParser;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.DefaultGateway;
 import com.hbm.devices.scan.messages.Device;
-import com.hbm.devices.scan.messages.Interface;
 import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.IPv6Entry;
-import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.messages.Interface;
 import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.NetSettings;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.messages.Router;
 import com.hbm.devices.scan.messages.ServiceEntry;
 
-public class MessageParserTest {
+public class AnnounceParserTest {
 
     private CommunicationPath cp;
     private Response res;
@@ -67,9 +67,9 @@ public class MessageParserTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
-        jf.addObserver(new Observer() {
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
+        parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 if (arg instanceof CommunicationPath) {
                     cp = (CommunicationPath) arg;
@@ -153,6 +153,12 @@ public class MessageParserTest {
     }
 
     @Test
+    public void parseMissingTypeMessage() {
+        fsmmr.emitMissingTypeResponseMessage();
+        assertNull("Got CommunicationPath message without type", cp);
+    }
+/*
+    @Test
     public void parseCorrectSuccessReponseMessage() {
         fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
         assertNotNull("No result object after correct success response", res);
@@ -175,7 +181,7 @@ public class MessageParserTest {
         fsmmr.emitMissingTypeResponseMessage();
         assertNull("Got result object from response with error and result", res);
     }
-
+*/
     @Test
     public void testGetters() {
         final String apiVersionString = "1.0";

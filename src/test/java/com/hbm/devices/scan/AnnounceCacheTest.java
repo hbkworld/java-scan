@@ -40,7 +40,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.messages.AnnounceParser;
 
 public class AnnounceCacheTest {
 
@@ -49,12 +49,12 @@ public class AnnounceCacheTest {
     private static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
 
     private FakeMessageReceiver fakeReceiver;
-    private MessageParser parser;
+    private AnnounceParser parser;
 
     @Before
     public void setUp() {
         this.fakeReceiver = new FakeMessageReceiver();
-        this.parser = new MessageParser();
+        this.parser = new AnnounceParser();
         fakeReceiver.addObserver(parser);
     }
 

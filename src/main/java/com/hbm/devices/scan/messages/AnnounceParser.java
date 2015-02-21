@@ -54,16 +54,16 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public final class MessageParser extends Observable implements Observer {
+public final class AnnounceParser extends Observable implements Observer {
 
     private final Gson gson;
     private final AnnounceCache announceCache;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
-     * Constructs a {@link MessageParser} object.
+     * Constructs a {@link AnnounceParser} object.
      */
-    public MessageParser() {
+    public AnnounceParser() {
         super();
 
         final GsonBuilder builder = new GsonBuilder();
@@ -100,10 +100,6 @@ public final class MessageParser extends Observable implements Observer {
                 }
                 setChanged();
                 notifyObservers(communicationPath);
-            } else if (json instanceof Response) {
-                final Response response = (Response)json;
-                setChanged();
-                notifyObservers(response);
             }
         } catch (JsonSyntaxException e) {
             /*
@@ -141,10 +137,6 @@ public final class MessageParser extends Observable implements Observer {
                     rpcObject = context.deserialize(json, Announce.class);
                     rpcObject.setJSONString(jsonObject.toString());
                 }
-            } else if (jsonObject.has("result") ^ jsonObject.has("error")) {
-                // is a response object
-                rpcObject = context.deserialize(json, Response.class);
-                rpcObject.setJSONString(jsonObject.toString());
             }
             return rpcObject;
         }

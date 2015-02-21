@@ -46,7 +46,7 @@ import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.ConfigureInterface.Method;
-import com.hbm.devices.scan.messages.MessageParser;
+import com.hbm.devices.scan.messages.ResponseParser;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
@@ -64,7 +64,7 @@ public final class Sender implements ConfigurationCallback {
 
     private Sender() throws IOException {
         final ConfigureResponseReceiver responseReceiver = new ConfigureResponseReceiver();
-        final MessageParser responseParser = new MessageParser();
+        final ResponseParser responseParser = new ResponseParser();
         responseReceiver.addObserver(responseParser);
 
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();

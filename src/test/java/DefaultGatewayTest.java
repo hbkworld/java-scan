@@ -37,9 +37,9 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.messages.AnnounceParser;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.DefaultGateway;
-import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 public class DefaultGatewayTest {
@@ -50,9 +50,9 @@ public class DefaultGatewayTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
-        jf.addObserver(new Observer() {
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
+        parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 if (arg instanceof CommunicationPath) {
                     cp = (CommunicationPath) arg;

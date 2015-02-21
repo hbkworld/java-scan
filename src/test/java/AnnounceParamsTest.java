@@ -36,9 +36,9 @@ import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.messages.AnnounceParser;
 import com.hbm.devices.scan.messages.CommunicationPath;
 import com.hbm.devices.scan.messages.Device;
-import com.hbm.devices.scan.messages.MessageParser;
 import com.hbm.devices.scan.messages.MissingDataException;
 
 public class AnnounceParamsTest {
@@ -49,9 +49,9 @@ public class AnnounceParamsTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
-        jf.addObserver(new Observer() {
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
+        parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 if (arg instanceof CommunicationPath) {
                     cp = (CommunicationPath) arg;

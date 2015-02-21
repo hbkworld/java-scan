@@ -41,8 +41,8 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
+import com.hbm.devices.scan.messages.AnnounceParser;
 import com.hbm.devices.scan.messages.CommunicationPath;
-import com.hbm.devices.scan.messages.MessageParser;
 
 public class FamilytypeMatchTest {
 
@@ -55,10 +55,10 @@ public class FamilytypeMatchTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        MessageParser jf = new MessageParser();
-        fsmmr.addObserver(jf);
+        AnnounceParser parser = new AnnounceParser();
+        fsmmr.addObserver(parser);
         filter = new Filter(matcher);
-        jf.addObserver(filter);
+        parser.addObserver(filter);
         filter.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 cp = (CommunicationPath)arg;
