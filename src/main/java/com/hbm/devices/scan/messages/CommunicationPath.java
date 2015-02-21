@@ -38,7 +38,7 @@ package com.hbm.devices.scan.messages;
  * <p>
  * Please note that the {@link #hashCode()} method is overridden. The
  * hash code of this announce object is unique for the communication
- * path the {@link Announce} message traveled.
+ * path the {@link Announce} message travelled.
  *
  * @since 1.0
  */
@@ -46,6 +46,7 @@ public final class CommunicationPath {
 
     private final Announce announce;
     private final int hash;
+    private final String communicationPath;
     private Object cookie;
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
@@ -59,13 +60,13 @@ public final class CommunicationPath {
 
         final Router router = params.getRouter();
         if (router != null) {
-            final String routerUuid = router.getUuid();
-            hashBuilder.append(routerUuid);
+            hashBuilder.append(router.getUuid());
         }
 
         final String deviceInterfaceName = params.getNetSettings().getInterface().getName();
         hashBuilder.append(deviceInterfaceName);
-        hash = hashBuilder.toString().hashCode();
+        communicationPath = hashBuilder.toString();
+        hash = communicationPath.hashCode();
     }
 
     public void setCookie(Object cookie) {
@@ -95,8 +96,7 @@ public final class CommunicationPath {
         if (!(obj instanceof CommunicationPath)) {
             return false;
         }
-
-        return hash == obj.hashCode();
+        return communicationPath.equals(((CommunicationPath)obj).communicationPath);
     }
     
     public Announce getAnnounce() {
