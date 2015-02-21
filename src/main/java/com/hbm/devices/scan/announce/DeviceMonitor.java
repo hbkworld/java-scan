@@ -107,9 +107,8 @@ public final class DeviceMonitor extends Observable implements Observer {
         try {
             synchronized (deviceMap) {
                 String path = announce.getPath();
-                // TODO: don't call containsKey
-                if (deviceMap.containsKey(path)) {
-                    ScheduledFuture<Void> future = deviceMap.get(path);
+                ScheduledFuture<Void> future = deviceMap.get(path);
+                if (future != null) {
                     future.cancel(false);
                     deviceMap.remove(path);
                     AnnounceTimerTask task = futureMap.remove(future);
@@ -125,10 +124,10 @@ public final class DeviceMonitor extends Observable implements Observer {
                     }
                 } else {
                     final AnnounceTimerTask task = new AnnounceTimerTask(announce);
-                    final ScheduledFuture<Void> future = executor.schedule(task, getExpiration(announce),
+                    final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
                             TimeUnit.MILLISECONDS);
-                    deviceMap.put(path, future);
-                    futureMap.put(future, task);
+                    deviceMap.put(path, newFuture);
+                    futureMap.put(newFuture, task);
                     setChanged();
                     notifyObservers(new NewDeviceEvent(announce));
                 }
