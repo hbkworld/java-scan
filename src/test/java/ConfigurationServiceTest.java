@@ -67,7 +67,7 @@ public class ConfigurationServiceTest {
     @Test
     public void sendingTest() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
         ConfigureParams configParams = new ConfigureParams(device, settings);
         ConfigurationCallback callback = new ConfigurationCallback() {
             public void onSuccess(Response response) {}
@@ -112,7 +112,7 @@ public class ConfigurationServiceTest {
         ConfigurationService service = new ConfigurationService(sender, messageParser);
 
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
         ConfigureParams configParams = new ConfigureParams(device, settings);
 
         try {
@@ -150,7 +150,7 @@ public class ConfigurationServiceTest {
         };
 
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
         ConfigureParams configParams = new ConfigureParams(device, settings);
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();
