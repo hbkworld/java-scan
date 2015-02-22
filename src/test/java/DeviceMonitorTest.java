@@ -40,6 +40,7 @@ import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParser;
 
 public class DeviceMonitorTest {
@@ -49,6 +50,7 @@ public class DeviceMonitorTest {
     private boolean newDevice;
     private boolean updateDevice;
     private boolean lostDevice;
+    private Object event;
     private DeviceMonitor monitor;
 
     @Before
@@ -70,6 +72,7 @@ public class DeviceMonitorTest {
                 } else if (arg instanceof LostDeviceEvent) {
                     lostDevice = true;
                 }
+                event = arg;
             }
         });
     }
@@ -77,23 +80,38 @@ public class DeviceMonitorTest {
     @Test
     public void newDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue("No new device event fired", newDevice);
-        assertFalse("Update device event fired", updateDevice);
+        assertTrue("No new device event fired", newDevice && !updateDevice && !lostDevice);
+        assertTrue("No anounce object in event", ((NewDeviceEvent)event).getAnnounce() instanceof Announce);
     }
 
     @Test
     public void updateDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue("No new device event fired", newDevice);
+        assertTrue("No new device event fired", newDevice && !updateDevice && !lostDevice);
         newDevice = false;
 
         fsmmr.emitSingleCorrentMessageDifferentIP();
-        assertTrue("No update device event fired", updateDevice && !newDevice);
+        assertTrue("No update device event fired", updateDevice && !newDevice && !lostDevice);
+        assertTrue("No old anounce object in event", ((UpdateDeviceEvent)event).getOldAnnounce() instanceof Announce);
+        assertTrue("No new anounce object in event", ((UpdateDeviceEvent)event).getNewAnnounce() instanceof Announce);
+
         updateDevice = false;
+        newDevice = false;
+        lostDevice = false;
 
         // Check if the event is not fired again
         fsmmr.emitSingleCorrentMessageDifferentIP();
-        assertFalse("Update device event fired twice", updateDevice || newDevice);
+        assertFalse("Update device event fired twice", updateDevice || newDevice || lostDevice);
+    }
+
+    @Test
+    public void testLostDevice() {
+        fsmmr.emitSingleCorrectMessageShortExpire();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {}
+        assertTrue("No lost device event fired", lostDevice && newDevice && !updateDevice);
+        assertTrue("No anounce object in event", ((LostDeviceEvent)event).getAnnounce() instanceof Announce);
     }
 
     @Test
@@ -109,14 +127,5 @@ public class DeviceMonitorTest {
         fsmmr.emitSingleCorrectMessage();
         monitor.stop();
         assertTrue("monitor not stopped", monitor.isStopped());
-    }
-
-    @Test
-    public void testLostDevice() {
-        fsmmr.emitSingleCorrectMessageShortExpire();
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {}
-        assertTrue("No lost device event fired", lostDevice);
     }
 }
