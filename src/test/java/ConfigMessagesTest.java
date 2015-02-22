@@ -65,7 +65,7 @@ public class ConfigMessagesTest {
 
     @Test
     public void parseNullDevice() {
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
         exception.expect(IllegalArgumentException.class);
         ConfigureParams configParams = new ConfigureParams(null, settings);
         fail("Method didn't throw expected IllegalArgumentException");
@@ -94,17 +94,24 @@ public class ConfigMessagesTest {
     }
 
     @Test
-    public void parseNullInterfaceName() {
+    public void parseNoInterfaceConfigMethod() {
         exception.expect(IllegalArgumentException.class);
-        ConfigureInterface iface = new ConfigureInterface(null, Method.DHCP, null);
-        fail("Method didn't throw expected IllegalArgumentException");
+        ConfigureInterface iface = new ConfigureInterface("eth0", null);
+        fail("Method didn't fail with no given configuration method");
     }
 
     @Test
-    public void parseNoInterfaceName() {
+    public void parseNullInterfaceName() {
         exception.expect(IllegalArgumentException.class);
-        ConfigureInterface iface = new ConfigureInterface("", Method.DHCP, null);
-        fail("Method didn't throw expected IllegalArgumentException");
+        ConfigureInterface iface = new ConfigureInterface(null, Method.DHCP);
+        fail("Method didn't fail with no interface name");
+    }
+
+    @Test
+    public void parseEmptyInterfaceName() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureInterface iface = new ConfigureInterface("", Method.DHCP);
+        fail("Method didn't failed with empty interface name");
     }
 
     @Test
