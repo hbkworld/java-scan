@@ -26,6 +26,7 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -35,7 +36,11 @@ import java.util.Observer;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.messages.ErrorObject;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.messages.ResponseParser;
 
@@ -86,5 +91,36 @@ public class ResponseParserTest {
     public void parseInvalidJsonMessage() {
         fsmmr.emitInvalidJsonMessage();
         assertNull("Got result object after invalid message", res);
+    }
+
+    @Test
+    public void parseErrorResponse() {
+        final String jsonRpcVersion = "2.0";
+        final String id = "12345";
+        final int errorCode = -12;
+        final String errorMessage = "Karoline";
+        final String errorData = "Error data";
+
+        final JsonObject root = new JsonObject();
+        root.addProperty("jsonrpc", jsonRpcVersion);
+        root.addProperty("id", id);
+        final JsonObject error = new JsonObject();
+        root.add("error", error);
+        error.addProperty("code", errorCode);
+        error.addProperty("message", errorMessage);
+        error.addProperty("data", errorData);
+
+        final Gson gson = new Gson();
+        fsmmr.emitString(gson.toJson(root));
+
+        assertNotNull("No result object after correct success response", res);
+        assertEquals("JSON-RPC versions not equal", res.getJsonrpc(), jsonRpcVersion);
+        assertEquals("Id's not equal", res.getId(), id);
+        ErrorObject checkError = res.getError();
+        assertNotNull("Expected error object", checkError);
+        assertNull("Unexpected result object", res.getResult());
+        assertEquals("error code not equal", checkError.getCode(), errorCode);
+        assertEquals("error message not equal", checkError.getMessage(), errorMessage);
+        assertEquals("error data not equal", checkError.getData(), errorData);
     }
 }
