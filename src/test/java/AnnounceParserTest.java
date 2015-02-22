@@ -117,9 +117,9 @@ public class AnnounceParserTest {
     }
 
     @Test
-    public void parseMissingDeviceUuidMessage() {
-        fsmmr.emitMissingDeviceUuidMessage();
-        assertNull("Got Announce from message without UUID", announce);
+    public void parseEmptyDeviceUuidMessage() {
+        fsmmr.emitEmptyDeviceUuidMessage();
+        assertNull("Got Announce from message with empty UUID", announce);
     }
 
     @Test

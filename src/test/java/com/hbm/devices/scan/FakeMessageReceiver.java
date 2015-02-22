@@ -57,6 +57,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String INVALID_JSON_MESSAGE;
     private static final String MISSING_DEVICE_MESSAGE;
     private static final String MISSING_DEVICE_UUID_MESSAGE;
+    private static final String EMPTY_DEVICE_UUID_MESSAGE;
     private static final String MISSING_PARAMS_MESSAGE;
     private static final String NO_INTERFACE_NAME_MESSAGE;
     private static final String NO_INTERFACE_MESSAGE;
@@ -156,6 +157,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitMissingDeviceUuidMessage() {
         setChanged();
         notifyObservers(MISSING_DEVICE_UUID_MESSAGE);
+    }
+
+    public void emitEmptyDeviceUuidMessage() {
+        setChanged();
+        notifyObservers(EMPTY_DEVICE_UUID_MESSAGE);
     }
 
     public void emitMissingParamsMessage() {
@@ -314,6 +320,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             INVALID_JSON_MESSAGE = props.getProperty("scan.announce.invalid_json_message");
             MISSING_DEVICE_MESSAGE = props.getProperty("scan.announce.missing_device_message");
             MISSING_DEVICE_UUID_MESSAGE = props.getProperty("scan.announce.missing_device_uuid_message");
+            EMPTY_DEVICE_UUID_MESSAGE = props.getProperty("scan.announce.empty_device_uuid_message");
             MISSING_PARAMS_MESSAGE = props.getProperty("scan.announce.missing_params_message");
             NO_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.no_interface_name_message");
             NO_INTERFACE_MESSAGE = props.getProperty("scan.announce.no_interface_message");
