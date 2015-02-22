@@ -147,9 +147,6 @@ public class ConfigurationService implements Observer {
      */
     @Override
     public void update(Observable observable, Object arg) {
-        if (!(arg instanceof Response))  {
-            return;
-        }
         final Response response = (Response)arg;
 
         final String responseID = response.getId();
