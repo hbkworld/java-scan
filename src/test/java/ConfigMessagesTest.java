@@ -82,10 +82,17 @@ public class ConfigMessagesTest {
     }
 
     @Test
-    public void parseEmptyDevice() {
+    public void parseEmptyUuid() {
         exception.expect(IllegalArgumentException.class);
         ConfigureDevice device = new ConfigureDevice("");
-        fail("Method didn't throw expected IllegalArgumentException");
+        fail("Not failed despite empty device uuid");
+    }
+
+    @Test
+    public void parseNoUuid() {
+        exception.expect(IllegalArgumentException.class);
+        ConfigureDevice device = new ConfigureDevice(null);
+        fail("Not failed despite no device uuid given");
     }
 
     @Test
