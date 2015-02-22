@@ -30,6 +30,8 @@ package com.hbm.devices.scan.messages;
 
 import java.util.List;
 
+import com.hbm.devices.scan.ScanConstants;
+
 /**
  * The AnnounceParams describe the properties of the device, which contain
  * information of the device itself (like uuid, name, type, etc), the
@@ -77,6 +79,9 @@ public final class AnnounceParams {
     }
 
     public int getExpiration() {
+        if (expiration == 0) {
+            return ScanConstants.DEFAULT_EXPIRATION_S;
+        }
         return expiration;
     }
 }

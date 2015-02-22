@@ -46,6 +46,8 @@ public final class ScanConstants {
     public static final String CONFIGURATION_ADDRESS;
     public static final int CONFIGURATION_PORT;
 
+    public static final int DEFAULT_EXPIRATION_S = 6;
+
     public static final String LOGGER_NAME = "scan";
 
     private ScanConstants() {

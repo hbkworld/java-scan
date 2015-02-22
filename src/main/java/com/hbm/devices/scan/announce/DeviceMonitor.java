@@ -66,7 +66,6 @@ public final class DeviceMonitor extends Observable implements Observer {
     private static final Logger LOGGER = 
         Logger.getLogger(ScanConstants.LOGGER_NAME);
     private static final int INITIAL_ENTRIES = 100;
-    private static final int DEFAULT_EXPIRATION_S = 6;
 
     /**
      * Constructs a new {@code DeviceMonitor} object.
@@ -148,9 +147,6 @@ public final class DeviceMonitor extends Observable implements Observer {
     private long getExpiration(Announce announce) throws MissingDataException {
         int expiration;
         expiration = announce.getParams().getExpiration();
-        if (expiration == 0) {
-            expiration = DEFAULT_EXPIRATION_S;
-        }
         return TimeUnit.SECONDS.toMillis(expiration);
     }
 
