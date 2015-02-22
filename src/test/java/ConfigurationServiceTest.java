@@ -90,6 +90,15 @@ public class ConfigurationServiceTest {
     }
 
     @Test
+    public void testShutdownWithoutOutstandingResponses() {
+        FakeMulticastSender fakeSender = new FakeMulticastSender();
+        ConfigurationSender sender = new ConfigurationSender(fakeSender);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+        service.shutdown();
+        assertTrue("Service was not shut down", service.isShutdown());
+    }
+
+    @Test
     public void sendingAndReceivingTest() {
 
         ConfigurationCallback cb = new ConfigurationCallback() {

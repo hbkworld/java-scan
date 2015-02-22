@@ -122,6 +122,10 @@ public class ConfigurationService implements Observer {
         sender.shutdown();
     }
 
+    public boolean isShutdown() {
+        return sender.isShutdown();
+    }
+
     /**
      * This method checks, if the service is waiting for a response.
      *
