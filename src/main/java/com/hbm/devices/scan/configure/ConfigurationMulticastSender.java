@@ -55,6 +55,7 @@ public final class ConfigurationMulticastSender implements MulticastSender {
     private final Collection<NetworkInterface> interfaces;
     private final Charset charset;
     private final InetAddress configureAddress;
+    private boolean stopped;
 
     /**
      * Creates a {@link ConfigurationMulticastSender} object for sending
@@ -75,6 +76,7 @@ public final class ConfigurationMulticastSender implements MulticastSender {
         
         interfaces = new LinkedList<NetworkInterface>();
         interfaces.addAll(ifs);
+        stopped = false;
     }
 
     /**
@@ -103,5 +105,11 @@ public final class ConfigurationMulticastSender implements MulticastSender {
     @Override
     public void shutdown() {
         socket.close();
+        stopped = true;
+    }
+
+    @Override
+    public boolean isShutdown() {
+        return stopped;
     }
 }

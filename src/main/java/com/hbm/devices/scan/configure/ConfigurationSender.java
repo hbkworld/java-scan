@@ -82,6 +82,10 @@ public final class ConfigurationSender {
         sender.shutdown();
     }
 
+    public boolean isShutdown() {
+        return sender.isShutdown();
+    }
+
     private String getJsonString(ConfigurationRequest configuration) {
         return gson.toJson(configuration);
     }

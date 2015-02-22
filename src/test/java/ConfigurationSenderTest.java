@@ -27,6 +27,7 @@
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import org.junit.Before;
@@ -83,5 +84,11 @@ public class ConfigurationSenderTest {
             cs.sendConfiguration(null);
         } catch (IOException e) {
         }
+    }
+
+    @Test
+    public void shutDownTest() {
+        cs.shutdown();
+        assertTrue("Sender was not shut down", cs.isShutdown());
     }
 }

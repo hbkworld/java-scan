@@ -43,6 +43,7 @@ import java.io.IOException;
 public class FakeMulticastSender implements MulticastSender {
 
     private String lastSent;
+	private boolean closed = false;
 
     public String getLastSent() {
         return this.lastSent;
@@ -55,5 +56,11 @@ public class FakeMulticastSender implements MulticastSender {
 
     @Override
     public void shutdown() {
+		closed = true;
+    }
+
+    @Override
+    public boolean isShutdown() {
+        return closed;
     }
 }

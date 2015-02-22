@@ -47,4 +47,6 @@ public interface MulticastSender {
      * Shuts down the multicast sender.
      */
     void shutdown();
+
+    boolean isShutdown();
 }
