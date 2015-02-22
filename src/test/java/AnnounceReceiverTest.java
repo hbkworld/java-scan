@@ -27,6 +27,7 @@
  */
 
 import static org.junit.Assert.fail;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -45,6 +46,23 @@ public class AnnounceReceiverTest {
             assertNotNull("Could not instantiate AnnounceReceiver", ar);
         } catch (IOException e) {
             fail("Got IOException while instantiating AnnounceReceiver");
+        }
+    }
+
+    @Test
+    public void runAndStop() {
+        try {
+            AnnounceReceiver ar = new AnnounceReceiver();
+            assertNotNull("Could not instantiate AnnounceReceiver", ar);
+            Thread arThread = new Thread(ar);
+            arThread.start();
+            ar.stop();
+            arThread.join(1000);
+            assertFalse("Thread still alive after stop", arThread.isAlive());
+        } catch (IOException e) {
+            fail("Got IOException while instantiating AnnounceReceiver");
+        } catch (InterruptedException e) {
+            fail("Got InterruptedExcpetion while joining AnnounceReceiver thread");
         }
     }
 }
