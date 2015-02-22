@@ -47,6 +47,7 @@ public class DeviceMonitorTest {
 
     private boolean newDevice;
     private boolean updateDevice;
+    private DeviceMonitor monitor;
 
     @Before
     public void setUp() {
@@ -55,9 +56,9 @@ public class DeviceMonitorTest {
         fsmmr = new FakeMessageReceiver();
         AnnounceParser parser = new AnnounceParser();
         fsmmr.addObserver(parser);
-        DeviceMonitor af = new DeviceMonitor();
-        parser.addObserver(af);
-        af.addObserver(new Observer() {
+        monitor = new DeviceMonitor();
+        parser.addObserver(monitor);
+        monitor.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
                 if (arg instanceof NewDeviceEvent) {
                     newDevice = true;
@@ -69,14 +70,14 @@ public class DeviceMonitorTest {
     }
 
     @Test
-    public void NewDeviceEvent() {
+    public void newDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
         assertTrue("No new device event fired", newDevice);
         assertFalse("Update device event fired", updateDevice);
     }
 
     @Test
-    public void UpdateDeviceEvent() {
+    public void updateDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
         assertTrue("No new device event fired", newDevice);
         newDevice = false;
@@ -88,5 +89,12 @@ public class DeviceMonitorTest {
         // Check if the event is not fired again
         fsmmr.emitSingleCorrentMessageDifferentIP();
         assertFalse("Update device event fired twice", updateDevice || newDevice);
+    }
+
+    @Test
+    public void stopTest() {
+        assertFalse("monitor stopped after creation", monitor.isStopped());
+        monitor.stop();
+        assertTrue("monitor not stopped", monitor.isStopped());
     }
 }
