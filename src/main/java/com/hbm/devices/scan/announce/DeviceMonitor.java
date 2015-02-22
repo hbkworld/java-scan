@@ -61,6 +61,8 @@ public final class DeviceMonitor extends Observable implements Observer {
     private final Map<String, ScheduledFuture<Void>> deviceMap;
     private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
     private final ScheduledThreadPoolExecutor executor;
+    private boolean stopped;
+
     private static final Logger LOGGER = 
         Logger.getLogger(ScanConstants.LOGGER_NAME);
     private static final int INITIAL_ENTRIES = 100;
@@ -76,6 +78,7 @@ public final class DeviceMonitor extends Observable implements Observer {
         deviceMap = new HashMap<String, ScheduledFuture<Void>>(INITIAL_ENTRIES);
         futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(INITIAL_ENTRIES);
         executor = new ScheduledThreadPoolExecutor(1);
+        stopped = false;
     }
 
     /**
@@ -99,6 +102,11 @@ public final class DeviceMonitor extends Observable implements Observer {
             executor.shutdownNow();
             Thread.currentThread().interrupt();
         }
+        stopped = true;
+    }
+
+    public boolean isStopped() {
+        return stopped;
     }
 
     @Override
