@@ -81,4 +81,10 @@ public class ResponseParserTest {
         fsmmr.emitMissingTypeResponseMessage();
         assertNull("Got result object from response with error and result", res);
     }
+
+    @Test
+    public void parseInvalidJsonMessage() {
+        fsmmr.emitInvalidJsonMessage();
+        assertNull("Got result object after invalid message", res);
+    }
 }
