@@ -56,7 +56,7 @@ public class ConfigMessagesTest {
     @Test
     public void parseNullUUID() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
         ConfigureParams configParams = new ConfigureParams(device, settings);
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
@@ -119,6 +119,12 @@ public class ConfigMessagesTest {
         exception.expect(IllegalArgumentException.class);
         ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, null);
         fail("Method didn't throw expected IllegalArgumentException");
+    }
+
+    @Test
+    public void parseManualWithIp() {
+        IPv4EntryManual entry = new IPv4EntryManual("10.1.2.3", "255.255.0.0");
+        ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, entry);
     }
 
     @Test
