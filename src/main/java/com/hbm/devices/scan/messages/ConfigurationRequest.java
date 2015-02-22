@@ -54,6 +54,7 @@ public final class ConfigurationRequest extends JsonRpc {
      */
     public ConfigurationRequest(ConfigureParams params, String queryID) {
         this();
+
         if (params == null) {
             throw new IllegalArgumentException("params == null");
         }
@@ -62,27 +63,6 @@ public final class ConfigurationRequest extends JsonRpc {
         }
         this.params = params;
         this.queryID = queryID;
-    }
-
-    public ConfigureParams getParams() {
-        return params;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof ConfigurationRequest)) {
-            return false;
-        }
-        final ConfigurationRequest rhs = (ConfigurationRequest)obj;
-        return this.getJSONString().equals(rhs.getJSONString());
-    }
-
-    @Override
-    public int hashCode() {
-        return getJSONString().hashCode();
     }
 
     public String getQueryId() {
