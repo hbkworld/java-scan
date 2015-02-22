@@ -64,6 +64,15 @@ public class ConfigMessagesTest {
     }
 
     @Test
+    public void parseInvalidTtl() {
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        exception.expect(IllegalArgumentException.class);
+        ConfigureParams configParams = new ConfigureParams(device, settings, 0);
+        fail("Not failed despite of illegal ttl");
+    }
+
+    @Test
     public void parseNullDevice() {
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
         exception.expect(IllegalArgumentException.class);
