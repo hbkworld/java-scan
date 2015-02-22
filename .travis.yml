@@ -24,8 +24,8 @@ jdk:
 after_failure: 
   - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
 	  
-after_success: 
-  - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
+#after_success: 
+#  - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
 
 addons:
   coverity_scan:
