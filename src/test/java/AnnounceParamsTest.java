@@ -26,7 +26,10 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,6 +38,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParser;
 import com.hbm.devices.scan.messages.Device;
@@ -63,6 +67,17 @@ public class AnnounceParamsTest {
     public void parseMissingDevice() {
         fsmmr.emitMissingDeviceMessage();
         assertNull("Got Announce object after message without device section", announce);
+    }
+
+    @Test
+    public void parseMissingExpiration() {
+        fsmmr.emitMissingExpiration();
+        assertNotNull("Got no Announce object after message without expiration", announce);
+        try {
+            assertEquals(announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
+        } catch (MissingDataException e) {
+            fail("Got MissingDataException for correct announce message");
+        }
     }
 
     @Test
