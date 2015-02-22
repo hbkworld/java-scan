@@ -38,7 +38,7 @@ package com.hbm.devices.scan.messages;
  */
 public final class DefaultGateway {
 
-    private String ipv4Address;
+    final private String ipv4Address;
     private String ipv6Address;
 
     DefaultGateway(String ipv4Address) {
