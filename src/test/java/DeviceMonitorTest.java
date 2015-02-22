@@ -36,6 +36,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.hbm.devices.scan.announce.DeviceMonitor;
+import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.FakeMessageReceiver;
@@ -47,12 +48,14 @@ public class DeviceMonitorTest {
 
     private boolean newDevice;
     private boolean updateDevice;
+    private boolean lostDevice;
     private DeviceMonitor monitor;
 
     @Before
     public void setUp() {
         this.newDevice = false;
         this.updateDevice = false;
+        this.lostDevice = false;
         fsmmr = new FakeMessageReceiver();
         AnnounceParser parser = new AnnounceParser();
         fsmmr.addObserver(parser);
@@ -64,6 +67,8 @@ public class DeviceMonitorTest {
                     newDevice = true;
                 } else if (arg instanceof UpdateDeviceEvent) {
                     updateDevice = true;
+                } else if (arg instanceof LostDeviceEvent) {
+                    lostDevice = true;
                 }
             }
         });
@@ -97,5 +102,14 @@ public class DeviceMonitorTest {
         fsmmr.emitSingleCorrectMessage();
         monitor.stop();
         assertTrue("monitor not stopped", monitor.isStopped());
+    }
+
+    @Test
+    public void testLostDevice() {
+        fsmmr.emitSingleCorrectMessageShortExpire();
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {}
+        assertTrue("No lost device event fired", lostDevice);
     }
 }
