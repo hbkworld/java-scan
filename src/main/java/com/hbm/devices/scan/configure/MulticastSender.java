@@ -48,5 +48,8 @@ public interface MulticastSender {
      */
     void shutdown();
 
+    /**
+     * @return true if sender was shutdown, false otherwise.
+     */
     boolean isShutdown();
 }
