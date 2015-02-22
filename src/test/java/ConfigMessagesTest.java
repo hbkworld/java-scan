@@ -51,7 +51,7 @@ public class ConfigMessagesTest {
     public void createConfigureNullParams() {
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(null, "1234");
-        fail("Method didn't throw expected IllegalArgumentException");
+        fail("Not failed despite no config params given");
     }
 
     @Test
@@ -81,6 +81,33 @@ public class ConfigMessagesTest {
         exception.expect(IllegalArgumentException.class);
         ConfigureParams configParams = new ConfigureParams(device, settings, 0);
         fail("Not failed despite of illegal ttl");
+    }
+
+    @Test
+    public void constructCorrectConfig() {
+        final String ip = "10.1.2.3";
+        final String netMask = "255.255.0.0";
+        final String interfaceName = "eth0";
+        final Method configMethod = Method.MANUAL;
+        final String deviceUUID = "0009E5001571";
+        final int ttl = 2;
+        final String queryID = "12345";
+
+        IPv4EntryManual entry = new IPv4EntryManual(ip, netMask);
+        ConfigureInterface iface = new ConfigureInterface(interfaceName, configMethod, entry);
+        ConfigureNetSettings settings = new ConfigureNetSettings(iface);
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureParams configParams = new ConfigureParams(device, settings, ttl);
+        ConfigurationRequest conf = new ConfigurationRequest(configParams, queryID);
+
+        assertNotNull("ConfigureInterface constructor failed", iface);
+        assertEquals("Query ID's not equal", conf.getQueryId(), queryID);
+        assertEquals("ttl not equal", conf.getParams().getTtl(), ttl);
+        assertEquals("device UUID not equal", conf.getParams().getDevice().getUUID(), deviceUUID);
+        assertEquals("interface name not equal", conf.getParams().getNetSettings().getInterface().getName(), interfaceName);
+        assertEquals("config method not equal", conf.getParams().getNetSettings().getInterface().getConfigurationMethod(), configMethod.toString());
+        assertEquals("config IP's not equal", conf.getParams().getNetSettings().getInterface().getIPv4().getAddress(), ip);
+        assertEquals("config netmask not equal", conf.getParams().getNetSettings().getInterface().getIPv4().getNetmask(), netMask);
     }
 
     @Test
