@@ -92,7 +92,7 @@ public final class ConfigureInterface {
      * 
      * @return returns the name of the network interface
      */
-    public String getInterfaceName() {
+    public String getName() {
         return name;
     }
 
