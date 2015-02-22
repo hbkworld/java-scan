@@ -26,6 +26,8 @@
  * SOFTWARE.
  */
 
+package com.hbm.devices.scan.messages;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
@@ -33,14 +35,6 @@ import static org.junit.Assert.fail;
 import org.junit.Test;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
-
-import com.hbm.devices.scan.messages.ConfigurationRequest;
-import com.hbm.devices.scan.messages.ConfigureDevice;
-import com.hbm.devices.scan.messages.ConfigureInterface;
-import com.hbm.devices.scan.messages.ConfigureInterface.Method;
-import com.hbm.devices.scan.messages.ConfigureNetSettings;
-import com.hbm.devices.scan.messages.ConfigureParams;
-import com.hbm.devices.scan.messages.IPv4EntryManual;
 
 public class ConfigMessagesTest {
 
@@ -57,7 +51,7 @@ public class ConfigMessagesTest {
     @Test
     public void parseNullUUID() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", ConfigureInterface.Method.DHCP));
         ConfigureParams configParams = new ConfigureParams(device, settings);
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
@@ -67,7 +61,7 @@ public class ConfigMessagesTest {
     @Test
     public void parseEmptyUUID() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", ConfigureInterface.Method.DHCP));
         ConfigureParams configParams = new ConfigureParams(device, settings);
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, "");
@@ -77,7 +71,7 @@ public class ConfigMessagesTest {
     @Test
     public void parseInvalidTtl() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", ConfigureInterface.Method.DHCP));
         exception.expect(IllegalArgumentException.class);
         ConfigureParams configParams = new ConfigureParams(device, settings, 0);
         fail("Not failed despite of illegal ttl");
@@ -87,15 +81,17 @@ public class ConfigMessagesTest {
     public void constructCorrectConfig() {
         final String ip = "10.1.2.3";
         final String netMask = "255.255.0.0";
+        final String gw = "10.3.4.5";
         final String interfaceName = "eth0";
-        final Method configMethod = Method.MANUAL;
+        final ConfigureInterface.Method configMethod = ConfigureInterface.Method.MANUAL;
         final String deviceUUID = "0009E5001571";
         final int ttl = 2;
         final String queryID = "12345";
 
         IPv4EntryManual entry = new IPv4EntryManual(ip, netMask);
         ConfigureInterface iface = new ConfigureInterface(interfaceName, configMethod, entry);
-        ConfigureNetSettings settings = new ConfigureNetSettings(iface);
+        DefaultGateway gateway = new DefaultGateway(gw);
+        ConfigureNetSettings settings = new ConfigureNetSettings(iface, gateway);
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureParams configParams = new ConfigureParams(device, settings, ttl);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, queryID);
@@ -105,6 +101,7 @@ public class ConfigMessagesTest {
         assertEquals("ttl not equal", conf.getParams().getTtl(), ttl);
         assertEquals("device UUID not equal", conf.getParams().getDevice().getUUID(), deviceUUID);
         assertEquals("interface name not equal", conf.getParams().getNetSettings().getInterface().getName(), interfaceName);
+        assertEquals("default gateway not equal", conf.getParams().getNetSettings().getDefaultGateway().getIpv4Address(), gw);
         assertEquals("config method not equal", conf.getParams().getNetSettings().getInterface().getConfigurationMethod(), configMethod.toString());
         assertEquals("config IP's not equal", conf.getParams().getNetSettings().getInterface().getIPv4().getAddress(), ip);
         assertEquals("config netmask not equal", conf.getParams().getNetSettings().getInterface().getIPv4().getNetmask(), netMask);
@@ -112,7 +109,7 @@ public class ConfigMessagesTest {
 
     @Test
     public void parseNullDevice() {
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", ConfigureInterface.Method.DHCP));
         exception.expect(IllegalArgumentException.class);
         ConfigureParams configParams = new ConfigureParams(null, settings);
         fail("Method didn't throw expected IllegalArgumentException");
@@ -157,28 +154,28 @@ public class ConfigMessagesTest {
     @Test
     public void parseNullInterfaceName() {
         exception.expect(IllegalArgumentException.class);
-        ConfigureInterface iface = new ConfigureInterface(null, Method.DHCP);
+        ConfigureInterface iface = new ConfigureInterface(null, ConfigureInterface.Method.DHCP);
         fail("Method didn't fail with no interface name");
     }
 
     @Test
     public void parseEmptyInterfaceName() {
         exception.expect(IllegalArgumentException.class);
-        ConfigureInterface iface = new ConfigureInterface("", Method.DHCP);
+        ConfigureInterface iface = new ConfigureInterface("", ConfigureInterface.Method.DHCP);
         fail("Method didn't failed with empty interface name");
     }
 
     @Test
     public void parseManualAndNoIp() {
         exception.expect(IllegalArgumentException.class);
-        ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, null);
+        ConfigureInterface iface = new ConfigureInterface("eth0", ConfigureInterface.Method.MANUAL, null);
         fail("Method didn't throw expected IllegalArgumentException");
     }
 
     @Test
     public void parseManualWithIp() {
         IPv4EntryManual entry = new IPv4EntryManual("10.1.2.3", "255.255.0.0");
-        ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, entry);
+        ConfigureInterface iface = new ConfigureInterface("eth0", ConfigureInterface.Method.MANUAL, entry);
         assertNotNull("ConfigureInterface constructor failed", iface);
     }
 
