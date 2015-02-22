@@ -228,7 +228,7 @@ public class ConfigurationService implements Observer {
         if (callback == null) {
             throw new IllegalArgumentException("the callback parameter must not be null");
         }
-        if (queryID == null) {
+        if (queryID == null || queryID.length() == 0) {
             throw new IllegalArgumentException("no queryID given");
         }
 
