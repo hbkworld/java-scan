@@ -87,6 +87,7 @@ artifacts {
 jar {
 	archiveName = jar.baseName + '.' + jar.extension
 	from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+	exclude ('fakemessages.properties')
 	manifest {
 		attributes \
 			'Implementation-Title': 'HBM Device Scan Library', \
