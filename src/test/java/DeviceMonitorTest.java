@@ -94,6 +94,7 @@ public class DeviceMonitorTest {
     @Test
     public void stopTest() {
         assertFalse("monitor stopped after creation", monitor.isStopped());
+        fsmmr.emitSingleCorrectMessage();
         monitor.stop();
         assertTrue("monitor not stopped", monitor.isStopped());
     }
