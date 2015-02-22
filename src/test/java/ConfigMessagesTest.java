@@ -27,6 +27,7 @@
  */
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 import org.junit.Test;
@@ -134,6 +135,7 @@ public class ConfigMessagesTest {
     public void parseManualWithIp() {
         IPv4EntryManual entry = new IPv4EntryManual("10.1.2.3", "255.255.0.0");
         ConfigureInterface iface = new ConfigureInterface("eth0", Method.MANUAL, entry);
+        assertNotNull("ConfigureInterface constructor failed", iface);
     }
 
     @Test
