@@ -304,10 +304,6 @@ class ConfigQuery {
         return config.getQueryId();
     }
 
-    ConfigurationRequest getConfiguration() {
-        return this.config;
-    }
-
     long getTimeout() {
         return this.timeout;
     }
