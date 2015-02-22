@@ -61,7 +61,17 @@ public class ConfigMessagesTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
         exception.expect(IllegalArgumentException.class);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, null);
-        fail("Method didn't throw expected IllegalArgumentException");
+        fail("Not failed despite no query ID given");
+    }
+
+    @Test
+    public void parseEmptyUUID() {
+        ConfigureDevice device = new ConfigureDevice("0009E5001571");
+        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigureParams configParams = new ConfigureParams(device, settings);
+        exception.expect(IllegalArgumentException.class);
+        ConfigurationRequest conf = new ConfigurationRequest(configParams, "");
+        fail("Not failed despite empty query ID given");
     }
 
     @Test
