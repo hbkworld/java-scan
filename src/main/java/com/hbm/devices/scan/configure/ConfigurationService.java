@@ -149,7 +149,7 @@ public class ConfigurationService implements Observer {
         final Response response = (Response)arg;
 
         final String responseID = response.getId();
-        if (responseIDnotValid(responseID)) {
+        if (responseIdNotValid(responseID)) {
             return;
         }
         final String result = response.getResult();
@@ -255,7 +255,7 @@ public class ConfigurationService implements Observer {
         }
     }
 
-    private static boolean responseIDnotValid(String responseID) {
+    private static boolean responseIdNotValid(String responseID) {
         return (responseID == null) || (responseID.length() <= 0);
     }
 
