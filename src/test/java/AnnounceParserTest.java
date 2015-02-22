@@ -153,6 +153,12 @@ public class AnnounceParserTest {
     }
 
     @Test
+    public void parseEmptyRouterUuidMessage() {
+        fsmmr.emitEmptyRouterUuidMessage();
+        assertNull("Got Announce from message with empty router UUID", announce);
+    }
+
+    @Test
     public void parseMissingTypeMessage() {
         fsmmr.emitMissingTypeResponseMessage();
         assertNull("Got Announce message without type", announce);

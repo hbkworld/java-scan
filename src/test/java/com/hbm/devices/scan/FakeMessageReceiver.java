@@ -63,6 +63,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String NO_INTERFACE_MESSAGE;
     private static final String NO_NET_SETTINGS_MESSAGE;
     private static final String MISSING_ROUTER_UUID_MESSAGE;
+    private static final String EMPTY_ROUTER_UUID_MESSAGE;
     private static final String MISSING_FAMILY_TYPE_MESSAGE;
     private static final String MISSING_SERVICE_MESSAGE;
     private static final String EMPTY_SERVICE_MESSAGE;
@@ -187,6 +188,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitMissingRouterUuidMessage() {
         setChanged();
         notifyObservers(MISSING_ROUTER_UUID_MESSAGE);
+    }
+
+    public void emitEmptyRouterUuidMessage() {
+        setChanged();
+        notifyObservers(EMPTY_ROUTER_UUID_MESSAGE);
     }
 
     public void emitMissingFamilyTypeMessage() {
@@ -326,6 +332,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             NO_INTERFACE_MESSAGE = props.getProperty("scan.announce.no_interface_message");
             NO_NET_SETTINGS_MESSAGE = props.getProperty("scan.announce.no_net_settings_message");
             MISSING_ROUTER_UUID_MESSAGE = props.getProperty("scan.announce.missing_router_uuid_message");
+            EMPTY_ROUTER_UUID_MESSAGE = props.getProperty("scan.announce.empty_router_uuid_message");
             MISSING_FAMILY_TYPE_MESSAGE = props.getProperty("scan.announce.missing_family_type_message");
             MISSING_SERVICE_MESSAGE = props.getProperty("scan.announce.correct_message_missing_service");
             EMPTY_SERVICE_MESSAGE = props.getProperty("scan.announce.correct_message_missing_service");
