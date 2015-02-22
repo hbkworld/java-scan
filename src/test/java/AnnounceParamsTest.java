@@ -74,7 +74,7 @@ public class AnnounceParamsTest {
         fsmmr.emitMissingExpiration();
         assertNotNull("Got no Announce object after message without expiration", announce);
         try {
-            assertEquals(announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
+            assertEquals("no expiration in announce does't lead to default expiration", announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
         } catch (MissingDataException e) {
             fail("Got MissingDataException for correct announce message");
         }
