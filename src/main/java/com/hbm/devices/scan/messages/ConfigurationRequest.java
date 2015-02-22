@@ -65,6 +65,10 @@ public final class ConfigurationRequest extends JsonRpc {
         this.queryID = queryID;
     }
 
+    public ConfigureParams getParams() {
+        return params;
+    }
+
     public String getQueryId() {
         return queryID;
     }
