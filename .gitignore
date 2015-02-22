@@ -1,4 +1,5 @@
 cscope.*
 .gradle
 build
+*.swp
 
