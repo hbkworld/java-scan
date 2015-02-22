@@ -135,6 +135,12 @@ public class AnnounceParserTest {
     }
 
     @Test
+    public void parseEmptyInterfaceNameMessage() {
+        fsmmr.emitEmptyInterfaceNameMessage();
+        assertNull("Got Announce from message with empty interface name", announce);
+    }
+
+    @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
         assertNull("Got Announce from message without interface", announce);

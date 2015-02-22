@@ -60,6 +60,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String EMPTY_DEVICE_UUID_MESSAGE;
     private static final String MISSING_PARAMS_MESSAGE;
     private static final String NO_INTERFACE_NAME_MESSAGE;
+    private static final String EMPTY_INTERFACE_NAME_MESSAGE;
     private static final String NO_INTERFACE_MESSAGE;
     private static final String NO_NET_SETTINGS_MESSAGE;
     private static final String MISSING_ROUTER_UUID_MESSAGE;
@@ -173,6 +174,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitNoInterfaceNameMessage() {
         setChanged();
         notifyObservers(NO_INTERFACE_NAME_MESSAGE);
+    }
+
+    public void emitEmptyInterfaceNameMessage() {
+        setChanged();
+        notifyObservers(EMPTY_INTERFACE_NAME_MESSAGE);
     }
 
     public void emitNoInterfaceMessage() {
@@ -329,6 +335,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             EMPTY_DEVICE_UUID_MESSAGE = props.getProperty("scan.announce.empty_device_uuid_message");
             MISSING_PARAMS_MESSAGE = props.getProperty("scan.announce.missing_params_message");
             NO_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.no_interface_name_message");
+            EMPTY_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.empty_interface_name_message");
             NO_INTERFACE_MESSAGE = props.getProperty("scan.announce.no_interface_message");
             NO_NET_SETTINGS_MESSAGE = props.getProperty("scan.announce.no_net_settings_message");
             MISSING_ROUTER_UUID_MESSAGE = props.getProperty("scan.announce.missing_router_uuid_message");
