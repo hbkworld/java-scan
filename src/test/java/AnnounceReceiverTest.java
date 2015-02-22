@@ -56,6 +56,7 @@ public class AnnounceReceiverTest {
             assertNotNull("Could not instantiate AnnounceReceiver", ar);
             Thread arThread = new Thread(ar);
             arThread.start();
+            Thread.sleep(10);
             ar.stop();
             arThread.join(1000);
             assertFalse("Thread still alive after stop", arThread.isAlive());
