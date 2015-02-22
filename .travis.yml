@@ -21,8 +21,8 @@ jdk:
   - oraclejdk7
   - openjdk7
 
-after_failure: 
-  - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
+# after_failure: 
+#   - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
 	  
 #after_success: 
 #  - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
