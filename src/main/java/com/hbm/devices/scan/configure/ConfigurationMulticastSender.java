@@ -68,6 +68,9 @@ public final class ConfigurationMulticastSender implements MulticastSender {
      * @throws IOException if creating the underlying socket fails.
      */
     public ConfigurationMulticastSender(Collection<NetworkInterface> ifs) throws IOException {
+        if (ifs == null) {
+            throw new IllegalArgumentException("no Collection of interfaces given");
+        }
         charset = Charset.forName("UTF-8");
         configureAddress = InetAddress.getByName(ScanConstants.CONFIGURATION_ADDRESS);
         socket = new MulticastSocket(null);
