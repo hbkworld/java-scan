@@ -66,4 +66,17 @@ public class ConfigurationMulticastSenderTest {
             fail("Can't instantiate ConfigurationMulticastSender object");
         }
     }
+
+    @Test
+    public void sendMessageTest() {
+        try {
+            final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
+            ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
+            sender.sendMessage("hello world");
+            sender.shutdown();
+            assertTrue("ConfigurationMulticastSender was not shutdown", sender.isShutdown());
+        } catch (IOException e) {
+            fail("Can't instantiate ConfigurationMulticastSender object or send message");
+        }
+    }
 }
