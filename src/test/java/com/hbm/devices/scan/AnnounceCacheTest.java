@@ -104,6 +104,8 @@ public class AnnounceCacheTest {
             final InputStream is = classloader.getResourceAsStream("fakemessages.properties");
             final Properties props = new Properties();
             props.load(is);
+            is.close();
+
             CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
             CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
             CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");

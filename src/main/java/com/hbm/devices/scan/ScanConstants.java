@@ -59,6 +59,7 @@ public final class ScanConstants {
             final InputStream inputStream = classloader.getResourceAsStream("scan.properties");
             final Properties props = new Properties();
             props.load(inputStream);
+            inputStream.close();
 
             ANNOUNCE_ADDRESS = props.getProperty("scan.announce.address");
             ANNOUNCE_PORT = Integer.parseInt(props.getProperty("scan.announce.port"));

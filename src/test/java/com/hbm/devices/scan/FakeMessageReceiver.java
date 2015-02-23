@@ -327,6 +327,8 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             final InputStream is = classloader.getResourceAsStream("fakemessages.properties");
             final Properties props = new Properties();
             props.load(is);
+            is.close();
+
             FAKE_DEVICE_1 = props.getProperty("scan.announce.device1");
             FAKE_DEVICE_2 = props.getProperty("scan.announce.device2");
             FAKE_DEVICE_3 = props.getProperty("scan.announce.device3");
