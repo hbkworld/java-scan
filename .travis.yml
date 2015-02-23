@@ -21,11 +21,13 @@ jdk:
   - oraclejdk7
   - openjdk7
 
+script:
+  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then
+    /usr/local/gradle/bin/gradle clean build
+  fi
+
 after_script: 
   - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
-# 	  
-# after_success: 
-#   - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
 
 addons:
   coverity_scan:
