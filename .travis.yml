@@ -25,5 +25,6 @@ addons:
       name: "gatzka/java-scan"
       description: "Build submitted via Travis CI"
     notification_email: stephan.gatzka@gmail.com
-    build_command: "gradle assemble"
+    build_command_prepend: "gradle clean"
+    build_command: "gradle build"
     branch_pattern: coverity_scan
