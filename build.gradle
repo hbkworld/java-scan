@@ -63,6 +63,11 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 	from sourceSets.main.allSource
 }
 
+compileJava {
+    options.fork = true
+    options.forkOptions.executable = 'javac'
+}
+
 javadoc {
 	configure(options) {
 		links = ['http://docs.oracle.com/javase/7/docs/api/']
