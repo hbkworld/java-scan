@@ -26,6 +26,7 @@
  * SOFTWARE.
  */
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -50,6 +51,7 @@ public class ConfigurationMulticastSenderTest {
         try {
             exception.expect(IllegalArgumentException.class);
             ConfigurationMulticastSender sender = new ConfigurationMulticastSender(null);
+            assertNotNull("Could not instantiate ConfigurationMulticastSender", sender);
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object");
         }
