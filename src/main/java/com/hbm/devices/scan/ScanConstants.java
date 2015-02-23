@@ -55,8 +55,7 @@ public final class ScanConstants {
 
     static {
         try {
-            final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            final InputStream inputStream = classloader.getResourceAsStream("scan.properties");
+            final InputStream inputStream = ScanConstants.class.getResourceAsStream("/scan.properties");
             final Properties props = new Properties();
             props.load(inputStream);
             inputStream.close();

@@ -100,8 +100,7 @@ public class AnnounceCacheTest {
 
     static {
         try {
-            final ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-            final InputStream is = classloader.getResourceAsStream("fakemessages.properties");
+            final InputStream is = AnnounceCacheTest.class.getResourceAsStream("/fakemessages.properties");
             final Properties props = new Properties();
             props.load(is);
             is.close();
