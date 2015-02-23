@@ -15,16 +15,13 @@ before_install:
   - curl -LO http://services.gradle.org/distributions/gradle-2.3-bin.zip
   - unzip -q gradle-2.3-bin.zip
   - sudo mv gradle-2.3 /usr/local/gradle
+  - export PATH=/usr/local/gradle/bin/:$PATH
+  - echo $PATH
 
 jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
-
-script:
-  - if [ ${COVERITY_SCAN_BRANCH} != 1 ]; then
-    /usr/local/gradle/bin/gradle clean build
-  fi
 
 after_script: 
   - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
