@@ -129,12 +129,8 @@ final class IPv4ConnectionFinder {
 
     private static int convertToInteger(byte... address) {
         int value = 0;
-        final int length = address.length;
-        final int arrayBitLength = length * Byte.SIZE;
-        int shift = arrayBitLength - Byte.SIZE;
-        for (int i = 0; i < length; i++) {
-            value |= ((int)address[i] & 0xff) << shift;
-            shift -= Byte.SIZE;
+        for (byte b: address) {
+            value = value << Byte.SIZE | (b & 0xff);
         }
         return value;
     }
