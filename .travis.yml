@@ -14,7 +14,6 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk7
-  - openjdk6
 
 after_script: 
   - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
