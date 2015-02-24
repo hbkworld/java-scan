@@ -54,11 +54,10 @@ public final class ScanConstants {
     }
 
     static {
+        final InputStream inputStream = ScanConstants.class.getResourceAsStream("/scan.properties");
+        final Properties props = new Properties();
         try {
-            final InputStream inputStream = ScanConstants.class.getResourceAsStream("/scan.properties");
-            final Properties props = new Properties();
             props.load(inputStream);
-            inputStream.close();
 
             ANNOUNCE_ADDRESS = props.getProperty("scan.announce.address");
             ANNOUNCE_PORT = Integer.parseInt(props.getProperty("scan.announce.port"));
@@ -66,6 +65,11 @@ public final class ScanConstants {
             CONFIGURATION_PORT = Integer.parseInt(props.getProperty("scan.configure.port"));
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+            }
         }
     }
 }
