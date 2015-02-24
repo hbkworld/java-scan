@@ -69,6 +69,7 @@ public final class ScanConstants {
             try {
                 inputStream.close();
             } catch (IOException e) {
+                throw new ExceptionInInitializerError(e);
             }
         }
     }
