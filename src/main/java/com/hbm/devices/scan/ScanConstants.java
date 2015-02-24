@@ -64,11 +64,9 @@ public final class ScanConstants {
             CONFIGURATION_ADDRESS = props.getProperty("scan.configure.address");
             CONFIGURATION_PORT = Integer.parseInt(props.getProperty("scan.configure.port"));
         } catch (IOException e) {
-            throw new ExceptionInInitializerError(e);
-        } finally {
             try {
                 inputStream.close();
-            } catch (IOException e) {
+            } finally {
                 throw new ExceptionInInitializerError(e);
             }
         }
