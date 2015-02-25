@@ -35,7 +35,7 @@ package com.hbm.devices.scan.messages;
 public final class ConfigurationParams {
 
     private ConfigurationDevice device;
-    private ConfigureNetSettings netSettings;
+    private ConfigurationNetSettings netSettings;
     private int ttl;
 
     /**
@@ -51,7 +51,7 @@ public final class ConfigurationParams {
      * {@code device} is {@code null} or {@code netSettings} is {@code
      * null}.
      */
-    public ConfigurationParams(ConfigurationDevice device, ConfigureNetSettings netSettings, int ttl) {
+    public ConfigurationParams(ConfigurationDevice device, ConfigurationNetSettings netSettings, int ttl) {
         if (device == null) {
             throw new IllegalArgumentException("device must not be null");
         }
@@ -74,7 +74,7 @@ public final class ConfigurationParams {
      * @param netSettings the network settings which shal be configured.
      *
      */
-    public ConfigurationParams(ConfigurationDevice device, ConfigureNetSettings netSettings) {
+    public ConfigurationParams(ConfigurationDevice device, ConfigurationNetSettings netSettings) {
         this(device, netSettings, 1);
     }
 
@@ -82,7 +82,7 @@ public final class ConfigurationParams {
         return device;
     }
 
-    public ConfigureNetSettings getNetSettings() {
+    public ConfigurationNetSettings getNetSettings() {
         return netSettings;
     }
 

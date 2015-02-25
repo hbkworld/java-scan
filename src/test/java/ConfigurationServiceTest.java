@@ -41,10 +41,10 @@ import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
-import com.hbm.devices.scan.messages.ConfigureDevice;
-import com.hbm.devices.scan.messages.ConfigureInterface;
-import com.hbm.devices.scan.messages.ConfigureInterface.Method;
-import com.hbm.devices.scan.messages.ConfigureNetSettings;
+import com.hbm.devices.scan.messages.ConfigurationDevice;
+import com.hbm.devices.scan.messages.ConfigurationInterface;
+import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
+import com.hbm.devices.scan.messages.ConfigurationNetSettings;
 import com.hbm.devices.scan.messages.ConfigurationParams;
 import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
@@ -66,8 +66,8 @@ public class ConfigurationServiceTest {
 
     @Test
     public void sendingTest() {
-        ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
         ConfigurationCallback callback = new ConfigurationCallback() {
             public void onSuccess(Response response) {}
@@ -120,8 +120,8 @@ public class ConfigurationServiceTest {
         fakeDevice.addObserver(messageParser);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
 
-        ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
         try {
@@ -158,8 +158,8 @@ public class ConfigurationServiceTest {
             }
         };
 
-        ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();

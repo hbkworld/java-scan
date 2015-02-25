@@ -41,10 +41,10 @@ import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
-import com.hbm.devices.scan.messages.ConfigureDevice;
-import com.hbm.devices.scan.messages.ConfigureInterface;
-import com.hbm.devices.scan.messages.ConfigureInterface.Method;
-import com.hbm.devices.scan.messages.ConfigureNetSettings;
+import com.hbm.devices.scan.messages.ConfigurationDevice;
+import com.hbm.devices.scan.messages.ConfigurationInterface;
+import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
+import com.hbm.devices.scan.messages.ConfigurationNetSettings;
 import com.hbm.devices.scan.messages.ConfigurationParams;
 
 public class ConfigurationSerializerTest {
@@ -62,8 +62,8 @@ public class ConfigurationSerializerTest {
 
     @Test
     public void parseCorrectConfig() {
-        ConfigureDevice device = new ConfigureDevice("0009E5001571");
-        ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP, null));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
  

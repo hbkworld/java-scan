@@ -41,11 +41,11 @@ import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
 import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
-import com.hbm.devices.scan.messages.ConfigureDevice;
-import com.hbm.devices.scan.messages.ConfigureInterface;
-import com.hbm.devices.scan.messages.ConfigureNetSettings;
+import com.hbm.devices.scan.messages.ConfigurationDevice;
+import com.hbm.devices.scan.messages.ConfigurationInterface;
+import com.hbm.devices.scan.messages.ConfigurationNetSettings;
 import com.hbm.devices.scan.messages.ConfigurationParams;
-import com.hbm.devices.scan.messages.ConfigureInterface.Method;
+import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
 import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.util.ScanInterfaces;
@@ -108,8 +108,8 @@ public final class Sender implements ConfigurationCallback {
     public static void main(String... args) {
         try {
             final Sender sender = new Sender();
-            final ConfigureDevice device = new ConfigureDevice("0009E5001571");
-            final ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
+            final ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+            final ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP, null));
             final ConfigurationParams configParams = new ConfigurationParams(device, settings);
             sender.service.sendConfiguration(configParams, sender, TimeUnit.SECONDS.toMillis(RESPONSE_TIMEOUT_S));
         } catch (IOException e) {

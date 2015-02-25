@@ -36,7 +36,7 @@ import com.google.gson.annotations.SerializedName;
  * @since 1.0
  *
  */
-public final class ConfigureNetSettings {
+public final class ConfigurationNetSettings {
 
     private DefaultGateway defaultGateway;
 
@@ -44,18 +44,18 @@ public final class ConfigureNetSettings {
     private ConfigurationInterface iface;
 
     /**
-     * This constructor is used to instantiate a {@link ConfigureNetSettings} object. The default Gateway is
+     * This constructor is used to instantiate a {@link ConfigurationNetSettings} object. The default Gateway is
      * not changed.
      * 
      * @param iface
      *            the interface settings
      */
-    public ConfigureNetSettings(ConfigurationInterface iface) {
+    public ConfigurationNetSettings(ConfigurationInterface iface) {
         this(iface, null);
     }
 
     /**
-     * This constructor is used to instantiate a {@link ConfigureNetSettings} object.
+     * This constructor is used to instantiate a {@link ConfigurationNetSettings} object.
      * 
      * @param iface
      *            the interface settings
@@ -63,7 +63,7 @@ public final class ConfigureNetSettings {
      *            the new defaultGateway
      * @throws IllegalArgumentException if interface is {@code null}.
      */
-    public ConfigureNetSettings(ConfigurationInterface iface, DefaultGateway defaultGateway) {
+    public ConfigurationNetSettings(ConfigurationInterface iface, DefaultGateway defaultGateway) {
         if (iface == null) {
             throw new IllegalArgumentException("No interface given!");
         }
