@@ -50,7 +50,7 @@ import com.hbm.devices.scan.messages.Device;
 import com.hbm.devices.scan.messages.Interface;
 import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.IPv6Entry;
-import com.hbm.devices.scan.messages.AnnounceParser;
+import com.hbm.devices.scan.messages.AnnounceDeserializer;
 import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.ServiceEntry;
 import com.hbm.devices.scan.ScanConstants;
@@ -79,7 +79,7 @@ public final class Receiver implements Observer {
      */
     public static void main(String... args) {
         try {
-            final AnnounceParser announceParser = new AnnounceParser();
+            final AnnounceDeserializer announceParser = new AnnounceDeserializer();
             final AnnounceReceiver announceReceiver = new AnnounceReceiver();
             announceReceiver.addObserver(announceParser);
 

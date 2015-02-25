@@ -37,7 +37,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.AnnounceParser;
+import com.hbm.devices.scan.messages.AnnounceDeserializer;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.DefaultGateway;
 import com.hbm.devices.scan.messages.MissingDataException;
@@ -50,7 +50,7 @@ public class DefaultGatewayTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        AnnounceParser parser = new AnnounceParser();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {

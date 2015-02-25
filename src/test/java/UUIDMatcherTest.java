@@ -41,7 +41,7 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
 import com.hbm.devices.scan.announce.filter.UUIDMatch;
-import com.hbm.devices.scan.messages.AnnounceParser;
+import com.hbm.devices.scan.messages.AnnounceDeserializer;
 import com.hbm.devices.scan.messages.Announce;
 public class UUIDMatcherTest {
 
@@ -65,7 +65,7 @@ public class UUIDMatcherTest {
         Matcher matcher = new UUIDMatch(uuids);
         filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
-        AnnounceParser parser = new AnnounceParser();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(filter);
         filter.addObserver(new Observer() {
@@ -83,7 +83,7 @@ public class UUIDMatcherTest {
         Matcher matcher = new UUIDMatch(noMatchingUuids);
         filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
-        AnnounceParser parser = new AnnounceParser();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(filter);
         filter.addObserver(new Observer() {
@@ -101,7 +101,7 @@ public class UUIDMatcherTest {
         Matcher matcher = new UUIDMatch(uuids);
         filter = new Filter(matcher);
         fsmmr = new FakeMessageReceiver();
-        AnnounceParser parser = new AnnounceParser();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(filter);
         filter.addObserver(new Observer() {

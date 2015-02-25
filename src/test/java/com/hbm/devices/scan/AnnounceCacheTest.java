@@ -41,7 +41,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.AnnounceParser;
+import com.hbm.devices.scan.messages.AnnounceDeserializer;
 
 public class AnnounceCacheTest {
 
@@ -50,12 +50,12 @@ public class AnnounceCacheTest {
     private static final String CORRECT_MESSAGE_DIFFERENT_DEVICE;
 
     private FakeMessageReceiver fakeReceiver;
-    private AnnounceParser parser;
+    private AnnounceDeserializer parser;
 
     @Before
     public void setUp() {
         this.fakeReceiver = new FakeMessageReceiver();
-        this.parser = new AnnounceParser();
+        this.parser = new AnnounceDeserializer();
         fakeReceiver.addObserver(parser);
     }
 

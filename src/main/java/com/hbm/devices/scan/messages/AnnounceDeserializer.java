@@ -54,16 +54,16 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public final class AnnounceParser extends Observable implements Observer {
+public final class AnnounceDeserializer extends Observable implements Observer {
 
     private final Gson gson;
     private final AnnounceCache announceCache;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
-     * Constructs a {@link AnnounceParser} object.
+     * Constructs a {@link AnnounceDeserializer} object.
      */
-    public AnnounceParser() {
+    public AnnounceDeserializer() {
         super();
 
         final GsonBuilder builder = new GsonBuilder();

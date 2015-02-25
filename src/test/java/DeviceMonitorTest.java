@@ -41,7 +41,7 @@ import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceParser;
+import com.hbm.devices.scan.messages.AnnounceDeserializer;
 
 public class DeviceMonitorTest {
 
@@ -59,7 +59,7 @@ public class DeviceMonitorTest {
         this.updateDevice = false;
         this.lostDevice = false;
         fsmmr = new FakeMessageReceiver();
-        AnnounceParser parser = new AnnounceParser();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         monitor = new DeviceMonitor();
         parser.addObserver(monitor);

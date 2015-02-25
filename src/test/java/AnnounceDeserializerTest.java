@@ -45,7 +45,7 @@ import com.google.gson.JsonObject;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceParams;
-import com.hbm.devices.scan.messages.AnnounceParser;
+import com.hbm.devices.scan.messages.AnnounceDeserializer;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.DefaultGateway;
 import com.hbm.devices.scan.messages.Device;
@@ -58,7 +58,7 @@ import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.messages.Router;
 import com.hbm.devices.scan.messages.ServiceEntry;
 
-public class AnnounceParserTest {
+public class AnnounceDeserializerTest {
 
     private Announce announce;
     private Response res;
@@ -67,7 +67,7 @@ public class AnnounceParserTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        AnnounceParser parser = new AnnounceParser();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {
