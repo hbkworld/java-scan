@@ -34,12 +34,12 @@ package com.hbm.devices.scan.messages;
  * @since 1.0
  *
  */
-public final class ConfigureDevice {
+public final class ConfigurationDevice {
 
     private final String uuid;
 
     /**
-     * This method checks the {@link ConfigureDevice} object for errors and if it conforms to the HBM network
+     * This method checks the {@link ConfigurationDevice} object for errors and if it conforms to the HBM network
      * discovery and configuration protocol.
      * 
      * @param uuid
@@ -47,9 +47,9 @@ public final class ConfigureDevice {
      * @throws IllegalArgumentException
      *          if {@code uuid} is null of {@code uuid.length() == 0}.
      */
-    public ConfigureDevice(String uuid) {
+    public ConfigurationDevice(String uuid) {
         if ((uuid == null) || (uuid.length() == 0)) {
-            throw new IllegalArgumentException("No uuid in ConfigureDevice");
+            throw new IllegalArgumentException("No uuid in ConfigurationDevice");
         }
         this.uuid = uuid;
     }
