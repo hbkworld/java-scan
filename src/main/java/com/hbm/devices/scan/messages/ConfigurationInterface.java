@@ -36,18 +36,18 @@ import com.hbm.devices.scan.messages.IPv4EntryManual;
  * @since 1.0
  *
  */
-public final class ConfigureInterface {
+public final class ConfigurationInterface {
 
     private String name;
     private IPv4EntryManual ipv4;
     private String configurationMethod;
 
     /**
-     * This constructor is used to instantiate an {@link ConfigureInterface} object.
+     * This constructor is used to instantiate an {@link ConfigurationInterface} object.
      * <p>
      * Note: The parameter {@code configMethod} must not be {@link Method#MANUAL}. If you want to
      * set a manual ipv4 use the constructor
-     * {@link #ConfigureInterface(String, com.hbm.devices.scan.messages.ConfigureInterface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
+     * {@link #ConfigurationInterface(String, com.hbm.devices.scan.messages.ConfigurationInterface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
      * <p>
      * 
      * @param interfaceName
@@ -56,12 +56,12 @@ public final class ConfigureInterface {
      *            this parameter specifies the ip configuration method.
      * 
      */
-    public ConfigureInterface(String interfaceName, Method configMethod) {
+    public ConfigurationInterface(String interfaceName, Method configMethod) {
         this(interfaceName, configMethod, null);
     }
 
     /**
-     * This constructor is used to instantiate an {@link ConfigureInterface} object.
+     * This constructor is used to instantiate an {@link ConfigurationInterface} object.
      * 
      * @param interfaceName
      *            this parameter specifies the interface
@@ -73,7 +73,7 @@ public final class ConfigureInterface {
      * configuration method given or if the configuration method is
      * {@code manual} but no IP address given.
      */
-    public ConfigureInterface(String interfaceName, Method configurationMethod, IPv4EntryManual ipv4) {
+    public ConfigurationInterface(String interfaceName, Method configurationMethod, IPv4EntryManual ipv4) {
         if ((interfaceName == null) || (interfaceName.length() == 0)) {
             throw new IllegalArgumentException("No interface name given!");
         }

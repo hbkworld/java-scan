@@ -41,7 +41,7 @@ public final class ConfigureNetSettings {
     private DefaultGateway defaultGateway;
 
     @SerializedName("interface")
-    private ConfigureInterface iface;
+    private ConfigurationInterface iface;
 
     /**
      * This constructor is used to instantiate a {@link ConfigureNetSettings} object. The default Gateway is
@@ -50,7 +50,7 @@ public final class ConfigureNetSettings {
      * @param iface
      *            the interface settings
      */
-    public ConfigureNetSettings(ConfigureInterface iface) {
+    public ConfigureNetSettings(ConfigurationInterface iface) {
         this(iface, null);
     }
 
@@ -63,7 +63,7 @@ public final class ConfigureNetSettings {
      *            the new defaultGateway
      * @throws IllegalArgumentException if interface is {@code null}.
      */
-    public ConfigureNetSettings(ConfigureInterface iface, DefaultGateway defaultGateway) {
+    public ConfigureNetSettings(ConfigurationInterface iface, DefaultGateway defaultGateway) {
         if (iface == null) {
             throw new IllegalArgumentException("No interface given!");
         }
@@ -83,7 +83,7 @@ public final class ConfigureNetSettings {
      * 
      * @return returns the interface settings
      */
-    public ConfigureInterface getInterface() {
+    public ConfigurationInterface getInterface() {
         return iface;
     }
 }
