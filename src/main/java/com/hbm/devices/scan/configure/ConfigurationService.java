@@ -42,7 +42,7 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
-import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.ConfigurationParams;
 import com.hbm.devices.scan.messages.ErrorObject;
 import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
@@ -59,7 +59,7 @@ import com.hbm.devices.scan.messages.Response;
  * to the response.<p>
  *
  * The main method, which is used to transmit configuration settings, is
- * {@link ConfigurationService#sendConfiguration(ConfigureParams,
+ * {@link ConfigurationService#sendConfiguration(ConfigurationParams,
  * ConfigurationCallback, long)}.<p>
  *
  * @since 1.0
@@ -186,7 +186,7 @@ public class ConfigurationService implements Observer {
      * @throws IOException
      *              if the underlying socket send does not succeed.
      */
-    public void sendConfiguration(final ConfigureParams configParams,
+    public void sendConfiguration(final ConfigurationParams configParams,
         final ConfigurationCallback callback, long timeout) throws IOException {
 
         final String queryID = UUID.randomUUID().toString();
@@ -216,7 +216,7 @@ public class ConfigurationService implements Observer {
      * @throws IOException
      *              if the underlying socket send does not succeed.
      */
-    public void sendConfiguration(final ConfigureParams configParams, final String queryID,
+    public void sendConfiguration(final ConfigurationParams configParams, final String queryID,
         final ConfigurationCallback callback, long timeout) throws IOException {
 
         if (configParams == null) {

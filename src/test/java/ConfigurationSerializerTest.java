@@ -45,7 +45,7 @@ import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
-import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.ConfigurationParams;
 
 public class ConfigurationSerializerTest {
 
@@ -64,7 +64,7 @@ public class ConfigurationSerializerTest {
     public void parseCorrectConfig() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
-        ConfigureParams configParams = new ConfigureParams(device, settings);
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
         ConfigurationRequest conf = new ConfigurationRequest(configParams, "TEST-UUID");
  
         try {

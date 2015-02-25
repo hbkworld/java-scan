@@ -44,7 +44,7 @@ import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
-import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.ConfigurationParams;
 import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
@@ -110,7 +110,7 @@ public final class Sender implements ConfigurationCallback {
             final Sender sender = new Sender();
             final ConfigureDevice device = new ConfigureDevice("0009E5001571");
             final ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP, null));
-            final ConfigureParams configParams = new ConfigureParams(device, settings);
+            final ConfigurationParams configParams = new ConfigurationParams(device, settings);
             sender.service.sendConfiguration(configParams, sender, TimeUnit.SECONDS.toMillis(RESPONSE_TIMEOUT_S));
         } catch (IOException e) {
             if (LOGGER.isLoggable(Level.SEVERE)) {

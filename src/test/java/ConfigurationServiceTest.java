@@ -45,7 +45,7 @@ import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
-import com.hbm.devices.scan.messages.ConfigureParams;
+import com.hbm.devices.scan.messages.ConfigurationParams;
 import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
 
@@ -68,7 +68,7 @@ public class ConfigurationServiceTest {
     public void sendingTest() {
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
-        ConfigureParams configParams = new ConfigureParams(device, settings);
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
         ConfigurationCallback callback = new ConfigurationCallback() {
             public void onSuccess(Response response) {}
             public void onError(Response response) {}
@@ -122,7 +122,7 @@ public class ConfigurationServiceTest {
 
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
-        ConfigureParams configParams = new ConfigureParams(device, settings);
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
         try {
             service.sendConfiguration(configParams, queryID, cb, 1000);
@@ -160,7 +160,7 @@ public class ConfigurationServiceTest {
 
         ConfigureDevice device = new ConfigureDevice("0009E5001571");
         ConfigureNetSettings settings = new ConfigureNetSettings(new ConfigureInterface("eth0", Method.DHCP));
-        ConfigureParams configParams = new ConfigureParams(device, settings);
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();
         ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);

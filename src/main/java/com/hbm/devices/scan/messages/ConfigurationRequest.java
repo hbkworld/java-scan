@@ -39,7 +39,7 @@ public final class ConfigurationRequest extends JsonRpc {
 
     @SerializedName("id")
     private String queryID;
-    private ConfigureParams params;
+    private ConfigurationParams params;
 
     private ConfigurationRequest() {
         super("configure");
@@ -52,7 +52,7 @@ public final class ConfigurationRequest extends JsonRpc {
      *            A value of any type, which is used to match the response with the request that it
      *            is replying to.
      */
-    public ConfigurationRequest(ConfigureParams params, String queryID) {
+    public ConfigurationRequest(ConfigurationParams params, String queryID) {
         this();
 
         if (params == null) {
@@ -65,7 +65,7 @@ public final class ConfigurationRequest extends JsonRpc {
         this.queryID = queryID;
     }
 
-    public ConfigureParams getParams() {
+    public ConfigurationParams getParams() {
         return params;
     }
 

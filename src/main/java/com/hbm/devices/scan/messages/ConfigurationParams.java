@@ -32,7 +32,7 @@ package com.hbm.devices.scan.messages;
  * This class holt all information to configure a device via the HBM
  * Network Discovery and Configuration Protocol for Embedded Devices.
  */
-public final class ConfigureParams {
+public final class ConfigurationParams {
 
     private ConfigureDevice device;
     private ConfigureNetSettings netSettings;
@@ -51,7 +51,7 @@ public final class ConfigureParams {
      * {@code device} is {@code null} or {@code netSettings} is {@code
      * null}.
      */
-    public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings, int ttl) {
+    public ConfigurationParams(ConfigureDevice device, ConfigureNetSettings netSettings, int ttl) {
         if (device == null) {
             throw new IllegalArgumentException("device must not be null");
         }
@@ -74,7 +74,7 @@ public final class ConfigureParams {
      * @param netSettings the network settings which shal be configured.
      *
      */
-    public ConfigureParams(ConfigureDevice device, ConfigureNetSettings netSettings) {
+    public ConfigurationParams(ConfigureDevice device, ConfigureNetSettings netSettings) {
         this(device, netSettings, 1);
     }
 
