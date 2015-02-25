@@ -37,7 +37,7 @@ import java.io.IOException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationCallback;
-import com.hbm.devices.scan.configure.ConfigurationSender;
+import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
@@ -76,7 +76,7 @@ public class ConfigurationServiceTest {
         };
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();
-        ConfigurationSender sender = new ConfigurationSender(fakeSender);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
         try {
             service.sendConfiguration(configParams, "TEST_UUID", callback, 5000);
@@ -92,7 +92,7 @@ public class ConfigurationServiceTest {
     @Test
     public void testShutdownWithoutOutstandingResponses() {
         FakeMulticastSender fakeSender = new FakeMulticastSender();
-        ConfigurationSender sender = new ConfigurationSender(fakeSender);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
         service.shutdown();
         assertTrue("Service was not shut down", service.isShutdown());
@@ -115,7 +115,7 @@ public class ConfigurationServiceTest {
         final String queryID = "test-id";
 
         FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
-        ConfigurationSender sender = new ConfigurationSender(fakeDevice);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
         
         fakeDevice.addObserver(messageParser);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
@@ -163,7 +163,7 @@ public class ConfigurationServiceTest {
         ConfigureParams configParams = new ConfigureParams(device, settings);
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();
-        ConfigurationSender sender = new ConfigurationSender(fakeSender);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
 
         synchronized(cb) {

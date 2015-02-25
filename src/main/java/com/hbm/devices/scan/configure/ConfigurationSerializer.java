@@ -39,18 +39,18 @@ import com.hbm.devices.scan.messages.ConfigurationRequest;
  * @since 1.0
  *
  */
-public final class ConfigurationSender {
+public final class ConfigurationSerializer {
 
     private final MulticastSender sender;
     private final Gson gson;
 
     /**
-     * Constructs a ConfigurationSender object.
+     * Constructs a ConfigurationSerializer object.
      *
      * @param sender The multicast sender that will be used when calling
      * {@link #sendConfiguration}.
      */
-    public ConfigurationSender(MulticastSender sender) {
+    public ConfigurationSerializer(MulticastSender sender) {
         this.sender = sender;
         gson = new Gson();
     }

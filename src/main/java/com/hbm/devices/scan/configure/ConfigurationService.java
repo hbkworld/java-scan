@@ -71,7 +71,7 @@ public class ConfigurationService implements Observer {
 
     private final ResponseDeserializer responseParser;
 
-    private final ConfigurationSender sender;
+    private final ConfigurationSerializer sender;
 
     private final ScheduledThreadPoolExecutor executor;
 
@@ -86,10 +86,10 @@ public class ConfigurationService implements Observer {
      * the devices, the message parsers to convert incoming JSON Strings
      * into objects or outgoing objects into JSON Strings.
      *
-     * @param sender the ConfigurationSender the ConfigurationService shall use.
+     * @param sender the ConfigurationSerializer the ConfigurationService shall use.
      * @param parser the ResponseDeserializer the ConfigurationService shall use.
      */
-    public ConfigurationService(ConfigurationSender sender, ResponseDeserializer parser) {
+    public ConfigurationService(ConfigurationSerializer sender, ResponseDeserializer parser) {
         executor = new ScheduledThreadPoolExecutor(1);
         awaitingResponses = new HashMap<String, ConfigQuery>();
         this.sender = sender;
@@ -101,7 +101,7 @@ public class ConfigurationService implements Observer {
      * Shuts down the {@link ConfigurationService}.
      *
      * Timers for outstanding {@link Response}s are cancelled and the
-     * {@link ConfigurationSender} is shut down.
+     * {@link ConfigurationSerializer} is shut down.
      */
     public void shutdown() {
         responseParser.deleteObserver(this);

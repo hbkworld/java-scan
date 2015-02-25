@@ -38,7 +38,7 @@ import java.util.logging.Logger;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.configure.ConfigurationCallback;
 import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
-import com.hbm.devices.scan.configure.ConfigurationSender;
+import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.ConfigureResponseReceiver;
 import com.hbm.devices.scan.messages.ConfigureDevice;
@@ -69,7 +69,7 @@ public final class Sender implements ConfigurationCallback {
 
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
         final ConfigurationMulticastSender multicastSender = new ConfigurationMulticastSender(scanInterfaces);
-        final ConfigurationSender sender = new ConfigurationSender(multicastSender);
+        final ConfigurationSerializer sender = new ConfigurationSerializer(multicastSender);
 
         service = new ConfigurationService(sender, responseParser);
     }

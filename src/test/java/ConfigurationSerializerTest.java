@@ -38,7 +38,7 @@ import java.io.IOException;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.hbm.devices.scan.configure.ConfigurationSender;
+import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureDevice;
@@ -47,16 +47,16 @@ import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
 
-public class ConfigurationSenderTest {
+public class ConfigurationSerializerTest {
 
     private FakeMulticastSender fs;
-    private ConfigurationSender cs;
+    private ConfigurationSerializer cs;
     private JsonParser parser;
 
     @Before
     public void setUp() {
         fs = new FakeMulticastSender();
-        cs = new ConfigurationSender(fs);
+        cs = new ConfigurationSerializer(fs);
         parser = new JsonParser();
     }
 
