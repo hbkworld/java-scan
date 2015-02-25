@@ -45,8 +45,8 @@ import com.google.gson.JsonSyntaxException;
 import com.hbm.devices.scan.ScanConstants;
 
 /**
- * This class gets JSON-RPC response messages, parses them and notifies {@link Response}
- * objects.
+ * This class gets <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>
+ * response messages, parses them and notifies {@link Response} objects.
  * <p>
  * The whole class is designed as a best effort service. So invalid JSON messages, or messages that
  * do not conform to the HBM network discovery and configuration protocol are simply ignored. Users
@@ -54,15 +54,15 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public final class ResponseParser extends Observable implements Observer {
+public final class ResponseDeserializer extends Observable implements Observer {
 
     private final Gson gson;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
-     * Constructs a {@link ResponseParser} object.
+     * Constructs a {@link ResponseDeserializer} object.
      */
-    public ResponseParser() {
+    public ResponseDeserializer() {
         super();
 
         final GsonBuilder builder = new GsonBuilder();

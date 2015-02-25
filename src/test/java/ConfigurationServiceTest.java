@@ -46,11 +46,11 @@ import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureInterface.Method;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
 import com.hbm.devices.scan.messages.ConfigureParams;
-import com.hbm.devices.scan.messages.ResponseParser;
+import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {
-    private ResponseParser messageParser;
+    private ResponseDeserializer messageParser;
     private JsonParser parser;
 
     private boolean received;
@@ -58,7 +58,7 @@ public class ConfigurationServiceTest {
 
     @Before
     public void setUp() {
-        this.messageParser = new ResponseParser();
+        this.messageParser = new ResponseDeserializer();
         this.parser = new JsonParser();
         received = false;
         timeout = false;

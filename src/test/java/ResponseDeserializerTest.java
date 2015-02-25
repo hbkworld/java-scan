@@ -42,9 +42,9 @@ import com.google.gson.JsonObject;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.ErrorObject;
 import com.hbm.devices.scan.messages.Response;
-import com.hbm.devices.scan.messages.ResponseParser;
+import com.hbm.devices.scan.messages.ResponseDeserializer;
 
-public class ResponseParserTest {
+public class ResponseDeserializerTest {
 
     private Response res;
     private FakeMessageReceiver fsmmr;
@@ -52,7 +52,7 @@ public class ResponseParserTest {
     @Before
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
-        ResponseParser parser = new ResponseParser();
+        ResponseDeserializer parser = new ResponseDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
             public void update(Observable o, Object arg) {

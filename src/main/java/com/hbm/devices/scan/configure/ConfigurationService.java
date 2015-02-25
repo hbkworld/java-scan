@@ -44,7 +44,7 @@ import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.ConfigurationRequest;
 import com.hbm.devices.scan.messages.ConfigureParams;
 import com.hbm.devices.scan.messages.ErrorObject;
-import com.hbm.devices.scan.messages.ResponseParser;
+import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.messages.Response;
 
 /**
@@ -69,7 +69,7 @@ public class ConfigurationService implements Observer {
 
     private final Map<String, ConfigQuery> awaitingResponses;
 
-    private final ResponseParser responseParser;
+    private final ResponseDeserializer responseParser;
 
     private final ConfigurationSender sender;
 
@@ -87,9 +87,9 @@ public class ConfigurationService implements Observer {
      * into objects or outgoing objects into JSON Strings.
      *
      * @param sender the ConfigurationSender the ConfigurationService shall use.
-     * @param parser the ResponseParser the ConfigurationService shall use.
+     * @param parser the ResponseDeserializer the ConfigurationService shall use.
      */
-    public ConfigurationService(ConfigurationSender sender, ResponseParser parser) {
+    public ConfigurationService(ConfigurationSender sender, ResponseDeserializer parser) {
         executor = new ScheduledThreadPoolExecutor(1);
         awaitingResponses = new HashMap<String, ConfigQuery>();
         this.sender = sender;
