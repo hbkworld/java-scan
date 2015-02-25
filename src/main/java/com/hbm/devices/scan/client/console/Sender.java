@@ -40,7 +40,7 @@ import com.hbm.devices.scan.configure.ConfigurationCallback;
 import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
 import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
-import com.hbm.devices.scan.configure.ConfigureResponseReceiver;
+import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
 import com.hbm.devices.scan.messages.ConfigureDevice;
 import com.hbm.devices.scan.messages.ConfigureInterface;
 import com.hbm.devices.scan.messages.ConfigureNetSettings;
@@ -63,7 +63,7 @@ public final class Sender implements ConfigurationCallback {
     private static final int RESPONSE_TIMEOUT_S = 5;
 
     private Sender() throws IOException {
-        final ConfigureResponseReceiver responseReceiver = new ConfigureResponseReceiver();
+        final ConfigurationMessageReceiver responseReceiver = new ConfigurationMessageReceiver();
         final ResponseDeserializer responseParser = new ResponseDeserializer();
         responseReceiver.addObserver(responseParser);
 

@@ -39,14 +39,14 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public final class ConfigureResponseReceiver extends MulticastMessageReceiver {
+public final class ConfigurationMessageReceiver extends MulticastMessageReceiver {
 
     /**
-     * Constructs a {@link ConfigureResponseReceiver}.
+     * Constructs a {@link ConfigurationMessageReceiver}.
      *
      * @throws IOException if an I/O error occurs.
      */
-    public ConfigureResponseReceiver() throws IOException {
+    public ConfigurationMessageReceiver() throws IOException {
         super(ScanConstants.CONFIGURATION_ADDRESS, ScanConstants.CONFIGURATION_PORT);
     }
 }

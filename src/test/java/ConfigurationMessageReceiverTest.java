@@ -34,25 +34,25 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import com.hbm.devices.scan.configure.ConfigureResponseReceiver;
+import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
 
-public class ConfigureResponseReceiverTest {
+public class ConfigurationMessageReceiverTest {
 
     @Test
     public void intantiation() {
         try {
-            ConfigureResponseReceiver cr = new ConfigureResponseReceiver();
-            assertNotNull("Could not instantiate ConfigureResponseReceiver", cr);
+            ConfigurationMessageReceiver cr = new ConfigurationMessageReceiver();
+            assertNotNull("Could not instantiate ConfigurationMessageReceiver", cr);
         } catch (IOException e) {
-            fail("Got IOException while instantiating ConfigureResponseReceiver");
+            fail("Got IOException while instantiating ConfigurationMessageReceiver");
         }
     }
 
     @Test
     public void runAndStop() {
         try {
-            ConfigureResponseReceiver cr = new ConfigureResponseReceiver();
-            assertNotNull("Could not instantiate ConfigureResponseReceiver", cr);
+            ConfigurationMessageReceiver cr = new ConfigurationMessageReceiver();
+            assertNotNull("Could not instantiate ConfigurationMessageReceiver", cr);
             Thread crThread = new Thread(cr);
             crThread.start();
             Thread.sleep(10);
@@ -60,9 +60,9 @@ public class ConfigureResponseReceiverTest {
             crThread.join(1000);
             assertFalse("Thread still alive after stop", crThread.isAlive());
         } catch (IOException e) {
-            fail("Got IOException while instantiating ConfigureResponseReceiver");
+            fail("Got IOException while instantiating ConfigurationMessageReceiver");
         } catch (InterruptedException e) {
-            fail("Got InterruptedExcpetion while joining ConfigureResponseReceiver thread");
+            fail("Got InterruptedExcpetion while joining ConfigurationMessageReceiver thread");
         }
     }
 }
