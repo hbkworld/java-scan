@@ -74,6 +74,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String NOT_ANNOUNCE_MESSAGE;
     private static final String MISSING_TYPE_RESPONSE_MESSAGE;
     private static final String NO_SUCCESS_ID_RESPONSE_MESSAGE;
+    private static final String EMPTY_SUCCESS_ID_RESPONSE_MESSAGE;
     private static final String CORRECT_ERROR_RESPONSE_MESSAGE;
     private static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE;
     private static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE;
@@ -255,6 +256,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
         notifyObservers(NO_SUCCESS_ID_RESPONSE_MESSAGE);
     }
 
+    public void emitEmtpySuccessIdResponseMessage() {
+        setChanged();
+        notifyObservers(EMPTY_SUCCESS_ID_RESPONSE_MESSAGE);
+    }
+
     public void emitSingleCorrectErrorResponseMessage() {
         setChanged();
         notifyObservers(CORRECT_ERROR_RESPONSE_MESSAGE);
@@ -360,6 +366,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             NOT_ANNOUNCE_MESSAGE = props.getProperty("scan.announce.not_announce_message");
             MISSING_TYPE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missing_type_response_message");
             NO_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.no_success_id_response_message");
+            EMPTY_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.empty_success_id_response_message");
             CORRECT_ERROR_RESPONSE_MESSAGE = props.getProperty("scan.configure.correct_error_response_message");
             INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = props.getProperty("scan.configure.invalid_error_success_response_message");
             MISSING_ERROR_CODE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missing_error_code_response_message");

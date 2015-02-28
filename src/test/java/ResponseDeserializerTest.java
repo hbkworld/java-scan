@@ -82,9 +82,21 @@ public class ResponseDeserializerTest {
     }
 
     @Test
+    public void parseMissingIdMessage() {
+        fsmmr.emitNoSuccessIdResponseMessage();
+        assertNull("Got result object from response without id", res);
+    }
+
+    @Test
+    public void parseEmptyIdMessage() {
+        fsmmr.emitEmtpySuccessIdResponseMessage();
+        assertNull("Got result object from response without id", res);
+    }
+
+    @Test
     public void parseMissingTypeMessage() {
         fsmmr.emitMissingTypeResponseMessage();
-        assertNull("Got result object from response with error and result", res);
+        assertNull("Got result object from response without error and result", res);
     }
 
     @Test

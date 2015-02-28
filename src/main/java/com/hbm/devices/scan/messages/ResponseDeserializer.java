@@ -103,7 +103,7 @@ public final class ResponseDeserializer extends Observable implements Observer {
             final JsonElement identifier = jsonObject.get("id");
             if (identifier != null) {
                 final String value = identifier.toString();
-                if ((!"".equals(value)) && 
+                if ((!value.equals("\"\"")) && 
                     (jsonObject.has("result") ^ jsonObject.has("error"))) {
                     
                     rpcObject = context.deserialize(json, Response.class);
