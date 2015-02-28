@@ -201,7 +201,7 @@ public class ConfigurationServiceTest {
         assertTrue("Illegal response not ignored", timeout && !success && !error);
         service.close();
     }
-/*
+
     @Test(timeout=100)
     public void testEmptyResponseID() {
 
@@ -372,5 +372,4 @@ public class ConfigurationServiceTest {
         assertTrue("Illegal response not ignored", timeout && !error && !success);
         service.close();
     }
-*/
 }
