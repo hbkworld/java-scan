@@ -149,13 +149,7 @@ public class ConfigurationService implements Observer, Closeable {
      */
     @Override
     public void update(Observable observable, Object arg) {
-        System.out.println("update called");
         final Response response = (Response)arg;
-        final String responseID = response.getId();
-        System.out.println("id: " + responseID);
-        if (responseIdNotValid(responseID)) {
-            return;
-        }
         handleCallbacks(response);
     }
 
@@ -238,10 +232,10 @@ public class ConfigurationService implements Observer, Closeable {
     }
 
     private void handleCallbacks(Response response) {
-        final ConfigQuery configQuery = awaitingResponses.get(response.getId());
+        final String responseID = response.getId();
+        final ConfigQuery configQuery = awaitingResponses.get(responseID);
 
         if (configQuery != null) {
-
             final ErrorObject error = response.getError();
             if (error == null) {
                 configQuery.getConfigCallback().onSuccess(response);
@@ -252,12 +246,8 @@ public class ConfigurationService implements Observer, Closeable {
                 }
                 configQuery.getConfigCallback().onError(response);
             }
-            awaitingResponses.remove(response.getId());
+            awaitingResponses.remove(responseID);
         }
-    }
-
-    private static boolean responseIdNotValid(String responseID) {
-        return (responseID == null) || (responseID.length() <= 0);
     }
 
     private static boolean errorMessageNotValid(String message) {
