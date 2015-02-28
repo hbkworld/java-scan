@@ -70,6 +70,19 @@ public class ConfigurationMulticastSenderTest {
     }
 
     @Test
+    public void createAndDoubleClose() {
+        try {
+            final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
+            ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
+            sender.close();
+            assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+            sender.close();
+            assertTrue("Sedonc close failed", sender.isClosed());
+        } catch (IOException e) {
+            fail("Can't instantiate ConfigurationMulticastSender object");
+        }
+    }
+    @Test
     public void sendMessageTest() {
         try {
             final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
