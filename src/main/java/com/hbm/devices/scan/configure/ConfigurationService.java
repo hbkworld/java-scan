@@ -155,11 +155,8 @@ public class ConfigurationService implements Observer, Closeable {
         if (responseIdNotValid(responseID)) {
             return;
         }
-        final String result = response.getResult();
-        final ErrorObject error = response.getError();
-
         if (awaitingResponses.containsKey(response.getId())) {
-            handleCallbacks(response, error);
+            handleCallbacks(response);
         }
     }
 
@@ -241,9 +238,11 @@ public class ConfigurationService implements Observer, Closeable {
         serializer.sendConfiguration(config);
     }
 
-    private void handleCallbacks(Response response, ErrorObject error) {
+    private void handleCallbacks(Response response) {
         final ConfigQuery configQuery = awaitingResponses.get(response.getId());
         awaitingResponses.remove(response.getId());
+
+        final ErrorObject error = response.getError();
         if (error == null) {
             configQuery.getConfigCallback().onSuccess(response);
         } else {
