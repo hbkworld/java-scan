@@ -64,6 +64,10 @@ public class FakeDeviceEmulator extends Observable implements MessageReceiver, M
             responseString = "{\"id\":\"\",\"jsonrpc\":\"2.0\",\"result\":0}";
         } else if (id.equals("error")) {
             responseString = "{\"id\":\"" + id + "\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":2,\"message\":\"hello\"}}";
+        } else if (id.equals("error-no-message")) {
+            responseString = "{\"id\":\"" + id + "\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":2}}";
+        } else if (id.equals("error-empty-message")) {
+            responseString = "{\"id\":\"" + id + "\",\"jsonrpc\":\"2.0\",\"error\":{\"code\":2,\"message\":\"\"}}";
         } else {
             responseString = "{\"id\":\"" + id + "\",\"jsonrpc\":\"2.0\",\"result\":0}";
         }

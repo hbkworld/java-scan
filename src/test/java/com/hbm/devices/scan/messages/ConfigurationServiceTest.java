@@ -64,18 +64,21 @@ public class ConfigurationServiceTest {
 
         cb = new ConfigurationCallback() {
             public void onTimeout(long t) {
+                System.out.println("on timeout");
                 synchronized(this) {
                     timeout = true;
                     this.notifyAll();
                 }
             }
             public void onSuccess(Response response) {
+                System.out.println("on success");
                 synchronized(this) {
                     success = true;
                     this.notifyAll();
                 }
             }
             public void onError(Response response) {
+                System.out.println("on error");
                 synchronized(this) {
                     error = true;
                     this.notifyAll();
@@ -266,6 +269,76 @@ public class ConfigurationServiceTest {
         }
 
         assertTrue("Illegal response not ignored", error && !timeout && !success);
+        service.close();
+    }
+
+    @Test(timeout=100)
+    public void testErrorResponseNoMessage() {
+
+        final String queryID = "error-no-message";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        try {
+            System.out.println("error-no-message");
+            service.sendConfiguration(configParams, queryID, cb, 10);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        synchronized(cb) {
+            while (!timeout && !success && !error) {
+                try {
+                    cb.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assertTrue("Illegal response not ignored", timeout && !error && !success);
+        service.close();
+    }
+
+    @Test(timeout=100)
+    public void testErrorResponseEmptyMessage() {
+
+        final String queryID = "error-empty-message";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        synchronized(cb) {
+            try {
+                service.sendConfiguration(configParams, queryID, cb, 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (!timeout && !success && !error) {
+                try {
+                    cb.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assertTrue("Illegal response not ignored", timeout && !error && !success);
         service.close();
     }
 }
