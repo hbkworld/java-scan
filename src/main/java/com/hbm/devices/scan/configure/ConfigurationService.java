@@ -157,9 +157,6 @@ public class ConfigurationService implements Observer, Closeable {
         }
         final String result = response.getResult();
         final ErrorObject error = response.getError();
-        if (responseNotValid(error, result)) {
-            return;
-        }
 
         if (awaitingResponses.containsKey(response.getId())) {
             handleCallbacks(response, error);
@@ -260,10 +257,6 @@ public class ConfigurationService implements Observer, Closeable {
 
     private static boolean responseIdNotValid(String responseID) {
         return (responseID == null) || (responseID.length() <= 0);
-    }
-
-    private static boolean responseNotValid(ErrorObject error, String result) {
-        return (result == null && error == null) || (result != null && error != null);
     }
 
     private static boolean errorMessageNotValid(String message) {
