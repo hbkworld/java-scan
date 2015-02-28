@@ -83,7 +83,7 @@ public class ConfigurationServiceTest {
             }
         };
     }
-/*
+
     @Test
     public void sendingTest() {
         ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
@@ -167,7 +167,7 @@ public class ConfigurationServiceTest {
         assertTrue("Haven't got timeout", !success && !error && timeout);
         assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
-*/
+
     @Test(timeout=100)
     public void testNoResponseID() {
 
