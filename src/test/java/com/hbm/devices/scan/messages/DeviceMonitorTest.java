@@ -26,6 +26,8 @@
  * SOFTWARE.
  */
 
+package com.hbm.devices.scan.messages;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -40,8 +42,6 @@ import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
 
 public class DeviceMonitorTest {
 
@@ -127,5 +127,12 @@ public class DeviceMonitorTest {
         fsmmr.emitSingleCorrectMessage();
         monitor.stop();
         assertTrue("monitor not stopped", monitor.isStopped());
+    }
+
+    @Test
+    public void wrongAnnounce() {
+        Announce announce = new Announce();
+        monitor.update(null, announce);
+        assertTrue("Event fired for illegal announce object", !newDevice && !updateDevice && !lostDevice);
     }
 }
