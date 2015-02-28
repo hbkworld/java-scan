@@ -90,12 +90,12 @@ public class ConfigurationServiceTest {
     }
 
     @Test
-    public void testShutdownWithoutOutstandingResponses() {
+    public void testCloseWithoutOutstandingResponses() {
         FakeMulticastSender fakeSender = new FakeMulticastSender();
         ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
-        service.shutdown();
-        assertTrue("Service was not shut down", service.isShutdown());
+        service.close();
+        assertTrue("Service was not closed", service.isClosed());
     }
 
     @Test

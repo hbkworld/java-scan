@@ -55,7 +55,7 @@ public final class ConfigurationMulticastSender implements MulticastSender {
     private final Collection<NetworkInterface> interfaces;
     private final Charset charset;
     private final InetAddress configureAddress;
-    private boolean stopped;
+    private boolean closed;
 
     /**
      * Creates a {@link ConfigurationMulticastSender} object for sending
@@ -79,7 +79,7 @@ public final class ConfigurationMulticastSender implements MulticastSender {
         
         interfaces = new LinkedList<NetworkInterface>();
         interfaces.addAll(ifs);
-        stopped = false;
+        closed = false;
     }
 
     /**
@@ -101,18 +101,21 @@ public final class ConfigurationMulticastSender implements MulticastSender {
     }
 
     /**
-     * Shuts down the multicast sender.
+     * Closes the {@link ConfigurationMulticastSender} and releases all
+     * underlying resources.
      *
      * The underlying socket is closed and IGMP leave messages are send.
      */
     @Override
-    public void shutdown() {
-        socket.close();
-        stopped = true;
+    public void close() {
+        if (!closed) {
+            socket.close();
+            closed = true;
+        }
     }
 
     @Override
-    public boolean isShutdown() {
-        return stopped;
+    public boolean isClosed() {
+        return closed;
     }
 }

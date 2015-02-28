@@ -28,12 +28,13 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 /**
  * Interface all multicast sender have to implement.
  */
-public interface MulticastSender {
+public interface MulticastSender extends Closeable {
 
     /**
      * Sends a multicast message
@@ -44,12 +45,12 @@ public interface MulticastSender {
     void sendMessage(String message) throws IOException;
 
     /**
-     * Shuts down the multicast sender.
+     * Closes the multicast sender.
      */
-    void shutdown();
+    void close();
 
     /**
-     * @return true if sender was shutdown, false otherwise.
+     * @return true if sender was closed, false otherwise.
      */
-    boolean isShutdown();
+    boolean isClosed();
 }

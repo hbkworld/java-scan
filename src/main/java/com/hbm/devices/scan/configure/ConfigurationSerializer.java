@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Closeable;
 import java.io.IOException;
 
 import com.google.gson.Gson;
@@ -39,7 +40,7 @@ import com.hbm.devices.scan.messages.ConfigurationRequest;
  * @since 1.0
  *
  */
-public final class ConfigurationSerializer {
+public final class ConfigurationSerializer implements Closeable {
 
     private final MulticastSender sender;
     private final Gson gson;
@@ -78,12 +79,12 @@ public final class ConfigurationSerializer {
      * This involves multicast leave IGMP messagesfor the configuration
      * address.
      */
-    public void shutdown() {
-        sender.shutdown();
+    public void close() {
+        sender.close();
     }
 
-    public boolean isShutdown() {
-        return sender.isShutdown();
+    public boolean isClosed() {
+        return sender.isClosed();
     }
 
     private String getJsonString(ConfigurationRequest configuration) {

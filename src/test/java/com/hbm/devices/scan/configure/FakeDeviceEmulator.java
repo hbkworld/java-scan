@@ -46,15 +46,15 @@ import com.hbm.devices.scan.MessageReceiver;
 public class FakeDeviceEmulator extends Observable implements MessageReceiver, MulticastSender {
 
     private String responseString;
-	private boolean stopped;
+	private boolean closed;
     public FakeDeviceEmulator(String queryID) {
         responseString = "{\"id\":\"" + queryID + "\",\"jsonrpc\":\"2.0\",\"result\":0}";
-		stopped = false;    
+		closed = false;    
 	}
     public void stop() {}
     public void run() {}
-    public void shutdown() {stopped = true;}
-    public boolean isShutdown() {return stopped;}
+    public void close() {closed = true;}
+    public boolean isClosed() {return closed;}
     public void sendMessage(String message) {
         setChanged();
         notifyObservers(responseString);

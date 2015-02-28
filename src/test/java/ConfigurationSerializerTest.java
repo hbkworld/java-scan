@@ -87,8 +87,8 @@ public class ConfigurationSerializerTest {
     }
 
     @Test
-    public void shutDownTest() {
-        cs.shutdown();
-        assertTrue("Sender was not shut down", cs.isShutdown());
+    public void closeTest() {
+        cs.close();
+        assertTrue("Sender was not closed", cs.isClosed());
     }
 }

@@ -55,12 +55,12 @@ public class FakeMulticastSender implements MulticastSender {
     }
 
     @Override
-    public void shutdown() {
+    public void close() {
 		closed = true;
     }
 
     @Override
-    public boolean isShutdown() {
+    public boolean isClosed() {
         return closed;
     }
 }

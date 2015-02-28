@@ -86,7 +86,7 @@ public final class Sender implements ConfigurationCallback {
             LOGGER.log(Level.INFO, " result: " + response.getResult() + "\n");
         }
         responseReceiver.stop();
-        service.shutdown();
+        service.close();
     }
 
     @Override
@@ -98,7 +98,7 @@ public final class Sender implements ConfigurationCallback {
             LOGGER.log(Level.INFO, " data: " + response.getError().getData() + "\n");
         }
         responseReceiver.stop();
-        service.shutdown();
+        service.close();
     }
 
     @Override
@@ -107,7 +107,7 @@ public final class Sender implements ConfigurationCallback {
             LOGGER.log(Level.INFO, "No response is received in " + timeout + "ms\n");
         }
         responseReceiver.stop();
-        service.shutdown();
+        service.close();
     }
 
     /**

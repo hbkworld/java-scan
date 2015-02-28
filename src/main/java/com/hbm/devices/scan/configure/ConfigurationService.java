@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -65,13 +66,13 @@ import com.hbm.devices.scan.messages.Response;
  * @since 1.0
  *
  */
-public class ConfigurationService implements Observer {
+public class ConfigurationService implements Observer, Closeable {
 
     private final Map<String, ConfigQuery> awaitingResponses;
 
     private final ResponseDeserializer responseParser;
 
-    private final ConfigurationSerializer sender;
+    private final ConfigurationSerializer serializer;
 
     private final ScheduledThreadPoolExecutor executor;
 
@@ -86,24 +87,24 @@ public class ConfigurationService implements Observer {
      * the devices, the message parsers to convert incoming JSON Strings
      * into objects or outgoing objects into JSON Strings.
      *
-     * @param sender the ConfigurationSerializer the ConfigurationService shall use.
+     * @param serializer the ConfigurationSerializer the ConfigurationService shall use.
      * @param parser the ResponseDeserializer the ConfigurationService shall use.
      */
-    public ConfigurationService(ConfigurationSerializer sender, ResponseDeserializer parser) {
+    public ConfigurationService(ConfigurationSerializer serializer, ResponseDeserializer parser) {
         executor = new ScheduledThreadPoolExecutor(1);
         awaitingResponses = new HashMap<String, ConfigQuery>();
-        this.sender = sender;
+        this.serializer = serializer;
         responseParser = parser;
         responseParser.addObserver(this);
     }
 
     /**
-     * Shuts down the {@link ConfigurationService}.
+     * Closes the {@link ConfigurationService}.
      *
      * Timers for outstanding {@link Response}s are cancelled and the
-     * {@link ConfigurationSerializer} is shut down.
+     * {@link ConfigurationSerializer} is closed.
      */
-    public void shutdown() {
+    public void close() {
         responseParser.deleteObserver(this);
 
         executor.shutdown();
@@ -119,11 +120,11 @@ public class ConfigurationService implements Observer {
             Thread.currentThread().interrupt();
         }
 
-        sender.shutdown();
+        serializer.close();
     }
 
-    public boolean isShutdown() {
-        return sender.isShutdown();
+    public boolean isClosed() {
+        return serializer.isClosed();
     }
 
     /**
@@ -239,7 +240,7 @@ public class ConfigurationService implements Observer {
         final TimeoutTimerTask task = new TimeoutTimerTask(configQuery);
         executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
-        sender.sendConfiguration(config);
+        serializer.sendConfiguration(config);
     }
 
     private void handleCallbacks(Response response, ErrorObject error) {
