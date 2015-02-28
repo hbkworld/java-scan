@@ -26,6 +26,8 @@
  * SOFTWARE.
  */
 
+package com.hbm.devices.scan.messages;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -41,13 +43,7 @@ import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
 import com.hbm.devices.scan.configure.FakeDeviceEmulator;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
-import com.hbm.devices.scan.messages.ConfigurationDevice;
-import com.hbm.devices.scan.messages.ConfigurationInterface;
 import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
-import com.hbm.devices.scan.messages.ConfigurationNetSettings;
-import com.hbm.devices.scan.messages.ConfigurationParams;
-import com.hbm.devices.scan.messages.ResponseDeserializer;
-import com.hbm.devices.scan.messages.Response;
 
 public class ConfigurationServiceTest {
     private ResponseDeserializer messageParser;
@@ -135,7 +131,7 @@ public class ConfigurationServiceTest {
     }
 
     @Test(timeout = 200)
-    public void CheckTimeout() {
+    public void checkTimeout() {
 
         ConfigurationCallback cb = new ConfigurationCallback() {
             public void onTimeout(long t) {
@@ -182,5 +178,62 @@ public class ConfigurationServiceTest {
         }
         assertTrue("Haven't got timeout", !received && timeout);
         assertFalse("Service is still waiting for responses", service.awaitingResponse());
+    }
+
+    @Test(timeout=100)
+    public void testNoResponseID() {
+
+        ConfigurationCallback cb = new ConfigurationCallback() {
+            public void onSuccess(Response response) {
+                synchronized(this) {
+                    received = true;
+                    this.notifyAll();
+                }
+            }
+            public void onError(Response response) {
+                synchronized(this) {
+                    received = true;
+                    this.notifyAll();
+                }
+            }
+            public void onTimeout(long t) {
+                synchronized(this) {
+                    timeout = true;
+                    System.out.println("got timeout");
+                    this.notifyAll();
+                }
+            }
+        };
+
+        final String queryID = "no-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        synchronized(cb) {
+            try {
+                service.sendConfiguration(configParams, queryID, cb, 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (!timeout && !received) {
+                try {
+                    cb.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assertFalse("Illegal response not ignored", received);
+        assertTrue("Illegal response not ignored", timeout);
+        service.close();
     }
 }
