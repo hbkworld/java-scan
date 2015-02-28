@@ -152,12 +152,13 @@ public class ConfigurationServiceTest {
         ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
 
+        try {
+            service.sendConfiguration(configParams, cb, 50);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        assertTrue("Service is not waiting for responses", service.awaitingResponse());
         synchronized(cb) {
-            try {
-                service.sendConfiguration(configParams, cb, 50);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             while (!timeout && !success && !error) {
                 try {
                     cb.wait();
