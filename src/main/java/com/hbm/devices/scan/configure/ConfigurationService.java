@@ -150,14 +150,11 @@ public class ConfigurationService implements Observer, Closeable {
     @Override
     public void update(Observable observable, Object arg) {
         final Response response = (Response)arg;
-
         final String responseID = response.getId();
         if (responseIdNotValid(responseID)) {
             return;
         }
-        if (awaitingResponses.containsKey(response.getId())) {
-            handleCallbacks(response);
-        }
+        handleCallbacks(response);
     }
 
     /**
@@ -240,17 +237,20 @@ public class ConfigurationService implements Observer, Closeable {
 
     private void handleCallbacks(Response response) {
         final ConfigQuery configQuery = awaitingResponses.get(response.getId());
-        awaitingResponses.remove(response.getId());
 
-        final ErrorObject error = response.getError();
-        if (error == null) {
-            configQuery.getConfigCallback().onSuccess(response);
-        } else {
-            final String message = error.getMessage();
-            if (errorMessageNotValid(message)){
-                return;
+        if (configQuery != null) {
+
+            final ErrorObject error = response.getError();
+            if (error == null) {
+                configQuery.getConfigCallback().onSuccess(response);
+            } else {
+                final String message = error.getMessage();
+                if (errorMessageNotValid(message)){
+                    return;
+                }
+                configQuery.getConfigCallback().onError(response);
             }
-            configQuery.getConfigCallback().onError(response);
+            awaitingResponses.remove(response.getId());
         }
     }
 
