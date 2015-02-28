@@ -57,7 +57,7 @@ public class AnnounceReceiverTest {
             Thread arThread = new Thread(ar);
             arThread.start();
             Thread.sleep(10);
-            ar.stop();
+            ar.close();
             arThread.join(1000);
             assertFalse("Thread still alive after stop", arThread.isAlive());
         } catch (IOException e) {

@@ -314,7 +314,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     }
 
     @Override
-    public void stop() {
+    public void close() {
         synchronized (this) {
             shallRun = false;
             this.notifyAll();

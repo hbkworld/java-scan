@@ -96,7 +96,7 @@ public class StressTestMessageReceiver extends Observable implements MessageRece
     }
 
     @Override
-    public void stop() {
+    public void close() {
     }
 
 }

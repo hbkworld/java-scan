@@ -56,9 +56,9 @@ public class ConfigurationMessageReceiverTest {
             Thread crThread = new Thread(cr);
             crThread.start();
             Thread.sleep(10);
-            cr.stop();
+            cr.close();
             crThread.join(1000);
-            assertFalse("Thread still alive after stop", crThread.isAlive());
+            assertFalse("Thread still alive after close", crThread.isAlive());
         } catch (IOException e) {
             fail("Got IOException while instantiating ConfigurationMessageReceiver");
         } catch (InterruptedException e) {

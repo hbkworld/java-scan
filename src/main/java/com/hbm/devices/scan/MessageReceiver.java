@@ -28,13 +28,15 @@
 
 package com.hbm.devices.scan;
 
+import java.io.Closeable;
+
 /**
  * Interface for all message receivers.
  * <p>
  *
  * @since 1.0
  */
-public interface MessageReceiver extends Runnable {
+public interface MessageReceiver extends Runnable, Closeable {
     /**
      * Start receiving multicast messages.
      */
@@ -44,5 +46,6 @@ public interface MessageReceiver extends Runnable {
     /**
      * Stops receiveing multicast messages.
      */
-    void stop();
+    @Override
+    void close();
 }

@@ -50,7 +50,7 @@ import com.hbm.devices.scan.util.ScanInterfaces;
  * {@link com.hbm.devices.scan.util.ScanInterfaces}) are joined.
  * <p>
  * Receiving messages is done infinitely when calling {@link #run() run()}. After calling
- * {@link #stop() stop()}, {@link #run() run()} returns.
+ * {@link #close() close()}, {@link #run() run()} returns.
  * <p>
  * In addition, via {@link com.hbm.devices.scan.MessageReceiver} this class is also an
  * {@link java.util.Observable}. So objects which are interested in String multicast messages have
@@ -128,10 +128,10 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     }
 
     /**
-     * This method stops the listening socket and cancels the infinite receiving loop.
+     * This method closes the listening socket and cancels the infinite receiving loop.
      */
     @Override
-    public void stop() {
+    public void close() {
         shallRun = false;
         try {
             leaveOnAllInterfaces(socket);
