@@ -79,6 +79,7 @@ public final class ConfigurationSerializer implements Closeable {
      * This involves multicast leave IGMP messagesfor the configuration
      * address.
      */
+    @Override
     public void close() {
         sender.close();
     }

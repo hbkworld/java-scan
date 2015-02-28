@@ -47,6 +47,7 @@ public interface MulticastSender extends Closeable {
     /**
      * Closes the multicast sender.
      */
+    @Override
     void close();
 
     /**

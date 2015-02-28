@@ -104,6 +104,7 @@ public class ConfigurationService implements Observer, Closeable {
      * Timers for outstanding {@link Response}s are cancelled and the
      * {@link ConfigurationSerializer} is closed.
      */
+    @Override
     public void close() {
         responseParser.deleteObserver(this);
 
