@@ -64,21 +64,18 @@ public class ConfigurationServiceTest {
 
         cb = new ConfigurationCallback() {
             public void onTimeout(long t) {
-                System.out.println("on timeout");
                 synchronized(this) {
                     timeout = true;
                     this.notifyAll();
                 }
             }
             public void onSuccess(Response response) {
-                System.out.println("on success");
                 synchronized(this) {
                     success = true;
                     this.notifyAll();
                 }
             }
             public void onError(Response response) {
-                System.out.println("on error");
                 synchronized(this) {
                     error = true;
                     this.notifyAll();
@@ -323,7 +320,6 @@ public class ConfigurationServiceTest {
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
         try {
-            System.out.println("error-no-message");
             service.sendConfiguration(configParams, queryID, cb, 10);
         } catch (Exception e) {
             e.printStackTrace();
