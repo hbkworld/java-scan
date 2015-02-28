@@ -105,8 +105,9 @@ public final class ResponseDeserializer extends Observable implements Observer {
                 final String value = identifier.toString();
                 if ((value != null) && (value.length() > 0) && (!"".equals(value)) && 
                     (jsonObject.has("result") ^ jsonObject.has("error"))) {
-                        rpcObject = context.deserialize(json, Response.class);
-                        rpcObject.setJSONString(jsonObject.toString());
+                    
+                    rpcObject = context.deserialize(json, Response.class);
+                    rpcObject.setJSONString(jsonObject.toString());
                 }
             }
             return rpcObject;
