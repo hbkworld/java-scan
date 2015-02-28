@@ -50,15 +50,17 @@ public class ConfigurationServiceTest {
     private JsonParser parser;
     private ConfigurationCallback cb;
 
-    private boolean received;
+    private boolean success;
+    private boolean error;
     private boolean timeout;
 
     @Before
     public void setUp() {
         this.messageParser = new ResponseDeserializer();
         this.parser = new JsonParser();
-        received = false;
+        success = false;
         timeout = false;
+        error = false;
 
         cb = new ConfigurationCallback() {
             public void onTimeout(long t) {
@@ -69,13 +71,13 @@ public class ConfigurationServiceTest {
             }
             public void onSuccess(Response response) {
                 synchronized(this) {
-                    received = true;
+                    success = true;
                     this.notifyAll();
                 }
             }
             public void onError(Response response) {
                 synchronized(this) {
-                    received = true;
+                    error = true;
                     this.notifyAll();
                 }
             }
@@ -132,7 +134,7 @@ public class ConfigurationServiceTest {
             e.printStackTrace();
         }
 
-        assertTrue("No response received", received);
+        assertTrue("No success response received", success && !error && !timeout);
         assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
 
@@ -153,7 +155,7 @@ public class ConfigurationServiceTest {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            while (!timeout && !received) {
+            while (!timeout && !success && !error) {
                 try {
                     cb.wait();
                 } catch (InterruptedException e) {
@@ -161,7 +163,7 @@ public class ConfigurationServiceTest {
                 }
             }
         }
-        assertTrue("Haven't got timeout", !received && timeout);
+        assertTrue("Haven't got timeout", !success && !error && timeout);
         assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
 
@@ -186,7 +188,7 @@ public class ConfigurationServiceTest {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            while (!timeout && !received) {
+            while (!timeout && !success && !error) {
                 try {
                     cb.wait();
                 } catch (InterruptedException e) {
@@ -195,8 +197,7 @@ public class ConfigurationServiceTest {
             }
         }
 
-        assertFalse("Illegal response not ignored", received);
-        assertTrue("Illegal response not ignored", timeout);
+        assertTrue("Illegal response not ignored", timeout && !success && !error);
         service.close();
     }
 
@@ -221,7 +222,7 @@ public class ConfigurationServiceTest {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            while (!timeout && !received) {
+            while (!timeout && !success && !error) {
                 try {
                     cb.wait();
                 } catch (InterruptedException e) {
@@ -230,8 +231,41 @@ public class ConfigurationServiceTest {
             }
         }
 
-        assertFalse("Illegal response not ignored", received);
-        assertTrue("Illegal response not ignored", timeout);
+        assertTrue("Illegal response not ignored", timeout && !success && !error);
+        service.close();
+    }
+
+    @Test(timeout=100)
+    public void testErrorResponse() {
+
+        final String queryID = "error";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        synchronized(cb) {
+            try {
+                service.sendConfiguration(configParams, queryID, cb, 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (!timeout && !success && !error) {
+                try {
+                    cb.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assertTrue("Illegal response not ignored", error && !timeout && !success);
         service.close();
     }
 }
