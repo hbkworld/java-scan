@@ -149,8 +149,10 @@ public class ConfigurationService implements Observer, Closeable {
      */
     @Override
     public void update(Observable observable, Object arg) {
+        System.out.println("update called");
         final Response response = (Response)arg;
         final String responseID = response.getId();
+        System.out.println("id: " + responseID);
         if (responseIdNotValid(responseID)) {
             return;
         }
