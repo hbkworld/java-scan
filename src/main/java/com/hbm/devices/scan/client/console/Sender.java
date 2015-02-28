@@ -46,7 +46,6 @@ import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
 import com.hbm.devices.scan.messages.ConfigurationInterface;
 import com.hbm.devices.scan.messages.ConfigurationNetSettings;
 import com.hbm.devices.scan.messages.ConfigurationParams;
-import com.hbm.devices.scan.messages.IPv4EntryManual;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.util.ScanInterfaces;
@@ -75,7 +74,7 @@ public final class Sender implements ConfigurationCallback {
 
         service = new ConfigurationService(sender, responseParser);
 
-        Thread receiverThread = new Thread(responseReceiver);
+        final Thread receiverThread = new Thread(responseReceiver);
         receiverThread.start();
     }
 
