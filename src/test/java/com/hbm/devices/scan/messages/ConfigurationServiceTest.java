@@ -239,6 +239,40 @@ public class ConfigurationServiceTest {
     }
 
     @Test(timeout=100)
+    public void testWrongResponseID() {
+
+        final String queryID = "wrong-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        synchronized(cb) {
+            try {
+                service.sendConfiguration(configParams, queryID, cb, 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (!timeout && !success && !error) {
+                try {
+                    cb.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assertTrue("Illegal response not ignored", timeout && !success && !error);
+        service.close();
+    }
+
+    @Test(timeout=100)
     public void testErrorResponse() {
 
         final String queryID = "error";
