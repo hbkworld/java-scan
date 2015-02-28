@@ -37,17 +37,18 @@ import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.configure.ConfigurationCallback;
+import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
 import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
 import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
-import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
 import com.hbm.devices.scan.messages.ConfigurationDevice;
+import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
 import com.hbm.devices.scan.messages.ConfigurationInterface;
 import com.hbm.devices.scan.messages.ConfigurationNetSettings;
 import com.hbm.devices.scan.messages.ConfigurationParams;
-import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
-import com.hbm.devices.scan.messages.ResponseDeserializer;
+import com.hbm.devices.scan.messages.IPv4EntryManual;
 import com.hbm.devices.scan.messages.Response;
+import com.hbm.devices.scan.messages.ResponseDeserializer;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
 /**
@@ -61,9 +62,10 @@ public final class Sender implements ConfigurationCallback {
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
     private final ConfigurationService service;
     private static final int RESPONSE_TIMEOUT_S = 5;
+    private final ConfigurationMessageReceiver responseReceiver;
 
     private Sender() throws IOException {
-        final ConfigurationMessageReceiver responseReceiver = new ConfigurationMessageReceiver();
+        responseReceiver = new ConfigurationMessageReceiver();
         final ResponseDeserializer responseParser = new ResponseDeserializer();
         responseReceiver.addObserver(responseParser);
 
@@ -72,6 +74,9 @@ public final class Sender implements ConfigurationCallback {
         final ConfigurationSerializer sender = new ConfigurationSerializer(multicastSender);
 
         service = new ConfigurationService(sender, responseParser);
+
+        Thread receiverThread = new Thread(responseReceiver);
+        receiverThread.start();
     }
 
     @Override
@@ -80,6 +85,8 @@ public final class Sender implements ConfigurationCallback {
             LOGGER.log(Level.INFO, "Success:\n");
             LOGGER.log(Level.INFO, " result: " + response.getResult() + "\n");
         }
+        responseReceiver.stop();
+        service.shutdown();
     }
 
     @Override
@@ -90,6 +97,8 @@ public final class Sender implements ConfigurationCallback {
             LOGGER.log(Level.INFO, " message: " + response.getError().getMessage() + "\n");
             LOGGER.log(Level.INFO, " data: " + response.getError().getData() + "\n");
         }
+        responseReceiver.stop();
+        service.shutdown();
     }
 
     @Override
@@ -97,6 +106,7 @@ public final class Sender implements ConfigurationCallback {
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, "No response is received in " + timeout + "ms\n");
         }
+        responseReceiver.stop();
         service.shutdown();
     }
 
@@ -108,8 +118,8 @@ public final class Sender implements ConfigurationCallback {
     public static void main(String... args) {
         try {
             final Sender sender = new Sender();
-            final ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
-            final ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP, null));
+            final ConfigurationDevice device = new ConfigurationDevice("0009E5001B6C");
+            final ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
             final ConfigurationParams configParams = new ConfigurationParams(device, settings);
             sender.service.sendConfiguration(configParams, sender, TimeUnit.SECONDS.toMillis(RESPONSE_TIMEOUT_S));
         } catch (IOException e) {
