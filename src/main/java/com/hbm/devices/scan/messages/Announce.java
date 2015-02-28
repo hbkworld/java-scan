@@ -39,7 +39,7 @@ public final class Announce extends JsonRpc {
 
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
-    private Announce() {
+    Announce() {
         super("announce");
     }
 
