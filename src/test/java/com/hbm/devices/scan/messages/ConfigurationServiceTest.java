@@ -48,6 +48,7 @@ import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
 public class ConfigurationServiceTest {
     private ResponseDeserializer messageParser;
     private JsonParser parser;
+    private ConfigurationCallback cb;
 
     private boolean received;
     private boolean timeout;
@@ -58,6 +59,27 @@ public class ConfigurationServiceTest {
         this.parser = new JsonParser();
         received = false;
         timeout = false;
+
+        cb = new ConfigurationCallback() {
+            public void onTimeout(long t) {
+                synchronized(this) {
+                    timeout = true;
+                    this.notifyAll();
+                }
+            }
+            public void onSuccess(Response response) {
+                synchronized(this) {
+                    received = true;
+                    this.notifyAll();
+                }
+            }
+            public void onError(Response response) {
+                synchronized(this) {
+                    received = true;
+                    this.notifyAll();
+                }
+            }
+        };
     }
 
     @Test
@@ -65,17 +87,12 @@ public class ConfigurationServiceTest {
         ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
-        ConfigurationCallback callback = new ConfigurationCallback() {
-            public void onSuccess(Response response) {}
-            public void onError(Response response) {}
-            public void onTimeout(long timeout) {}
-        };
 
         FakeMulticastSender fakeSender = new FakeMulticastSender();
         ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
         try {
-            service.sendConfiguration(configParams, "TEST_UUID", callback, 5000);
+            service.sendConfiguration(configParams, "TEST_UUID", cb, 5000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,17 +113,6 @@ public class ConfigurationServiceTest {
 
     @Test
     public void sendingAndReceivingTest() {
-
-        ConfigurationCallback cb = new ConfigurationCallback() {
-            public void onSuccess(Response response) {
-                received = true;
-            }
-            public void onError(Response response) {
-                received = true;
-            }
-            public void onTimeout(long timeout) {
-            }
-        };
 
         final String queryID = "test-id";
 
@@ -132,27 +138,6 @@ public class ConfigurationServiceTest {
 
     @Test(timeout = 200)
     public void checkTimeout() {
-
-        ConfigurationCallback cb = new ConfigurationCallback() {
-            public void onTimeout(long t) {
-                synchronized(this) {
-                    timeout = true;
-                    this.notifyAll();
-                }
-            }
-            public void onSuccess(Response response) {
-                synchronized(this) {
-                    received = true;
-                    this.notifyAll();
-                }
-            }
-            public void onError(Response response) {
-                synchronized(this) {
-                    received = true;
-                    this.notifyAll();
-                }
-            }
-        };
 
         ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
@@ -183,29 +168,42 @@ public class ConfigurationServiceTest {
     @Test(timeout=100)
     public void testNoResponseID() {
 
-        ConfigurationCallback cb = new ConfigurationCallback() {
-            public void onSuccess(Response response) {
-                synchronized(this) {
-                    received = true;
-                    this.notifyAll();
-                }
-            }
-            public void onError(Response response) {
-                synchronized(this) {
-                    received = true;
-                    this.notifyAll();
-                }
-            }
-            public void onTimeout(long t) {
-                synchronized(this) {
-                    timeout = true;
-                    System.out.println("got timeout");
-                    this.notifyAll();
-                }
-            }
-        };
-
         final String queryID = "no-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        synchronized(cb) {
+            try {
+                service.sendConfiguration(configParams, queryID, cb, 10);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            while (!timeout && !received) {
+                try {
+                    cb.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        assertFalse("Illegal response not ignored", received);
+        assertTrue("Illegal response not ignored", timeout);
+        service.close();
+    }
+
+    @Test(timeout=100)
+    public void testEmptyResponseID() {
+
+        final String queryID = "empty-id";
 
         FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
         ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
