@@ -116,11 +116,19 @@ public final class ConnectionFinder {
 }
 
 class NetworkInterfaceAddress {
-    public String address;
-    public int prefix;
+    private String address;
+    private int prefix;
 
     NetworkInterfaceAddress(String address, int prefix) {
         this.address = address;
         this.prefix = prefix;
+    }
+
+    String getAddress() {
+        return address;
+    }
+
+    int getPrefix() {
+        return prefix;
     }
 }
