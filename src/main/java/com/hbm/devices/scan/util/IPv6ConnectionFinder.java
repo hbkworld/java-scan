@@ -46,28 +46,15 @@ import com.hbm.devices.scan.messages.MissingDataException;
 
 final class IPv6ConnectionFinder {
 
-    private final Iterable<InterfaceAddress> ipv6Addresses;
+    private final Iterable<NetworkInterfaceAddress> interfaceAddresses;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    IPv6ConnectionFinder(Collection<NetworkInterface> interfaces) {
-
-        final List<InterfaceAddress> addressList = new LinkedList<InterfaceAddress>();
-
-        for (final NetworkInterface iface : interfaces) {
-            final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
-            for (final InterfaceAddress niAddress : niAddresses) {
-                final InetAddress interfaceAddress = niAddress.getAddress();
-                if (interfaceAddress instanceof Inet6Address) {
-                    addressList.add(niAddress);
-                }
-            }
-        }
-        ipv6Addresses = addressList;
-
+    IPv6ConnectionFinder(Collection<NetworkInterfaceAddress> interfacesAddresses) {
+        this.interfaceAddresses = interfacesAddresses;
     }
 
     InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
-        for (final InterfaceAddress niAddress : ipv6Addresses) {
+        for (final NetworkInterfaceAddress niAddress : interfaceAddresses) {
             final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {
                 return address;
@@ -76,7 +63,7 @@ final class IPv6ConnectionFinder {
         return null;
     }
 
-    private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
+    private static InetAddress getConnectAddress(NetworkInterfaceAddress interfaceAddress,
             Announce announce) throws MissingDataException {
         final Iterable<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv6();
@@ -84,17 +71,15 @@ final class IPv6ConnectionFinder {
             return null;
         }
         for (final IPv6Entry address : announceAddresses) {
-            InetAddress announceAddress;
             try {
-                announceAddress = InetAddress.getByName(address.getAddress());
+                final InetAddress announceAddress = InetAddress.getByName(address.getAddress());
                 if (!(announceAddress instanceof Inet6Address)) {
                     continue;
                 }
                 if (sameNet(announceAddress, address.getPrefix(),
-                        interfaceAddress.getAddress(), interfaceAddress.getNetworkPrefixLength())) {
+                        InetAddress.getByName(interfaceAddress.address), interfaceAddress.prefix)) {
                     return announceAddress;
                 }
-
             } catch (UnknownHostException e) {
                 LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address!", e);
             }

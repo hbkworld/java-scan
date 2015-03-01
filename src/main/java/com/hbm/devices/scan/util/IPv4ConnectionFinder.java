@@ -46,26 +46,15 @@ import com.hbm.devices.scan.messages.MissingDataException;
 
 final class IPv4ConnectionFinder {
 
-    private final Iterable<InterfaceAddress> ipv4Addresses;
+    private final Iterable<NetworkInterfaceAddress> interfaceAddresses;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
-    IPv4ConnectionFinder(Collection<NetworkInterface> interfaces) {
-        final List<InterfaceAddress> addressList = new LinkedList<InterfaceAddress>();
-
-        for (final NetworkInterface iface : interfaces) {
-            final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
-            for (final InterfaceAddress niAddress : niAddresses) {
-                final InetAddress interfaceAddress = niAddress.getAddress();
-                if (interfaceAddress instanceof Inet4Address) {
-                    addressList.add(niAddress);
-                }
-            }
-        }
-        ipv4Addresses = addressList;
+    IPv4ConnectionFinder(Collection<NetworkInterfaceAddress> interfacesAddresses) {
+        this.interfaceAddresses = interfacesAddresses;
     }
 
     InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
-        for (final InterfaceAddress niAddress : ipv4Addresses) {
+        for (final NetworkInterfaceAddress niAddress : interfaceAddresses) {
             final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {
                 return address;
@@ -74,8 +63,9 @@ final class IPv4ConnectionFinder {
         return null;
     }
 
-    private static InetAddress getConnectAddress(InterfaceAddress interfaceAddress,
+    private static InetAddress getConnectAddress(NetworkInterfaceAddress interfaceAddress,
             Announce announce) throws MissingDataException {
+
         final Iterable<IPv4Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv4();
         if (announceAddresses == null) {
@@ -89,12 +79,11 @@ final class IPv4ConnectionFinder {
                 if (!(announceAddress instanceof Inet4Address)) {
                     continue;
                 }
-                final InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry)
-                        .getNetmask());
+                final InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry).getNetmask());
                 final int announcePrefix = calculatePrefix(announceNetmask);
 
-                final InetAddress ifaceAddress = interfaceAddress.getAddress();
-                final int ifaceAddressPrefix = interfaceAddress.getNetworkPrefixLength();
+                final InetAddress ifaceAddress = InetAddress.getByName(interfaceAddress.address);
+                final int ifaceAddressPrefix = interfaceAddress.prefix;
                 if (sameNet(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
                     return announceAddress;
                 }

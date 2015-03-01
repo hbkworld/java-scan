@@ -32,9 +32,13 @@
  */
 package com.hbm.devices.scan.util;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.MissingDataException;
@@ -62,8 +66,24 @@ public final class ConnectionFinder {
      */
     public ConnectionFinder(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
         this.preferIPv6 = preferIPv6;
-        this.ipv4ConnectionFinder = new IPv4ConnectionFinder(interfaces);
-        this.ipv6ConnectionFinder = new IPv6ConnectionFinder(interfaces);
+
+        final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<NetworkInterfaceAddress>();
+        final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<NetworkInterfaceAddress>();
+
+        for (final NetworkInterface iface : interfaces) {
+            final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
+            for (final InterfaceAddress niAddress : niAddresses) {
+                final InetAddress interfaceAddress = niAddress.getAddress();
+                final NetworkInterfaceAddress address = new NetworkInterfaceAddress(interfaceAddress.getHostAddress(), niAddress.getNetworkPrefixLength());
+                if (interfaceAddress instanceof Inet4Address) {
+                    ipv4AddressList.add(address);
+                } else {
+                    ipv6AddressList.add(address);
+                }
+            }
+        }
+        this.ipv4ConnectionFinder = new IPv4ConnectionFinder(ipv4AddressList);
+        this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6AddressList);
     }
 
     /**
@@ -92,5 +112,15 @@ public final class ConnectionFinder {
             }
             return address;
         }
+    }
+}
+
+class NetworkInterfaceAddress {
+    String address;
+    int prefix;
+
+    NetworkInterfaceAddress(String address, int prefix) {
+        this.address = address;
+        this.prefix = prefix;
     }
 }
