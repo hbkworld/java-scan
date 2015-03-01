@@ -30,12 +30,8 @@ package com.hbm.devices.scan.util;
 
 import java.net.Inet6Address;
 import java.net.InetAddress;
-import java.net.InterfaceAddress;
-import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
