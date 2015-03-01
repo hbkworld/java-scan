@@ -106,7 +106,7 @@ final class IPv4ConnectionFinder {
         return null;
     }
 
-    private static int calculatePrefix(InetAddress announceNetmask) {
+    static int calculatePrefix(InetAddress announceNetmask) {
         final byte[] address = announceNetmask.getAddress();
         final int length = address.length;
         int prefix = 0;
@@ -116,7 +116,7 @@ final class IPv4ConnectionFinder {
         return prefix;
     }
 
-    private static boolean sameNet(InetAddress announceAddress, int announcePrefix,
+    static boolean sameNet(InetAddress announceAddress, int announcePrefix,
             InetAddress interfaceAddress, int interfacePrefix) {
         final byte[] announceBytes = announceAddress.getAddress();
         final byte[] interfaceBytes = interfaceAddress.getAddress();
