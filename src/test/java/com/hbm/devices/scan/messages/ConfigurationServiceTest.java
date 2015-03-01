@@ -31,8 +31,12 @@ package com.hbm.devices.scan.messages;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
+
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 
@@ -83,6 +87,9 @@ public class ConfigurationServiceTest {
             }
         };
     }
+
+    @Rule 
+    public ExpectedException exception = ExpectedException.none(); 
 
     @Test
     public void sendingTest() {
@@ -302,6 +309,140 @@ public class ConfigurationServiceTest {
         }
 
         assertTrue("Illegal response not ignored", timeout && !error && !success);
+        service.close();
+    }
+
+    @Test
+    public void testNoConfigParams() {
+
+        final String queryID = "test-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+
+        try {
+            exception.expect(IllegalArgumentException.class);
+            service.sendConfiguration(null, queryID, cb, 10);
+            fail("Not failed despite no config params given");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        service.close();
+    }
+
+    @Test
+    public void testWrongTimeout() {
+
+        final String queryID = "test-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        try {
+            exception.expect(IllegalArgumentException.class);
+            service.sendConfiguration(configParams, queryID, cb, 0);
+            fail("Not failed despite no config params given");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        service.close();
+    }
+
+    @Test
+    public void testNoCallback() {
+
+        final String queryID = "test-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        try {
+            exception.expect(IllegalArgumentException.class);
+            service.sendConfiguration(configParams, queryID, null, 10);
+            fail("Not failed despite no config params given");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        service.close();
+    }
+
+    @Test
+    public void testNoQueryID() {
+
+        final String queryID = "test-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        try {
+            exception.expect(IllegalArgumentException.class);
+            service.sendConfiguration(configParams, null, cb, 10);
+            fail("Not failed despite no config params given");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        service.close();
+    }
+
+    @Test
+    public void testEmptyQueryID() {
+
+        final String queryID = "test-id";
+
+        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+        
+        fakeDevice.addObserver(messageParser);
+        ConfigurationService service = new ConfigurationService(sender, messageParser);
+
+        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+        ConfigurationParams configParams = new ConfigurationParams(device, settings);
+
+        try {
+            exception.expect(IllegalArgumentException.class);
+            service.sendConfiguration(configParams, "", cb, 10);
+            fail("Not failed despite no config params given");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        assertTrue("Illegal response not ignored", !timeout && !error && !success);
         service.close();
     }
 }
