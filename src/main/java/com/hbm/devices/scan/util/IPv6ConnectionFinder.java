@@ -103,7 +103,7 @@ final class IPv6ConnectionFinder {
         return null;
     }
 
-    private static boolean sameNet(InetAddress announceAddress, int announcePrefixLength,
+    static boolean sameNet(InetAddress announceAddress, int announcePrefixLength,
             InetAddress interfaceAddress, int interfacePrefixLength) {
         if (announcePrefixLength != interfacePrefixLength) {
             return false;
