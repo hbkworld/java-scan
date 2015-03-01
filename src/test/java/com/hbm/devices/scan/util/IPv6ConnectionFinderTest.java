@@ -26,6 +26,7 @@ public class IPv6ConnectionFinderTest {
         }
     }
 
+    @Test
     public void differentTest() {
         try {
             InetAddress announceAddress = InetAddress.getByName("fe80::222:4dff:feaa:4c1e");
