@@ -75,7 +75,7 @@ public final class ResponseDeserializer extends Observable implements Observer {
         final String message = (String)arg;
         try {
             final JsonRpc json = gson.fromJson(message, JsonRpc.class);
-            if (json instanceof Response) {
+            if (json != null) {
                 setChanged();
                 notifyObservers(json);
             }
