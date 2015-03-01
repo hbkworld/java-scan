@@ -73,7 +73,7 @@ final class IPv6ConnectionFinder {
                     continue;
                 }
                 if (sameNet(announceAddress, address.getPrefix(),
-                        InetAddress.getByName(interfaceAddress.getAddress()), interfaceAddress.getPrefix())) {
+                        interfaceAddress.getAddress(), interfaceAddress.getPrefix())) {
                     return announceAddress;
                 }
             } catch (UnknownHostException e) {

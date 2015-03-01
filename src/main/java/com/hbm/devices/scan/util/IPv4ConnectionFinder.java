@@ -78,7 +78,7 @@ final class IPv4ConnectionFinder {
                 final InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry).getNetmask());
                 final int announcePrefix = calculatePrefix(announceNetmask);
 
-                final InetAddress ifaceAddress = InetAddress.getByName(interfaceAddress.getAddress());
+                final InetAddress ifaceAddress = interfaceAddress.getAddress();
                 final int ifaceAddressPrefix = interfaceAddress.getPrefix();
                 if (sameNet(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
                     return announceAddress;

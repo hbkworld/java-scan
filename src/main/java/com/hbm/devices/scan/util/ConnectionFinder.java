@@ -74,7 +74,7 @@ public final class ConnectionFinder {
             final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
             for (final InterfaceAddress niAddress : niAddresses) {
                 final InetAddress interfaceAddress = niAddress.getAddress();
-                final NetworkInterfaceAddress address = new NetworkInterfaceAddress(interfaceAddress.getHostAddress(), niAddress.getNetworkPrefixLength());
+                final NetworkInterfaceAddress address = new NetworkInterfaceAddress(interfaceAddress, niAddress.getNetworkPrefixLength());
                 if (interfaceAddress instanceof Inet4Address) {
                     ipv4AddressList.add(address);
                 } else {
@@ -116,15 +116,15 @@ public final class ConnectionFinder {
 }
 
 class NetworkInterfaceAddress {
-    private final String address;
+    private final InetAddress address;
     private final int prefix;
 
-    NetworkInterfaceAddress(String address, int prefix) {
+    NetworkInterfaceAddress(InetAddress address, int prefix) {
         this.address = address;
         this.prefix = prefix;
     }
 
-    String getAddress() {
+    InetAddress getAddress() {
         return address;
     }
 
