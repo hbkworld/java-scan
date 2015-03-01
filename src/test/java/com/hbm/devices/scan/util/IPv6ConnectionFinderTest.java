@@ -53,4 +53,19 @@ public class IPv6ConnectionFinderTest {
             fail("name resolution failed");
         }
     }
+
+    @Test
+    public void noIPv6AddressTest() {
+        try {
+            InetAddress ipv4 = InetAddress.getByName("127.19.1.2");
+            int announcePrefix = 64;
+            InetAddress ipv6 = InetAddress.getByName("fe80::333:4dff:feaa:4c1f");
+            int interfacePrefix = 64;
+
+            assertFalse("IPv4 and IPv6 addresses can't be in the same IP net", IPv6ConnectionFinder.sameNet(ipv4, announcePrefix, ipv6, interfacePrefix));
+            assertFalse("IPv4 and IPv6 addresses can't be in the same IP net", IPv6ConnectionFinder.sameNet(ipv6, announcePrefix, ipv4, interfacePrefix));
+        } catch (UnknownHostException e) {
+            fail("name resolution failed");
+        }
+    }
 }

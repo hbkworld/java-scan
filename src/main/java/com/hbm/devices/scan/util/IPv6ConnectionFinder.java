@@ -109,13 +109,12 @@ final class IPv6ConnectionFinder {
             return false;
         }
 
-        final byte[] announceAddr = announceAddress.getAddress();
-        final byte[] interfaceAddr = interfaceAddress.getAddress();
-
-        if (announceAddr.length < (announcePrefixLength / Byte.SIZE)
-                || interfaceAddr.length < (announcePrefixLength / Byte.SIZE)) {
+        if (!(announceAddress instanceof Inet6Address) || !(interfaceAddress instanceof Inet6Address)) {
             return false;
         }
+
+        final byte[] announceAddr = announceAddress.getAddress();
+        final byte[] interfaceAddr = interfaceAddress.getAddress();
 
         for (int i = 0; i < (announcePrefixLength / Byte.SIZE); i++) {
             if (announceAddr[i] != interfaceAddr[i]) {
