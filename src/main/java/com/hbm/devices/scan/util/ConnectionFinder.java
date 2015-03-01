@@ -116,8 +116,8 @@ public final class ConnectionFinder {
 }
 
 class NetworkInterfaceAddress {
-    String address;
-    int prefix;
+    public String address;
+    public int prefix;
 
     NetworkInterfaceAddress(String address, int prefix) {
         this.address = address;
