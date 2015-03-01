@@ -78,9 +78,8 @@ public final class Receiver implements Observer {
      * @param  args An array of command line paramters. Not used in the method.
      */
     public static void main(String... args) {
-        try {
-            final AnnounceDeserializer announceParser = new AnnounceDeserializer();
-            final AnnounceReceiver announceReceiver = new AnnounceReceiver();
+        final AnnounceDeserializer announceParser = new AnnounceDeserializer();
+        try (final AnnounceReceiver announceReceiver = new AnnounceReceiver()) {
             announceReceiver.addObserver(announceParser);
 
             final String[] families = {"QuantumX"};
