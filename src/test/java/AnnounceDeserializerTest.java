@@ -66,6 +66,8 @@ public class AnnounceDeserializerTest {
 
     @Before
     public void setUp() {
+        announce = null;
+        res = null;
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
@@ -83,7 +85,7 @@ public class AnnounceDeserializerTest {
     @Test
     public void parseCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("No CommunictionPath object after correct message", announce);
+        assertNotNull("No Announce object after correct message", announce);
     }
 
     @Test
@@ -255,7 +257,7 @@ public class AnnounceDeserializerTest {
 
         final Gson gson = new Gson();
         fsmmr.emitString(gson.toJson(root));
-        assertNotNull("No CommunictionPath object after correct message", announce);
+        assertNotNull("No Announce object after correct message", announce);
         try {
             assertEquals("JSON-RPC versions not equal", announce.getJsonrpc(), jsonRpcVersion);
             assertEquals("JSON-RPC methods not equal", announce.getMethod(), jsonRpcMethod);
