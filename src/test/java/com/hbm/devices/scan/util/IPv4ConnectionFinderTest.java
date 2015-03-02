@@ -3,9 +3,11 @@ package com.hbm.devices.scan.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import java.net.InetAddress;
@@ -23,6 +25,23 @@ import com.hbm.devices.scan.messages.MissingDataException;
 public class IPv4ConnectionFinderTest {
 
     private Announce announce;
+    private FakeMessageReceiver fsmmr;
+    
+    @Before
+    public void setUp() {
+        announce = null;
+        fsmmr = new FakeMessageReceiver();
+        AnnounceDeserializer parser = new AnnounceDeserializer();
+        fsmmr.addObserver(parser);
+        parser.addObserver(new Observer() {
+            public void update(Observable o, Object arg) {
+                if (arg instanceof Announce) {
+                    announce = (Announce) arg;
+                } 
+            }
+        });
+    }
+
 
     @Test
     public void sameNetTest() {
@@ -73,18 +92,6 @@ public class IPv4ConnectionFinderTest {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("192.168.4.5"), 24));
             IPv4ConnectionFinder finder = new IPv4ConnectionFinder(list);
 
-            announce = null;
-            FakeMessageReceiver fsmmr = new FakeMessageReceiver();
-            AnnounceDeserializer parser = new AnnounceDeserializer();
-            fsmmr.addObserver(parser);
-            parser.addObserver(new Observer() {
-                public void update(Observable o, Object arg) {
-                    if (arg instanceof Announce) {
-                        announce = (Announce) arg;
-                    } 
-                }
-            });
-
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
             try {
@@ -95,6 +102,20 @@ public class IPv4ConnectionFinderTest {
             }
         } catch (UnknownHostException e) {
             fail("name resolution failed");
+        }
+    }
+
+    @Test
+    public void noAddressesInList() {
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        IPv4ConnectionFinder finder = new IPv4ConnectionFinder(list);
+
+        fsmmr.emitSingleCorrectMessage();
+        assertNotNull("No Announce object after correct message", announce);
+        try {
+            assertNull("Device not connectable", finder.getConnectableAddress(announce));
+        } catch (MissingDataException e) {
+            fail("some information in anounce missing");
         }
     }
 }
