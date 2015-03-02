@@ -46,6 +46,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     private static final String CORRECT_MESSAGE;
+    private static final String CORRECT_MESSAGE_NO_IPV4;
     private static final String CORRECT_MESSAGE_NO_EXPIRE;
     private static final String CORRECT_MESSAGE_SHORT_EXPIRE;
     private static final String CORRECT_MESSAGE_MANUAL;
@@ -92,6 +93,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitSingleCorrectMessage() {
         setChanged();
         notifyObservers(CORRECT_MESSAGE);
+    }
+
+    public void emitSingleCorrectMessageNoIpv4() {
+        setChanged();
+        notifyObservers(CORRECT_MESSAGE_NO_IPV4);
     }
 
     public void emitMissingExpiration() {
@@ -338,6 +344,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             FAKE_DEVICE_4 = props.getProperty("scan.announce.device4");
             FAKE_DEVICE_5 = props.getProperty("scan.announce.device5");
             CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
+            CORRECT_MESSAGE_NO_IPV4 = props.getProperty("scan.announce.correct_message_no_ipv4");
             CORRECT_MESSAGE_NO_EXPIRE = props.getProperty("scan.announce.correct_message_missing_expire");
             CORRECT_MESSAGE_SHORT_EXPIRE = props.getProperty("scan.announce.correct_message_short_expire");
             CORRECT_MESSAGE_MANUAL = props.getProperty("scan.announce.correct_message_manual");

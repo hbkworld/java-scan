@@ -106,6 +106,27 @@ public class IPv4ConnectionFinderTest {
     }
 
     @Test
+    public void noIpv4AddressInAnnounce() {
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        try {
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("10.1.2.3"), 8));
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("172.19.1.2"), 16));
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("192.168.4.5"), 24));
+            IPv4ConnectionFinder finder = new IPv4ConnectionFinder(list);
+
+            fsmmr.emitSingleCorrectMessageNoIpv4();
+            assertNotNull("No Announce object after correct message", announce);
+            try {
+                assertNull("Device not connectable", finder.getConnectableAddress(announce));
+            } catch (MissingDataException e) {
+                fail("some information in anounce missing");
+            }
+        } catch (UnknownHostException e) {
+            fail("name resolution failed");
+        }
+    }
+
+    @Test
     public void noAddressesInList() {
         LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
         IPv4ConnectionFinder finder = new IPv4ConnectionFinder(list);
