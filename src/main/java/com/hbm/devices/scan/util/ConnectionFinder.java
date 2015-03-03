@@ -88,6 +88,12 @@ public final class ConnectionFinder {
         this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6AddressList);
     }
 
+    ConnectionFinder(Collection<NetworkInterfaceAddress> ipv4List, Collection<NetworkInterfaceAddress> ipv6List, LookupPreference preference) {
+        this.preference = preference;
+        this.ipv4ConnectionFinder = new IPv4ConnectionFinder(ipv4List);
+        this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6List);
+    }
+
     /**
      * This method looks for a connectable IP address.
      *
