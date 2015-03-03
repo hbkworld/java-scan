@@ -162,4 +162,18 @@ public class IPv6ConnectionFinderTest {
             fail("name resolution failed");
         }
     }
+
+    @Test
+    public void noAddressesInList() {
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+
+        fsmmr.emitSingleCorrectMessage();
+        assertNotNull("No Announce object after correct message", announce);
+        try {
+            assertNull("Device not connectable", finder.getConnectableAddress(announce));
+        } catch (MissingDataException e) {
+            fail("some information in anounce missing");
+        }
+    }
 }
