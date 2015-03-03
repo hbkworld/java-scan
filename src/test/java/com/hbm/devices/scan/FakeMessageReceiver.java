@@ -51,6 +51,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String MESSAGE_IPV6_IN_IPV4;
     private static final String MESSAGE_IPV4_IN_IPV6;
     private static final String MESSAGE_ILLEGAL_IPV4;
+    private static final String MESSAGE_ILLEGAL_IPV6;
     private static final String CORRECT_MESSAGE_NO_EXPIRE;
     private static final String CORRECT_MESSAGE_SHORT_EXPIRE;
     private static final String CORRECT_MESSAGE_MANUAL;
@@ -122,6 +123,11 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     public void emitIllegalIpv4() {
         setChanged();
         notifyObservers(MESSAGE_ILLEGAL_IPV4);
+    }
+
+    public void emitIllegalIpv6() {
+        setChanged();
+        notifyObservers(MESSAGE_ILLEGAL_IPV6);
     }
 
     public void emitMissingExpiration() {
@@ -373,6 +379,7 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             MESSAGE_IPV6_IN_IPV4 = props.getProperty("scan.announce.message_ipv6_in_ipv4");
             MESSAGE_IPV4_IN_IPV6 = props.getProperty("scan.announce.message_ipv4_in_ipv6");
             MESSAGE_ILLEGAL_IPV4 = props.getProperty("scan.announce.illegal_ipv4");
+            MESSAGE_ILLEGAL_IPV6 = props.getProperty("scan.announce.illegal_ipv6");
             CORRECT_MESSAGE_NO_EXPIRE = props.getProperty("scan.announce.correct_message_missing_expire");
             CORRECT_MESSAGE_SHORT_EXPIRE = props.getProperty("scan.announce.correct_message_short_expire");
             CORRECT_MESSAGE_MANUAL = props.getProperty("scan.announce.correct_message_manual");
