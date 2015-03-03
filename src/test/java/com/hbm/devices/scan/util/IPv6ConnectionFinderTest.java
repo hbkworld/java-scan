@@ -3,6 +3,7 @@ package com.hbm.devices.scan.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -111,6 +112,28 @@ public class IPv6ConnectionFinderTest {
             try {
                 InetAddress addr = finder.getConnectableAddress(announce);
                 assertNotNull("Device not connectable", addr);
+            } catch (MissingDataException e) {
+                fail("some information in anounce missing");
+            }
+        } catch (UnknownHostException e) {
+            fail("name resolution failed");
+        }
+    }
+ 
+    @Test
+    public void noIpv6AddressInAnnounce() {
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        try {
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
+            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+
+            fsmmr.emitSingleCorrectMessageNoIpv6();
+            assertNotNull("No Announce object after correct message", announce);
+            try {
+                InetAddress addr = finder.getConnectableAddress(announce);
+                assertNull("Device connectable", addr);
             } catch (MissingDataException e) {
                 fail("some information in anounce missing");
             }
