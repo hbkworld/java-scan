@@ -141,4 +141,25 @@ public class IPv6ConnectionFinderTest {
             fail("name resolution failed");
         }
     }
+
+    @Test
+    public void ipv4InIPv6AddressTest() {
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        try {
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
+            list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
+            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+
+            fsmmr.emitSingleMessageIpv4InIpv6();
+            assertNotNull("No Announce object after correct message", announce);
+            try {
+                assertNull("Device connectable", finder.getConnectableAddress(announce));
+            } catch (MissingDataException e) {
+                fail("some information in anounce missing");
+            }
+        } catch (UnknownHostException e) {
+            fail("name resolution failed");
+        }
+    }
 }
