@@ -42,7 +42,6 @@ public class IPv4ConnectionFinderTest {
         });
     }
 
-
     @Test
     public void sameNetTest() {
         try {
