@@ -43,6 +43,8 @@ import java.util.List;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.MissingDataException;
 
+import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
+
 /**
  * Convenience class for checking if an IP connection is possible to an announced device.
  * 
@@ -50,7 +52,7 @@ import com.hbm.devices.scan.messages.MissingDataException;
  */
 public final class ConnectionFinder {
 
-    private final boolean preferIPv6;
+    private final LookupPreference preference;
     private final IPv4ConnectionFinder ipv4ConnectionFinder;
     private final IPv6ConnectionFinder ipv6ConnectionFinder;
 
@@ -61,11 +63,11 @@ public final class ConnectionFinder {
      * NetworkInterface}s used to check {@link Announce} objects against
      * in {@link #getConnectableAddress(Announce)}.
      *
-     * @param preferIPv6 Set true if {@link #getConnectableAddress}
-     * returns IPv6 addresses preferentially.
+     * @param preference Set {@link LookupPreference#PREFER_IPV6} if {@link #getConnectableAddress}
+     * an IPv6 lookup is preferred, {@link LookupPreference#PREFER_IPV4} otherwise.
      */
-    public ConnectionFinder(Collection<NetworkInterface> interfaces, boolean preferIPv6) {
-        this.preferIPv6 = preferIPv6;
+    public ConnectionFinder(Collection<NetworkInterface> interfaces, LookupPreference preference) {
+        this.preference = preference;
 
         final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<NetworkInterfaceAddress>();
         final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<NetworkInterfaceAddress>();
@@ -99,7 +101,7 @@ public final class ConnectionFinder {
      * contain any IP addresses.
      */
     public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
-        if (preferIPv6) {
+        if (preference == PREFER_IPV6) {
             InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
             if (address == null) {
                 address = ipv4ConnectionFinder.getConnectableAddress(announce);
@@ -112,6 +114,13 @@ public final class ConnectionFinder {
             }
             return address;
         }
+    }
+
+    /**
+     * Preference if IPv4 or IPv6 address should be considered first.
+     */
+    public enum LookupPreference {
+        PREFER_IPV6, PREFER_IPV4
     }
 }
 

@@ -57,6 +57,8 @@ import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.util.ConnectionFinder;
 import com.hbm.devices.scan.util.ScanInterfaces;
 
+import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
+
 /**
  * Example class to show handling of announce messages.
  * <p>
@@ -111,7 +113,7 @@ class EventLogger {
 
     EventLogger() throws SocketException {
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
-        connectionFinder = new ConnectionFinder(scanInterfaces, false);
+        connectionFinder = new ConnectionFinder(scanInterfaces, PREFER_IPV4);
     }
 
     void logEvent(Object event) {
