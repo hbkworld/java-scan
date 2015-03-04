@@ -83,4 +83,58 @@ public class ConnectionFinderTest {
             fail("name resolution failed");
         }
     }
+
+    @Test
+    public void testNonPreferredIpv4ConnectableAddress() {
+        LinkedList<NetworkInterfaceAddress> ipv4List = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> ipv6List = new LinkedList<NetworkInterfaceAddress>();
+        try {
+            ipv4List.push(new NetworkInterfaceAddress(InetAddress.getByName("10.1.2.3"), 8));
+            ipv4List.push(new NetworkInterfaceAddress(InetAddress.getByName("172.19.1.2"), 16));
+            ipv4List.push(new NetworkInterfaceAddress(InetAddress.getByName("192.168.4.5"), 24));
+
+            ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
+            ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
+            ConnectionFinder finder6 = new ConnectionFinder(ipv4List, ipv6List, PREFER_IPV6);
+
+            fsmmr.emitSingleCorrectMessage();
+            assertNotNull("No Announce object after correct message", announce);
+
+            try {
+                assertTrue("Address is not an IPv4 InetAdress", finder6.getConnectableAddress(announce) instanceof Inet4Address);
+            } catch (MissingDataException e) {
+                fail("Got MissingDataException from announce");
+            }
+
+        } catch (UnknownHostException e) {
+            fail("name resolution failed");
+        }
+    }
+
+    @Test
+    public void testNonPreferredIpv6ConnectableAddress() {
+        LinkedList<NetworkInterfaceAddress> ipv4List = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> ipv6List = new LinkedList<NetworkInterfaceAddress>();
+        try {
+            ipv4List.push(new NetworkInterfaceAddress(InetAddress.getByName("10.1.2.3"), 8));
+            ipv4List.push(new NetworkInterfaceAddress(InetAddress.getByName("192.168.4.5"), 24));
+
+            ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
+            ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
+            ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
+            ConnectionFinder finder4 = new ConnectionFinder(ipv4List, ipv6List, PREFER_IPV4);
+
+            fsmmr.emitSingleCorrectMessage();
+            assertNotNull("No Announce object after correct message", announce);
+
+            try {
+                assertTrue("Address is not an IPv6 InetAdress", finder4.getConnectableAddress(announce) instanceof Inet6Address);
+            } catch (MissingDataException e) {
+                fail("Got MissingDataException from announce");
+            }
+
+        } catch (UnknownHostException e) {
+            fail("name resolution failed");
+        }
+    }
 }
