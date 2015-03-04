@@ -66,13 +66,15 @@ public class ConnectionFinderTest {
             ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
             ipv6List.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
-            ConnectionFinder finder = new ConnectionFinder(ipv4List, ipv6List, PREFER_IPV6);
+            ConnectionFinder finder6 = new ConnectionFinder(ipv4List, ipv6List, PREFER_IPV6);
+            ConnectionFinder finder4 = new ConnectionFinder(ipv4List, ipv6List, PREFER_IPV4);
 
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
 
             try {
-                assertTrue("Address is not an IPv6 InetAdress", finder.getConnectableAddress(announce) instanceof Inet6Address);
+                assertTrue("Address is not an IPv6 InetAdress", finder6.getConnectableAddress(announce) instanceof Inet6Address);
+                assertTrue("Address is not an IPv4 InetAdress", finder4.getConnectableAddress(announce) instanceof Inet4Address);
             } catch (MissingDataException e) {
                 fail("Got MissingDataException from announce");
             }
