@@ -36,6 +36,7 @@ public final class Announce extends JsonRpc {
 
     private AnnounceParams params;
     private String path;
+    private Object cookie;
 
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
@@ -48,6 +49,24 @@ public final class Announce extends JsonRpc {
             throw new MissingDataException("No device section in announce params!");
         }
         return params;
+    }
+    
+    /**
+     * Retrieve the auxiliary data previously set by {@link #setCookie}
+     *
+     * @return the auxiliary data
+     */
+    public Object getCookie() {
+        return cookie;
+    }
+    
+    /**
+     * This method can be used to bind some auxiliary data to an Announce object
+     *
+     * @param cookie the auxiliary data to be set
+     */
+    public void setCookie(Object cookie) {
+        this.cookie = cookie;
     }
 
     @Override
