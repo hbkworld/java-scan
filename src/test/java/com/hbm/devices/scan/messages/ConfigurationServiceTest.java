@@ -175,7 +175,7 @@ public class ConfigurationServiceTest {
         assertFalse("Service is still waiting for responses", service.awaitingResponse());
     }
 
-    @Test(timeout=100)
+    @Test(timeout=1000)
     public void testWrongResponseID() {
 
         final String queryID = "wrong-id";
@@ -192,7 +192,7 @@ public class ConfigurationServiceTest {
 
         synchronized(cb) {
             try {
-                service.sendConfiguration(configParams, queryID, cb, 10);
+                service.sendConfiguration(configParams, queryID, cb, 100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -209,7 +209,7 @@ public class ConfigurationServiceTest {
         service.close();
     }
 
-    @Test(timeout=100)
+    @Test(timeout=1000)
     public void testErrorResponse() {
 
         final String queryID = "error";
@@ -226,7 +226,7 @@ public class ConfigurationServiceTest {
 
         synchronized(cb) {
             try {
-                service.sendConfiguration(configParams, queryID, cb, 10);
+                service.sendConfiguration(configParams, queryID, cb, 100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -243,7 +243,7 @@ public class ConfigurationServiceTest {
         service.close();
     }
 
-    @Test(timeout=100)
+    @Test(timeout=1000)
     public void testErrorResponseNoMessage() {
 
         final String queryID = "error-no-message";
@@ -259,7 +259,7 @@ public class ConfigurationServiceTest {
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
         try {
-            service.sendConfiguration(configParams, queryID, cb, 10);
+            service.sendConfiguration(configParams, queryID, cb, 100);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -278,7 +278,7 @@ public class ConfigurationServiceTest {
         service.close();
     }
 
-    @Test(timeout=100)
+    @Test(timeout=1000)
     public void testErrorResponseEmptyMessage() {
 
         final String queryID = "error-empty-message";
@@ -295,7 +295,7 @@ public class ConfigurationServiceTest {
 
         synchronized(cb) {
             try {
-                service.sendConfiguration(configParams, queryID, cb, 10);
+                service.sendConfiguration(configParams, queryID, cb, 100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -328,7 +328,7 @@ public class ConfigurationServiceTest {
 
         try {
             exception.expect(IllegalArgumentException.class);
-            service.sendConfiguration(null, queryID, cb, 10);
+            service.sendConfiguration(null, queryID, cb, 100);
             fail("Not failed despite no config params given");
         } catch (IOException e) {
             e.printStackTrace();
@@ -382,7 +382,7 @@ public class ConfigurationServiceTest {
 
         try {
             exception.expect(IllegalArgumentException.class);
-            service.sendConfiguration(configParams, queryID, null, 10);
+            service.sendConfiguration(configParams, queryID, null, 100);
             fail("Not failed despite no config params given");
         } catch (IOException e) {
             e.printStackTrace();
@@ -409,7 +409,7 @@ public class ConfigurationServiceTest {
 
         try {
             exception.expect(IllegalArgumentException.class);
-            service.sendConfiguration(configParams, null, cb, 10);
+            service.sendConfiguration(configParams, null, cb, 100);
             fail("Not failed despite no config params given");
         } catch (IOException e) {
             e.printStackTrace();
@@ -436,7 +436,7 @@ public class ConfigurationServiceTest {
 
         try {
             exception.expect(IllegalArgumentException.class);
-            service.sendConfiguration(configParams, "", cb, 10);
+            service.sendConfiguration(configParams, "", cb, 100);
             fail("Not failed despite no config params given");
         } catch (IOException e) {
             e.printStackTrace();
