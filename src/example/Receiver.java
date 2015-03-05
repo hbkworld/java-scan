@@ -155,13 +155,17 @@ class EventLogger {
 
     private static void logServices(StringBuilder logBuilder, Announce announce) throws MissingDataException {
         final Iterable<ServiceEntry> services = announce.getParams().getServices();
-        logBuilder.append("  Services\n");
-        for (final ServiceEntry entry : services) {
-            logBuilder.append("    ")
-                .append(entry.getType())
-                .append(": ")
-                .append(entry.getPort())
-                .append('\n');
+        if (services == null) {
+            logBuilder.append("  No services announced!\n");
+        } else {
+            logBuilder.append("  Services\n");
+            for (final ServiceEntry entry : services) {
+                logBuilder.append("    ")
+                    .append(entry.getType())
+                    .append(": ")
+                    .append(entry.getPort())
+                    .append('\n');
+            }
         }
     }
 
