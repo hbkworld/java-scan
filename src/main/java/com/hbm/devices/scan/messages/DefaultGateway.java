@@ -41,7 +41,7 @@ public final class DefaultGateway {
     private String ipv6Address;
     private final String ipv4Address;
 
-    DefaultGateway(String ipv4Address) {
+    public DefaultGateway(String ipv4Address) {
         this.ipv4Address = ipv4Address;
     }
 
