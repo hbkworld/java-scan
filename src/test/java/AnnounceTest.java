@@ -31,6 +31,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,5 +74,15 @@ public class AnnounceTest {
         fsmmr.emitCorrectMessageManual();
         assertNotEquals("Both announce are different, but equals returns true", oldAnnounce, announce);
         assertNotSame("Both announce are different, but hashCodes are the same", oldAnnounce.hashCode(), announce.hashCode());
+    }
+
+    @Test
+    public void testCookie() {
+        fsmmr.emitSingleCorrectMessage();
+        assertNotNull("Got no Announce object", announce);
+        Object object = new Object();
+        announce.setCookie(object);
+
+        assertSame("Cookie object is not the same as before", object, announce.getCookie());
     }
 }
