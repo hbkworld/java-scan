@@ -19,7 +19,6 @@ import java.util.Observable;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceDeserializer;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
 
@@ -72,13 +71,8 @@ public class ConnectionFinderTest {
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
 
-            try {
-                assertTrue("Address is not an IPv6 InetAdress", finder6.getConnectableAddress(announce) instanceof Inet6Address);
-                assertTrue("Address is not an IPv4 InetAdress", finder4.getConnectableAddress(announce) instanceof Inet4Address);
-            } catch (MissingDataException e) {
-                fail("Got MissingDataException from announce");
-            }
-
+            assertTrue("Address is not an IPv6 InetAdress", finder6.getConnectableAddress(announce) instanceof Inet6Address);
+            assertTrue("Address is not an IPv4 InetAdress", finder4.getConnectableAddress(announce) instanceof Inet4Address);
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -100,12 +94,7 @@ public class ConnectionFinderTest {
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
 
-            try {
-                assertTrue("Address is not an IPv4 InetAdress", finder6.getConnectableAddress(announce) instanceof Inet4Address);
-            } catch (MissingDataException e) {
-                fail("Got MissingDataException from announce");
-            }
-
+            assertTrue("Address is not an IPv4 InetAdress", finder6.getConnectableAddress(announce) instanceof Inet4Address);
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -127,12 +116,7 @@ public class ConnectionFinderTest {
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
 
-            try {
-                assertTrue("Address is not an IPv6 InetAdress", finder4.getConnectableAddress(announce) instanceof Inet6Address);
-            } catch (MissingDataException e) {
-                fail("Got MissingDataException from announce");
-            }
-
+            assertTrue("Address is not an IPv6 InetAdress", finder4.getConnectableAddress(announce) instanceof Inet6Address);
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }

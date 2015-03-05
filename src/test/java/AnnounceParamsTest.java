@@ -42,7 +42,6 @@ import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceDeserializer;
 import com.hbm.devices.scan.messages.Device;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 public class AnnounceParamsTest {
 
@@ -73,11 +72,7 @@ public class AnnounceParamsTest {
     public void parseMissingExpiration() {
         fsmmr.emitMissingExpiration();
         assertNotNull("Got no Announce object after message without expiration", announce);
-        try {
-            assertEquals("no expiration in announce does't lead to default expiration", announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
-        } catch (MissingDataException e) {
-            fail("Got MissingDataException for correct announce message");
-        }
+        assertEquals("no expiration in announce does't lead to default expiration", announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
     }
 
     @Test

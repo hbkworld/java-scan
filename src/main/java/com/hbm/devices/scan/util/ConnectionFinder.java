@@ -41,7 +41,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
 
@@ -102,11 +101,8 @@ public final class ConnectionFinder {
      *
      * @return An {@link InetAddress} if a connectable IP address was
      * found, null otherwise.
-     *
-     * @throws MissingDataException if  the Announce object doesn't
-     * contain any IP addresses.
      */
-    public InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
+    public InetAddress getConnectableAddress(Announce announce) {
         if (preference == PREFER_IPV6) {
             InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
             if (address == null) {

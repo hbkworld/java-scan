@@ -29,7 +29,6 @@
 package com.hbm.devices.scan.announce.filter;
 
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.ServiceEntry;
 
 /**
@@ -54,10 +53,10 @@ public final class ServicetypeMatch implements Matcher {
     }
 
     @Override
-    public boolean match(Announce announce) throws MissingDataException {
+    public boolean match(Announce announce) {
         final Iterable<ServiceEntry> services = announce.getParams().getServices();
         if (services == null) {
-            throw new MissingDataException("No service section in announce");
+            return false;
         }
         for (final ServiceEntry entry : services) {
             for (int i = 0; i < serviceTypes.length; i++) {

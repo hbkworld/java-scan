@@ -30,12 +30,8 @@ package com.hbm.devices.scan.announce.filter;
 
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class filters {@link Announce} objects with according to a {@link Matcher} object.
@@ -48,7 +44,6 @@ import com.hbm.devices.scan.messages.MissingDataException;
 public final class Filter extends Observable implements Observer {
 
     private final Matcher matcher;
-    private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     /**
      * Constructs a {@link Filter} object.
@@ -69,13 +64,9 @@ public final class Filter extends Observable implements Observer {
     @Override
     public void update(Observable observable, Object arg) {
         final Announce announce = (Announce)arg;
-        try {
-            if (matcher.match(announce)) {
-                setChanged();
-                notifyObservers(announce);
-            }
-        } catch (MissingDataException e) {
-            LOGGER.log(Level.INFO, "Some information is missing in announce!", e);
+        if (matcher.match(announce)) {
+            setChanged();
+            notifyObservers(announce);
         }
     }
 }

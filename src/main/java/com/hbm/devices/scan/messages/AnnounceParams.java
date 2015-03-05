@@ -52,10 +52,7 @@ public final class AnnounceParams {
     private AnnounceParams() {
     }
 
-    public Device getDevice() throws MissingDataException {
-        if (device == null) {
-            throw new MissingDataException("No device section in announce params!");
-        }
+    public Device getDevice() {
         return device;
     }
 
@@ -63,10 +60,7 @@ public final class AnnounceParams {
         return apiVersion;
     }
 
-    public NetSettings getNetSettings() throws MissingDataException {
-        if (netSettings == null) {
-            throw new MissingDataException("No netSettings section in announce params!");
-        }
+    public NetSettings getNetSettings() {
         return netSettings;
     }
 

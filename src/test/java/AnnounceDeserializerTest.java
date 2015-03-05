@@ -52,7 +52,6 @@ import com.hbm.devices.scan.messages.Device;
 import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.IPv6Entry;
 import com.hbm.devices.scan.messages.Interface;
-import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.NetSettings;
 import com.hbm.devices.scan.messages.Response;
 import com.hbm.devices.scan.messages.Router;
@@ -258,55 +257,52 @@ public class AnnounceDeserializerTest {
         final Gson gson = new Gson();
         fsmmr.emitString(gson.toJson(root));
         assertNotNull("No Announce object after correct message", announce);
-        try {
-            assertEquals("JSON-RPC versions not equal", announce.getJsonrpc(), jsonRpcVersion);
-            assertEquals("JSON-RPC methods not equal", announce.getMethod(), jsonRpcMethod);
-            AnnounceParams checkAnnounceParams = announce.getParams();
-            
-            assertEquals("expiration does not match", checkAnnounceParams.getExpiration(), expire);
-            assertEquals("API version does not match", checkAnnounceParams.getApiVersion(), apiVersionString);
 
-            Device checkDevice = checkAnnounceParams.getDevice();
-            assertEquals("family type does not match", checkDevice.getFamilyType(), familyTypeString);
-            assertEquals("firmware version does not match", checkDevice.getFirmwareVersion(), fwVersionString);
-            assertEquals("Hardware ID does not match", checkDevice.getHardwareId(), hwIdString);
-            assertEquals("device name does not match", checkDevice.getName(), nameString);
-            assertEquals("device type does not match", checkDevice.getType(), typeString);
-            assertEquals("device uuid does not match", checkDevice.getUuid(), uuidString);
-            assertEquals("isRouter entry does not match", checkDevice.isRouter(), isRouter);
+        assertEquals("JSON-RPC versions not equal", announce.getJsonrpc(), jsonRpcVersion);
+        assertEquals("JSON-RPC methods not equal", announce.getMethod(), jsonRpcMethod);
+        AnnounceParams checkAnnounceParams = announce.getParams();
+        
+        assertEquals("expiration does not match", checkAnnounceParams.getExpiration(), expire);
+        assertEquals("API version does not match", checkAnnounceParams.getApiVersion(), apiVersionString);
 
-            NetSettings checkNetSettings = checkAnnounceParams.getNetSettings();
-            DefaultGateway checkDefaultGateway = checkNetSettings.getDefaultGateway();
-            assertEquals("Gateway addres does not match", checkDefaultGateway.getIpv4Address(), gwAddressString);
-            Interface checkIface = checkNetSettings.getInterface();
-            assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
-            assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
-            assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
-            Iterable<IPv4Entry> checkIPv4Entries = checkIface.getIPv4();
-            IPv4Entry checkIPv4 = checkIPv4Entries.iterator().next();
-            assertEquals("IPv4 address does not match", checkIPv4.getAddress(), ipv4Address);
-            assertEquals("IPv4 netmask does not match", checkIPv4.getNetmask(), ipv4Mask);
-            Iterable<IPv6Entry> checkIPv6Entries = checkIface.getIPv6();
-            IPv6Entry checkIPv6 = checkIPv6Entries.iterator().next();
-            assertEquals("IPv6 address does not match", checkIPv6.getAddress(), ipv6Address);
-            assertEquals("IPv6 prefix does not match", checkIPv6.getPrefix(), ipv6Prefix);
-            
-            Router checkRouter = checkAnnounceParams.getRouter();
-            assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
+        Device checkDevice = checkAnnounceParams.getDevice();
+        assertEquals("family type does not match", checkDevice.getFamilyType(), familyTypeString);
+        assertEquals("firmware version does not match", checkDevice.getFirmwareVersion(), fwVersionString);
+        assertEquals("Hardware ID does not match", checkDevice.getHardwareId(), hwIdString);
+        assertEquals("device name does not match", checkDevice.getName(), nameString);
+        assertEquals("device type does not match", checkDevice.getType(), typeString);
+        assertEquals("device uuid does not match", checkDevice.getUuid(), uuidString);
+        assertEquals("isRouter entry does not match", checkDevice.isRouter(), isRouter);
 
-            Iterable<ServiceEntry> checkServices = checkAnnounceParams.getServices();
-            for (ServiceEntry s : checkServices) {
-                String serviceType = s.getType();
-                assertTrue("Service type neither http nor streaming", serviceType.equals(httpType) || serviceType.equals(streamType));
-                int port = s.getPort(); 
-                if (serviceType.equals(httpType)) {
-                    assertEquals("http port does not match", port, httpPort);
-                } else {
-                    assertEquals("streaming port does not match", port, streamPort);
-                }
+        NetSettings checkNetSettings = checkAnnounceParams.getNetSettings();
+        DefaultGateway checkDefaultGateway = checkNetSettings.getDefaultGateway();
+        assertEquals("Gateway addres does not match", checkDefaultGateway.getIpv4Address(), gwAddressString);
+        Interface checkIface = checkNetSettings.getInterface();
+        assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
+        assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
+        assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
+        Iterable<IPv4Entry> checkIPv4Entries = checkIface.getIPv4();
+        IPv4Entry checkIPv4 = checkIPv4Entries.iterator().next();
+        assertEquals("IPv4 address does not match", checkIPv4.getAddress(), ipv4Address);
+        assertEquals("IPv4 netmask does not match", checkIPv4.getNetmask(), ipv4Mask);
+        Iterable<IPv6Entry> checkIPv6Entries = checkIface.getIPv6();
+        IPv6Entry checkIPv6 = checkIPv6Entries.iterator().next();
+        assertEquals("IPv6 address does not match", checkIPv6.getAddress(), ipv6Address);
+        assertEquals("IPv6 prefix does not match", checkIPv6.getPrefix(), ipv6Prefix);
+        
+        Router checkRouter = checkAnnounceParams.getRouter();
+        assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
+
+        Iterable<ServiceEntry> checkServices = checkAnnounceParams.getServices();
+        for (ServiceEntry s : checkServices) {
+            String serviceType = s.getType();
+            assertTrue("Service type neither http nor streaming", serviceType.equals(httpType) || serviceType.equals(streamType));
+            int port = s.getPort(); 
+            if (serviceType.equals(httpType)) {
+                assertEquals("http port does not match", port, httpPort);
+            } else {
+                assertEquals("streaming port does not match", port, streamPort);
             }
-        } catch (MissingDataException e) {
-            fail("MissingDataException thrown" + e);
         }
     }
 }

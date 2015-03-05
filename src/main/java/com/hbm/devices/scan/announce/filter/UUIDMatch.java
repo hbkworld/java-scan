@@ -28,7 +28,6 @@
 
 package com.hbm.devices.scan.announce.filter;
 
-import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.Announce;
 
 /**
@@ -51,7 +50,7 @@ public final class UUIDMatch implements Matcher {
     }
 
     @Override
-    public boolean match(Announce announce) throws MissingDataException {
+    public boolean match(Announce announce) {
         final String deviceUUID = announce.getParams().getDevice().getUuid();
         for (final String s : uuids) {
             if (s.equals(deviceUUID)) {

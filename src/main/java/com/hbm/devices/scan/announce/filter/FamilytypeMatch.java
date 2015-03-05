@@ -29,7 +29,6 @@
 package com.hbm.devices.scan.announce.filter;
 
 import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 /**
  * This class matches family type information in Announce objects.
@@ -54,7 +53,7 @@ public final class FamilytypeMatch implements Matcher {
     }
 
     @Override
-    public boolean match(Announce announce) throws MissingDataException {
+    public boolean match(Announce announce) {
         final String familyType = announce.getParams().getDevice().getFamilyType();
         for (int i = 0; i < familyTypes.length; i++) {
             if (familyTypes[i].equals(familyType)) {

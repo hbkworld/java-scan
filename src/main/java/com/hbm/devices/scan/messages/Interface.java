@@ -52,13 +52,8 @@ public final class Interface {
      *      A string containing the name of the interface. For
      *      Linux systems typically something like eth0,
      *      eth1, ... .
-     * @throws MissingDataException
-     *      if no name is set
      */
-    public String getName() throws MissingDataException {
-        if (name == null || name.length() == 0) {
-            throw new MissingDataException("Interface has no name!");
-        }
+    public String getName() {
         return name;
     }
 

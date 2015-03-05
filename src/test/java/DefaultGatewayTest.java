@@ -40,7 +40,6 @@ import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.AnnounceDeserializer;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.DefaultGateway;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 public class DefaultGatewayTest {
 
@@ -65,14 +64,10 @@ public class DefaultGatewayTest {
     public void getAddresses() {
         fsmmr.emitSingleCorrectMessage();
         assertNotNull("Go not Announce object", announce);
-        try {
-            DefaultGateway gateway = announce.getParams().getNetSettings().getDefaultGateway();
-            String ipv4 = gateway.getIpv4Address();
-            assertNotNull("IPv4 address is not set", ipv4);
-            String ipv6 = gateway.getIpv6Address();
-            assertNull("IPv6 address is set", ipv6);
-        } catch (MissingDataException e) {
-            fail("Could not access default gateway of announce!");
-        }
+        DefaultGateway gateway = announce.getParams().getNetSettings().getDefaultGateway();
+        String ipv4 = gateway.getIpv4Address();
+        assertNotNull("IPv4 address is not set", ipv4);
+        String ipv6 = gateway.getIpv6Address();
+        assertNull("IPv6 address is set", ipv6);
     }
 }

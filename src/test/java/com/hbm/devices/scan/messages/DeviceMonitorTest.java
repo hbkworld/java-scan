@@ -128,11 +128,4 @@ public class DeviceMonitorTest {
         monitor.stop();
         assertTrue("monitor not stopped", monitor.isStopped());
     }
-
-    @Test
-    public void wrongAnnounce() {
-        Announce announce = new Announce();
-        monitor.update(null, announce);
-        assertTrue("Event fired for illegal announce object", !newDevice && !updateDevice && !lostDevice);
-    }
 }

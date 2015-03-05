@@ -38,7 +38,6 @@ import java.util.logging.Logger;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.IPv6Entry;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 final class IPv6ConnectionFinder {
 
@@ -49,7 +48,7 @@ final class IPv6ConnectionFinder {
         this.interfaceAddresses = interfacesAddresses;
     }
 
-    InetAddress getConnectableAddress(Announce announce) throws MissingDataException {
+    InetAddress getConnectableAddress(Announce announce) {
         for (final NetworkInterfaceAddress niAddress : interfaceAddresses) {
             final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {
@@ -60,7 +59,7 @@ final class IPv6ConnectionFinder {
     }
 
     private static InetAddress getConnectAddress(NetworkInterfaceAddress interfaceAddress,
-            Announce announce) throws MissingDataException {
+            Announce announce) {
         final Iterable<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv6();
         if (announceAddresses == null) {

@@ -54,12 +54,8 @@ public final class Device {
      * @return A string containing a unique ID of a device. That might be the MAC address of a
      *         network interface card. This uuid is necessary to address devices by a dedicated
      *         request.
-     * @throws MissingDataException if no uuid was set in Device object
      */
-    public String getUuid() throws MissingDataException {
-        if (uuid == null || uuid.length() == 0) {
-            throw new MissingDataException("No UUID in device section!");
-        }
+    public String getUuid() {
         return uuid;
     }
 

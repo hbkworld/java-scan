@@ -47,10 +47,7 @@ public final class NetSettings {
         return defaultGateway;
     }
     
-    public Interface getInterface() throws MissingDataException {
-        if (iface == null) {
-            throw new MissingDataException("No interface section in netSettings!");
-        }
+    public Interface getInterface() {
         return iface;
     }
 }

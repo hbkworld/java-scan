@@ -40,12 +40,8 @@ public final class Router {
 
     /**
      * @return     A string containing the unique ID of the router the device is connected to.
-     * @throws  MissingDataException if no uuid is present.
      */
-    public String getUuid() throws MissingDataException {
-        if (uuid == null || uuid.length() == 0) {
-            throw new MissingDataException("No uuid in router!");
-        }
+    public String getUuid() {
         return uuid;
     }
 }

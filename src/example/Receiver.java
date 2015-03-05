@@ -49,7 +49,6 @@ import com.hbm.devices.scan.messages.Interface;
 import com.hbm.devices.scan.messages.IPv4Entry;
 import com.hbm.devices.scan.messages.IPv6Entry;
 import com.hbm.devices.scan.messages.AnnounceDeserializer;
-import com.hbm.devices.scan.messages.MissingDataException;
 import com.hbm.devices.scan.messages.ServiceEntry;
 import com.hbm.devices.scan.ScanConstants;
 import com.hbm.devices.scan.util.ConnectionFinder;
@@ -116,44 +115,39 @@ class EventLogger {
 
     void logEvent(Object event) {
         final StringBuilder logBuilder = new StringBuilder(INITIAL_BUFFER_SIZE);
-        try {
-            Announce announce;
-            if (event instanceof NewDeviceEvent) {
-                announce = ((NewDeviceEvent)event).getAnnounce();
-                final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
-                logBuilder.append("New Device:\n");
-                if (connectAddress != null) {
-                    logBuilder.append("Connectable: ").append(connectAddress).append('\n');
-                }
-            } else if (event instanceof LostDeviceEvent) {
-                announce = ((LostDeviceEvent) event).getAnnounce();
-                logBuilder.append("Lost Device:\n");
-            } else if (event instanceof UpdateDeviceEvent) {
-                final UpdateDeviceEvent updateEvent = (UpdateDeviceEvent) event;
-                announce = updateEvent.getNewAnnounce();
-                logBuilder.append("Update Device:\n");
-            } else {
-                logBuilder.append("unknown\n");
-                return;
+        Announce announce;
+        if (event instanceof NewDeviceEvent) {
+            announce = ((NewDeviceEvent)event).getAnnounce();
+            final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
+            logBuilder.append("New Device:\n");
+            if (connectAddress != null) {
+                logBuilder.append("Connectable: ").append(connectAddress).append('\n');
             }
-            fillDeviceInformation(announce, logBuilder);
-        } catch (MissingDataException e) {
-            logBuilder.append("Some data missing in Announce: ").append(e);
+        } else if (event instanceof LostDeviceEvent) {
+            announce = ((LostDeviceEvent) event).getAnnounce();
+            logBuilder.append("Lost Device:\n");
+        } else if (event instanceof UpdateDeviceEvent) {
+            final UpdateDeviceEvent updateEvent = (UpdateDeviceEvent) event;
+            announce = updateEvent.getNewAnnounce();
+            logBuilder.append("Update Device:\n");
+        } else {
+            logBuilder.append("unknown\n");
+            return;
         }
+        fillDeviceInformation(announce, logBuilder);
         if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, logBuilder.toString());
         }
     }
 
-    private static void fillDeviceInformation(Announce announce, StringBuilder logBuilder)
-        throws MissingDataException {
+    private static void fillDeviceInformation(Announce announce, StringBuilder logBuilder) {
         logDevice(logBuilder, announce.getParams().getDevice());
         logIpAddresses(logBuilder, announce);
         logServices(logBuilder, announce);
         logBuilder.append('\n');
     }
 
-    private static void logServices(StringBuilder logBuilder, Announce announce) throws MissingDataException {
+    private static void logServices(StringBuilder logBuilder, Announce announce) {
         final Iterable<ServiceEntry> services = announce.getParams().getServices();
         if (services == null) {
             logBuilder.append("  No services announced!\n");
@@ -169,7 +163,7 @@ class EventLogger {
         }
     }
 
-    private static void logIpAddresses(StringBuilder logBuilder, Announce announce) throws MissingDataException {
+    private static void logIpAddresses(StringBuilder logBuilder, Announce announce) {
         final Interface iface = announce.getParams().getNetSettings().getInterface();
         logBuilder.append("  IP-Addresses:\n    interfaceName: ")
         .append(iface.getName())
@@ -198,7 +192,7 @@ class EventLogger {
         }
     }
 
-    private static void logDevice(StringBuilder logBuilder, Device device) throws MissingDataException{
+    private static void logDevice(StringBuilder logBuilder, Device device) {
         logBuilder.append("Device:\n  UUID: ")
             .append(device.getUuid())
             .append("\n  name: ")

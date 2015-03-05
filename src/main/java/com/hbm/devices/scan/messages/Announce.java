@@ -44,10 +44,7 @@ public final class Announce extends JsonRpc {
         super("announce");
     }
 
-    public AnnounceParams getParams() throws MissingDataException {
-        if (params == null) {
-            throw new MissingDataException("No parameter section in announce!");
-        }
+    public AnnounceParams getParams() {
         return params;
     }
     
@@ -90,11 +87,7 @@ public final class Announce extends JsonRpc {
         return path;
     }
 
-    void identifyCommunicationPath() throws MissingDataException {
-        final AnnounceParams parameters = getParams();
-        if (parameters == null) {
-            throw new MissingDataException("No parameters in announce!");
-        }
+    private String getDeviceUUID(AnnounceParams parameters) throws MissingDataException {
         final Device device = parameters.getDevice();
         if (device == null) {
             throw new MissingDataException("No device section in announce!");
@@ -103,14 +96,18 @@ public final class Announce extends JsonRpc {
         if (deviceUUID == null || deviceUUID.length() == 0) {
             throw new MissingDataException("No device UUID in announce!");
         }
-        final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
-        hashBuilder.append(deviceUUID);
+        return deviceUUID;
+    }
 
-        final Router router = parameters.getRouter();
-        if (router != null) {
-            hashBuilder.append(router.getUuid());
+    private String getRouterUUID(Router router) throws MissingDataException {
+        final String uuid = router.getUuid();
+        if (uuid == null || uuid.length() == 0) {
+            throw new MissingDataException("Router uuid either null or of zero length!");
         }
-        
+        return uuid;
+    }
+
+    private String getInterfaceName(AnnounceParams parameters) throws MissingDataException {
         final NetSettings settings = parameters.getNetSettings();
         if (settings == null) {
             throw new MissingDataException("No network settings in announce!");
@@ -123,7 +120,24 @@ public final class Announce extends JsonRpc {
         if (interfaceName == null || interfaceName.length() == 0) {
             throw new MissingDataException("No interface name in announce!");
         }
-        hashBuilder.append(interfaceName);
+        return interfaceName;
+    }
+
+    void identifyCommunicationPath() throws MissingDataException {
+        final AnnounceParams parameters = getParams();
+        if (parameters == null) {
+            throw new MissingDataException("No parameters in announce!");
+        }
+
+        final StringBuilder hashBuilder = new StringBuilder(INITIAL_HASHCODE_BUFFER_SIZE);
+        hashBuilder.append(getDeviceUUID(parameters));
+
+        final Router router = parameters.getRouter();
+        if (router != null) {
+            hashBuilder.append(getRouterUUID(router));
+        }
+        
+        hashBuilder.append(getInterfaceName(parameters));
         path = hashBuilder.toString();
     }
 }

@@ -19,7 +19,6 @@ import java.util.Observable;
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.messages.Announce;
 import com.hbm.devices.scan.messages.AnnounceDeserializer;
-import com.hbm.devices.scan.messages.MissingDataException;
 
 public class IPv6ConnectionFinderTest {
 
@@ -109,12 +108,8 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
-            try {
-                InetAddress addr = finder.getConnectableAddress(announce);
-                assertNotNull("Device not connectable", addr);
-            } catch (MissingDataException e) {
-                fail("some information in anounce missing");
-            }
+            InetAddress addr = finder.getConnectableAddress(announce);
+            assertNotNull("Device not connectable", addr);
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -131,12 +126,8 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitSingleCorrectMessageNoIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            try {
-                InetAddress addr = finder.getConnectableAddress(announce);
-                assertNull("Device connectable", addr);
-            } catch (MissingDataException e) {
-                fail("some information in anounce missing");
-            }
+            InetAddress addr = finder.getConnectableAddress(announce);
+            assertNull("Device connectable", addr);
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -153,11 +144,7 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitSingleMessageIpv4InIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            try {
-                assertNull("Device connectable", finder.getConnectableAddress(announce));
-            } catch (MissingDataException e) {
-                fail("some information in anounce missing");
-            }
+            assertNull("Device connectable", finder.getConnectableAddress(announce));
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -174,11 +161,7 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitIllegalIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            try {
-                assertNull("Device connectable", finder.getConnectableAddress(announce));
-            } catch (MissingDataException e) {
-                fail("some information in anounce missing");
-            }
+            assertNull("Device connectable", finder.getConnectableAddress(announce));
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -191,10 +174,6 @@ public class IPv6ConnectionFinderTest {
 
         fsmmr.emitSingleCorrectMessage();
         assertNotNull("No Announce object after correct message", announce);
-        try {
-            assertNull("Device not connectable", finder.getConnectableAddress(announce));
-        } catch (MissingDataException e) {
-            fail("some information in anounce missing");
-        }
+        assertNull("Device not connectable", finder.getConnectableAddress(announce));
     }
 }
