@@ -41,6 +41,11 @@ public final class DefaultGateway {
     private String ipv6Address;
     private final String ipv4Address;
 
+    /**
+     * Constructs an object representing a default IPv4 gateway.
+     *
+     * @param ipv4Address the IPv4 address of the default gateway.
+     */
     public DefaultGateway(String ipv4Address) {
         this.ipv4Address = ipv4Address;
     }
