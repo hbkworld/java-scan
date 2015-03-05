@@ -81,9 +81,9 @@ public final class AnnounceDeserializer extends Observable implements Observer {
     @Override
     public void update(Observable observable, Object arg) {
         final String message = (String)arg;
-        try {
-            Announce announce = announceCache.get(message);
-            if (announce == null) {
+        Announce announce = announceCache.get(message);
+        if (announce == null) {
+            try {
                 announce = (Announce)gson.fromJson(message, JsonRpc.class);
                 if (announce != null) {
                     announce.identifyCommunicationPath();
@@ -91,25 +91,26 @@ public final class AnnounceDeserializer extends Observable implements Observer {
                     setChanged();
                     notifyObservers(announce);
                 }
-            } else { 
-                setChanged();
-                notifyObservers(announce);
+            } catch (JsonSyntaxException e) {
+                /*
+                 * There is no error handling necessary in this case. If somebody sends us invalid JSON,
+                 * we just ignore the packet and go ahead.
+                 */
+                LOGGER.log(Level.SEVERE, "Can't parse JSON!", e);
+            } catch (MissingDataException e) {
+                /*
+                 * During the creation of an Announce object it is required that some
+                 * sub-objects are created in the parsed JSON object (i.e. the device's UUID). If these
+                 * sub-objects are not created, the construction of the Announce object fails.
+                 * 
+                 * Go ahead with the next packet.
+                 */
+                LOGGER.log(Level.SEVERE, "Some information is missing in JSON!", e);
+                LOGGER.log(Level.SEVERE, announce.getJSONString());
             }
-        } catch (JsonSyntaxException e) {
-            /*
-             * There is no error handling necessary in this case. If somebody sends us invalid JSON,
-             * we just ignore the packet and go ahead.
-             */
-            LOGGER.log(Level.SEVERE, "Can't parse JSON!", e);
-        } catch (MissingDataException e) {
-            /*
-             * During the creation of an Announce object it is required that some
-             * sub-objects are created in the parsed JSON object (i.e. the device's UUID). If these
-             * sub-objects are not created, the construction of the Announce object fails.
-             * 
-             * Go ahead with the next packet.
-             */
-            LOGGER.log(Level.SEVERE, "Some information is missing in JSON!", e);
+        } else { 
+            setChanged();
+            notifyObservers(announce);
         }
     }
 
@@ -154,11 +155,13 @@ public final class AnnounceDeserializer extends Observable implements Observer {
                     params = gson.fromJson(json, AnnounceParams.class);
                 } else {
                     if (LOGGER.isLoggable(Level.INFO)) {
-                        LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version);
+                        LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version + "\n" + jsonObject);
                     }
                 }
             } else {
-                LOGGER.log(Level.SEVERE, "No apiVersion set in announce packet!");
+                if (LOGGER.isLoggable(Level.SEVERE)) {
+                    LOGGER.log(Level.SEVERE, "No apiVersion set in announce packet!\n" + jsonObject);
+                }
             }
             return params;
         }
