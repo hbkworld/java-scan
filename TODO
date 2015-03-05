@@ -1,2 +1,0 @@
-Test shutdown of ConfigurationService if outstanding responses (timers) are set.
-Test IPv6ConnectionFinder with prefix not dividable by 8
