@@ -52,22 +52,52 @@ public final class AnnounceParams {
     private AnnounceParams() {
     }
 
+    /**
+     * Gets the router specific information of an announce message.
+     * 
+     * @return the device. It is guaranteed by the {@link
+     * AnnounceDeserializer} that only valid announces are forwarded
+     * through the chain of observers, so a null reference is never
+     * returned from this method.
+     */
     public Device getDevice() {
         return device;
     }
 
+    /**
+     * @return the API version of the announce. 
+     * It is guaranteed by the {@link
+     * AnnounceDeserializer} that only valid announces are forwarded
+     * through the chain of observers, so a null reference is never
+     * returned from this method.
+     */
     public String getApiVersion() {
         return apiVersion;
     }
 
+    /**
+     * @return the network settings of an announce.
+     * It is guaranteed by the {@link
+     * AnnounceDeserializer} that only valid announces are forwarded
+     * through the chain of observers, so a null reference is never
+     * returned from this method.
+     */
     public NetSettings getNetSettings() {
         return netSettings;
     }
 
+    /**
+     * @return the router object or {@code null}, if no router was
+     * announced.
+     */
     public Router getRouter() {
         return router;
     }
 
+    /**
+     * @return the service section of an announce or {@code null}, if no
+     * services were announced.
+     */
     public Iterable<ServiceEntry> getServices() {
         return services;
     }

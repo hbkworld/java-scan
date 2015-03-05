@@ -43,7 +43,15 @@ public final class Announce extends JsonRpc {
     Announce() {
         super("announce");
     }
-
+    
+    /**
+     * Get the parameter of an announce message.
+     *
+     * @return the parameters. It is guaranteed by the {@link
+     * AnnounceDeserializer} that only valid announces are forwarded
+     * through the chain of observers, so a null reference is never
+     * returned from this method.
+     */
     public AnnounceParams getParams() {
         return params;
     }

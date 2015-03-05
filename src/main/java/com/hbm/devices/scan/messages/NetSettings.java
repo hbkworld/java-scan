@@ -43,10 +43,20 @@ public final class NetSettings {
     private NetSettings() {
     }
 
+    /**
+     * @return the default gateway of a device. Might return {@code
+     * null} if not announced.
+     */
     public DefaultGateway getDefaultGateway() {
         return defaultGateway;
     }
     
+    /**
+     * @return the network interface of a device. It is guaranteed by the {@link
+     * AnnounceDeserializer} that only valid announces are forwarded
+     * through the chain of observers, so a null reference is never
+     * returned from this method.
+     */
     public Interface getInterface() {
         return iface;
     }

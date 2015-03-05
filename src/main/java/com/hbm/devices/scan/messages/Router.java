@@ -39,7 +39,9 @@ public final class Router {
     }
 
     /**
-     * @return     A string containing the unique ID of the router the device is connected to.
+     * @return A string containing the unique ID of the router the
+     * device is connected to. Might return {@code null} if no router
+     * UUID was announced.
      */
     public String getUuid() {
         return uuid;

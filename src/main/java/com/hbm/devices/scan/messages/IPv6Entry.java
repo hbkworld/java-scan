@@ -39,6 +39,10 @@ public final class IPv6Entry {
     private IPv6Entry() {
     }
 
+    /**
+     * @return the IPv6 address of an interface or {@code null} if not
+     * announced.
+     */
     public String getAddress() {
         return address;
     }

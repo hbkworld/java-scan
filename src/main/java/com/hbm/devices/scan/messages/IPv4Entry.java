@@ -39,10 +39,18 @@ public final class IPv4Entry {
     private IPv4Entry() {
     }
 
+    /**
+     * @return the IPv4 address of an interface or {@code null} if not
+     * announced.
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * @return the IPv4 netmask of an interface or {@code null} if not
+     * announced.
+     */
     public String getNetmask() {
         return netmask;
     }

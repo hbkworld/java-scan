@@ -52,6 +52,10 @@ public final class Interface {
      *      A string containing the name of the interface. For
      *      Linux systems typically something like eth0,
      *      eth1, ... .
+     *      It is guaranteed by the {@link AnnounceDeserializer} that
+     *      only valid announces are forwarded through the chain of
+     *      observers, so a null reference is never returned from this
+     *      method.
      */
     public String getName() {
         return name;
@@ -59,7 +63,8 @@ public final class Interface {
 
     /**
      * @return
-     *      An optional string containing the type of the interface.
+     *      Astring containing the type of the interface or {@code null} if not
+     *      announced.
      *      For QuantumX systems it might be useful to distinguish
      *      Ethernet and Firewire interfaces.
      */
@@ -69,8 +74,9 @@ public final class Interface {
 
     /**
      * @return
-     *      An optional string containing some additional
-     *      information. QuantumX devices report whether the
+     *      Astring containing some additional
+     *      information or {@code null} if not announced. QuantumX devices
+     *      report whether the
      *      interface is on the front or back side.
      */
     public String getDescription() {
@@ -80,7 +86,8 @@ public final class Interface {
     /**
      * @return
      *      An Iterable containing all IPv4 addresses of the interface
-     *      with their netmask.
+     *      with their netmask. Might be {@code null} if no IPv4
+     *      interface was announced.
      */
     public Iterable<IPv4Entry> getIPv4() {
         return ipv4;
@@ -89,7 +96,8 @@ public final class Interface {
     /**
      * @return
      *      An Iterable containing all IPv6 addresses of the interface
-     *      with their prefix.
+     *      with their netmask. Might be {@code null} if no IPv6
+     *      interface was announced.
      */
     public Iterable<IPv6Entry> getIPv6() {
         return ipv6;

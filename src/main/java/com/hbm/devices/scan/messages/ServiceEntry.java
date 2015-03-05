@@ -46,7 +46,7 @@ public final class ServiceEntry {
     }
 
     /**
-     * @return Name of the service.
+     * @return Name of the service. Might return {@code null} if not announced.
      */
     public String getType() {
         return type;

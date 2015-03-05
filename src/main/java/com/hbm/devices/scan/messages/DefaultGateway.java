@@ -53,7 +53,8 @@ public final class DefaultGateway {
     /**
      * @return
      *      A string containing the IPv4 address of the configured
-     *      default gateway.
+     *      default gateway of {@code null} if no IPv4 default gateway was
+     *      announced.
      */
     public String getIpv4Address() {
         return ipv4Address;
@@ -62,7 +63,8 @@ public final class DefaultGateway {
     /**
      * @return
      *      A string containing the IPv6 address of the configured
-     *      default gateway.
+     *      default gateway of {@code null} if no IPv6 default gateway was
+     *      announced.
      */
     public String getIpv6Address() {
         return ipv6Address;

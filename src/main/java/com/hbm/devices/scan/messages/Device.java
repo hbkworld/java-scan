@@ -51,16 +51,20 @@ public final class Device {
     }
 
     /**
-     * @return A string containing a unique ID of a device. That might be the MAC address of a
-     *         network interface card. This uuid is necessary to address devices by a dedicated
-     *         request.
+     * @return
+     *      A string containing a unique ID of a device. That might be the MAC address of a
+     *      network interface card. This uuid is necessary to address devices by a dedicated
+     *      request. It is guaranteed by the {@link AnnounceDeserializer} that only valid
+     *      announces are forwarded through the chain of observers, so a null reference is
+     *      never returned from this method.
      */
     public String getUuid() {
         return uuid;
     }
 
     /**
-     * @return An optional string containing the name of the device.
+     * @return An string containing the name of the device or {@code
+     * null} if no name was announced.
      */
     public String getName() {
         return name;
@@ -68,21 +72,25 @@ public final class Device {
 
     /**
      * @return A string describing the type of the device, e.g. for a QuantumX MX840 this will
-     *         contain "MX840".
+     *         contain "MX840". This method could return {@code null} if
+     *         no type was announced.
      */
     public String getType() {
         return type;
     }
 
     /**
-     * @return A string describing the hardware ID of a device.
+     * @return A string describing the hardware ID of a device or {@code null} 
+     * if no hardware ID was announced.
      */
     public String getHardwareId() {
         return hardwareId;
     }
 
     /**
-     * @return A string describing the family type of the device, e.g. QuantumX or PMX.
+     * @return A string describing the family type of the device, e.g.
+     * QuantumX or PMX. Might be {@code null} if no family type was
+     * announced.
      */
     public String getFamilyType() {
         return familyType;
@@ -90,6 +98,7 @@ public final class Device {
 
     /**
      * @return A string containing the firmware version of the device.
+     * Might be {@code null} if no firmware version was announced.
      */
     public String getFirmwareVersion() {
         return firmwareVersion;
