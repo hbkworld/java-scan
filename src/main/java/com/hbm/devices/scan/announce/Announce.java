@@ -26,7 +26,9 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
+
+import com.hbm.devices.scan.JsonRpc;
 
 /**
  * This class hold all information required to implement the HBM network
@@ -91,7 +93,7 @@ public final class Announce extends JsonRpc {
         return getJSONString().hashCode();
     }
 
-    public String getPath() {
+    String getPath() {
         return path;
     }
 

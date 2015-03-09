@@ -26,50 +26,41 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
-
-import com.google.gson.annotations.SerializedName;
+package com.hbm.devices.scan.announce;
 
 /**
- * This class hold a complete configuration request packet according to the specification.
+ * The default gateway describes the configured default gateway of a
+ * device.<p>
+ *
+ * Only a single default gateway is possible.
  * 
  * @since 1.0
  */
-public final class ConfigurationRequest extends JsonRpc {
+public final class DefaultGateway {
 
-    @SerializedName("id")
-    private String queryID;
-    private ConfigurationParams params;
+    private String ipv6Address;
+    private String ipv4Address;
 
-    private ConfigurationRequest() {
-        super("configure");
+    private DefaultGateway() {
     }
 
     /**
-     * @param params
-     *            the configuration parameters, which should be sent to a device
-     * @param queryID
-     *            A value of any type, which is used to match the response with the request that it
-     *            is replying to.
+     * @return
+     *      A string containing the IPv4 address of the configured
+     *      default gateway or {@code null} if no IPv4 default gateway was
+     *      announced.
      */
-    public ConfigurationRequest(ConfigurationParams params, String queryID) {
-        this();
-
-        if (params == null) {
-            throw new IllegalArgumentException("params == null");
-        }
-        if ((queryID == null) || (queryID.length() == 0)) {
-            throw new IllegalArgumentException("No queryID given");
-        }
-        this.params = params;
-        this.queryID = queryID;
+    public String getIpv4Address() {
+        return ipv4Address;
     }
 
-    public ConfigurationParams getParams() {
-        return params;
-    }
-
-    public String getQueryId() {
-        return queryID;
+    /**
+     * @return
+     *      A string containing the IPv6 address of the configured
+     *      default gateway or {@code null} if no IPv6 default gateway was
+     *      announced.
+     */
+    public String getIpv6Address() {
+        return ipv6Address;
     }
 }

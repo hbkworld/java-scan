@@ -36,25 +36,25 @@ import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.hbm.devices.scan.ScanConstants;
+import com.hbm.devices.scan.ScanInterfaces;
+import com.hbm.devices.scan.announce.Announce;
+import com.hbm.devices.scan.announce.AnnounceDeserializer;
 import com.hbm.devices.scan.announce.AnnounceReceiver;
+import com.hbm.devices.scan.announce.ConnectionFinder;
+import com.hbm.devices.scan.announce.Device;
 import com.hbm.devices.scan.announce.DeviceMonitor;
-import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
-import com.hbm.devices.scan.announce.filter.Filter;
+import com.hbm.devices.scan.announce.IPv4Entry;
+import com.hbm.devices.scan.announce.IPv6Entry;
+import com.hbm.devices.scan.announce.Interface;
 import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
+import com.hbm.devices.scan.announce.ServiceEntry;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.Device;
-import com.hbm.devices.scan.messages.Interface;
-import com.hbm.devices.scan.messages.IPv4Entry;
-import com.hbm.devices.scan.messages.IPv6Entry;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
-import com.hbm.devices.scan.messages.ServiceEntry;
-import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.util.ConnectionFinder;
-import com.hbm.devices.scan.util.ScanInterfaces;
+import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
+import com.hbm.devices.scan.announce.filter.Filter;
 
-import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
+import static com.hbm.devices.scan.announce.ConnectionFinder.LookupPreference.*;
 
 /**
  * Example class to show handling of announce messages.

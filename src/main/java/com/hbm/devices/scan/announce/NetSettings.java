@@ -26,32 +26,39 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
- * A class holding an IPv4 address and IPv4 network mask.
+ * Objects of this class hold the information of a devices network settings.
  */
-public final class IPv4Entry {
+public final class NetSettings {
+
+    private DefaultGateway defaultGateway;
+
+    @SerializedName("interface")
+    private Interface iface;
+
+    private NetSettings() {
+    }
+
+    /**
+     * @return the default gateway of a device. Might return {@code
+     * null} if not announced.
+     */
+    public DefaultGateway getDefaultGateway() {
+        return defaultGateway;
+    }
     
-    private String address;
-    private String netmask;
-
-    private IPv4Entry() {
-    }
-
     /**
-     * @return the IPv4 address of an interface or {@code null} if not
-     * announced.
+     * @return the network interface of a device. It is guaranteed by the {@link
+     * AnnounceDeserializer} that only valid announces are forwarded
+     * through the chain of observers, so a null reference is never
+     * returned from this method.
      */
-    public String getAddress() {
-        return address;
-    }
-
-    /**
-     * @return the IPv4 netmask of an interface or {@code null} if not
-     * announced.
-     */
-    public String getNetmask() {
-        return netmask;
+    public Interface getInterface() {
+        return iface;
     }
 }
+

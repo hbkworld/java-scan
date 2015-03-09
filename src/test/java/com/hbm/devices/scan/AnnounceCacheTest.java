@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -41,7 +41,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
 
 public class AnnounceCacheTest {
 

@@ -26,13 +26,36 @@
  * SOFTWARE.
  */
 
+package com.hbm.devices.scan.configure;
 
 /**
- * Provides utility classes useful for working with the scan classes.
- * <p>
- * There are classes that can be used to determine the network
- * interfaces that are suitable for receiving scan messages and classes
- * for checking if an IP connection is possible to an announced device.
+ * The default gateway describes the configured default gateway of a
+ * device.<p>
+ *
+ * Only a single default gateway is possible.
+ * 
+ * @since 1.0
  */
-package com.hbm.devices.scan.util;
+public final class ConfigurationDefaultGateway {
 
+    private final String ipv4Address;
+
+    /**
+     * Constructs an object representing a default IPv4 gateway.
+     *
+     * @param ipv4Address the IPv4 address of the default gateway.
+     */
+    public ConfigurationDefaultGateway(String ipv4Address) {
+        this.ipv4Address = ipv4Address;
+    }
+
+    /**
+     * @return
+     *      A string containing the IPv4 address of the configured
+     *      default gateway of {@code null} if no IPv4 default gateway was
+     *      announced.
+     */
+    public String getIpv4Address() {
+        return ipv4Address;
+    }
+}

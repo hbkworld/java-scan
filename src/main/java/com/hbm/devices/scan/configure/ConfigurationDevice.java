@@ -26,39 +26,39 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
-
-import com.google.gson.annotations.SerializedName;
+package com.hbm.devices.scan.configure;
 
 /**
- * Objects of this class hold the information of a devices network settings.
+ * The device class specifies which device should be configured.
+ * 
+ * @since 1.0
+ *
  */
-public final class NetSettings {
+public final class ConfigurationDevice {
 
-    private DefaultGateway defaultGateway;
+    private final String uuid;
 
-    @SerializedName("interface")
-    private Interface iface;
-
-    private NetSettings() {
+    /**
+     * This method checks the {@link ConfigurationDevice} object for errors and if it conforms to the HBM network
+     * discovery and configuration protocol.
+     * 
+     * @param uuid
+     *          the unique ID of the device to be configured
+     * @throws IllegalArgumentException
+     *          if {@code uuid} is null of {@code uuid.length() == 0}.
+     */
+    public ConfigurationDevice(String uuid) {
+        if ((uuid == null) || (uuid.length() == 0)) {
+            throw new IllegalArgumentException("No uuid in ConfigurationDevice");
+        }
+        this.uuid = uuid;
     }
 
     /**
-     * @return the default gateway of a device. Might return {@code
-     * null} if not announced.
+     * 
+     * @return returns the unique ID of the device
      */
-    public DefaultGateway getDefaultGateway() {
-        return defaultGateway;
-    }
-    
-    /**
-     * @return the network interface of a device. It is guaranteed by the {@link
-     * AnnounceDeserializer} that only valid announces are forwarded
-     * through the chain of observers, so a null reference is never
-     * returned from this method.
-     */
-    public Interface getInterface() {
-        return iface;
+    public String getUUID() {
+        return this.uuid;
     }
 }
-

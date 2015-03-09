@@ -31,7 +31,7 @@ package com.hbm.devices.scan.announce.filter;
 import java.util.Observable;
 import java.util.Observer;
 
-import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.announce.Announce;
 
 /**
  * This class filters {@link Announce} objects with according to a {@link Matcher} object.

@@ -26,9 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
-
-import com.hbm.devices.scan.messages.IPv4EntryManual;
+package com.hbm.devices.scan.configure;
 
 /**
  * The interface describes the properties and settings of an network interface which are configured.
@@ -47,7 +45,7 @@ public final class ConfigurationInterface {
      * <p>
      * Note: The parameter {@code configMethod} must not be {@link Method#MANUAL}. If you want to
      * set a manual ipv4 use the constructor
-     * {@link #ConfigurationInterface(String, com.hbm.devices.scan.messages.ConfigurationInterface.Method, com.hbm.devices.scan.messages.IPv4EntryManual)}.
+     * {@link #ConfigurationInterface(String, ConfigurationInterface.Method, IPv4EntryManual)}.
      * <p>
      * 
      * @param interfaceName

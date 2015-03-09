@@ -26,29 +26,38 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan;
+
+import com.google.gson.annotations.SerializedName;
 
 /**
- * Class for error objects in <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>.
+ * Super class for all <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> messages.
  */
-public final class ErrorObject {
-
-    private int code;
-    private String message;
-    private String data;
-
-    private ErrorObject() {
+public class JsonRpc {
+    
+    @SerializedName("jsonrpc")
+    private final String jsonrpcVersion;
+    private final String method;
+    private String json;
+    
+    protected JsonRpc(String method) {
+        jsonrpcVersion = "2.0";
+        this.method = method;
+    }
+    
+    public void setJSONString(String json) {
+        this.json = json;
     }
 
-    public int getCode() {
-        return code;
+    public String getJSONString() {
+        return json;
     }
 
-    public String getMessage() {
-        return message;
+    public String getJsonrpc() {
+        return jsonrpcVersion;
     }
 
-    public String getData() {
-        return data;
+    public String getMethod() {
+        return method;
     }
 }

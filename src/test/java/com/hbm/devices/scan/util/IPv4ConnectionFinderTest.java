@@ -1,4 +1,4 @@
-package com.hbm.devices.scan.util;
+package com.hbm.devices.scan.announce;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -17,8 +17,6 @@ import java.util.Observer;
 import java.util.Observable;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
 
 public class IPv4ConnectionFinderTest {
 

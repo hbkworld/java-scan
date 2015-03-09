@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -90,7 +90,7 @@ public class ConfigMessagesTest {
 
         IPv4EntryManual entry = new IPv4EntryManual(ip, netMask);
         ConfigurationInterface iface = new ConfigurationInterface(interfaceName, configMethod, entry);
-        DefaultGateway gateway = new DefaultGateway(gw);
+        ConfigurationDefaultGateway gateway = new ConfigurationDefaultGateway(gw);
         ConfigurationNetSettings settings = new ConfigurationNetSettings(iface, gateway);
         ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
         ConfigurationParams configParams = new ConfigurationParams(device, settings, ttl);

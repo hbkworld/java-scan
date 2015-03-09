@@ -26,39 +26,36 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
-
-import com.google.gson.annotations.SerializedName;
+package com.hbm.devices.scan.announce;
 
 /**
- * Response object according to <a
- * href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>
- * specification.
+ * The optional service might be used to deliver the IP port under which the client can reach
+ * different services on the device. So devices might e.g. specify how to connect to the data
+ * acquisition service.
+ * 
+ * The content of the service is totally device specific and not specified in this document.
  * 
  * @since 1.0
- *
  */
-public final class Response extends JsonRpc {
+public final class ServiceEntry {
 
-    private String result;
-    private ErrorObject error;
+    private String type;
+    private int port;
 
-    @SerializedName("id")
-    private String responseID;
-
-    Response() {
-        super("response");
+    private ServiceEntry() {
     }
 
-    public String getResult() {
-        return result;
+    /**
+     * @return Name of the service. Might return {@code null} if not announced.
+     */
+    public String getType() {
+        return type;
     }
 
-    public ErrorObject getError() {
-        return error;
-    }
-
-    public String getId() {
-        return responseID;
+    /**
+     * @return IP port of the service.
+     */
+    public int getPort() {
+        return port;
     }
 }

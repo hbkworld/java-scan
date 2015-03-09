@@ -26,28 +26,32 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
 
 /**
- * A class holding the IPv6 address and IPv6 prefix.
+ * A class holding an IPv4 address and IPv4 network mask.
  */
-public final class IPv6Entry {
-
+public final class IPv4Entry {
+    
     private String address;
-    private int prefix;
+    private String netmask;
 
-    private IPv6Entry() {
+    private IPv4Entry() {
     }
 
     /**
-     * @return the IPv6 address of an interface or {@code null} if not
+     * @return the IPv4 address of an interface or {@code null} if not
      * announced.
      */
     public String getAddress() {
         return address;
     }
 
-    public int getPrefix() {
-        return prefix;
+    /**
+     * @return the IPv4 netmask of an interface or {@code null} if not
+     * announced.
+     */
+    public String getNetmask() {
+        return netmask;
     }
 }

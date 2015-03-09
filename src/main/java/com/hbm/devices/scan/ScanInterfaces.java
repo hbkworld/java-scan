@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.util;
+package com.hbm.devices.scan;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;

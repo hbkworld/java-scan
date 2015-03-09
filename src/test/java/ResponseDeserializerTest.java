@@ -40,9 +40,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.ErrorObject;
-import com.hbm.devices.scan.messages.Response;
-import com.hbm.devices.scan.messages.ResponseDeserializer;
+import com.hbm.devices.scan.configure.ErrorObject;
+import com.hbm.devices.scan.configure.Response;
+import com.hbm.devices.scan.configure.ResponseDeserializer;
 
 public class ResponseDeserializerTest {
 

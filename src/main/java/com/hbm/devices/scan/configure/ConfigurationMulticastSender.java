@@ -43,9 +43,6 @@ import com.hbm.devices.scan.ScanConstants;
 /**
  * This class receives {@link java.lang.String} messages and sends them via multicast UDP sockets
  * <p>
- * All network interfaces that are eligible to handle multicast messages (see
- * {@link com.hbm.devices.scan.util.ScanInterfaces}) are joined.
- * <p>
  * 
  * @since 1.0
  */

@@ -28,8 +28,6 @@
 
 package com.hbm.devices.scan.announce;
 
-import com.hbm.devices.scan.messages.Announce;
-
 /**
  * This event is emitted by an {@link com.hbm.devices.scan.announce.DeviceMonitor}.
  * <p>

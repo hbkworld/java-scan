@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.util;
+package com.hbm.devices.scan.announce;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -36,8 +36,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.IPv4Entry;
 
 final class IPv4ConnectionFinder {
 

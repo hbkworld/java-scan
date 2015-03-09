@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
 
 /**
  * This class holt all information to configure a device via the HBM

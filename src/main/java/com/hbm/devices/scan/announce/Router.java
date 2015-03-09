@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
 
 /**
  * Class encapsulating the router information of an announced device.

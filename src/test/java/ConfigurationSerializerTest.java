@@ -40,12 +40,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.FakeMulticastSender;
-import com.hbm.devices.scan.messages.ConfigurationRequest;
-import com.hbm.devices.scan.messages.ConfigurationDevice;
-import com.hbm.devices.scan.messages.ConfigurationInterface;
-import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
-import com.hbm.devices.scan.messages.ConfigurationNetSettings;
-import com.hbm.devices.scan.messages.ConfigurationParams;
+import com.hbm.devices.scan.configure.ConfigurationRequest;
+import com.hbm.devices.scan.configure.ConfigurationDevice;
+import com.hbm.devices.scan.configure.ConfigurationInterface;
+import com.hbm.devices.scan.configure.ConfigurationInterface.Method;
+import com.hbm.devices.scan.configure.ConfigurationNetSettings;
+import com.hbm.devices.scan.configure.ConfigurationParams;
 
 public class ConfigurationSerializerTest {
 

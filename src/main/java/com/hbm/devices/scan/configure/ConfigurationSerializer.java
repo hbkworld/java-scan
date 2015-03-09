@@ -32,7 +32,6 @@ import java.io.Closeable;
 import java.io.IOException;
 
 import com.google.gson.Gson;
-import com.hbm.devices.scan.messages.ConfigurationRequest;
 
 /**
  * This class is able to send {@link ConfigurationRequest} messages via multicast.

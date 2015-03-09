@@ -28,7 +28,7 @@
 
 package com.hbm.devices.scan.announce.filter;
 
-import com.hbm.devices.scan.messages.Announce;
+import com.hbm.devices.scan.announce.Announce;
 
 /**
  * An object able to match information in {@link Announce} objects.

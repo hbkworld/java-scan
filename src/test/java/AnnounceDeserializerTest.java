@@ -43,30 +43,27 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceParams;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.DefaultGateway;
-import com.hbm.devices.scan.messages.Device;
-import com.hbm.devices.scan.messages.IPv4Entry;
-import com.hbm.devices.scan.messages.IPv6Entry;
-import com.hbm.devices.scan.messages.Interface;
-import com.hbm.devices.scan.messages.NetSettings;
-import com.hbm.devices.scan.messages.Response;
-import com.hbm.devices.scan.messages.Router;
-import com.hbm.devices.scan.messages.ServiceEntry;
+import com.hbm.devices.scan.announce.Announce;
+import com.hbm.devices.scan.announce.AnnounceParams;
+import com.hbm.devices.scan.announce.AnnounceDeserializer;
+import com.hbm.devices.scan.announce.Announce;
+import com.hbm.devices.scan.announce.DefaultGateway;
+import com.hbm.devices.scan.announce.Device;
+import com.hbm.devices.scan.announce.IPv4Entry;
+import com.hbm.devices.scan.announce.IPv6Entry;
+import com.hbm.devices.scan.announce.Interface;
+import com.hbm.devices.scan.announce.NetSettings;
+import com.hbm.devices.scan.announce.Router;
+import com.hbm.devices.scan.announce.ServiceEntry;
 
 public class AnnounceDeserializerTest {
 
     private Announce announce;
-    private Response res;
     private FakeMessageReceiver fsmmr;
 
     @Before
     public void setUp() {
         announce = null;
-        res = null;
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
@@ -74,8 +71,6 @@ public class AnnounceDeserializerTest {
             public void update(Observable o, Object arg) {
                 if (arg instanceof Announce) {
                     announce = (Announce) arg;
-                } else if (arg instanceof Response) {
-                    res = (Response) arg;
                 }
             }
         });

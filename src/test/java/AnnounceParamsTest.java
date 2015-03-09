@@ -39,9 +39,9 @@ import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
 import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
-import com.hbm.devices.scan.messages.Device;
+import com.hbm.devices.scan.announce.Announce;
+import com.hbm.devices.scan.announce.AnnounceDeserializer;
+import com.hbm.devices.scan.announce.Device;
 
 public class AnnounceParamsTest {
 

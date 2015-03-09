@@ -40,14 +40,14 @@ import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.util.ScanInterfaces;
+import com.hbm.devices.scan.ScanInterfaces;
 
 /**
  * This class receives messages from a multicast UDP socket and converts them to a
  * {@link java.lang.String}.
  * <p>
  * All network interfaces that are eligible to receive IPv4 multicast messages (see
- * {@link com.hbm.devices.scan.util.ScanInterfaces}) are joined.
+ * {@link com.hbm.devices.scan.ScanInterfaces}) are joined.
  * <p>
  * Receiving messages is done infinitely when calling {@link #run() run()}. After calling
  * {@link #close() close()}, {@link #run() run()} returns.

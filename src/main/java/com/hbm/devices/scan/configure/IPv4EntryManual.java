@@ -26,36 +26,46 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
 
 /**
- * The optional service might be used to deliver the IP port under which the client can reach
- * different services on the device. So devices might e.g. specify how to connect to the data
- * acquisition service.
- * 
- * The content of the service is totally device specific and not specified in this document.
- * 
- * @since 1.0
+ * A class holding the information for manual IP interface configuration an a device.
  */
-public final class ServiceEntry {
+public final class IPv4EntryManual {
 
-    private String type;
-    private int port;
+    private final String manualAddress;
+    private final String manualNetmask;
 
-    private ServiceEntry() {
+    /**
+     * Constructs a {@link IPv4EntryManual} object.
+     *
+     * @param address The IP address for the manual interface
+     * configuration of a device.
+     * @param netmask The network mask for the manual interface
+     * configuration of a device.
+     */
+    public IPv4EntryManual(String address, String netmask) {
+        if (address == null || address.length() == 0) {
+            throw new IllegalArgumentException("address parameter must not be null");
+        }
+        if (netmask == null || netmask.length() == 0) {
+            throw new IllegalArgumentException("netmask parameter must not be null");
+        }
+        this.manualAddress = address;
+        this.manualNetmask = netmask;
+    }
+    
+    /**
+     * @return the address used for manual interface configuration
+     */
+    public String getAddress() {
+        return manualAddress;
     }
 
     /**
-     * @return Name of the service. Might return {@code null} if not announced.
+     * @return the netmask used for manual interface configuration
      */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * @return IP port of the service.
-     */
-    public int getPort() {
-        return port;
+    public String getNetmask() {
+        return manualNetmask;
     }
 }

@@ -34,19 +34,19 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
+import com.hbm.devices.scan.ScanInterfaces;
 import com.hbm.devices.scan.configure.ConfigurationCallback;
+import com.hbm.devices.scan.configure.ConfigurationDevice;
+import com.hbm.devices.scan.configure.ConfigurationInterface.Method;
+import com.hbm.devices.scan.configure.ConfigurationInterface;
 import com.hbm.devices.scan.configure.ConfigurationMessageReceiver;
 import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
+import com.hbm.devices.scan.configure.ConfigurationNetSettings;
+import com.hbm.devices.scan.configure.ConfigurationParams;
 import com.hbm.devices.scan.configure.ConfigurationSerializer;
 import com.hbm.devices.scan.configure.ConfigurationService;
-import com.hbm.devices.scan.messages.ConfigurationDevice;
-import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
-import com.hbm.devices.scan.messages.ConfigurationInterface;
-import com.hbm.devices.scan.messages.ConfigurationNetSettings;
-import com.hbm.devices.scan.messages.ConfigurationParams;
-import com.hbm.devices.scan.messages.Response;
-import com.hbm.devices.scan.messages.ResponseDeserializer;
-import com.hbm.devices.scan.util.ScanInterfaces;
+import com.hbm.devices.scan.configure.Response;
+import com.hbm.devices.scan.configure.ResponseDeserializer;
 
 /**
  * Example class to show configuration of a device.

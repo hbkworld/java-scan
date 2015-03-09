@@ -30,7 +30,7 @@
  * This class finds the IP addresses of an announce messages the
  * receiving device is able to connect to.
  */
-package com.hbm.devices.scan.util;
+package com.hbm.devices.scan.announce;
 
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -40,9 +40,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.hbm.devices.scan.messages.Announce;
-
-import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
+import static com.hbm.devices.scan.announce.ConnectionFinder.LookupPreference.*;
 
 /**
  * Convenience class for checking if an IP connection is possible to an announced device.

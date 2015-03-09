@@ -38,11 +38,11 @@ import java.util.Observable;
 import java.util.Observer;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
+import com.hbm.devices.scan.announce.Announce;
+import com.hbm.devices.scan.announce.AnnounceDeserializer;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
 import com.hbm.devices.scan.announce.filter.Matcher;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
 
 public class FamilytypeMatchTest {
 

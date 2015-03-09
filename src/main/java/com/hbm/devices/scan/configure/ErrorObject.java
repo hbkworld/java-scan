@@ -26,47 +26,29 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
 
 /**
- * The default gateway describes the configured default gateway of a
- * device.<p>
- *
- * Only a single default gateway is possible.
- * 
- * @since 1.0
+ * Class for error objects in <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>.
  */
-public final class DefaultGateway {
+public final class ErrorObject {
 
-    private String ipv6Address;
-    private final String ipv4Address;
+    private int code;
+    private String message;
+    private String data;
 
-    /**
-     * Constructs an object representing a default IPv4 gateway.
-     *
-     * @param ipv4Address the IPv4 address of the default gateway.
-     */
-    public DefaultGateway(String ipv4Address) {
-        this.ipv4Address = ipv4Address;
+    private ErrorObject() {
     }
 
-    /**
-     * @return
-     *      A string containing the IPv4 address of the configured
-     *      default gateway of {@code null} if no IPv4 default gateway was
-     *      announced.
-     */
-    public String getIpv4Address() {
-        return ipv4Address;
+    public int getCode() {
+        return code;
     }
 
-    /**
-     * @return
-     *      A string containing the IPv6 address of the configured
-     *      default gateway of {@code null} if no IPv6 default gateway was
-     *      announced.
-     */
-    public String getIpv6Address() {
-        return ipv6Address;
+    public String getMessage() {
+        return message;
+    }
+
+    public String getData() {
+        return data;
     }
 }

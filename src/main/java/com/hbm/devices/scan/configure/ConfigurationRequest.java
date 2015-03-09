@@ -26,46 +26,52 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
+
+import com.google.gson.annotations.SerializedName;
+
+import com.hbm.devices.scan.JsonRpc;
 
 /**
- * A class holding the information for manual IP interface configuration an a device.
+ * This class hold a complete configuration request packet according to the specification.
+ * 
+ * @since 1.0
  */
-public final class IPv4EntryManual {
+public final class ConfigurationRequest extends JsonRpc {
 
-    private final String manualAddress;
-    private final String manualNetmask;
+    @SerializedName("id")
+    private String queryID;
+    private ConfigurationParams params;
 
-    /**
-     * Constructs a {@link IPv4EntryManual} object.
-     *
-     * @param address The IP address for the manual interface
-     * configuration of a device.
-     * @param netmask The network mask for the manual interface
-     * configuration of a device.
-     */
-    public IPv4EntryManual(String address, String netmask) {
-        if (address == null || address.length() == 0) {
-            throw new IllegalArgumentException("address parameter must not be null");
-        }
-        if (netmask == null || netmask.length() == 0) {
-            throw new IllegalArgumentException("netmask parameter must not be null");
-        }
-        this.manualAddress = address;
-        this.manualNetmask = netmask;
-    }
-    
-    /**
-     * @return the address used for manual interface configuration
-     */
-    public String getAddress() {
-        return manualAddress;
+    private ConfigurationRequest() {
+        super("configure");
     }
 
     /**
-     * @return the netmask used for manual interface configuration
+     * @param params
+     *            the configuration parameters, which should be sent to a device
+     * @param queryID
+     *            A value of any type, which is used to match the response with the request that it
+     *            is replying to.
      */
-    public String getNetmask() {
-        return manualNetmask;
+    public ConfigurationRequest(ConfigurationParams params, String queryID) {
+        this();
+
+        if (params == null) {
+            throw new IllegalArgumentException("params == null");
+        }
+        if ((queryID == null) || (queryID.length() == 0)) {
+            throw new IllegalArgumentException("No queryID given");
+        }
+        this.params = params;
+        this.queryID = queryID;
+    }
+
+    public ConfigurationParams getParams() {
+        return params;
+    }
+
+    public String getQueryId() {
+        return queryID;
     }
 }

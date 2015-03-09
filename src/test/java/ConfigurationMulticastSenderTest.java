@@ -39,7 +39,7 @@ import java.net.NetworkInterface;
 import java.util.Collection;
 
 import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
-import com.hbm.devices.scan.util.ScanInterfaces;
+import com.hbm.devices.scan.ScanInterfaces;
 
 public class ConfigurationMulticastSenderTest {
 

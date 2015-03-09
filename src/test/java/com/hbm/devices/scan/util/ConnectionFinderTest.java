@@ -1,4 +1,4 @@
-package com.hbm.devices.scan.util;
+package com.hbm.devices.scan.announce;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -17,10 +17,9 @@ import java.util.Observer;
 import java.util.Observable;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.messages.Announce;
-import com.hbm.devices.scan.messages.AnnounceDeserializer;
+import com.hbm.devices.scan.ScanInterfaces;
 
-import static com.hbm.devices.scan.util.ConnectionFinder.LookupPreference.*;
+import static com.hbm.devices.scan.announce.ConnectionFinder.LookupPreference.*;
 
 public class ConnectionFinderTest {
 

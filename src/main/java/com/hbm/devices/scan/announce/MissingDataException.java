@@ -26,15 +26,21 @@
  * SOFTWARE.
  */
 
+package com.hbm.devices.scan.announce;
+
 /**
- * Provides classes that correspond to the JSON (sub) trees of an
- * announce message.
- * <p>
- * Please look into the "HBM Network Discovery and Configuration Protocol
- * for Embbedded Devices" for an explanation of the classes in this
- * package.
+ * This exception is thrown if an announce message doesn't carry the information required by the
+ * specification.
  * 
  * @since 1.0
  */
-package com.hbm.devices.scan.messages;
+public final class MissingDataException extends Exception {
 
+    /**
+     * Constructs a new exception with the specified detail message.
+     * @param message the detail message.
+     */
+    public MissingDataException(String message) {
+        super(message);
+    }
+}

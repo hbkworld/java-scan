@@ -42,11 +42,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.messages.ConfigurationRequest;
-import com.hbm.devices.scan.messages.ConfigurationParams;
-import com.hbm.devices.scan.messages.ErrorObject;
-import com.hbm.devices.scan.messages.ResponseDeserializer;
-import com.hbm.devices.scan.messages.Response;
 
 /**
  *This is the main service which is used to configure a device.<p>

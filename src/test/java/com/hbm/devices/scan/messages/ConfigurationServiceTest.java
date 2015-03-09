@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -42,12 +42,8 @@ import java.io.IOException;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.hbm.devices.scan.configure.ConfigurationCallback;
-import com.hbm.devices.scan.configure.ConfigurationSerializer;
-import com.hbm.devices.scan.configure.ConfigurationService;
-import com.hbm.devices.scan.configure.FakeDeviceEmulator;
-import com.hbm.devices.scan.configure.FakeMulticastSender;
-import com.hbm.devices.scan.messages.ConfigurationInterface.Method;
+
+import static com.hbm.devices.scan.configure.ConfigurationInterface.Method;
 
 public class ConfigurationServiceTest {
     private ResponseDeserializer messageParser;

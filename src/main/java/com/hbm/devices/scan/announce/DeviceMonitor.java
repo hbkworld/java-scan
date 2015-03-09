@@ -40,7 +40,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.hbm.devices.scan.ScanConstants;
-import com.hbm.devices.scan.messages.Announce;
 
 /**
  * This class provides the concept of posting new/lost device events.

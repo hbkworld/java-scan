@@ -28,8 +28,6 @@
 
 package com.hbm.devices.scan.configure;
 
-import com.hbm.devices.scan.messages.Response;
-
 /**
  * This is the callback interface to handle the responses received from a device.
  * 

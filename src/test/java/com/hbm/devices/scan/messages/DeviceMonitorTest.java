@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -37,10 +37,6 @@ import java.util.Observer;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.hbm.devices.scan.announce.DeviceMonitor;
-import com.hbm.devices.scan.announce.LostDeviceEvent;
-import com.hbm.devices.scan.announce.NewDeviceEvent;
-import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.FakeMessageReceiver;
 
 public class DeviceMonitorTest {

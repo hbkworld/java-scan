@@ -26,21 +26,41 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
+
+import com.google.gson.annotations.SerializedName;
+
+import com.hbm.devices.scan.JsonRpc;
 
 /**
- * This exception is thrown if an announce message doesn't carry the information required by the
+ * Response object according to <a
+ * href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>
  * specification.
  * 
  * @since 1.0
+ *
  */
-public final class MissingDataException extends Exception {
+public final class Response extends JsonRpc {
 
-    /**
-     * Constructs a new exception with the specified detail message.
-     * @param message the detail message.
-     */
-    public MissingDataException(String message) {
-        super(message);
+    private String result;
+    private ErrorObject error;
+
+    @SerializedName("id")
+    private String responseID;
+
+    Response() {
+        super("response");
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public ErrorObject getError() {
+        return error;
+    }
+
+    public String getId() {
+        return responseID;
     }
 }

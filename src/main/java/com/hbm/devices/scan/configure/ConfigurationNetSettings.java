@@ -26,7 +26,7 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.configure;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -38,7 +38,7 @@ import com.google.gson.annotations.SerializedName;
  */
 public final class ConfigurationNetSettings {
 
-    private DefaultGateway defaultGateway;
+    private ConfigurationDefaultGateway defaultGateway;
 
     @SerializedName("interface")
     private ConfigurationInterface iface;
@@ -63,7 +63,7 @@ public final class ConfigurationNetSettings {
      *            the new defaultGateway
      * @throws IllegalArgumentException if interface is {@code null}.
      */
-    public ConfigurationNetSettings(ConfigurationInterface iface, DefaultGateway defaultGateway) {
+    public ConfigurationNetSettings(ConfigurationInterface iface, ConfigurationDefaultGateway defaultGateway) {
         if (iface == null) {
             throw new IllegalArgumentException("No interface given!");
         }
@@ -75,7 +75,7 @@ public final class ConfigurationNetSettings {
      * 
      * @return returns the default gateway settings
      */
-    public DefaultGateway getDefaultGateway() {
+    public ConfigurationDefaultGateway getDefaultGateway() {
         return defaultGateway;
     }
 

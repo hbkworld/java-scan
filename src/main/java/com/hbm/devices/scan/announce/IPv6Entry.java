@@ -26,39 +26,28 @@
  * SOFTWARE.
  */
 
-package com.hbm.devices.scan.messages;
+package com.hbm.devices.scan.announce;
 
 /**
- * The device class specifies which device should be configured.
- * 
- * @since 1.0
- *
+ * A class holding the IPv6 address and IPv6 prefix.
  */
-public final class ConfigurationDevice {
+public final class IPv6Entry {
 
-    private final String uuid;
+    private String address;
+    private int prefix;
 
-    /**
-     * This method checks the {@link ConfigurationDevice} object for errors and if it conforms to the HBM network
-     * discovery and configuration protocol.
-     * 
-     * @param uuid
-     *          the unique ID of the device to be configured
-     * @throws IllegalArgumentException
-     *          if {@code uuid} is null of {@code uuid.length() == 0}.
-     */
-    public ConfigurationDevice(String uuid) {
-        if ((uuid == null) || (uuid.length() == 0)) {
-            throw new IllegalArgumentException("No uuid in ConfigurationDevice");
-        }
-        this.uuid = uuid;
+    private IPv6Entry() {
     }
 
     /**
-     * 
-     * @return returns the unique ID of the device
+     * @return the IPv6 address of an interface or {@code null} if not
+     * announced.
      */
-    public String getUUID() {
-        return this.uuid;
+    public String getAddress() {
+        return address;
+    }
+
+    public int getPrefix() {
+        return prefix;
     }
 }
