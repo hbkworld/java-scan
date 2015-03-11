@@ -48,6 +48,12 @@ javadoc {
 		header = 'HBM Device Scan API'
 		options.overview = "src/main/doc/overview.html"
 	}
+	doLast {
+		copy {
+			from "src/main/doc/doc-files"
+			into "$buildDir/docs/javadoc/doc-files"
+		}
+	}
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
