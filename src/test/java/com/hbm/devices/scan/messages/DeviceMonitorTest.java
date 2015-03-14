@@ -124,4 +124,14 @@ public class DeviceMonitorTest {
         monitor.close();
         assertTrue("monitor not stopped", monitor.isClosed());
     }
+
+    @Test
+    public void messageAfterClose() {
+        assertFalse("monitor stopped after creation", monitor.isClosed());
+        monitor.close();
+        assertTrue("monitor not stopped", monitor.isClosed());
+
+        fsmmr.emitSingleCorrectMessage();
+        assertFalse("Got update after closed device monitor", updateDevice || newDevice || lostDevice);
+    }
 }
