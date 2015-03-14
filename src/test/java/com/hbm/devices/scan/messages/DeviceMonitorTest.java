@@ -112,16 +112,16 @@ public class DeviceMonitorTest {
 
     @Test
     public void stopTestWithoutRunningTimer() {
-        assertFalse("monitor stopped after creation", monitor.isStopped());
-        monitor.stop();
-        assertTrue("monitor not stopped", monitor.isStopped());
+        assertFalse("monitor stopped after creation", monitor.isClosed());
+        monitor.close();
+        assertTrue("monitor not stopped", monitor.isClosed());
     }
 
     @Test
     public void stopTestWithRunningTimer() {
-        assertFalse("monitor stopped after creation", monitor.isStopped());
+        assertFalse("monitor stopped after creation", monitor.isClosed());
         fsmmr.emitSingleCorrectMessage();
-        monitor.stop();
-        assertTrue("monitor not stopped", monitor.isStopped());
+        monitor.close();
+        assertTrue("monitor not stopped", monitor.isClosed());
     }
 }

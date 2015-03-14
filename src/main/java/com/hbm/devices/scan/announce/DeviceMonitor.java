@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -54,7 +55,7 @@ import com.hbm.devices.scan.ScanConstants;
  *
  * @since 1.0
  */
-public final class DeviceMonitor extends Observable implements Observer {
+public final class DeviceMonitor extends Observable implements Observer, Closeable {
 
     private final Map<String, ScheduledFuture<Void>> deviceMap;
     private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
@@ -86,7 +87,7 @@ public final class DeviceMonitor extends Observable implements Observer {
      *
      * @since 1.0
      */
-    public void stop() {
+    public void close() {
         executor.shutdown();
         try {
             if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
@@ -102,7 +103,7 @@ public final class DeviceMonitor extends Observable implements Observer {
         stopped = true;
     }
 
-    public boolean isStopped() {
+    public boolean isClosed() {
         return stopped;
     }
 
