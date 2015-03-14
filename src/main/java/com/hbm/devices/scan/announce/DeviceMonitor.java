@@ -83,10 +83,11 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
      * Stops the {@code DeviceMonitor}.
      *
      * There is no guarantee that connected {@link Observer}s will be
-     * notified.
+     * notified. 
      *
      * @since 1.0
      */
+    @Override
     public void close() {
         executor.shutdown();
         try {
@@ -110,30 +111,32 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
     @Override
     public void update(Observable observable, Object arg) {
         final Announce announce = (Announce)arg;
-        synchronized (deviceMap) {
-            final String path = announce.getPath();
-            ScheduledFuture<Void> future = deviceMap.get(path);
-            if (future == null) {
-                final AnnounceTimerTask task = new AnnounceTimerTask(announce);
-                final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
-                        TimeUnit.MILLISECONDS);
-                deviceMap.put(path, newFuture);
-                futureMap.put(newFuture, task);
-                setChanged();
-                notifyObservers(new NewDeviceEvent(announce));
-            } else {
-                future.cancel(false);
-                deviceMap.remove(path);
-                AnnounceTimerTask task = futureMap.remove(future);
-                final Announce oldAnnounce = task.getAnnounce();
-                task = new AnnounceTimerTask(announce);
-                future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
-                deviceMap.put(path, future);
-                futureMap.put(future, task);
-
-                if (!oldAnnounce.equals(announce)) {
+        if (!stopped) {
+            synchronized (deviceMap) {
+                final String path = announce.getPath();
+                ScheduledFuture<Void> future = deviceMap.get(path);
+                if (future == null) {
+                    final AnnounceTimerTask task = new AnnounceTimerTask(announce);
+                    final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
+                            TimeUnit.MILLISECONDS);
+                    deviceMap.put(path, newFuture);
+                    futureMap.put(newFuture, task);
                     setChanged();
-                    notifyObservers(new UpdateDeviceEvent(oldAnnounce, announce));
+                    notifyObservers(new NewDeviceEvent(announce));
+                } else {
+                    future.cancel(false);
+                    deviceMap.remove(path);
+                    AnnounceTimerTask task = futureMap.remove(future);
+                    final Announce oldAnnounce = task.getAnnounce();
+                    task = new AnnounceTimerTask(announce);
+                    future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
+                    deviceMap.put(path, future);
+                    futureMap.put(future, task);
+
+                    if (!oldAnnounce.equals(announce)) {
+                        setChanged();
+                        notifyObservers(new UpdateDeviceEvent(oldAnnounce, announce));
+                    }
                 }
             }
         }
