@@ -98,7 +98,7 @@ public final class AnnounceParams {
      * @return the service section of an announce or {@code null}, if no
      * services were announced.
      */
-    public Iterable<ServiceEntry> getServices() {
+    public List<ServiceEntry> getServices() {
         return services;
     }
 
