@@ -85,21 +85,21 @@ public final class Interface {
 
     /**
      * @return
-     *      An Iterable containing all IPv4 addresses of the interface
+     *      A List containing all IPv4 addresses of the interface
      *      with their netmask. Might be {@code null} if no IPv4
      *      interface was announced.
      */
-    public Iterable<IPv4Entry> getIPv4() {
+    public List<IPv4Entry> getIPv4() {
         return ipv4;
     }
 
     /**
      * @return
-     *      An Iterable containing all IPv6 addresses of the interface
+     *      A List containing all IPv6 addresses of the interface
      *      with their netmask. Might be {@code null} if no IPv6
      *      interface was announced.
      */
-    public Iterable<IPv6Entry> getIPv6() {
+    public List<IPv6Entry> getIPv6() {
         return ipv6;
     }
 }
