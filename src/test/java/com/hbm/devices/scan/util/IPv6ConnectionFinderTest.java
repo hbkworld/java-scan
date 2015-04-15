@@ -13,6 +13,7 @@ import org.junit.Test;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Observer;
 import java.util.Observable;
 
@@ -108,8 +109,8 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
-            InetAddress addr = finder.getConnectableAddress(announce);
-            assertNotNull("Device not connectable", addr);
+            List<InetAddress> addresses = finder.getConnectableAddresses(announce);
+            assertFalse("Device not connectable", addresses.isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -126,8 +127,8 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitSingleCorrectMessageNoIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            InetAddress addr = finder.getConnectableAddress(announce);
-            assertNull("Device connectable", addr);
+            List<InetAddress> addresses = finder.getConnectableAddresses(announce);
+            assertTrue("Device connectable", addresses.isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -144,7 +145,7 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitSingleMessageIpv4InIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            assertNull("Device connectable", finder.getConnectableAddress(announce));
+            assertTrue("Device connectable", finder.getConnectableAddresses(announce).isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -161,7 +162,7 @@ public class IPv6ConnectionFinderTest {
 
             fsmmr.emitIllegalIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            assertNull("Device connectable", finder.getConnectableAddress(announce));
+            assertTrue("Device connectable", finder.getConnectableAddresses(announce).isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -174,6 +175,6 @@ public class IPv6ConnectionFinderTest {
 
         fsmmr.emitSingleCorrectMessage();
         assertNotNull("No Announce object after correct message", announce);
-        assertNull("Device not connectable", finder.getConnectableAddress(announce));
+        assertTrue("Device not connectable", finder.getConnectableAddresses(announce).isEmpty());
     }
 }

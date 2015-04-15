@@ -40,8 +40,6 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.hbm.devices.scan.announce.ConnectionFinder.LookupPreference.*;
-
 /**
  * Convenience class for checking if an IP connection is possible to an announced device.
  * 
@@ -49,7 +47,6 @@ import static com.hbm.devices.scan.announce.ConnectionFinder.LookupPreference.*;
  */
 public final class ConnectionFinder {
 
-    private final LookupPreference preference;
     private final IPv4ConnectionFinder ipv4ConnectionFinder;
     private final IPv6ConnectionFinder ipv6ConnectionFinder;
 
@@ -58,13 +55,10 @@ public final class ConnectionFinder {
      *
      * @param interfaces A {@link Collection} of {@link
      * NetworkInterface}s used to check {@link Announce} objects against
-     * in {@link #getConnectableAddress(Announce)}.
+     * in {@link #getConnectableAddresses(Announce)}.
      *
-     * @param preference Set {@link LookupPreference#PREFER_IPV6} if {@link #getConnectableAddress}
-     * an IPv6 lookup is preferred, {@link LookupPreference#PREFER_IPV4} otherwise.
      */
-    public ConnectionFinder(Collection<NetworkInterface> interfaces, LookupPreference preference) {
-        this.preference = preference;
+    public ConnectionFinder(Collection<NetworkInterface> interfaces) {
 
         final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<NetworkInterfaceAddress>();
         final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<NetworkInterfaceAddress>();
@@ -85,8 +79,7 @@ public final class ConnectionFinder {
         this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6AddressList);
     }
 
-    ConnectionFinder(Collection<NetworkInterfaceAddress> ipv4List, Collection<NetworkInterfaceAddress> ipv6List, LookupPreference preference) {
-        this.preference = preference;
+    ConnectionFinder(Collection<NetworkInterfaceAddress> ipv4List, Collection<NetworkInterfaceAddress> ipv6List) {
         this.ipv4ConnectionFinder = new IPv4ConnectionFinder(ipv4List);
         this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6List);
     }
@@ -100,27 +93,10 @@ public final class ConnectionFinder {
      * @return An {@link InetAddress} if a connectable IP address was
      * found, null otherwise.
      */
-    public InetAddress getConnectableAddress(Announce announce) {
-        if (preference == PREFER_IPV6) {
-            InetAddress address = ipv6ConnectionFinder.getConnectableAddress(announce);
-            if (address == null) {
-                address = ipv4ConnectionFinder.getConnectableAddress(announce);
-            }
-            return address;
-        } else {
-            InetAddress address = ipv4ConnectionFinder.getConnectableAddress(announce);
-            if (address == null) {
-                address = ipv6ConnectionFinder.getConnectableAddress(announce);
-            }
-            return address;
-        }
-    }
-
-    /**
-     * Preference if IPv4 or IPv6 address should be considered first.
-     */
-    public enum LookupPreference {
-        PREFER_IPV6, PREFER_IPV4
+    public List<InetAddress> getConnectableAddresses(Announce announce) {
+        final List<InetAddress> list = ipv4ConnectionFinder.getConnectableAddresses(announce);
+        list.addAll(ipv6ConnectionFinder.getConnectableAddresses(announce));
+        return list;
     }
 }
 
