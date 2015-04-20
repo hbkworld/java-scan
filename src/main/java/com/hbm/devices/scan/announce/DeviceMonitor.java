@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.concurrent.Callable;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -112,9 +113,15 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
     public void update(Observable observable, Object arg) {
         final Announce announce = (Announce)arg;
         if (!stopped) {
-            synchronized (deviceMap) {
-                final String path = announce.getPath();
-                ScheduledFuture<Void> future = deviceMap.get(path);
+            armTimer(announce);
+        }
+    }
+
+    private void armTimer(Announce announce) {
+        synchronized (deviceMap) {
+            final String path = announce.getPath();
+            ScheduledFuture<Void> future = deviceMap.get(path);
+            try {
                 if (future == null) {
                     final AnnounceTimerTask task = new AnnounceTimerTask(announce);
                     final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
@@ -138,6 +145,13 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
                         notifyObservers(new UpdateDeviceEvent(oldAnnounce, announce));
                     }
                 }
+            } catch (RejectedExecutionException e) {
+                /*
+                 * There is no error handling necessary in this case.
+                 * If work is scheduled when the executor was shutdown,
+                 * we just ignore that issue and go ahead.
+                 */
+                LOGGER.log(Level.WARNING, "Task scheduled in shutdown executor!", e);
             }
         }
     }
