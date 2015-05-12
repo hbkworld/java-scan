@@ -7,3 +7,6 @@
 Copyright (c) 2014 Hottinger Baldwin Messtechnik GmbH. See the [LICENSE](LICENSE) file for license rights and
 limitations (MIT).
 
+## Documentation
+
+The generated javadoc documentation can be found [here](http://hbm.github.io/java-scan/javadoc/).
