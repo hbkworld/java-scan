@@ -11,9 +11,9 @@ env:
   - secure: "txucPw09tA8laIbppuF8q63G7E88fandOSsAZrsEWhSA4HpzP+FizIKsiokmJr/uA5zDitWMSkKTHYbz/wK8zgt0Hyb5w+krXG0gXSqJolMdOPE2/tm4pS0tAwbJFMxHCtxfvMeA97LIWvwUAcQ336BKWdoT+xeawGBSh/EsGpM="
 
 jdk:
-  - oraclejdk8
   - oraclejdk7
   - openjdk7
+  - oraclejdk8
 
 after_script: 
   - cat /home/travis/build/HBM/java-scan/cov-int/build-log.txt
