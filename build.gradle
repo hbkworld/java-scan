@@ -14,7 +14,7 @@ buildscript {
 		mavenCentral()
 	}
 	dependencies {
-		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.0'
+		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
 	}
 }
 
@@ -27,14 +27,14 @@ jacocoTestReport {
     reports {
         xml {
             enabled true
-            destination "${buildDir}/reports/jacoco/xml/jacoco.xml"
+            destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
         }
 
         csv.enabled false
 
         html {
             enabled true
-            destination "${buildDir}/reports/jacoco/html"
+            destination "${buildDir}/reports/jacoco/test/html"
         }
     }
 }
