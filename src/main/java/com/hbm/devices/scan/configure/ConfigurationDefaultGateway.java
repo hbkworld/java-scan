@@ -3,7 +3,7 @@
  *
  * The MIT License (MIT)
  *
- * Copyright (C) Stephan Gatzka
+ * Copyright (C) Hottinger Baldwin Messtechnik GmbH
  *
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the

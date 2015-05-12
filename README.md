@@ -4,6 +4,6 @@
 [![Coverity](https://scan.coverity.com/projects/3486/badge.svg)](https://scan.coverity.com/projects/3486)
 
 ## License
-Copyright (c) 2014 Stephan Gatzka. See the [LICENSE](LICENSE) file for license rights and
+Copyright (c) 2014 Hottinger Baldwin Messtechnik GmbH. See the [LICENSE](LICENSE) file for license rights and
 limitations (MIT).
 
