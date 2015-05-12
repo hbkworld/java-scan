@@ -21,8 +21,8 @@ after_script:
 addons:
   coverity_scan:
     project:
-      name: "gatzka/java-scan"
+      name: "iHBM/java-scan"
       description: "Build submitted via Travis CI"
-    notification_email: stephan.gatzka@gmail.com
+    notification_email: stephan.gatzka@hbm.com
     build_command: "mvn compile"
     branch_pattern: coverity_scan
