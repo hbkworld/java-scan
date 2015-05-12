@@ -8,7 +8,7 @@ env:
   global:
    # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
    #   via the "travis encrypt" command using the project repo's public key
-    - secure: "pdACrnUpOihPQH/Vn5peJfkt+bRlhsp++NP9e/F6KBpMptvlmr3B+DD45RjFQktiyDIK8OrsAQ35QwpuoZDx/NMRaeXfhVq2QA87E56YwezsKyE3FMlNGPC8PwoEtnBieAAEWNnhiaQa0xPRXPLS/fwbqD8w7BJtxAGjsaoOzac="
+  - secure: "txucPw09tA8laIbppuF8q63G7E88fandOSsAZrsEWhSA4HpzP+FizIKsiokmJr/uA5zDitWMSkKTHYbz/wK8zgt0Hyb5w+krXG0gXSqJolMdOPE2/tm4pS0tAwbJFMxHCtxfvMeA97LIWvwUAcQ336BKWdoT+xeawGBSh/EsGpM="
 
 jdk:
   - oraclejdk8
@@ -16,7 +16,7 @@ jdk:
   - openjdk7
 
 after_script: 
-  - cat /home/travis/build/gatzka/java-scan/cov-int/build-log.txt
+  - cat /home/travis/build/HBM/java-scan/cov-int/build-log.txt
 
 addons:
   coverity_scan:
