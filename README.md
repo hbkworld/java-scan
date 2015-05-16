@@ -18,12 +18,16 @@ Copyright (c) 2014 Hottinger Baldwin Messtechnik GmbH. See the
 ## Build
 
 The preferred method to build the library is gradle. Just run
-	gradle build
+```bash
+gradle build
+```
 and you will find the generated devscan.jar file in the folder
 build/libs.
 
 In addition, a maven build is also supported. Please run
-	mvn package
+```bash
+mvn package
+```
 for the build.
 
 ## Documentation
