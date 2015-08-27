@@ -87,6 +87,17 @@ public final class ConnectionFinder {
     /**
      * This method looks for a connectable IP address.
      *
+     * Please note, that this method might give
+     * you false positives. Consider you have two ethernet interfaces:
+     * eth0 with IP address 172.19.1.2 and eth1 with IP address
+     * 10.1.2.3. Now you get an announce packet via eth0 from a device
+     * with IP address 10.1.2.4. This method now wrongly says that the
+     * device is connectable.
+     *
+     * This limitation comes from the Java-API by not providing the
+     * information over which network interface a multicast UDP packet was
+     * received.
+     *
      * @param announce The {@link Announce} containing the device we
      * want to communicate with.
      *
