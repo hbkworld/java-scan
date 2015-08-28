@@ -31,6 +31,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collection;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -53,8 +54,6 @@ import com.hbm.devices.scan.announce.ServiceEntry;
 import com.hbm.devices.scan.announce.UpdateDeviceEvent;
 import com.hbm.devices.scan.announce.filter.FamilytypeMatch;
 import com.hbm.devices.scan.announce.filter.Filter;
-
-import static com.hbm.devices.scan.announce.ConnectionFinder.LookupPreference.*;
 
 /**
  * Example class to show handling of announce messages.
@@ -110,7 +109,7 @@ class EventLogger {
 
     EventLogger() throws SocketException {
         final Collection<NetworkInterface> scanInterfaces = new ScanInterfaces().getInterfaces();
-        connectionFinder = new ConnectionFinder(scanInterfaces, PREFER_IPV4);
+        connectionFinder = new ConnectionFinder(scanInterfaces);
     }
 
     void logEvent(Object event) {
@@ -118,7 +117,7 @@ class EventLogger {
         Announce announce;
         if (event instanceof NewDeviceEvent) {
             announce = ((NewDeviceEvent)event).getAnnounce();
-            final InetAddress connectAddress = connectionFinder.getConnectableAddress(announce);
+            final List<InetAddress> connectAddress = connectionFinder.getConnectableAddresses(announce);
             logBuilder.append("New Device:\n");
             if (connectAddress != null) {
                 logBuilder.append("Connectable: ").append(connectAddress).append('\n');
