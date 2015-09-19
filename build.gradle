@@ -5,6 +5,10 @@ apply plugin: 'com.github.kt3k.coveralls'
 
 version = '1.0'
 
+allprojects {
+	buildDir = "/tmp/${rootProject.name}/${project.name}"
+}
+
 repositories {
 	mavenCentral()
 }
