@@ -73,7 +73,7 @@ public final class Receiver implements Observer {
     /**
      * main method for an executable
      *
-     * @param  args An array of command line paramters. Not used in the method.
+     * @param  args An array of command line parameters. Not used in the method.
      */
     public static void main(String... args) {
         final AnnounceDeserializer announceParser = new AnnounceDeserializer();
