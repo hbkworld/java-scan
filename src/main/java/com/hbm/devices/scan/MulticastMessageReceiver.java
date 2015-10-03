@@ -145,7 +145,6 @@ public class MulticastMessageReceiver extends Observable implements MessageRecei
     }
 
     private MulticastSocket setupMulticastSocket() throws IOException {
-        final InetSocketAddress socketAddress = new InetSocketAddress(multicastIP, port);
         final MulticastSocket sock = new MulticastSocket(port);
         sock.setReuseAddress(true);
 
