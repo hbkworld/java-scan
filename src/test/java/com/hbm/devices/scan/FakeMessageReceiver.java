@@ -83,8 +83,6 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
     private static final String EMPTY_SUCCESS_ID_RESPONSE_MESSAGE;
     private static final String CORRECT_ERROR_RESPONSE_MESSAGE;
     private static final String INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE;
-    private static final String MISSING_ERROR_CODE_RESPONSE_MESSAGE;
-    private static final String NO_ERROR_CODE_RESPONSE_MESSAGE;
     private static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE;
     private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE;
     private static final String ERROR_AND_RESULT_RESPONSE_MESSAGE;
@@ -307,16 +305,6 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
         notifyObservers(INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE);
     }
 
-    public void emitMissingErrorCodeResponseMessage() {
-        setChanged();
-        notifyObservers(MISSING_ERROR_CODE_RESPONSE_MESSAGE);
-    }
-
-    public void emitNoErrorCodeResponseMessage() {
-        setChanged();
-        notifyObservers(NO_ERROR_CODE_RESPONSE_MESSAGE);
-    }
-
     public void emitMissingErrorMessageReponseMessage() {
         setChanged();
         notifyObservers(MISSING_ERROR_MESSAGE_REPONSE_MESSAGE);
@@ -411,8 +399,6 @@ public class FakeMessageReceiver extends Observable implements MessageReceiver {
             EMPTY_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.emptySuccessIdResponseMessage");
             CORRECT_ERROR_RESPONSE_MESSAGE = props.getProperty("scan.configure.correctErrorResponseMessage");
             INVALID_ERROR_SUCCESS_RESPONSE_MESSAGE = props.getProperty("scan.configure.invalidErrorSuccessResponseMessage");
-            MISSING_ERROR_CODE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missingErrorCodeResponseMessage");
-            NO_ERROR_CODE_RESPONSE_MESSAGE = props.getProperty("scan.configure.noErrorCodeResponseMessage");
             MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = props.getProperty("scan.configure.missingErrorMessageResponseMessage");
             NO_ERROR_MESSAGE_RESPONSE_MESSAGE = props.getProperty("scan.configure.noErrorMessageResponseMessage");
             ERROR_AND_RESULT_RESPONSE_MESSAGE = props.getProperty("scan.configure.errorAndResultResponseMessage");
