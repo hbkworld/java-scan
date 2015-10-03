@@ -30,7 +30,6 @@ package com.hbm.devices.scan;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Observable;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -40,7 +39,7 @@ import java.util.logging.Logger;
  *
  * @since 1.0
  */
-public class FakeMessageReceiver extends Observable implements MessageReceiver {
+public class FakeMessageReceiver extends AbstractMessageReceiver {
 
     private boolean shallRun = true;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);

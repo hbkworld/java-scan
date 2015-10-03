@@ -28,9 +28,7 @@
 
 package com.hbm.devices.scan.configure;
 
-import java.util.Observable;
-
-import com.hbm.devices.scan.MessageReceiver; 
+import com.hbm.devices.scan.AbstractMessageReceiver; 
 
 /**
  * This class is used to simulate a device.
@@ -43,7 +41,7 @@ import com.hbm.devices.scan.MessageReceiver;
  * @since 1.0
  *
  */
-public class FakeDeviceEmulator extends Observable implements MessageReceiver, MulticastSender {
+public class FakeDeviceEmulator extends AbstractMessageReceiver implements MulticastSender {
 
     private String responseString;
 	private boolean closed;
@@ -55,6 +53,7 @@ public class FakeDeviceEmulator extends Observable implements MessageReceiver, M
 	}
     public void stop() {}
     public void run() {}
+    @Override
     public void close() {closed = true;}
     public boolean isClosed() {return closed;}
     public void sendMessage(String message) {

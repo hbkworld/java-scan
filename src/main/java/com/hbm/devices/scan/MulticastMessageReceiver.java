@@ -36,7 +36,6 @@ import java.net.MulticastSocket;
 import java.net.NetworkInterface;
 import java.nio.charset.Charset;
 import java.util.Collection;
-import java.util.Observable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -52,14 +51,14 @@ import com.hbm.devices.scan.ScanInterfaces;
  * Receiving messages is done infinitely when calling {@link #run() run()}. After calling
  * {@link #close() close()}, {@link #run() run()} returns.
  * <p>
- * In addition, via {@link com.hbm.devices.scan.MessageReceiver} this class is also an
+ * In addition, via {@link com.hbm.devices.scan.AbstractMessageReceiver} this class is also an
  * {@link java.util.Observable}. So objects which are interested in String multicast messages have
  * to implement the {@link java.util.Observer} interface and register themselves to an instance of
  * this class with addObserver().
  *
  * @since 1.0
  */
-public class MulticastMessageReceiver extends Observable implements MessageReceiver {
+public class MulticastMessageReceiver extends AbstractMessageReceiver {
 
     private InetAddress multicastIP;
     private int port;
