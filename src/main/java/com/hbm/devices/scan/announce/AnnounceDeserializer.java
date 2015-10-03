@@ -156,7 +156,7 @@ public final class AnnounceDeserializer extends Observable implements Observer {
                     params = gson.fromJson(json, AnnounceParams.class);
                 } else {
                     if (LOGGER.isLoggable(Level.INFO)) {
-                        LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version + "\n" + jsonObject);
+                        LOGGER.log(Level.INFO, "Can't handle apiVersion: " + version + '\n' + jsonObject);
                     }
                 }
             } else {
