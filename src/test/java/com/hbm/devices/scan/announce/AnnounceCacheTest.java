@@ -102,9 +102,9 @@ public class AnnounceCacheTest {
             final Properties props = new Properties();
             props.load(is);
 
-            CORRECT_MESSAGE = props.getProperty("scan.announce.correct_message");
-            CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correct_message_different_services");
-            CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correct_message_different_device");
+            CORRECT_MESSAGE = props.getProperty("scan.announce.correctMessage");
+            CORRECT_MESSAGE_DIFFERENT_SERVICES = props.getProperty("scan.announce.correctMessageDifferentServices");
+            CORRECT_MESSAGE_DIFFERENT_DEVICE = props.getProperty("scan.announce.correctMessageDifferentDevice");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
