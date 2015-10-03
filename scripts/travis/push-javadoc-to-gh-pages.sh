@@ -4,7 +4,7 @@ if [ "$TRAVIS_REPO_SLUG" == "HBM/java-scan" ] && [ "$TRAVIS_JDK_VERSION" == "ora
 
   echo -e "Publishing javadoc...\n"
 
-  cp -R build/docs/javadoc $HOME/javadoc-latest
+  cp -R /tmp/devscan/devscan/docs/javadoc/ $HOME/javadoc-latest
 
   cd $HOME
   git config --global user.email "travis@travis-ci.org"
