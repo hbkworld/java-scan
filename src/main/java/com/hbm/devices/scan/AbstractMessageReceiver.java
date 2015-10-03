@@ -29,6 +29,7 @@
 package com.hbm.devices.scan;
 
 import java.io.Closeable;
+import java.util.Observable;
 
 /**
  * Interface for all message receivers.
@@ -36,16 +37,12 @@ import java.io.Closeable;
  *
  * @since 1.0
  */
-public interface MessageReceiver extends Runnable, Closeable {
-    /**
-     * Start receiving multicast messages.
-     */
-    @Override
-    void run();
+public abstract class AbstractMessageReceiver extends Observable implements Runnable, Closeable {
 
-    /**
-     * Stops receiveing multicast messages.
-     */
+    protected AbstractMessageReceiver() {
+        super();
+    }
+
     @Override
-    void close();
+    public abstract void close();
 }
