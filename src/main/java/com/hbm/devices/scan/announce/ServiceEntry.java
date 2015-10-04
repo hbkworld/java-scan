@@ -39,6 +39,10 @@ package com.hbm.devices.scan.announce;
  */
 public final class ServiceEntry {
 
+    public static final String SERVICE_HTTP = "http";
+    public static final String SERVICE_SSH = "ssh";
+    public static final String SERVICE_DAQ = "daq";
+
     private String type;
     private int port;
 
