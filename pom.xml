@@ -51,6 +51,11 @@
       </plugin>
     </plugins>
     <directory>build</directory>
+    <testResources>
+      <testResource>
+        <directory>src/example</directory>
+      </testResource>
+    </testResources>
   </build>
 
   <dependencies>
