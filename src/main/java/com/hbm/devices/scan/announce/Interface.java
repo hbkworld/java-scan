@@ -31,7 +31,7 @@ package com.hbm.devices.scan.announce;
 import java.util.List;
 
 /**
- * Objects of this class hold the inforamtion describing the properties
+ * Objects of this class hold the information describing the properties
  * of an network interface.
  * 
  * @since 1.0
@@ -63,7 +63,7 @@ public final class Interface {
 
     /**
      * @return
-     *      Astring containing the type of the interface or {@code null} if not
+     *      A string containing the type of the interface or {@code null} if not
      *      announced.
      *      For QuantumX systems it might be useful to distinguish
      *      Ethernet and Firewire interfaces.
@@ -74,7 +74,7 @@ public final class Interface {
 
     /**
      * @return
-     *      Astring containing some additional
+     *      A string containing some additional
      *      information or {@code null} if not announced. QuantumX devices
      *      report whether the
      *      interface is on the front or back side.
