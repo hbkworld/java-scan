@@ -1,3 +1,7 @@
 cscope.*
 .gradle
 *.swp
+build
+.classpath
+.project
+.settings
