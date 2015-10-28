@@ -118,10 +118,14 @@ public class MulticastMessageReceiver extends AbstractMessageReceiver {
                 /*
                  * No error handling by intention. Receiving announce datagrams is a best effort
                  * service. so don't bother users of the class with error handling.
-                 * 
+                 *
                  * Just try receiving the next datagram.
+                 *
+                 * If shallRun is false - socket has already been closed by close() method.
                  */
-                LOGGER.log(Level.INFO, "Error receiving Multicast messages!", e);
+                if (shallRun) {
+                    LOGGER.log(Level.INFO, "Error receiving Multicast messages!", e);
+                }
             }
         }
     }
