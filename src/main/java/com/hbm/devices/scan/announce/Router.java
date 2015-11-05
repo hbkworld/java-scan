@@ -28,12 +28,16 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Serializable;
+
 /**
  * Class encapsulating the router information of an announced device.
  */
-public final class Router {
+public final class Router implements Serializable {
 
     private String uuid;
+
+    static final long serialVersionUID = -3904823671758702259L;
 
     private Router() {
     }

@@ -28,13 +28,18 @@
 
 package com.hbm.devices.scan.announce;
 
+
+import java.io.Serializable;
+
 /**
  * A class holding an IPv4 address and IPv4 network mask.
  */
-public final class IPv4Entry {
+public final class IPv4Entry implements Serializable {
     
     private String address;
     private String netmask;
+
+    static final long serialVersionUID = -582658347189793351L;
 
     private IPv4Entry() {
     }
