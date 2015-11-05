@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.hbm.devices.scan.ScanConstants;
@@ -40,7 +41,7 @@ import com.hbm.devices.scan.ScanConstants;
  * 
  * @since 1.0
  */
-public final class AnnounceParams {
+public final class AnnounceParams implements Serializable {
 
     private String apiVersion;
     private Device device;
@@ -48,6 +49,8 @@ public final class AnnounceParams {
     private Router router;
     private List<ServiceEntry> services;
     private int expiration;
+
+    static final long serialVersionUID = 2532013264163413436L;
 
     private AnnounceParams() {
     }

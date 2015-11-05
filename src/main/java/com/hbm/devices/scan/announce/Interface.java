@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -36,13 +37,15 @@ import java.util.List;
  * 
  * @since 1.0
  */
-public final class Interface {
+public final class Interface implements Serializable {
 
     private String name;
     private String type;
     private String description;
     private List<IPv4Entry> ipv4;
     private List<IPv6Entry> ipv6;
+
+    static final long serialVersionUID = -7559269992133760117L;
 
     private Interface() {
     }

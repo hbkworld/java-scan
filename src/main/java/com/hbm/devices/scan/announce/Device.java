@@ -29,13 +29,14 @@
 package com.hbm.devices.scan.announce;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * The device describes some properties of the device.
  * 
  * @since 1.0
  */
-public final class Device {
+public final class Device implements Serializable {
 
     private String uuid;
     private String name;
@@ -43,6 +44,8 @@ public final class Device {
     private String familyType;
     private String firmwareVersion;
     private String hardwareId;
+
+    static final long serialVersionUID = -2099617037615519469L;
 
     @SerializedName("isRouter")
     private boolean router;

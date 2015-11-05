@@ -28,13 +28,17 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Serializable;
+
 /**
  * A class holding the IPv6 address and IPv6 prefix.
  */
-public final class IPv6Entry {
+public final class IPv6Entry implements Serializable {
 
     private String address;
     private int prefix;
+
+    static final long serialVersionUID = 1670054764197893620L;
 
     private IPv6Entry() {
     }

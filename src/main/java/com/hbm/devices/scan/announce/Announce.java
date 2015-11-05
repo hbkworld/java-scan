@@ -28,17 +28,21 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Serializable;
+
 import com.hbm.devices.scan.JsonRpc;
 
 /**
  * This class hold all information required to implement the HBM network
  * discovery and configuration protocol.
  */
-public final class Announce extends JsonRpc {
+public final class Announce extends JsonRpc implements Serializable {
 
     private AnnounceParams params;
     private String path;
     private Object cookie;
+
+    static final long serialVersionUID = 3398751494808132238L;
 
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 

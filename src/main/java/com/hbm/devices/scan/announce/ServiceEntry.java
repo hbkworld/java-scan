@@ -28,6 +28,8 @@
 
 package com.hbm.devices.scan.announce;
 
+import java.io.Serializable;
+
 /**
  * The optional service might be used to deliver the IP port under which the client can reach
  * different services on the device. So devices might e.g. specify how to connect to the data
@@ -37,7 +39,7 @@ package com.hbm.devices.scan.announce;
  * 
  * @since 1.0
  */
-public final class ServiceEntry {
+public final class ServiceEntry implements Serializable {
 
     public static final String SERVICE_HTTP = "http";
     public static final String SERVICE_SSH = "ssh";
@@ -45,6 +47,8 @@ public final class ServiceEntry {
 
     private String type;
     private int port;
+
+    static final long serialVersionUID = 8891307656812767172L;
 
     private ServiceEntry() {
     }

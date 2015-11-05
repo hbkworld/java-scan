@@ -29,13 +29,16 @@
 package com.hbm.devices.scan.announce;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * Objects of this class hold the information of a devices network settings.
  */
-public final class NetSettings {
+public final class NetSettings implements Serializable {
 
     private DefaultGateway defaultGateway;
+
+    static final long serialVersionUID = 7399836134150394297L;
 
     @SerializedName("interface")
     private Interface iface;
