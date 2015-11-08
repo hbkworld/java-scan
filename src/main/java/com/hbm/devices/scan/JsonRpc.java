@@ -29,12 +29,15 @@
 package com.hbm.devices.scan;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * Super class for all <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a> messages.
  */
-public class JsonRpc {
+public class JsonRpc implements Serializable {
     
+    static final long serialVersionUID = -8848256609629084209L;
+
     @SerializedName("jsonrpc")
     private final String jsonrpcVersion;
     private final String method;
