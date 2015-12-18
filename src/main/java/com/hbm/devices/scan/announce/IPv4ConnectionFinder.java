@@ -115,7 +115,7 @@ final class IPv4ConnectionFinder {
     private static int convertToInteger(byte... address) {
         int value = 0;
         for (final byte b: address) {
-            value = value << Byte.SIZE | (b & 0xff);
+            value = (value << Byte.SIZE) | (b & 0xff);
         }
         return value;
     }
