@@ -53,7 +53,7 @@ public final class ScanInterfaces {
      * @throws SocketException if an I/O error occurs.
      */
     public ScanInterfaces() throws SocketException {
-        interfaces = new LinkedList<NetworkInterface>();
+        interfaces = new LinkedList<>();
         final Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
 
         if (ifs != null) {

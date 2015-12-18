@@ -49,7 +49,7 @@ final class IPv4ConnectionFinder {
     }
 
     List<InetAddress> getConnectableAddresses(Announce announce) {
-        final List<InetAddress> list = new ArrayList<InetAddress>();
+        final List<InetAddress> list = new ArrayList<>();
         for (final NetworkInterfaceAddress niAddress : interfaceAddresses) {
             final InetAddress address = getConnectAddress(niAddress, announce);
             if (address != null) {

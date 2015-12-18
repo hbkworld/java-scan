@@ -58,8 +58,8 @@ final class AnnounceCache {
     }
 
     AnnounceCache(int cacheSize) {
-        parsedMessages = new LRUCache<String, Announce>(cacheSize);
-        lastDeviceAnnounce = new LRUCache<String, String>(cacheSize);
+        parsedMessages = new LRUCache<>(cacheSize);
+        lastDeviceAnnounce = new LRUCache<>(cacheSize);
     }
 
     Announce get(String string) {

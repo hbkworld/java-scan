@@ -60,8 +60,8 @@ public final class ConnectionFinder {
      */
     public ConnectionFinder(Collection<NetworkInterface> interfaces) {
 
-        final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<NetworkInterfaceAddress>();
-        final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<NetworkInterfaceAddress>();
+        final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<>();
+        final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<>();
 
         for (final NetworkInterface iface : interfaces) {
             final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
