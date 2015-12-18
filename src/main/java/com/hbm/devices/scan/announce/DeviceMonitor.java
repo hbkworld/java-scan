@@ -156,7 +156,7 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
         }
     }
 
-    private long getExpiration(Announce announce) {
+    private static long getExpiration(Announce announce) {
         int expiration;
         expiration = announce.getParams().getExpiration();
         return TimeUnit.SECONDS.toMillis(expiration);
