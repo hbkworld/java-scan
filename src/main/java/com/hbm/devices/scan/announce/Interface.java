@@ -45,7 +45,7 @@ public final class Interface implements Serializable {
     private List<IPv4Entry> ipv4;
     private List<IPv6Entry> ipv6;
 
-    static final long serialVersionUID = -7559269992133760117L;
+    private static final long serialVersionUID = -7559269992133760117L;
 
     private Interface() {
     }

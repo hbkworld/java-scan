@@ -45,7 +45,7 @@ public final class Device implements Serializable {
     private String firmwareVersion;
     private String hardwareId;
 
-    static final long serialVersionUID = -2099617037615519469L;
+    private static final long serialVersionUID = -2099617037615519469L;
 
     @SerializedName("isRouter")
     private boolean router;

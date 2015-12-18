@@ -43,7 +43,7 @@ public final class DefaultGateway implements Serializable {
     private String ipv6Address;
     private String ipv4Address;
 
-    static final long serialVersionUID = -9171516639732825413L;
+    private static final long serialVersionUID = -9171516639732825413L;
 
     private DefaultGateway() {
     }

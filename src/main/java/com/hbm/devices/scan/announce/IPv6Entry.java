@@ -38,7 +38,7 @@ public final class IPv6Entry implements Serializable {
     private String address;
     private int prefix;
 
-    static final long serialVersionUID = 1670054764197893620L;
+    private static final long serialVersionUID = 1670054764197893620L;
 
     private IPv6Entry() {
     }

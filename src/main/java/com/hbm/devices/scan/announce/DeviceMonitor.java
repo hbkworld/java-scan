@@ -74,8 +74,8 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
      */
     public DeviceMonitor() {
         super();
-        deviceMap = new HashMap<String, ScheduledFuture<Void>>(INITIAL_ENTRIES);
-        futureMap = new HashMap<ScheduledFuture<Void>, AnnounceTimerTask>(INITIAL_ENTRIES);
+        deviceMap = new HashMap<>(INITIAL_ENTRIES);
+        futureMap = new HashMap<>(INITIAL_ENTRIES);
         executor = new ScheduledThreadPoolExecutor(1);
         stopped = false;
     }
@@ -156,7 +156,7 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
         }
     }
 
-    private long getExpiration(Announce announce) {
+    private static long getExpiration(Announce announce) {
         int expiration;
         expiration = announce.getParams().getExpiration();
         return TimeUnit.SECONDS.toMillis(expiration);

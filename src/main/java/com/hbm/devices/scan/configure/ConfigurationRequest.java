@@ -39,6 +39,8 @@ import com.hbm.devices.scan.JsonRpc;
  */
 public final class ConfigurationRequest extends JsonRpc {
 
+    private static final long serialVersionUID = 3209610744516812625L;
+
     @SerializedName("id")
     private String queryID;
     private ConfigurationParams params;

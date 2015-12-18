@@ -87,7 +87,7 @@ public class ConfigurationService implements Observer, Closeable {
      */
     public ConfigurationService(ConfigurationSerializer serializer, ResponseDeserializer parser) {
         executor = new ScheduledThreadPoolExecutor(1);
-        awaitingResponses = new HashMap<String, ConfigQuery>();
+        awaitingResponses = new HashMap<>();
         this.serializer = serializer;
         responseParser = parser;
         responseParser.addObserver(this);

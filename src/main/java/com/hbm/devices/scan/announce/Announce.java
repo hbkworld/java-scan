@@ -42,7 +42,7 @@ public final class Announce extends JsonRpc implements Serializable {
     private String path;
     private Object cookie;
 
-    static final long serialVersionUID = 3398751494808132238L;
+    private static final long serialVersionUID = 3398751494808132238L;
 
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 
@@ -101,7 +101,7 @@ public final class Announce extends JsonRpc implements Serializable {
         return path;
     }
 
-    private String getDeviceUUID(AnnounceParams parameters) throws MissingDataException {
+    private static String getDeviceUUID(AnnounceParams parameters) throws MissingDataException {
         final Device device = parameters.getDevice();
         if (device == null) {
             throw new MissingDataException("No device section in announce!");
@@ -113,7 +113,7 @@ public final class Announce extends JsonRpc implements Serializable {
         return deviceUUID;
     }
 
-    private String getRouterUUID(Router router) throws MissingDataException {
+    private static String getRouterUUID(Router router) throws MissingDataException {
         final String uuid = router.getUuid();
         if (uuid == null || uuid.length() == 0) {
             throw new MissingDataException("Router uuid either null or of zero length!");
@@ -121,7 +121,7 @@ public final class Announce extends JsonRpc implements Serializable {
         return uuid;
     }
 
-    private String getInterfaceName(AnnounceParams parameters) throws MissingDataException {
+    private static String getInterfaceName(AnnounceParams parameters) throws MissingDataException {
         final NetSettings settings = parameters.getNetSettings();
         if (settings == null) {
             throw new MissingDataException("No network settings in announce!");

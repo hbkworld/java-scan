@@ -48,7 +48,7 @@ public final class ServiceEntry implements Serializable {
     private String type;
     private int port;
 
-    static final long serialVersionUID = 8891307656812767172L;
+    private static final long serialVersionUID = 8891307656812767172L;
 
     private ServiceEntry() {
     }

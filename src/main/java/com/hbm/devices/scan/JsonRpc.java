@@ -36,7 +36,7 @@ import java.io.Serializable;
  */
 public class JsonRpc implements Serializable {
     
-    static final long serialVersionUID = -8848256609629084209L;
+    private static final long serialVersionUID = -8848256609629084209L;
 
     @SerializedName("jsonrpc")
     private final String jsonrpcVersion;

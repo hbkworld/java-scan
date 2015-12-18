@@ -74,7 +74,7 @@ public final class ConfigurationMulticastSender implements MulticastSender {
         socket.setReuseAddress(true);
         socket.bind(new InetSocketAddress(ScanConstants.CONFIGURATION_PORT));
         
-        interfaces = new LinkedList<NetworkInterface>();
+        interfaces = new LinkedList<>();
         interfaces.addAll(ifs);
         closed = false;
     }

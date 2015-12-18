@@ -45,6 +45,8 @@ public final class Response extends JsonRpc {
     private String result;
     private ErrorObject error;
 
+    private static final long serialVersionUID = -4622107053628982607L;
+
     @SerializedName("id")
     private String responseID;
 

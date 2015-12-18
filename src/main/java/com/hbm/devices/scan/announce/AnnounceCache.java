@@ -58,8 +58,8 @@ final class AnnounceCache {
     }
 
     AnnounceCache(int cacheSize) {
-        parsedMessages = new LRUCache<String, Announce>(cacheSize);
-        lastDeviceAnnounce = new LRUCache<String, String>(cacheSize);
+        parsedMessages = new LRUCache<>(cacheSize);
+        lastDeviceAnnounce = new LRUCache<>(cacheSize);
     }
 
     Announce get(String string) {
@@ -93,10 +93,12 @@ final class AnnounceCache {
 
 final class LRUCache<K, V> extends LinkedHashMap<K, V> {
 
+    private static final long serialVersionUID = -8301636009829845575L;
+
     /**
      * By default the cache size is 100.
      */
-    private static final float LOAD_FACTOR = 0.75f;
+    private static final float LOAD_FACTOR = 0.75F;
 
     private final int maxSize;
 

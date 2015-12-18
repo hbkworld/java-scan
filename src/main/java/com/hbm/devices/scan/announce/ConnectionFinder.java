@@ -60,14 +60,15 @@ public final class ConnectionFinder {
      */
     public ConnectionFinder(Collection<NetworkInterface> interfaces) {
 
-        final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<NetworkInterfaceAddress>();
-        final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<NetworkInterfaceAddress>();
+        final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<>();
+        final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<>();
 
         for (final NetworkInterface iface : interfaces) {
             final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
             for (final InterfaceAddress niAddress : niAddresses) {
                 final InetAddress interfaceAddress = niAddress.getAddress();
-                final NetworkInterfaceAddress address = new NetworkInterfaceAddress(interfaceAddress, niAddress.getNetworkPrefixLength());
+                final NetworkInterfaceAddress address =
+                    new NetworkInterfaceAddress(interfaceAddress, niAddress.getNetworkPrefixLength());
                 if (interfaceAddress instanceof Inet4Address) {
                     ipv4AddressList.add(address);
                 } else {
