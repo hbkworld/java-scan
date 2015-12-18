@@ -98,7 +98,7 @@ final class LRUCache<K, V> extends LinkedHashMap<K, V> {
     /**
      * By default the cache size is 100.
      */
-    private static final float LOAD_FACTOR = 0.75f;
+    private static final float LOAD_FACTOR = 0.75F;
 
     private final int maxSize;
 
