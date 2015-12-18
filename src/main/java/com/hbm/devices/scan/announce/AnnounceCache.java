@@ -93,6 +93,8 @@ final class AnnounceCache {
 
 final class LRUCache<K, V> extends LinkedHashMap<K, V> {
 
+    private static final long serialVersionUID = -8301636009829845575L;
+
     /**
      * By default the cache size is 100.
      */
