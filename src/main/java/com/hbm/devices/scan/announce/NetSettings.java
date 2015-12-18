@@ -38,7 +38,7 @@ public final class NetSettings implements Serializable {
 
     private DefaultGateway defaultGateway;
 
-    static final long serialVersionUID = 7399836134150394297L;
+    private static final long serialVersionUID = 7399836134150394297L;
 
     @SerializedName("interface")
     private Interface iface;

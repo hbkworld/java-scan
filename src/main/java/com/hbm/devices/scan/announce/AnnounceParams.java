@@ -50,7 +50,7 @@ public final class AnnounceParams implements Serializable {
     private List<ServiceEntry> services;
     private int expiration;
 
-    static final long serialVersionUID = 2532013264163413436L;
+    private static final long serialVersionUID = 2532013264163413436L;
 
     private AnnounceParams() {
     }

@@ -42,7 +42,7 @@ public final class Announce extends JsonRpc implements Serializable {
     private String path;
     private Object cookie;
 
-    static final long serialVersionUID = 3398751494808132238L;
+    private static final long serialVersionUID = 3398751494808132238L;
 
     private static final int INITIAL_HASHCODE_BUFFER_SIZE = 100;
 

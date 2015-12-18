@@ -37,7 +37,7 @@ public final class Router implements Serializable {
 
     private String uuid;
 
-    static final long serialVersionUID = -3904823671758702259L;
+    private static final long serialVersionUID = -3904823671758702259L;
 
     private Router() {
     }

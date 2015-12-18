@@ -39,7 +39,7 @@ public final class IPv4Entry implements Serializable {
     private String address;
     private String netmask;
 
-    static final long serialVersionUID = -582658347189793351L;
+    private static final long serialVersionUID = -582658347189793351L;
 
     private IPv4Entry() {
     }
