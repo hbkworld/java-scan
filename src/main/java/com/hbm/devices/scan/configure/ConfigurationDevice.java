@@ -28,13 +28,17 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Serializable;
+
 /**
  * The device class specifies which device should be configured.
  * 
  * @since 1.0
  *
  */
-public final class ConfigurationDevice {
+public final class ConfigurationDevice implements Serializable {
+
+    private static final long serialVersionUID = 920682536196085418L;
 
     private final String uuid;
 

@@ -28,6 +28,8 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Serializable;
+
 /**
  * The default gateway describes the configured default gateway of a
  * device.<p>
@@ -36,7 +38,9 @@ package com.hbm.devices.scan.configure;
  * 
  * @since 1.0
  */
-public final class ConfigurationDefaultGateway {
+public final class ConfigurationDefaultGateway implements Serializable {
+
+    private static final long serialVersionUID = -6691414244302799743L;
 
     private final String ipv4Address;
 

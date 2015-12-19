@@ -28,10 +28,14 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Serializable;
+
 /**
  * Class for error objects in <a href="http://www.jsonrpc.org/specification">JSON-RPC 2.0</a>.
  */
-public final class ErrorObject {
+public final class ErrorObject implements Serializable {
+
+    private static final long serialVersionUID = -4477750829225411308L;
 
     private int code;
     private String message;

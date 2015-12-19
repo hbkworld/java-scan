@@ -28,11 +28,15 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Serializable;
+
 /**
  * This class holt all information to configure a device via the HBM
  * Network Discovery and Configuration Protocol for Embedded Devices.
  */
-public final class ConfigurationParams {
+public final class ConfigurationParams implements Serializable {
+
+    private static final long serialVersionUID = 8607748022420306958L;
 
     private ConfigurationDevice device;
     private ConfigurationNetSettings netSettings;
