@@ -28,14 +28,17 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Serializable;
+
 /**
  * The interface describes the properties and settings of an network interface which are configured.
  * 
  * @since 1.0
  *
  */
-public final class ConfigurationInterface {
+public final class ConfigurationInterface implements Serializable {
 
+    private static final long serialVersionUID = -9128366354731289950L;
     private String name;
     private IPv4EntryManual ipv4;
     private String configurationMethod;

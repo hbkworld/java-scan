@@ -29,6 +29,7 @@
 package com.hbm.devices.scan.configure;
 
 import com.google.gson.annotations.SerializedName;
+import java.io.Serializable;
 
 /**
  * This class stores the network properties which are send in a configuration request
@@ -36,7 +37,9 @@ import com.google.gson.annotations.SerializedName;
  * @since 1.0
  *
  */
-public final class ConfigurationNetSettings {
+public final class ConfigurationNetSettings implements Serializable {
+
+    private static final long serialVersionUID = 8240137946038695796L;
 
     private ConfigurationDefaultGateway defaultGateway;
 

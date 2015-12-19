@@ -40,7 +40,7 @@ public final class Announce extends JsonRpc implements Serializable {
 
     private AnnounceParams params;
     private String path;
-    private Object cookie;
+    private transient Object cookie;
 
     private static final long serialVersionUID = 3398751494808132238L;
 
@@ -72,7 +72,10 @@ public final class Announce extends JsonRpc implements Serializable {
     }
     
     /**
-     * This method can be used to bind some auxiliary data to an Announce object
+     * This method can be used to bind some auxiliary data to an
+     * Announce object.
+     *
+     * Caution! This object will not serailized!
      *
      * @param cookie the auxiliary data to be set
      */

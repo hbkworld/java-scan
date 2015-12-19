@@ -49,15 +49,12 @@ public final class ServicetypeMatch implements Matcher {
      * against the service entries in {@link Announce} objects.
      */
     public ServicetypeMatch(String... serviceTypes) {
-        this.serviceTypes = serviceTypes;
+        this.serviceTypes = serviceTypes.clone();
     }
 
     @Override
     public boolean match(Announce announce) {
         final Iterable<ServiceEntry> services = announce.getParams().getServices();
-        if (services == null) {
-            return false;
-        }
         for (final ServiceEntry entry : services) {
             for (int i = 0; i < serviceTypes.length; i++) {
                 if (serviceTypes[i].equals(entry.getType())) {

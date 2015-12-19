@@ -28,10 +28,14 @@
 
 package com.hbm.devices.scan.configure;
 
+import java.io.Serializable;
+
 /**
  * A class holding the information for manual IP interface configuration an a device.
  */
-public final class IPv4EntryManual {
+public final class IPv4EntryManual implements Serializable {
+
+    private static final long serialVersionUID = -2048138845467225369L;
 
     private final String manualAddress;
     private final String manualNetmask;

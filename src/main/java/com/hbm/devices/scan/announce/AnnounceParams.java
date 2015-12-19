@@ -29,6 +29,8 @@
 package com.hbm.devices.scan.announce;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.hbm.devices.scan.ScanConstants;
@@ -98,11 +100,16 @@ public final class AnnounceParams implements Serializable {
     }
 
     /**
-     * @return the service section of an announce or {@code null}, if no
-     * services were announced.
+     * @return an {@link java.util.Collections#unmodifiableList(List list) unmodifiable List}
+     * of services announced. If no services are
+     * announced, an empty {@link java.util.List} is returned.
      */
     public List<ServiceEntry> getServices() {
-        return services;
+        if (services == null) {
+            return new ArrayList<>();
+        } else {
+            return Collections.unmodifiableList(services);
+        }
     }
 
     public int getExpiration() {
