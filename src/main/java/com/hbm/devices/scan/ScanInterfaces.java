@@ -33,6 +33,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,7 +68,11 @@ public final class ScanInterfaces {
     }
 
     public Collection<NetworkInterface> getInterfaces() {
-        return interfaces;
+        if (interfaces == null) {
+            return new LinkedList<>();
+        } else {
+            return Collections.unmodifiableCollection(interfaces);
+        }    
     }
 
     private static boolean willScan(NetworkInterface iface) throws SocketException {

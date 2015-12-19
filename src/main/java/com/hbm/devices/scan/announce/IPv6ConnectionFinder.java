@@ -34,6 +34,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,7 +46,7 @@ final class IPv6ConnectionFinder {
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     IPv6ConnectionFinder(Collection<NetworkInterfaceAddress> interfacesAddresses) {
-        this.interfaceAddresses = interfacesAddresses;
+        this.interfaceAddresses = Collections.unmodifiableCollection(interfacesAddresses);
     }
 
     List<InetAddress> getConnectableAddresses(Announce announce) {
@@ -63,9 +64,7 @@ final class IPv6ConnectionFinder {
             Announce announce) {
         final Iterable<IPv6Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv6();
-        if (announceAddresses == null) {
-            return null;
-        }
+
         for (final IPv6Entry address : announceAddresses) {
             try {
                 final InetAddress announceAddress = InetAddress.getByName(address.getAddress());

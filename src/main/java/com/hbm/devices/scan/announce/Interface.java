@@ -29,6 +29,8 @@
 package com.hbm.devices.scan.announce;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -93,7 +95,11 @@ public final class Interface implements Serializable {
      *      interface was announced.
      */
     public List<IPv4Entry> getIPv4() {
-        return ipv4;
+        if (ipv4 == null) {
+            return new LinkedList<>();
+        } else {
+            return Collections.unmodifiableList(ipv4);
+        }
     }
 
     /**
@@ -103,6 +109,10 @@ public final class Interface implements Serializable {
      *      interface was announced.
      */
     public List<IPv6Entry> getIPv6() {
-        return ipv6;
+        if (ipv6 == null) {
+            return new LinkedList<>();
+        } else {
+            return Collections.unmodifiableList(ipv6);
+        }
     }
 }

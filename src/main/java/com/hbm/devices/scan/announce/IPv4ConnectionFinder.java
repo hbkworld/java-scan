@@ -32,6 +32,7 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -45,7 +46,7 @@ final class IPv4ConnectionFinder {
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
 
     IPv4ConnectionFinder(Collection<NetworkInterfaceAddress> interfacesAddresses) {
-        this.interfaceAddresses = interfacesAddresses;
+        this.interfaceAddresses = Collections.unmodifiableCollection(interfacesAddresses);
     }
 
     List<InetAddress> getConnectableAddresses(Announce announce) {
@@ -64,9 +65,6 @@ final class IPv4ConnectionFinder {
 
         final Iterable<IPv4Entry> announceAddresses = announce.getParams().getNetSettings()
                 .getInterface().getIPv4();
-        if (announceAddresses == null) {
-            return null;
-        }
 
         for (final Object ipv4Entry : announceAddresses) {
             try {
