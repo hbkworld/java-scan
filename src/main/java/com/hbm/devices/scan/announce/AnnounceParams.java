@@ -100,8 +100,9 @@ public final class AnnounceParams implements Serializable {
     }
 
     /**
-     * @return the service section of an announce. If no services are
-     * announced, an empty List is returned.
+     * @return an {@link java.util.Collections#unmodifiableList(List list) unmodifiable List}
+     * of services announced. If no services are
+     * announced, an empty {@link java.util.List} is returned.
      */
     public List<ServiceEntry> getServices() {
         if (services == null) {

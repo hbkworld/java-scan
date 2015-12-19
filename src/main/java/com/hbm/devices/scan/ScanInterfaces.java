@@ -67,6 +67,12 @@ public final class ScanInterfaces {
         }
     }
 
+    /**
+     * @return an {@link java.util.Collections#unmodifiableCollection(Collection c) unmodifiable Collection}
+     * of {@link java.net.NetworkInterface NetworkInterfaces} usable for
+     * Multicast scanning. If no interface was found, an empty
+     * {@link java.util.Collection} is returned.
+     */
     public Collection<NetworkInterface> getInterfaces() {
         if (interfaces == null) {
             return new LinkedList<>();

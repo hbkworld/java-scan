@@ -90,9 +90,10 @@ public final class Interface implements Serializable {
 
     /**
      * @return
-     *      A List containing all IPv4 addresses of the interface
-     *      with their netmask. Might be {@code null} if no IPv4
-     *      interface was announced.
+     *      an {@link java.util.Collections#unmodifiableList(List list) unmodifiable List}
+     *      containing all IPv4 addresses of the interface
+     *      with their netmask. If no IPv4 interface was announced,
+     *      an empty {@link java.util.List} is returned.
      */
     public List<IPv4Entry> getIPv4() {
         if (ipv4 == null) {
@@ -104,9 +105,10 @@ public final class Interface implements Serializable {
 
     /**
      * @return
-     *      A List containing all IPv6 addresses of the interface
-     *      with their netmask. Might be {@code null} if no IPv6
-     *      interface was announced.
+     *      an {@link java.util.Collections#unmodifiableList(List list) unmodifiable List}
+     *      containing all IPv6 addresses of the interface
+     *      with their network prefix. If no IPv6 interface was announced,
+     *      an empty {@link java.util.List} is returned.
      */
     public List<IPv6Entry> getIPv6() {
         if (ipv6 == null) {
