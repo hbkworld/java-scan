@@ -24,6 +24,14 @@ gradle build
 and you will find the generated devscan.jar file in the folder
 /tmp/devscan/devscan/libs.
 
+The gradle script has now the ability to deploy jar files and 
+pom files to [bintray](https://bintray.com/) and
+[Maven Central](http://search.maven.org/). Run
+```bash
+gradle uploadArchives -Prelease -P<repository> -Pgpg_id=<gpg-id> -Pgpg_secring=<path/to/secring.gpg> -Pgpg_passphrase=<gpg-passphrase> -PrepositoryUsername=<name> -PrepositoryPassword=<passwd
+```
+with either "mavencentral" or "bintray" for `<repository>`.
+
 In addition, a maven build is also supported. Please run
 ```bash
 mvn package
