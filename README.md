@@ -22,7 +22,7 @@ The preferred method to build the library is gradle. Just run
 gradle build
 ```
 and you will find the generated devscan.jar file in the folder
-build/libs.
+/tmp/devscan/devscan/libs.
 
 In addition, a maven build is also supported. Please run
 ```bash
