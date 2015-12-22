@@ -1,20 +1,41 @@
-buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.4.0'
-	}
-}
-
 plugins {
-  id "org.sonarqube" version "1.1"
-  id "java"
-  id "jacoco"
-  id "com.github.kt3k.coveralls" version "2.4.0x"
+	id "com.github.kt3k.coveralls" version "2.4.0x"
+	id "jacoco"
+	id "java"
+	id "maven"
+	id "org.sonarqube" version "1.1"
+	id "signing"
 }
 
-version = '1.2-SNAPSHOT'
+group = 'com.hbm'
+version = '1.2'
+
+def isDevBuild
+def isReleaseBuild
+
+def repositoryUrl
+
+//set build variables based on build type (release, continuous integration, development)
+if (hasProperty("release")) {
+	isReleaseBuild = true
+} else {
+	version += "-SNAPSHOT"
+	isDevBuild = true
+}
+
+if (hasProperty("bintray")) {
+	repositoryUrl = "https://api.bintray.com/maven/hbm/java/" + rootProject.name + "/"
+} else if (hasProperty("mavencentral")) {
+	repositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
+if (!project.hasProperty("repositoryUsername")) {
+	ext.repositoryUsername = ""
+}
+
+if (!project.hasProperty("repositoryPassword")) {
+	ext.repositoryPassword = ""
+}
 
 allprojects {
 	buildDir = "/tmp/${rootProject.name}/${project.name}"
@@ -24,8 +45,13 @@ repositories {
 	mavenCentral()
 }
 
+dependencies {
+	compile group: 'com.google.code.gson', name: 'gson', version: '[2.5,)'
+	testCompile group: 'junit', name: 'junit', version: '[4.12,)'
+}
+
 jacoco {
-    toolVersion = "0.7.5.201505241946"
+	toolVersion = "0.7.5.201505241946"
 }
 
 jacocoTestReport {
@@ -43,11 +69,6 @@ jacocoTestReport {
             destination "${buildDir}/reports/jacoco/test/html"
         }
     }
-}
-
-dependencies {
-	compile group: 'com.google.code.gson', name: 'gson', version: '2.+'
-	testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
@@ -95,5 +116,79 @@ jar {
 			'Built-By': System.getProperty('user.name'), \
 			'Built-JDK': System.getProperty('java.version'), \
 			'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+	}
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+	if (taskGraph.allTasks.any { it instanceof Sign }) {
+		def id = gpg_id
+		def file = gpg_secring
+		def password = gpg_passphrase
+		
+		allprojects { ext."signing.keyId" = id }
+		allprojects { ext."signing.secretKeyRingFile" = file }
+		allprojects { ext."signing.password" = password }
+	}
+}
+
+if (isReleaseBuild) {
+	signing {
+		sign configurations.archives
+	}
+} else {
+	task signArchives {
+		// do nothing
+	}
+}
+
+uploadArchives {
+	repositories {
+		if (isDevBuild) {
+			mavenLocal()
+		} else {
+			mavenDeployer {
+				if (isReleaseBuild) {
+					beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+				}
+				
+				repository(url: repositoryUrl,id: rootProject.name) {
+				//repository(url: repositoryUrl,id: 'devscan') {
+							authentication(userName: repositoryUsername, password: repositoryPassword)
+				}
+
+				pom.project {
+					name 'HBM device scan library for Java'
+					packaging 'jar'
+					description 'A Java library to find and configure HBM device via multicast communication.'
+					url 'https://github.com/HBM/java-scan'
+
+					scm {
+						url 'git@github.com:HBM/java-scan.git'
+						connection 'scm:git:git@github.com:HBM/java-scan.git'
+						developerConnection 'scm:git:git@github.com:HBM/java-scan.git'
+					}
+
+					organization {
+						name 'Hottinger Baldwin Messtechnik GmbH'
+						url 'http://www.hbm.com'
+					}
+
+					licenses {
+						license {
+							name 'MIT License'
+							url 'http://www.opensource.org/licenses/mit-license.php'
+							distribution 'repo'
+						}
+					}
+
+					developers {
+						developer {
+							name 'Stephan Gatzka'
+							organization = 'Hottinger Baldwin Messtechnik GmbH'
+						}
+					}
+				}
+			}
+		}
 	}
 }
