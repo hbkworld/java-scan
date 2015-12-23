@@ -21,7 +21,9 @@ after_script:
   - cat /home/travis/build/HBM/java-scan/cov-int/build-log.txt
 after_success:
   - scripts/travis/push-javadoc-to-gh-pages.sh
-  - gradle jacocoTestReport coveralls
+  - gradle jacocoTestReport
+  - gradle coveralls
+  - ls -l /home/travis/build/HBM/java-scan/build/reports/jacoco/test/
 
 addons:
   coverity_scan:
