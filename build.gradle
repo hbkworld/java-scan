@@ -47,10 +47,6 @@ if (!project.hasProperty("repositoryPassword")) {
 	ext.repositoryPassword = ""
 }
 
-allprojects {
-	buildDir = "/tmp/${rootProject.name}/${project.name}"
-}
-
 processResources {
 	expand projectVersion: project.version
 }

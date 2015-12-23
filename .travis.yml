@@ -23,7 +23,7 @@ after_success:
   - scripts/travis/push-javadoc-to-gh-pages.sh
   - gradle jacocoTestReport
   - gradle coveralls
-  - ls -l /home/travis/build/HBM/java-scan/build/reports/jacoco/test/
+  - ls -l /home/travis/build/HBM/java-scan/
 
 addons:
   coverity_scan:
