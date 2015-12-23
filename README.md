@@ -4,6 +4,7 @@
 [![Coverity](https://scan.coverity.com/projects/5097/badge.svg)](https://scan.coverity.com/projects/5097)
 [![Coverage Status](https://coveralls.io/repos/HBM/java-scan/badge.svg?branch=master)](https://coveralls.io/r/HBM/java-scan?branch=master)
 [ ![Download](https://api.bintray.com/packages/hbm/java/devscan/images/download.svg) ](https://bintray.com/hbm/java/devscan/_latestVersion)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hbm/devscan/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.hbm/devscan)
 
 ## About
 This library implements the HBM device discovery protocol in  Java. The
