@@ -66,19 +66,19 @@ jacoco {
 
 jacocoTestReport {
 	description = "Generate Jacoco coverage reports after running tests."
-    reports {
-        xml {
-            enabled true
-            destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
-        }
-
-        csv.enabled false
-
-        html {
-            enabled true
-            destination "${buildDir}/reports/jacoco/test/html"
-        }
-    }
+	reports {
+		xml {
+			enabled true
+			destination "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+		}
+		
+		csv.enabled false
+		
+		html {
+			enabled true
+			destination "${buildDir}/reports/jacoco/test/html"
+		}
+	}
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
