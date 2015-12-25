@@ -17,7 +17,7 @@ plugins {
 	id "signing"
 }
 
-description 'A Java library to find and configure HBM device via multicast communication.'
+description 'A Java library to find and configure HBM devices via multicast communication.'
 group = 'com.hbm'
 version = '1.3'
 
