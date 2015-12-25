@@ -19,18 +19,18 @@ Copyright (c) 2014 Hottinger Baldwin Messtechnik GmbH. See the
 
 ## Build
 
-The preferred method to build the library is gradle. Just run
+The preferred method to build the library is gradle. Just run the gradle wrapper
 ```bash
-gradle build
+./gradlew build
 ```
 and you will find the generated devscan.jar file in the folder
 /tmp/devscan/devscan/libs.
 
-The gradle script has now the ability to deploy jar files and 
+The gradlew script has now the ability to deploy jar files and 
 pom files to [bintray](https://bintray.com/) and
 [Maven Central](http://search.maven.org/). Run
 ```bash
-gradle uploadArchives -Prelease -P<repository> -Pgpg_id=<gpg-id> -Pgpg_secring=<path/to/secring.gpg> -Pgpg_passphrase=<gpg-passphrase> -PrepositoryUsername=<name> -PrepositoryPassword=<passwd
+./gradlew uploadArchives -Prelease -P<repository> -Pgpg_id=<gpg-id> -Pgpg_secring=<path/to/secring.gpg> -Pgpg_passphrase=<gpg-passphrase> -PrepositoryUsername=<name> -PrepositoryPassword=<passwd
 ```
 with either "mavencentral" or "bintray" for `<repository>`.
 

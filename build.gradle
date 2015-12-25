@@ -201,3 +201,8 @@ uploadArchives {
 		}
 	}
 }
+
+task createWrapper(type: Wrapper) {
+	gradleVersion = '2.9'
+}
+
