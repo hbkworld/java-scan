@@ -3,10 +3,6 @@ apply plugin: 'java'
  
 description 'An example to use the devscan library to configre a device.'
 
-repositories {
-    mavenCentral()
-}
- 
 dependencies {
     compile project(':devscan')
 }
