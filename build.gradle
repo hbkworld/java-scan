@@ -5,3 +5,7 @@ subprojects {
         mavenCentral()
     }
 }
+
+configure(subprojects.findAll {(it.name != 'devscan') && (it.name != 'devscan-examples')}) {
+    apply plugin: 'application'  
+}
