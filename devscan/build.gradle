@@ -35,7 +35,7 @@ if (hasProperty("release")) {
 }
 
 if (hasProperty("bintray")) {
-	repositoryUrl = "https://api.bintray.com/maven/hbm/java/" + rootProject.name + "/"
+	repositoryUrl = "https://api.bintray.com/maven/hbm/java/" + project.name + "/"
 } else if (hasProperty("mavencentral")) {
 	repositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 }
@@ -161,7 +161,7 @@ uploadArchives {
 					beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 				}
 				
-				repository(url: repositoryUrl,id: rootProject.name) {
+				repository(url: repositoryUrl,id: project.name) {
 							authentication(userName: repositoryUsername, password: repositoryPassword)
 				}
 
