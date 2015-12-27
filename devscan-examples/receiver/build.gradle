@@ -1,5 +1,4 @@
 apply plugin: 'application'
-apply plugin: 'java'
  
 description 'An example to use the devscan library for receiving announce messages.'
 
