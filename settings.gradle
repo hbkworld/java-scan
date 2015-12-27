@@ -1,2 +1,3 @@
-rootProject.name = 'devscan'
-
+include 'devscan'
+include 'devscan-examples:receiver'
+include 'devscan-examples:sender'

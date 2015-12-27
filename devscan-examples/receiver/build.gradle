@@ -1,0 +1,8 @@
+description 'An example to use the devscan library for receiving announce messages.'
+
+dependencies {
+    compile project(':devscan')
+}
+ 
+mainClassName = 'Receiver'
+
