@@ -3,6 +3,24 @@ description 'An example to use the devscan library for receiving announce messag
 dependencies {
     compile project(':devscan')
 }
- 
+
+project.version = getRootProject().version
 mainClassName = 'Receiver'
+
+jar {
+    archiveName = jar.baseName + '.' + jar.extension
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    exclude ('fakemessages.properties')
+    manifest {
+        attributes \
+			'Implementation-Title': 'HBM Device Scan Receiver', \
+			'Implementation-Version': version, \
+			'Implementation-Vendor': 'Hottinger Baldwin Messtechnik GmbH', \
+			'Built-By': System.getProperty('user.name'), \
+			'Built-JDK': System.getProperty('java.version'), \
+			'Build-Time': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"), \
+            'Main-Class': mainClassName
+    }
+}
+
 
