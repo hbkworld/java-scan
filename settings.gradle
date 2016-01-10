@@ -1,3 +1,3 @@
 include 'devscan'
-include 'devscan-examples:receiver'
-include 'devscan-examples:sender'
+include 'receiver'
+include 'sender'
