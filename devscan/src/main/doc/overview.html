@@ -8,21 +8,44 @@ The following picture shows the overall structure of processing device announce 
 <p>
 <img src="doc-files/structure.svg"> 
 <p>
-In general processing announce messages is a chain of several filters an
+In general, processing announce messages is a chain of several filters and
 transformers. Because the connection between all blocks is a
 Observer/Observable interface, you can attach an arbitrary amount of
 inputs to outputs.
 <p>
-The AnnounceReceiver receive announce multicast messages, the
-AnnounceDeserializer parses the JSON messages into Java objects. All
-Filter object are instantiated with a specific Matcher object, currently
-a family type matcher, a UUID matcher and service type matcher are
-implemented. The Filter object let pass only those Announce objects
-with respect to the Matcher. The DeviceMonitor monitors the expiration
-key in Announce messages and provides the concept of events if a new
-device was discovered, a device was lost (didn't sent announces during
-the expiration time) or if some information changed in the Announce (for
-instance the IP addresses or some services).
+The <a
+href="com/hbm/devices/scan/announce/AnnounceReceiver.html">AnnounceReceiver</a>
+receives announce multicast messages, the AnnounceDeserializer parses
+the JSON messages into <a
+href="com/hbm/devices/scan/announce/Announce.html">Java objects</a>. All
+<a href="com/hbm/devices/scan/announce/filter/Filter.html">Filter</a> objects are instantiated
+with a specific <a
+href="com/hbm/devices/scan/announce/filter/Matcher.html">Matcher</a>
+object, currently a <a
+href="com/hbm/devices/scan/announce/filter/FamilytypeMatch.html">family
+type matcher</a>, a <a
+href="com/hbm/devices/scan/announce/filter/UUIDMatch.html">UUID
+matcher</a> and <a
+href="com/hbm/devices/scan/announce/filter/ServicetypeMatch.html">service
+type matcher</a> are implemented. The <a
+href="com/hbm/devices/scan/announce/filter/Filter.html">Filter</a> objects let
+pass only those <a
+href="com/hbm/devices/scan/announce/Announce.html">Announce</a> objects
+with respect to the <a
+href="com/hbm/devices/scan/announce/filter/Matcher.html">Matcher</a>. The
+<a
+href="com/hbm/devices/scan/announce/DeviceMonitor.html">DeviceMonitor</a>
+monitors the expiration key in <a
+href="com/hbm/devices/scan/announce/Announce.html">Announce</a> messages and
+provides the concept of events if a <a
+href="com/hbm/devices/scan/announce/NewDeviceEvent.html">new device</a>
+was discovered, a <a
+href="com/hbm/devices/scan/announce/LostDeviceEvent.html">device
+was lost</a> (didn't sent announces during the expiration time) or if <a
+href="com/hbm/devices/scan/announce/UpdateDeviceEvent.html">some
+information changed</a> in the <a
+href="com/hbm/devices/scan/announce/Announce.html">Announce</a> (for instance the IP addresses or
+some services).
 <p>
 It should noted that the whole is completly event driven, no polling is
 involved. 
