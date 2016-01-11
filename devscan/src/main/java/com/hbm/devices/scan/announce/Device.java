@@ -41,6 +41,7 @@ public final class Device implements Serializable {
     private String uuid;
     private String name;
     private String type;
+    private String label;
     private String familyType;
     private String firmwareVersion;
     private String hardwareId;
@@ -80,6 +81,16 @@ public final class Device implements Serializable {
      */
     public String getType() {
         return type;
+    }
+
+    /**
+     * @return A string describing the label of the device. The label
+     *         is equal to the label really printed on the device. For an
+     *         MX840BR this method returns "MX840BR" .This method could
+     *         return {@code null} if no label was announced.
+     */
+    public String getLabel() {
+        return label;
     }
 
     /**

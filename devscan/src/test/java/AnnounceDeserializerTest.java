@@ -174,6 +174,7 @@ public class AnnounceDeserializerTest {
         final String hwIdString = "MX410_R0";
         final String nameString = "MX410 Matthias";
         final String typeString = "MX410";
+        final String labelString = "MX410B";
         final String uuidString = "0009E500123A";
         final boolean isRouter = true;
         final String ifaceNameString = "eth0";
@@ -208,6 +209,7 @@ public class AnnounceDeserializerTest {
         device.addProperty("hardwareId", hwIdString);
         device.addProperty("name", nameString);
         device.addProperty("type", typeString);
+        device.addProperty("label", labelString);
         device.addProperty("uuid", uuidString);
         device.addProperty("isRouter", isRouter);
 
@@ -266,6 +268,7 @@ public class AnnounceDeserializerTest {
         assertEquals("Hardware ID does not match", checkDevice.getHardwareId(), hwIdString);
         assertEquals("device name does not match", checkDevice.getName(), nameString);
         assertEquals("device type does not match", checkDevice.getType(), typeString);
+        assertEquals("device label does not match", checkDevice.getLabel(), labelString);
         assertEquals("device uuid does not match", checkDevice.getUuid(), uuidString);
         assertEquals("isRouter entry does not match", checkDevice.isRouter(), isRouter);
 
