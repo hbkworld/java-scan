@@ -206,6 +206,8 @@ class EventLogger {
             .append(device.getFamilyType())
             .append("\n  type: ")
             .append(device.getType())
+            .append("\n  label: ")
+            .append(device.getLabel())
             .append("\n  firmware version: ")
             .append(device.getFirmwareVersion())
             .append("\n  is router: ")
