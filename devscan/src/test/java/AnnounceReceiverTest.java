@@ -41,8 +41,7 @@ public class AnnounceReceiverTest {
 
     @Test
     public void intantiation() {
-        try {
-            AnnounceReceiver ar = new AnnounceReceiver();
+        try (final AnnounceReceiver ar = new AnnounceReceiver()) {
             assertNotNull("Could not instantiate AnnounceReceiver", ar);
         } catch (IOException e) {
             fail("Got IOException while instantiating AnnounceReceiver");

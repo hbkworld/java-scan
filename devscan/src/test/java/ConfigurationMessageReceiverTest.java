@@ -40,8 +40,7 @@ public class ConfigurationMessageReceiverTest {
 
     @Test
     public void intantiation() {
-        try {
-            ConfigurationMessageReceiver cr = new ConfigurationMessageReceiver();
+        try (final ConfigurationMessageReceiver cr = new ConfigurationMessageReceiver()) {
             assertNotNull("Could not instantiate ConfigurationMessageReceiver", cr);
         } catch (IOException e) {
             fail("Got IOException while instantiating ConfigurationMessageReceiver");
