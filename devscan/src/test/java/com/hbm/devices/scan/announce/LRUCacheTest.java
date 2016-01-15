@@ -28,6 +28,7 @@
 
 package com.hbm.devices.scan.announce;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -61,7 +62,7 @@ public class LRUCacheTest {
         cache.put(1, 1);
         cache.put(2, 2);
         cache.put(3, 3);
-        cache.get(1);
+        assertEquals(cache.get(1).intValue(), 1);
         cache.put(4, 4);
         
         assertFalse("Eldest element still in cache", cache.containsKey(2));
