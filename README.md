@@ -34,12 +34,6 @@ pom files to [bintray](https://bintray.com/) and
 ```
 with either "mavencentral" or "bintray" for `<repository>`.
 
-In addition, a maven build is also supported. Please run
-```bash
-mvn package
-```
-for the build.
-
 ## Documentation
 
 The generated javadoc documentation can be found
