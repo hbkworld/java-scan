@@ -61,6 +61,8 @@ public final class Device implements Serializable {
      *      request. It is guaranteed by the {@link AnnounceDeserializer} that only valid
      *      announces are forwarded through the chain of observers, so a null reference is
      *      never returned from this method.
+     *
+     * @since 1.0
      */
     public String getUuid() {
         return uuid;
@@ -69,6 +71,8 @@ public final class Device implements Serializable {
     /**
      * @return An string containing the name of the device or {@code
      * null} if no name was announced.
+     *
+     * @since 1.0
      */
     public String getName() {
         return name;
@@ -78,6 +82,8 @@ public final class Device implements Serializable {
      * @return A string describing the type of the device, e.g. for a QuantumX MX840 this will
      *         contain "MX840". This method could return {@code null} if
      *         no type was announced.
+     *
+     * @since 1.0
      */
     public String getType() {
         return type;
@@ -88,6 +94,7 @@ public final class Device implements Serializable {
      *         is equal to the label really printed on the device. For an
      *         MX840BR this method returns "MX840BR" .This method could
      *         return {@code null} if no label was announced.
+     * @since 1.3
      */
     public String getLabel() {
         return label;
@@ -96,6 +103,8 @@ public final class Device implements Serializable {
     /**
      * @return A string describing the hardware ID of a device or {@code null} 
      * if no hardware ID was announced.
+     *
+     * @since 1.0
      */
     public String getHardwareId() {
         return hardwareId;
@@ -105,6 +114,8 @@ public final class Device implements Serializable {
      * @return A string describing the family type of the device, e.g.
      * QuantumX or PMX. Might be {@code null} if no family type was
      * announced.
+     *
+     * @since 1.0
      */
     public String getFamilyType() {
         return familyType;
@@ -113,6 +124,8 @@ public final class Device implements Serializable {
     /**
      * @return A string containing the firmware version of the device.
      * Might be {@code null} if no firmware version was announced.
+     *
+     * @since 1.0
      */
     public String getFirmwareVersion() {
         return firmwareVersion;
@@ -120,6 +133,8 @@ public final class Device implements Serializable {
 
     /**
      * @return this key is send with value true if the module acts as a IP router.
+     *
+     * @since 1.0
      */
     public boolean isRouter() {
         return router;
