@@ -23,3 +23,8 @@ subprojects {
 configure(subprojects.findAll {(it.name != 'devscan') && (it.name != 'devscan-examples')}) {
     apply plugin: 'application'  
 }
+
+
+task createWrapper(type: Wrapper) {
+	gradleVersion = '2.10'
+}
