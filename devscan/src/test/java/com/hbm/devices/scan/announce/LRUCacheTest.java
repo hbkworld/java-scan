@@ -62,7 +62,8 @@ public class LRUCacheTest {
         cache.put(1, 1);
         cache.put(2, 2);
         cache.put(3, 3);
-        assertEquals(cache.get(1).intValue(), 1);
+        assertTrue("Element not in cache", cache.containsKey(1));
+        assertEquals("Value for key 1 not correct", cache.get(1).intValue(), 1);
         cache.put(4, 4);
         
         assertFalse("Eldest element still in cache", cache.containsKey(2));
