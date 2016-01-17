@@ -6,6 +6,10 @@
 [ ![Download](https://api.bintray.com/packages/hbm/java/devscan/images/download.svg) ](https://bintray.com/hbm/java/devscan/_latestVersion)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hbm/devscan/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.hbm/devscan)
 
+[![Stories in Backlog](https://badge.waffle.io/HBM/java-scan.png?label=backlog&title=Backlog)](https://waffle.io/HBM/java-scan)
+[![Stories in Ready](https://badge.waffle.io/HBM/java-scan.png?label=ready&title=Ready)](https://waffle.io/HBM/java-scan)
+[![Stories in progress](https://badge.waffle.io/HBM/java-scan.png?label=in%20progress&title=In%20Progress)](https://waffle.io/HBM/java-scan)
+
 ## About
 This library implements the HBM device discovery protocol in  Java. The
 library is 100 % pure Java and fully compatible with Android.
