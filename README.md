@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/HBM/java-scan.png?label=ready&title=Ready)](https://waffle.io/HBM/java-scan)
 # A Java implementation of the HBM device discovery protocol.
 
 [![Build Status](https://travis-ci.org/HBM/java-scan.svg?branch=master)](https://travis-ci.org/HBM/java-scan)
