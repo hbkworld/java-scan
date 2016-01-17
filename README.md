@@ -10,6 +10,8 @@
 [![Stories in Ready](https://badge.waffle.io/HBM/java-scan.png?label=ready&title=Ready)](https://waffle.io/HBM/java-scan)
 [![Stories in progress](https://badge.waffle.io/HBM/java-scan.png?label=in%20progress&title=In%20Progress)](https://waffle.io/HBM/java-scan)
 
+[![Open Hub](https://img.shields.io/badge/Open-Hub-0185CA.svg)](https://www.openhub.net/p/java-scan)
+
 ## About
 This library implements the HBM device discovery protocol in  Java. The
 library is 100 % pure Java and fully compatible with Android.
