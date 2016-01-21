@@ -10,9 +10,8 @@ buildscript {
 
 plugins {
 	id "com.github.kt3k.coveralls" version "2.4.0x"
-	id "jacoco"
 	id "maven"
-	id "org.sonarqube" version "1.1"
+	id "org.sonarqube" version "1.2"
 	id "signing"
 }
 

@@ -14,13 +14,14 @@ if (hasProperty("release")) {
 
 subprojects {
     apply plugin: 'java'
+    apply plugin: 'jacoco'
  
     repositories {
         mavenCentral()
     }
 }
 
-configure(subprojects.findAll {(it.name != 'devscan') && (it.name != 'devscan-examples')}) {
+configure(subprojects.findAll {(it.name != 'devscan')}) {
     apply plugin: 'application'  
 }
 
