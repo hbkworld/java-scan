@@ -1,35 +1,40 @@
 language: java
-
 sudo: false
-
 branches:
   except:
-    - /^feature.*$/
-
+  - /^feature.*$/
 env:
   global:
-   # The next declaration is the encrypted COVERITY_SCAN_TOKEN, created
-   #   via the "travis encrypt" command using the project repo's public key
-  - secure: "txucPw09tA8laIbppuF8q63G7E88fandOSsAZrsEWhSA4HpzP+FizIKsiokmJr/uA5zDitWMSkKTHYbz/wK8zgt0Hyb5w+krXG0gXSqJolMdOPE2/tm4pS0tAwbJFMxHCtxfvMeA97LIWvwUAcQ336BKWdoT+xeawGBSh/EsGpM="
-  - secure: "o7pzDMSC65WNuutOU3xlKnSa38r1Gmg+ayw/7g32K9tnhJFut2jGOXcD4D8EbpuVUPJDhw/o6JK2XJD3gO/Xaxb2A/Zoa8TMVyozbQPhKJXE3IPQcxDebOLrQJ04NaSA8CKsj4WQ9vQ7/xG9YCC/bxbAidNwuSMuNHLLR3bI7Ig="
+  - secure: txucPw09tA8laIbppuF8q63G7E88fandOSsAZrsEWhSA4HpzP+FizIKsiokmJr/uA5zDitWMSkKTHYbz/wK8zgt0Hyb5w+krXG0gXSqJolMdOPE2/tm4pS0tAwbJFMxHCtxfvMeA97LIWvwUAcQ336BKWdoT+xeawGBSh/EsGpM=
+  - secure: o7pzDMSC65WNuutOU3xlKnSa38r1Gmg+ayw/7g32K9tnhJFut2jGOXcD4D8EbpuVUPJDhw/o6JK2XJD3gO/Xaxb2A/Zoa8TMVyozbQPhKJXE3IPQcxDebOLrQJ04NaSA8CKsj4WQ9vQ7/xG9YCC/bxbAidNwuSMuNHLLR3bI7Ig=
 jdk:
-  - oraclejdk7
-  - openjdk7
-  - oraclejdk8
-
-after_script: 
-  - cat /home/travis/build/HBM/java-scan/cov-int/build-log.txt
+- oraclejdk7
+- openjdk7
+- oraclejdk8
+after_script:
+- cat /home/travis/build/HBM/java-scan/cov-int/build-log.txt
 after_success:
-  - scripts/travis/push-javadoc-to-gh-pages.sh
-  - ./gradlew jacocoTestReport
-  - ./gradlew coveralls
-
+- scripts/travis/push-javadoc-to-gh-pages.sh
+- ./gradlew jacocoTestReport
+- ./gradlew coveralls
 addons:
   coverity_scan:
     project:
-      name: "HBM/java-scan"
-      description: "Build submitted via Travis CI"
-#    build_script_url: https://raw.githubusercontent.com/HBM/java-scan/coverity_scan/scripts/travis/travisci_build_coverity_scan.sh
+      name: HBM/java-scan
+      description: Build submitted via Travis CI
     notification_email: stephan.gatzka@gmail.com
-    build_command: "./gradlew build"
+    build_command: ./gradlew build
     branch_pattern: coverity_scan
+deploy:
+  provider: releases
+  api_key:
+    secure: YrCXXllKnvhDfVWvDo1vX5Vdddr78cVlDApRe4olskDxupCqTXZ4tqVwPFAXPe2fIwDq0eTLvnnQMnHgakgclNfKlwjfNksHx5UyuU7JeSHBSlMKE3OYTPbqBHPPGD5Pa03bKoSdWcCF3i2OH55nvx4/JpYyHIxAGKC+ejVAluE=
+  file:
+    - "devscan/build/libs/devscan.jar"
+    - "devscan/build/libs/devscan-sources.jar"
+    - "devscan/build/libs/devscan-javadoc.jar"
+    - "receiver/build/libs/receiver.jar"
+    - "sender/build/libs/sender.jar"
+
+  on:
+    repo: HBM/java-scan
