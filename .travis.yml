@@ -38,3 +38,4 @@ deploy:
 
   on:
     repo: HBM/java-scan
+    tags: true
