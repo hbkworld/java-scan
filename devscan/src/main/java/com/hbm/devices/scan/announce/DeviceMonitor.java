@@ -58,8 +58,7 @@ import com.hbm.devices.scan.ScanConstants;
  */
 public final class DeviceMonitor extends Observable implements Observer, Closeable {
 
-    private final Map<String, ScheduledFuture<Void>> deviceMap;
-    private final Map<ScheduledFuture<Void>, AnnounceTimerTask> futureMap;
+    private final Map<String, TimerContainer> deviceMap;
     private final ScheduledThreadPoolExecutor executor;
     private boolean stopped;
 
@@ -75,7 +74,6 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
     public DeviceMonitor() {
         super();
         deviceMap = new HashMap<>(INITIAL_ENTRIES);
-        futureMap = new HashMap<>(INITIAL_ENTRIES);
         executor = new ScheduledThreadPoolExecutor(1);
         stopped = false;
     }
@@ -90,6 +88,7 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
      */
     @Override
     public void close() {
+        stopped = true;
         executor.shutdown();
         try {
             if (!executor.awaitTermination(1, TimeUnit.SECONDS)) {
@@ -102,7 +101,6 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
             executor.shutdownNow();
             Thread.currentThread().interrupt();
         }
-        stopped = true;
     }
 
     public boolean isClosed() {
@@ -120,26 +118,23 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
     private void armTimer(Announce announce) {
         synchronized (deviceMap) {
             final String path = announce.getPath();
-            ScheduledFuture<Void> future = deviceMap.get(path);
+            TimerContainer container = deviceMap.get(path);
             try {
-                if (future == null) {
+                if (container == null) {
                     final AnnounceTimerTask task = new AnnounceTimerTask(announce);
                     final ScheduledFuture<Void> newFuture = executor.schedule(task, getExpiration(announce),
                             TimeUnit.MILLISECONDS);
-                    deviceMap.put(path, newFuture);
-                    futureMap.put(newFuture, task);
+                    container = new TimerContainer(task, newFuture);
+                    deviceMap.put(path, container);
                     setChanged();
                     notifyObservers(new NewDeviceEvent(announce));
                 } else {
-                    future.cancel(false);
-                    deviceMap.remove(path);
-                    AnnounceTimerTask task = futureMap.remove(future);
-                    final Announce oldAnnounce = task.getAnnounce();
-                    task = new AnnounceTimerTask(announce);
-                    future = executor.schedule(task, getExpiration(announce), TimeUnit.MILLISECONDS);
-                    deviceMap.put(path, future);
-                    futureMap.put(future, task);
-
+                    container.future.cancel(false);
+                    final Announce oldAnnounce = container.task.getAnnounce();
+                    container.task.setAnnounce(announce);
+                    final ScheduledFuture<Void> future =
+                        executor.schedule(container.task, getExpiration(announce), TimeUnit.MILLISECONDS);
+                    container.future = future;
                     if (!oldAnnounce.equals(announce)) {
                         setChanged();
                         notifyObservers(new UpdateDeviceEvent(oldAnnounce, announce));
@@ -162,8 +157,18 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
         return TimeUnit.SECONDS.toMillis(expiration);
     }
 
+    private class TimerContainer {
+        private final AnnounceTimerTask task;
+        private ScheduledFuture<Void> future;
+
+        TimerContainer(AnnounceTimerTask task, ScheduledFuture<Void> future) {
+            this.task = task;
+            this.future = future;
+        }
+    }
+
     private class AnnounceTimerTask implements Callable<Void> {
-        private final Announce announce;
+        private Announce announce;
 
         AnnounceTimerTask(Announce announce) {
             this.announce = announce;
@@ -181,6 +186,10 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
 
         Announce getAnnounce() {
             return announce;
+        }
+
+        void setAnnounce(Announce announce) {
+            this.announce = announce;
         }
     }
 }
