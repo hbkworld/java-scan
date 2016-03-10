@@ -76,9 +76,11 @@ final class IPv6ConnectionFinder {
                     return announceAddress;
                 }
             } catch (UnknownHostException e) {
-                LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address!", e);
+                if (LOGGER.isLoggable(Level.INFO)) {
+                    LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address! Announce: " +
+                        announce.getJSONString(), e);
+                }
             }
-
         }
         return null;
     }
