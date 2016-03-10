@@ -107,7 +107,6 @@ public final class AnnounceDeserializer extends Observable implements Observer {
                  * Go ahead with the next packet.
                  */
                 LOGGER.log(Level.SEVERE, "Some information is missing in JSON!", e);
-                LOGGER.log(Level.SEVERE, announce.getJSONString());
             }
         } else { 
             setChanged();
