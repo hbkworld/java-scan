@@ -77,7 +77,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String EMPTY_SERVICE_MESSAGE;
     private static final String MISSING_HTTP_MESSAGE;
     private static final String NOT_ANNOUNCE_MESSAGE;
-    private static final String MISSING_TYPE_RESPONSE_MESSAGE;
+    private static final String MISSING_METHOD_MESSAGE;
     private static final String NO_SUCCESS_ID_RESPONSE_MESSAGE;
     private static final String EMPTY_SUCCESS_ID_RESPONSE_MESSAGE;
     private static final String CORRECT_ERROR_RESPONSE_MESSAGE;
@@ -279,9 +279,9 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(NOT_ANNOUNCE_MESSAGE);
     }
 
-    public void emitMissingTypeResponseMessage() {
+    public void emitMissingMethodMessage() {
         setChanged();
-        notifyObservers(MISSING_TYPE_RESPONSE_MESSAGE);
+        notifyObservers(MISSING_METHOD_MESSAGE);
     }
 
     public void emitNoSuccessIdResponseMessage() {
@@ -393,7 +393,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             EMPTY_SERVICE_MESSAGE = props.getProperty("scan.announce.correctMessageMissingService");
             MISSING_HTTP_MESSAGE = props.getProperty("scan.announce.correctMessageNoHttp");
             NOT_ANNOUNCE_MESSAGE = props.getProperty("scan.announce.notAnnounceMessage");
-            MISSING_TYPE_RESPONSE_MESSAGE = props.getProperty("scan.configure.missingTypeResponseMessage");
+            MISSING_METHOD_MESSAGE = props.getProperty("scan.configure.missingMethodMessage");
             NO_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.noSuccessIdResponseMessage");
             EMPTY_SUCCESS_ID_RESPONSE_MESSAGE = props.getProperty("scan.configure.emptySuccessIdResponseMessage");
             CORRECT_ERROR_RESPONSE_MESSAGE = props.getProperty("scan.configure.correctErrorResponseMessage");

@@ -94,8 +94,8 @@ public class ResponseDeserializerTest {
     }
 
     @Test
-    public void parseMissingTypeMessage() {
-        fsmmr.emitMissingTypeResponseMessage();
+    public void parseMethodMessage() {
+        fsmmr.emitMissingMethodMessage();
         assertNull("Got result object from response without error and result", res);
     }
 

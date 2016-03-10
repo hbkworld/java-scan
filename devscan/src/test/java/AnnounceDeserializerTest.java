@@ -162,7 +162,7 @@ public class AnnounceDeserializerTest {
 
     @Test
     public void parseMissingTypeMessage() {
-        fsmmr.emitMissingTypeResponseMessage();
+        fsmmr.emitMissingMethodMessage();
         assertNull("Got Announce message without type", announce);
     }
 
