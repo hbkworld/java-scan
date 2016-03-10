@@ -83,6 +83,19 @@ public final class Announce extends JsonRpc implements Serializable {
         this.cookie = cookie;
     }
 
+    /**
+     * This method checks if another Announce object has the same
+     * communication path.
+     *
+     * @param other the Announce object to check against
+     *
+     * @return true if both Announces have the same communication path,
+     * false otherwise.
+     */
+    public boolean sameCommunicationPath(Announce other) {
+        return other.getPath().equals(path);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
