@@ -96,6 +96,16 @@ public final class Announce extends JsonRpc implements Serializable {
         return other.getPath().equals(path);
     }
 
+    /**
+     * Computes a unique ID representing the communication path of the
+     * Announce.
+     *
+     * @return an integer representing the communication path.
+     */
+    public int getCommunicationPathId() {
+        return path.hashCode();
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
