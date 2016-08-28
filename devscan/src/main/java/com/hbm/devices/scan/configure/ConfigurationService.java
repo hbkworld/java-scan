@@ -116,6 +116,9 @@ public class ConfigurationService implements Observer, Closeable {
             Thread.currentThread().interrupt();
         }
 
+        synchronized (awaitingResponses) {
+            awaitingResponses.clear();
+        }
         serializer.close();
     }
 
@@ -219,7 +222,9 @@ public class ConfigurationService implements Observer, Closeable {
         final ConfigurationRequest config = new ConfigurationRequest(configParams, queryID);
         final ConfigQuery configQuery = new ConfigQuery(config, callback, timeout);
 
-        awaitingResponses.put(queryID, configQuery);
+        synchronized (awaitingResponses) {
+            awaitingResponses.put(queryID, configQuery);
+        }
         final TimeoutTimerTask task = new TimeoutTimerTask(configQuery);
         executor.schedule(task, timeout, TimeUnit.MILLISECONDS);
 
@@ -228,20 +233,23 @@ public class ConfigurationService implements Observer, Closeable {
 
     private void handleCallbacks(Response response) {
         final String responseID = response.getId();
-        final ConfigQuery configQuery = awaitingResponses.get(responseID);
 
-        if (configQuery != null) {
-            final ErrorObject error = response.getError();
-            if (error == null) {
-                configQuery.getConfigCallback().onSuccess(response);
-            } else {
-                final String message = error.getMessage();
-                if (errorMessageNotValid(message)){
-                    return;
+        synchronized (awaitingResponses) {
+            final ConfigQuery configQuery = awaitingResponses.get(responseID);
+
+            if (configQuery != null) {
+                final ErrorObject error = response.getError();
+                if (error == null) {
+                    configQuery.getConfigCallback().onSuccess(response);
+                } else {
+                    final String message = error.getMessage();
+                    if (errorMessageNotValid(message)){
+                        return;
+                    }
+                    configQuery.getConfigCallback().onError(response);
                 }
-                configQuery.getConfigCallback().onError(response);
+                awaitingResponses.remove(responseID);
             }
-            awaitingResponses.remove(responseID);
         }
     }
 
