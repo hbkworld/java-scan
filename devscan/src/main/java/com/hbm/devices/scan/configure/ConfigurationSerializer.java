@@ -75,7 +75,7 @@ public final class ConfigurationSerializer implements Closeable {
     /**
      * Shuts down the underlying multicast sender.
      *
-     * This involves multicast leave IGMP messagesfor the configuration
+     * This also sends multicast leave IGMP messages for the configuration
      * address.
      */
     @Override
