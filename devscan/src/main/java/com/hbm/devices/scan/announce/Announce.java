@@ -75,7 +75,7 @@ public final class Announce extends JsonRpc implements Serializable {
      * This method can be used to bind some auxiliary data to an
      * Announce object.
      *
-     * Caution! This object will not serailized!
+     * Caution! This object will not serialized!
      *
      * @param cookie the auxiliary data to be set
      */
