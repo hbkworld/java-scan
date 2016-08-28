@@ -23,7 +23,8 @@ addons:
       name: HBM/java-scan
       description: Build submitted via Travis CI
     notification_email: stephan.gatzka@gmail.com
-    build_command: ./gradlew build
+    build_command_prepend: "./gradlew clean"
+    build_command: "./gradlew compileJava"
     branch_pattern: coverity_scan
 deploy:
   provider: releases
