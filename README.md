@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/HBM/java-scan.svg?branch=master)](https://travis-ci.org/HBM/java-scan)
 [![Coverity](https://scan.coverity.com/projects/5097/badge.svg)](https://scan.coverity.com/projects/5097)
-[![Coverage Status](https://coveralls.io/repos/HBM/java-scan/badge.svg?branch=master)](https://coveralls.io/r/HBM/java-scan?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/HBM/java-scan/badge.svg?branch=master)](https://coveralls.io/github/HBM/java-scan?branch=master)
 [ ![Download](https://api.bintray.com/packages/hbm/java/devscan/images/download.svg) ](https://bintray.com/hbm/java/devscan/_latestVersion)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hbm/devscan/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.hbm/devscan)
 
