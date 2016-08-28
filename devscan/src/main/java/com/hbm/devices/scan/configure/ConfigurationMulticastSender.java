@@ -59,7 +59,7 @@ public final class ConfigurationMulticastSender implements MulticastSender {
      * configuration messages to a device. 
      *
      * @param ifs A {@link Collection} of {@link NetworkInterface}s over
-     * which the multicast messages wild be send if {@link #sendMessage}
+     * which the multicast messages will be send if {@link #sendMessage}
      * is called.
      * 
      * @throws IOException if creating the underlying socket fails.
