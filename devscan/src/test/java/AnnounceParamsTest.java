@@ -76,6 +76,13 @@ public class AnnounceParamsTest {
     }
 
     @Test
+    public void parseNegativeExpiration() {
+        fsmmr.emitNegativeExpiration();
+        assertNotNull("Got no Announce object after message with negative expiration", announce);
+        assertEquals("negative expiration in announce does't lead to default expiration", announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
+    }
+
+    @Test
     public void parseMissingVersion() {
         fsmmr.emitMissingVersion();
         assertNull("Got Announce object after message without apiVersion", announce);

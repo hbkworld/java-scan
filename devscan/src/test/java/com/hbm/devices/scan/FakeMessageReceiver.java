@@ -52,6 +52,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String MESSAGE_ILLEGAL_IPV4;
     private static final String MESSAGE_ILLEGAL_IPV6;
     private static final String CORRECT_MESSAGE_NO_EXPIRE;
+    private static final String CORRECT_MESSAGE_NEGATIVE_EXPIRE;
     private static final String CORRECT_MESSAGE_SHORT_EXPIRE;
     private static final String CORRECT_MESSAGE_MANUAL;
     private static final String CORRECT_MESSAGE_ROUTER_SOLICIT;
@@ -130,6 +131,11 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     public void emitMissingExpiration() {
         setChanged();
         notifyObservers(CORRECT_MESSAGE_NO_EXPIRE);
+    }
+
+    public void emitNegativeExpiration() {
+        setChanged();
+        notifyObservers(CORRECT_MESSAGE_NEGATIVE_EXPIRE);
     }
 
     public void emitSingleCorrectMessageShortExpire() {
@@ -368,6 +374,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             MESSAGE_ILLEGAL_IPV4 = props.getProperty("scan.announce.illegalIPv4");
             MESSAGE_ILLEGAL_IPV6 = props.getProperty("scan.announce.illegalIPv6");
             CORRECT_MESSAGE_NO_EXPIRE = props.getProperty("scan.announce.correctMessageMissingExpire");
+            CORRECT_MESSAGE_NEGATIVE_EXPIRE = props.getProperty("scan.announce.correctMessageNegativeExpire");
             CORRECT_MESSAGE_SHORT_EXPIRE = props.getProperty("scan.announce.correctMessageShortExpire");
             CORRECT_MESSAGE_MANUAL = props.getProperty("scan.announce.correctMessageManual");
             CORRECT_MESSAGE_ROUTER_SOLICIT = props.getProperty("scan.announce.correctMessageRouterSolicitation");

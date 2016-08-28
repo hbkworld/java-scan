@@ -113,7 +113,7 @@ public final class AnnounceParams implements Serializable {
     }
 
     public int getExpiration() {
-        if (expiration == 0) {
+        if (expiration <= 0) {
             return ScanConstants.DEFAULT_EXPIRATION_S;
         }
         return expiration;
