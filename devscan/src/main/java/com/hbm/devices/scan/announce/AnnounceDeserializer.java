@@ -88,6 +88,9 @@ public final class AnnounceDeserializer extends Observable implements Observer {
                 announce = (Announce)gson.fromJson(message, JsonRpc.class);
                 if (announce != null) {
                     announce.identifyCommunicationPath();
+                    if (announce.getParams().getExpiration() < 0) {
+                        return;
+                    }
                     announceCache.put(message, announce);
                     setChanged();
                     notifyObservers(announce);
