@@ -8,8 +8,6 @@ env:
   - secure: txucPw09tA8laIbppuF8q63G7E88fandOSsAZrsEWhSA4HpzP+FizIKsiokmJr/uA5zDitWMSkKTHYbz/wK8zgt0Hyb5w+krXG0gXSqJolMdOPE2/tm4pS0tAwbJFMxHCtxfvMeA97LIWvwUAcQ336BKWdoT+xeawGBSh/EsGpM=
   - secure: o7pzDMSC65WNuutOU3xlKnSa38r1Gmg+ayw/7g32K9tnhJFut2jGOXcD4D8EbpuVUPJDhw/o6JK2XJD3gO/Xaxb2A/Zoa8TMVyozbQPhKJXE3IPQcxDebOLrQJ04NaSA8CKsj4WQ9vQ7/xG9YCC/bxbAidNwuSMuNHLLR3bI7Ig=
 jdk:
-- oraclejdk7
-- openjdk7
 - oraclejdk8
 after_script:
 - cat /home/travis/build/HBM/java-scan/cov-int/build-log.txt
