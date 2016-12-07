@@ -33,7 +33,7 @@ import java.io.Serializable;
 import com.hbm.devices.scan.JsonRpc;
 
 /**
- * This class hold all information required to implement the HBM network
+ * This class holds all information required to implement the HBM network
  * discovery and configuration protocol.
  */
 public final class Announce extends JsonRpc implements Serializable {
@@ -51,7 +51,7 @@ public final class Announce extends JsonRpc implements Serializable {
     }
     
     /**
-     * Get the parameter of an announce message.
+     * Get the parameters of an announce message.
      *
      * @return the parameters. It is guaranteed by the {@link
      * AnnounceDeserializer} that only valid announces are forwarded
