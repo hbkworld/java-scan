@@ -178,10 +178,10 @@ public final class DeviceMonitor extends Observable implements Observer, Closeab
         public Void call() throws Exception {
             synchronized (deviceMap) {
                 deviceMap.remove(announce.getPath());
+                setChanged();
+                notifyObservers(new LostDeviceEvent(announce));
+                return null;
             }
-            setChanged();
-            notifyObservers(new LostDeviceEvent(announce));
-            return null;
         }
 
         Announce getAnnounce() {
