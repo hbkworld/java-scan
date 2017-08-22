@@ -124,7 +124,7 @@ class EventLogger {
         Announce announce;
         if (event instanceof NewDeviceEvent) {
             announce = ((NewDeviceEvent)event).getAnnounce();
-            final List<InetAddress> connectAddress = connectionFinder.getConnectableAddresses(announce);
+            final List<InetAddress> connectAddress = connectionFinder.getSameNetworkAddresses(announce);
             logBuilder.append("New Device:\n");
             if (connectAddress != null) {
                 logBuilder.append("Connectable: ").append(connectAddress).append('\n');
