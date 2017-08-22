@@ -56,8 +56,8 @@ public final class ServicetypeMatch implements Matcher {
     public boolean match(Announce announce) {
         final Iterable<ServiceEntry> services = announce.getParams().getServices();
         for (final ServiceEntry entry : services) {
-            for (int i = 0; i < serviceTypes.length; i++) {
-                if (serviceTypes[i].equals(entry.getType())) {
+            for (String serviceType : serviceTypes) {
+                if (serviceType.equals(entry.getType())) {
                     return true;
                 }
             }
