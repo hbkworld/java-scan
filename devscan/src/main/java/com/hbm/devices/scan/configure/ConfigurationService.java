@@ -143,7 +143,8 @@ public class ConfigurationService implements Observer, Closeable {
      * either the onSucess or onError callback function of the
      * corresponding query object is called.
      *
-     * @param arg the received response
+     * @param observable the observable object.
+     * @param arg the received response.
      */
     @Override
     public void update(Observable observable, Object arg) {
