@@ -40,10 +40,15 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 import com.hbm.devices.scan.JsonRpc;
 import com.hbm.devices.scan.ScanConstants;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * This class gets JSON announce messages, parses them and notifies {@link Announce}
@@ -70,6 +75,9 @@ public final class AnnounceDeserializer extends Observable implements Observer {
         final GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(JsonRpc.class, new JsonRpcDeserializer());
         builder.registerTypeAdapter(AnnounceParams.class, new AnnounceParamsDeserializer());
+        Type serviceListType = new TypeToken<List<ServiceEntry>>() {}.getType();
+        builder.registerTypeAdapter(serviceListType, new ServiceDeserializer());
+
         gson = builder.create();
 
         this.announceCache = new AnnounceCache();
@@ -140,14 +148,29 @@ public final class AnnounceDeserializer extends Observable implements Observer {
         }
     }
 
-    private static final class AnnounceParamsDeserializer implements JsonDeserializer<AnnounceParams> {
+    private static final class ServiceDeserializer implements JsonDeserializer<List<ServiceEntry>> {
 
-        private final Gson gson;
+        @Override
+        public List<ServiceEntry> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            List<ServiceEntry> vals = null;
+            if (json.isJsonArray()) {
+                vals = new ArrayList<>();
+                for (JsonElement e : json.getAsJsonArray()) {
+                    vals.add((ServiceEntry) context.deserialize(e, ServiceEntry.class));
+                }
+            }
 
-        AnnounceParamsDeserializer() {
-            // This constructor is only use by the outer class.
-            gson = new Gson();
+            return vals;
         }
+    }
+    
+    private static final class AnnounceParamsDeserializer implements JsonDeserializer<AnnounceParams> {
+        private Type serviceListType;
+        
+        AnnounceParamsDeserializer() {
+         serviceListType = new TypeToken<List<ServiceEntry>>() {}.getType();
+        }
+        
         @Override
         public AnnounceParams deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
             AnnounceParams params = null;
@@ -155,7 +178,22 @@ public final class AnnounceDeserializer extends Observable implements Observer {
             if (jsonObject.has("apiVersion")) {
                 final String version = jsonObject.get("apiVersion").getAsString();
                 if ("1.0".compareTo(version) == 0) {
-                    params = gson.fromJson(json, AnnounceParams.class);
+                    params = new AnnounceParams();
+                    params.apiVersion = version;
+                   
+                    Device device = context.deserialize(jsonObject.get("device"), Device.class);
+                    params.device = device;
+                    NetSettings netSettings = context.deserialize(jsonObject.get("netSettings"), NetSettings.class);
+                    params.netSettings = netSettings;
+                    Router router = context.deserialize(jsonObject.get("router"), Router.class);
+                    params.router = router;
+                    JsonElement e = jsonObject.get("services");
+                    List<ServiceEntry> services = context.deserialize(e, serviceListType);
+                    params.services = services;
+                    e = jsonObject.get("expiration");
+                    if (e != null) {
+                        params.expiration = e.getAsInt();
+                    }
                 } else {
                     if (LOGGER.isLoggable(Level.INFO)) {
                         LOGGER.log(Level.INFO, "Can't handle apiVersion: {0}\n{1}", new Object[]{version, jsonObject});
