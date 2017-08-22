@@ -55,7 +55,7 @@ public final class ConnectionFinder {
      *
      * @param interfaces A {@link Collection} of {@link
      * NetworkInterface}s used to check {@link Announce} objects against
-     * in {@link #getConnectableAddresses(Announce)}.
+     * in {@link #getSameNetworkAddresses(Announce)}.
      *
      */
     public ConnectionFinder(Collection<NetworkInterface> interfaces) {
@@ -102,7 +102,7 @@ public final class ConnectionFinder {
      * @return An {@link InetAddress} if a connectable IP address was
      * found, null otherwise.
      */
-    public List<InetAddress> getConnectableAddresses(Announce announce) {
+    public List<InetAddress> getSameNetworkAddresses(Announce announce) {
         final Iterable<IPEntry> announceAddresses = announce.getParams().getNetSettings()
             .getInterface().getIPList();
         final List<InetAddress> list = new LinkedList<>();
