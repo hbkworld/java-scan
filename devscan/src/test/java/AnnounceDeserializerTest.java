@@ -45,8 +45,7 @@ import com.hbm.devices.scan.announce.AnnounceDeserializer;
 import com.hbm.devices.scan.announce.Announce;
 import com.hbm.devices.scan.announce.DefaultGateway;
 import com.hbm.devices.scan.announce.Device;
-import com.hbm.devices.scan.announce.IPv4Entry;
-import com.hbm.devices.scan.announce.IPv6Entry;
+import com.hbm.devices.scan.announce.IPEntry;
 import com.hbm.devices.scan.announce.Interface;
 import com.hbm.devices.scan.announce.NetSettings;
 import com.hbm.devices.scan.announce.Router;
@@ -295,26 +294,20 @@ public class AnnounceDeserializerTest {
         assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
         assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
         assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
-        Iterable<IPv4Entry> checkIPv4Entries = checkIface.getIPv4();
-        IPv4Entry checkIPv4 = checkIPv4Entries.iterator().next();
+        
+        Iterable<IPEntry> checkIPEntries = checkIface.getIPList();
+        IPEntry entry = findIpInList(checkIPEntries, ipv4Address);
+        assertNotNull("IPv4 address does not match", entry);
         try {
-            assertEquals("IPv4 address does not match", checkIPv4.getAddress(), InetAddress.getByName(ipv4Address));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(AnnounceDeserializerTest.class.getName()).log(Level.SEVERE, "Could not convert IPv4 address", ex);
-        }
-        try {
-            assertEquals("IPv4 prefix does not match", checkIPv4.getPrefix(), calculatePrefix(InetAddress.getByName(ipv4Mask)));
+            assertEquals("IPv4 prefix does not match", entry.getPrefix(), calculatePrefix(InetAddress.getByName(ipv4Mask)));
         } catch (UnknownHostException ex) {
             Logger.getLogger(AnnounceDeserializerTest.class.getName()).log(Level.SEVERE, "Could not convert netmask", ex);
         }
-        Iterable<IPv6Entry> checkIPv6Entries = checkIface.getIPv6();
-        IPv6Entry checkIPv6 = checkIPv6Entries.iterator().next();
-        try {
-            assertEquals("IPv6 address does not match", checkIPv6.getAddress(), InetAddress.getByName(ipv6Address));
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(AnnounceDeserializerTest.class.getName()).log(Level.SEVERE, "Could not convert IPv6 address", ex);
-        }
-        assertEquals("IPv6 prefix does not match", checkIPv6.getPrefix(), ipv6Prefix);
+        
+        entry = findIpInList(checkIPEntries, ipv6Address);
+        assertNotNull("IPv6 address does not match", entry);
+
+        assertEquals("IPv6 prefix does not match", entry.getPrefix(), ipv6Prefix);
         
         Router checkRouter = checkAnnounceParams.getRouter();
         assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
@@ -329,6 +322,21 @@ public class AnnounceDeserializerTest {
             } else {
                 assertEquals("streaming port does not match", port, streamPort);
             }
+        }
+    }
+    
+    private static IPEntry findIpInList(Iterable<IPEntry> list, String ip) {
+        try {
+            InetAddress address = InetAddress.getByName(ip);
+            for (IPEntry entry : list) {
+                if (entry.getAddress().equals(address)) {
+                    return entry;
+                }
+            }
+            
+            return null;
+        } catch (UnknownHostException ex) {
+            return null;
         }
     }
     

@@ -41,13 +41,12 @@ import java.util.List;
  */
 public final class Interface implements Serializable {
 
+    private static final long serialVersionUID = 8110401485735664487L;
+
     String name;
     String type;
     String description;
-    List<IPv4Entry> ipv4;
-    List<IPv6Entry> ipv6;
-
-    private static final long serialVersionUID = -7559269992133760117L;
+    List<IPEntry> ipList;
 
     Interface() {
     }
@@ -92,29 +91,14 @@ public final class Interface implements Serializable {
      * @return
      *      an {@link java.util.Collections#unmodifiableList(List list) unmodifiable List}
      *      containing all IPv4 addresses of the interface
-     *      with their netmask. If no IPv4 interface was announced,
+     *      with their netmask. If no IP address was announced,
      *      an empty {@link java.util.List} is returned.
      */
-    public List<IPv4Entry> getIPv4() {
-        if (ipv4 == null) {
-            return new LinkedList<>();
+    public List<IPEntry> getIPList() {
+        if (ipList == null) {
+            return Collections.unmodifiableList(new LinkedList<IPEntry>());
         } else {
-            return Collections.unmodifiableList(ipv4);
-        }
-    }
-
-    /**
-     * @return
-     *      an {@link java.util.Collections#unmodifiableList(List list) unmodifiable List}
-     *      containing all IPv6 addresses of the interface
-     *      with their network prefix. If no IPv6 interface was announced,
-     *      an empty {@link java.util.List} is returned.
-     */
-    public List<IPv6Entry> getIPv6() {
-        if (ipv6 == null) {
-            return new LinkedList<>();
-        } else {
-            return Collections.unmodifiableList(ipv6);
+            return Collections.unmodifiableList(ipList);
         }
     }
 }

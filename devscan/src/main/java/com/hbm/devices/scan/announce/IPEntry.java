@@ -35,14 +35,15 @@ import java.net.InetAddress;
 /**
  * A class holding an IPv4 address and IPv4 network mask.
  */
-public final class IPv4Entry implements Serializable {
+public final class IPEntry implements Serializable {
+
+    private static final long serialVersionUID = 9130510981751066678L;
     
     InetAddress address;
     int prefix;
 
-    private static final long serialVersionUID = -582658347189793351L;
 
-    IPv4Entry() {
+    IPEntry() {
     }
 
     /**
