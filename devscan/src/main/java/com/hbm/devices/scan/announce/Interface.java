@@ -41,15 +41,15 @@ import java.util.List;
  */
 public final class Interface implements Serializable {
 
-    private String name;
-    private String type;
-    private String description;
-    private List<IPv4Entry> ipv4;
-    private List<IPv6Entry> ipv6;
+    String name;
+    String type;
+    String description;
+    List<IPv4Entry> ipv4;
+    List<IPv6Entry> ipv6;
 
     private static final long serialVersionUID = -7559269992133760117L;
 
-    private Interface() {
+    Interface() {
     }
 
     /**

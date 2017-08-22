@@ -180,9 +180,9 @@ class EventLogger {
         if (ipv4 != null) {
             for (final IPv4Entry entry : ipv4) {
                 logBuilder.append("    ")
-                    .append(entry.getAddress())
+                    .append(entry.getAddress().getHostAddress())
                     .append('/')
-                    .append(entry.getNetmask())
+                    .append(entry.getPrefix())
                     .append('\n');
             }
         }

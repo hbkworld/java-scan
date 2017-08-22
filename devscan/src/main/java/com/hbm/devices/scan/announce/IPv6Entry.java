@@ -29,25 +29,26 @@
 package com.hbm.devices.scan.announce;
 
 import java.io.Serializable;
+import java.net.InetAddress;
 
 /**
  * A class holding the IPv6 address and IPv6 prefix.
  */
 public final class IPv6Entry implements Serializable {
 
-    private String address;
-    private int prefix;
+    InetAddress address;
+    int prefix;
 
     private static final long serialVersionUID = 1670054764197893620L;
 
-    private IPv6Entry() {
+    IPv6Entry() {
     }
 
     /**
      * @return the IPv6 address of an interface or {@code null} if not
      * announced.
      */
-    public String getAddress() {
+    public InetAddress getAddress() {
         return address;
     }
 

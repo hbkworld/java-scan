@@ -133,23 +133,6 @@ public class IPv4ConnectionFinderTest {
     }
 
     @Test
-    public void illegalIpv4AddressTest() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
-        try {
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("10.1.2.3"), 8));
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("172.19.1.2"), 16));
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("192.168.4.5"), 24));
-            IPv4ConnectionFinder finder = new IPv4ConnectionFinder(list);
-
-            fsmmr.emitIllegalIpv4();
-            assertNotNull("No Announce object after correct message", announce);
-            assertTrue("Device connectable", finder.getConnectableAddresses(announce).isEmpty());
-        } catch (UnknownHostException e) {
-            fail("name resolution failed");
-        }
-    }
-
-    @Test
     public void noAddressesInList() {
         LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
         IPv4ConnectionFinder finder = new IPv4ConnectionFinder(list);
