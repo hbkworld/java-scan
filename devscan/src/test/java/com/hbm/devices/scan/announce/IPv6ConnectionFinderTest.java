@@ -1,9 +1,7 @@
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -18,8 +16,6 @@ import java.util.Observer;
 import java.util.Observable;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.announce.Announce;
-import com.hbm.devices.scan.announce.AnnounceDeserializer;
 
 public class IPv6ConnectionFinderTest {
 
@@ -33,6 +29,7 @@ public class IPv6ConnectionFinderTest {
         AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
+            @Override
             public void update(Observable o, Object arg) {
                 if (arg instanceof Announce) {
                     announce = (Announce) arg;
@@ -100,7 +97,7 @@ public class IPv6ConnectionFinderTest {
 
     @Test
     public void findIPAddressInList() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         try {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
@@ -118,7 +115,7 @@ public class IPv6ConnectionFinderTest {
  
     @Test
     public void noIpv6AddressInAnnounce() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         try {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
@@ -136,7 +133,7 @@ public class IPv6ConnectionFinderTest {
 
     @Test
     public void ipv4InIPv6AddressTest() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         try {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
@@ -153,7 +150,7 @@ public class IPv6ConnectionFinderTest {
 
     @Test
     public void noAddressesInList() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
 
         fsmmr.emitSingleCorrectMessage();

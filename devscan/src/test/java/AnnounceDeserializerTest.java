@@ -27,10 +27,7 @@
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -73,6 +70,7 @@ public class AnnounceDeserializerTest {
         AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
+            @Override
             public void update(Observable o, Object arg) {
                 if (arg instanceof Announce) {
                     announce = (Announce) arg;
