@@ -45,16 +45,16 @@ import com.hbm.devices.scan.ScanConstants;
  */
 public final class AnnounceParams implements Serializable {
 
-    private String apiVersion;
-    private Device device;
-    private NetSettings netSettings;
-    private Router router;
-    private List<ServiceEntry> services;
-    private int expiration;
+    String apiVersion;
+    Device device;
+    NetSettings netSettings;
+    Router router;
+    List<ServiceEntry> services;
+    int expiration;
 
     private static final long serialVersionUID = 2532013264163413436L;
 
-    private AnnounceParams() {
+    AnnounceParams() {
     }
 
     /**
