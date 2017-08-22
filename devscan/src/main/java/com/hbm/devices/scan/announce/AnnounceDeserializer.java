@@ -46,6 +46,7 @@ import com.google.gson.reflect.TypeToken;
 
 import com.hbm.devices.scan.JsonRpc;
 import com.hbm.devices.scan.ScanConstants;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -77,7 +78,10 @@ public final class AnnounceDeserializer extends Observable implements Observer {
         builder.registerTypeAdapter(AnnounceParams.class, new AnnounceParamsDeserializer());
         Type serviceListType = new TypeToken<List<ServiceEntry>>() {}.getType();
         builder.registerTypeAdapter(serviceListType, new ServiceDeserializer());
-
+        builder.registerTypeAdapter(Interface.class, new InterfaceDeserializer());
+        
+      //  builder.registerTypeAdapter(IPv4Entry.class, new IPv4Deserializer());
+        
         gson = builder.create();
 
         this.announceCache = new AnnounceCache();
@@ -147,7 +151,86 @@ public final class AnnounceDeserializer extends Observable implements Observer {
             return rpcObject;
         }
     }
+ 
+    private static final class InterfaceDeserializer implements JsonDeserializer<Interface> {
 
+        @Override
+        public Interface deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            final JsonObject jsonObject = json.getAsJsonObject();
+
+            JsonElement name = jsonObject.get("name");
+            if (name != null) {
+                String interfaceName = name.getAsString();
+                if (interfaceName != null) {
+                    Interface iface = new Interface();
+                    iface.name = interfaceName;
+                    JsonElement description = jsonObject.get("description");
+                    if (description != null) {
+                        iface.description = description.getAsString();
+                    }
+                    
+                    JsonElement type = jsonObject.get("type");
+                    if (type != null) {
+                        iface.type = type.getAsString();
+                    }
+                    
+                    LinkedList<IPv4Entry> ipv4List = new LinkedList<>();
+                    iface.ipv4 = ipv4List;
+                    JsonElement ipv4 = jsonObject.get("ipv4");
+                    if (ipv4 != null) {
+                        for (JsonElement e : ipv4.getAsJsonArray()) {
+                            JsonElement address = e.getAsJsonObject().get("address");
+                            JsonElement netMask = e.getAsJsonObject().get("netmask");
+                            if ((address != null) && (netMask != null)) {
+                                InetAddress value = context.deserialize(address, InetAddress.class);
+                                InetAddress mask = context.deserialize(netMask, InetAddress.class);
+                                if ((value != null) && (mask != null)) {
+                                    IPv4Entry entry = new IPv4Entry();
+                                    entry.address = value;
+                                    entry.prefix = calculatePrefix(mask);
+                                    ipv4List.add(entry);
+                                }
+                            }
+                        }
+                    }
+                    
+                    LinkedList<IPv6Entry> ipv6List = new LinkedList<>();
+                    iface.ipv6 = ipv6List;
+                    JsonElement ipv6 = jsonObject.get("ipv6");
+                    if (ipv6 != null) {
+                        for (JsonElement e : ipv6.getAsJsonArray()) {
+                            JsonElement address = e.getAsJsonObject().get("address");
+                            JsonElement prefix = e.getAsJsonObject().get("prefix");
+                            if ((address != null) && (prefix != null)) {
+                                InetAddress value = context.deserialize(address, InetAddress.class);
+                                if (value != null) {
+                                    IPv6Entry entry = new IPv6Entry();
+                                    entry.address = value;
+                                    entry.prefix = prefix.getAsInt();
+                                    ipv6List.add(entry);
+                                }
+                            }
+                        }
+                    }
+                    
+                    return iface;
+                }
+            }
+
+            return null;
+        }
+        
+        private static int calculatePrefix(InetAddress announceNetmask) {
+            final byte[] address = announceNetmask.getAddress();
+            final int length = address.length;
+            int prefix = 0;
+            for (int i = 0; i < length; i++) {
+                prefix += Integer.bitCount(address[i] & 0xff);
+            }
+            return prefix;
+        }
+    }
+    
     private static final class ServiceDeserializer implements JsonDeserializer<List<ServiceEntry>> {
 
         @Override

@@ -67,25 +67,17 @@ final class IPv4ConnectionFinder {
                 .getInterface().getIPv4();
 
         for (final Object ipv4Entry : announceAddresses) {
-            try {
-                final InetAddress announceAddress = InetAddress.getByName(((IPv4Entry) ipv4Entry)
-                        .getAddress());
-                if (!(announceAddress instanceof Inet4Address)) {
-                    continue;
-                }
-                final InetAddress announceNetmask = InetAddress.getByName(((IPv4Entry) ipv4Entry).getNetmask());
-                final int announcePrefix = calculatePrefix(announceNetmask);
-
-                final InetAddress ifaceAddress = interfaceAddress.getAddress();
-                final int ifaceAddressPrefix = interfaceAddress.getPrefix();
-                if (sameNet(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
-                    return announceAddress;
-                }
-            } catch (UnknownHostException e) {
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address! Announce: " +
-                        announce.getJSONString(), e);
-                }
+            IPv4Entry entry = (IPv4Entry) ipv4Entry;
+            final InetAddress announceAddress = entry.getAddress();
+            if (!(announceAddress instanceof Inet4Address)) {
+                continue;
+            }
+                
+            final int announcePrefix = entry.getPrefix();
+            final InetAddress ifaceAddress = interfaceAddress.getAddress();
+            final int ifaceAddressPrefix = interfaceAddress.getPrefix();
+            if (sameNet(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
+                return announceAddress;
             }
         }
 

@@ -152,23 +152,6 @@ public class IPv6ConnectionFinderTest {
     }
 
     @Test
-    public void illegalIpv6AddressTest() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
-        try {
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
-            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
-
-            fsmmr.emitIllegalIpv6();
-            assertNotNull("No Announce object after correct message", announce);
-            assertTrue("Device connectable", finder.getConnectableAddresses(announce).isEmpty());
-        } catch (UnknownHostException e) {
-            fail("name resolution failed");
-        }
-    }
-
-    @Test
     public void noAddressesInList() {
         LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
         IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);

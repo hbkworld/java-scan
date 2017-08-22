@@ -66,20 +66,13 @@ final class IPv6ConnectionFinder {
                 .getInterface().getIPv6();
 
         for (final IPv6Entry address : announceAddresses) {
-            try {
-                final InetAddress announceAddress = InetAddress.getByName(address.getAddress());
-                if (!(announceAddress instanceof Inet6Address)) {
-                    continue;
-                }
-                if (sameNet(announceAddress, address.getPrefix(),
-                        interfaceAddress.getAddress(), interfaceAddress.getPrefix())) {
-                    return announceAddress;
-                }
-            } catch (UnknownHostException e) {
-                if (LOGGER.isLoggable(Level.INFO)) {
-                    LOGGER.log(Level.INFO, "Can't retrieve InetAddress from IP address! Announce: " +
-                        announce.getJSONString(), e);
-                }
+            final InetAddress announceAddress = address.getAddress();
+            if (!(announceAddress instanceof Inet6Address)) {
+                continue;
+            }
+            if (sameNet(announceAddress, address.getPrefix(),
+                    interfaceAddress.getAddress(), interfaceAddress.getPrefix())) {
+                return announceAddress;
             }
         }
         return null;
