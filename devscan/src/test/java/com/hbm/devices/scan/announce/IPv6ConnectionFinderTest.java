@@ -1,9 +1,7 @@
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -18,8 +16,6 @@ import java.util.Observer;
 import java.util.Observable;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.announce.Announce;
-import com.hbm.devices.scan.announce.AnnounceDeserializer;
 
 public class IPv6ConnectionFinderTest {
 
@@ -33,6 +29,7 @@ public class IPv6ConnectionFinderTest {
         AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
+            @Override
             public void update(Observable o, Object arg) {
                 if (arg instanceof Announce) {
                     announce = (Announce) arg;
@@ -49,7 +46,7 @@ public class IPv6ConnectionFinderTest {
             InetAddress interfaceAddress = InetAddress.getByName("fe80::333:4dff:feaa:4c1f");
             int interfacePrefix = 64;
 
-            assertTrue("Addresses should be in the same net", IPv6ConnectionFinder.sameNet(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
+            assertTrue("Addresses should be in the same net", ConnectionFinder.sameIPv6Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -63,7 +60,7 @@ public class IPv6ConnectionFinderTest {
             InetAddress interfaceAddress = InetAddress.getByName("fe80::333:4dff:feaa:4c1f");
             int interfacePrefix = 57;
 
-            assertFalse("Addresses should not be in the same net", IPv6ConnectionFinder.sameNet(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
+            assertFalse("Addresses should not be in the same net", ConnectionFinder.sameIPv6Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -77,7 +74,7 @@ public class IPv6ConnectionFinderTest {
             InetAddress interfaceAddress = InetAddress.getByName("fe80::333:4dff:feaa:4c1f");
             int interfacePrefix = 64;
 
-            assertFalse("Addresses should not be in the same net", IPv6ConnectionFinder.sameNet(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
+            assertFalse("Addresses should not be in the same net", ConnectionFinder.sameIPv6Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -91,8 +88,8 @@ public class IPv6ConnectionFinderTest {
             InetAddress ipv6 = InetAddress.getByName("fe80::333:4dff:feaa:4c1f");
             int interfacePrefix = 64;
 
-            assertFalse("IPv4 and IPv6 addresses can't be in the same IP net", IPv6ConnectionFinder.sameNet(ipv4, announcePrefix, ipv6, interfacePrefix));
-            assertFalse("IPv4 and IPv6 addresses can't be in the same IP net", IPv6ConnectionFinder.sameNet(ipv6, announcePrefix, ipv4, interfacePrefix));
+            assertFalse("IPv4 and IPv6 addresses can't be in the same IP net", ConnectionFinder.sameIPv6Net(ipv4, announcePrefix, ipv6, interfacePrefix));
+            assertFalse("IPv4 and IPv6 addresses can't be in the same IP net", ConnectionFinder.sameIPv6Net(ipv6, announcePrefix, ipv4, interfacePrefix));
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -100,16 +97,16 @@ public class IPv6ConnectionFinderTest {
 
     @Test
     public void findIPAddressInList() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         try {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
-            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+            ConnectionFinder finder = new ConnectionFinder(new LinkedList<NetworkInterfaceAddress>(), list);
 
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
-            List<InetAddress> addresses = finder.getConnectableAddresses(announce);
+            List<InetAddress> addresses = finder.getSameNetworkAddresses(announce);
             assertFalse("Device not connectable", addresses.isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
@@ -118,16 +115,16 @@ public class IPv6ConnectionFinderTest {
  
     @Test
     public void noIpv6AddressInAnnounce() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         try {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
-            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+            ConnectionFinder finder = new ConnectionFinder(new LinkedList<NetworkInterfaceAddress>(), list);
 
             fsmmr.emitSingleCorrectMessageNoIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            List<InetAddress> addresses = finder.getConnectableAddresses(announce);
+            List<InetAddress> addresses = finder.getSameNetworkAddresses(announce);
             assertTrue("Device connectable", addresses.isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
@@ -136,33 +133,16 @@ public class IPv6ConnectionFinderTest {
 
     @Test
     public void ipv4InIPv6AddressTest() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
         try {
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
             list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
-            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+            ConnectionFinder finder = new ConnectionFinder(new LinkedList<NetworkInterfaceAddress>(), list);
 
             fsmmr.emitSingleMessageIpv4InIpv6();
             assertNotNull("No Announce object after correct message", announce);
-            assertTrue("Device connectable", finder.getConnectableAddresses(announce).isEmpty());
-        } catch (UnknownHostException e) {
-            fail("name resolution failed");
-        }
-    }
-
-    @Test
-    public void illegalIpv6AddressTest() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
-        try {
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fe80::222:4dff:feaa:4c1e"), 64));
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("fdfb:84a3:9d2d:0:d890:1567:3af6:974e"), 64));
-            list.push(new NetworkInterfaceAddress(InetAddress.getByName("2a01:238:20a:202:6660:0000:0198:0033"), 48));
-            IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
-
-            fsmmr.emitIllegalIpv6();
-            assertNotNull("No Announce object after correct message", announce);
-            assertTrue("Device connectable", finder.getConnectableAddresses(announce).isEmpty());
+            assertTrue("Device connectable", finder.getSameNetworkAddresses(announce).isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -170,11 +150,11 @@ public class IPv6ConnectionFinderTest {
 
     @Test
     public void noAddressesInList() {
-        LinkedList<NetworkInterfaceAddress> list = new LinkedList<NetworkInterfaceAddress>();
-        IPv6ConnectionFinder finder = new IPv6ConnectionFinder(list);
+        LinkedList<NetworkInterfaceAddress> list = new LinkedList<>();
+        ConnectionFinder finder = new ConnectionFinder(new LinkedList<NetworkInterfaceAddress>(), list);
 
         fsmmr.emitSingleCorrectMessage();
         assertNotNull("No Announce object after correct message", announce);
-        assertTrue("Device not connectable", finder.getConnectableAddresses(announce).isEmpty());
+        assertTrue("Device not connectable", finder.getSameNetworkAddresses(announce).isEmpty());
     }
 }

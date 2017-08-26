@@ -30,25 +30,27 @@ package com.hbm.devices.scan.announce;
 
 
 import java.io.Serializable;
+import java.net.InetAddress;
 
 /**
  * A class holding an IPv4 address and IPv4 network mask.
  */
-public final class IPv4Entry implements Serializable {
+public final class IPEntry implements Serializable {
+
+    private static final long serialVersionUID = 9130510981751066678L;
     
-    private String address;
-    private String netmask;
+    InetAddress address;
+    int prefix;
 
-    private static final long serialVersionUID = -582658347189793351L;
 
-    private IPv4Entry() {
+    IPEntry() {
     }
 
     /**
      * @return the IPv4 address of an interface or {@code null} if not
      * announced.
      */
-    public String getAddress() {
+    public InetAddress getAddress() {
         return address;
     }
 
@@ -56,7 +58,7 @@ public final class IPv4Entry implements Serializable {
      * @return the IPv4 netmask of an interface or {@code null} if not
      * announced.
      */
-    public String getNetmask() {
-        return netmask;
+    public int getPrefix() {
+        return prefix;
     }
 }

@@ -48,7 +48,7 @@ import com.hbm.devices.scan.ScanInterfaces;
 import com.hbm.devices.scan.announce.Announce;
 import com.hbm.devices.scan.announce.AnnounceParams;
 import com.hbm.devices.scan.announce.Device;
-import com.hbm.devices.scan.announce.IPv4Entry;
+import com.hbm.devices.scan.announce.IPEntry;
 import com.hbm.devices.scan.announce.Interface;
 import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
@@ -259,7 +259,7 @@ class ConfigDialog extends JDialog implements ActionListener, ConfigurationCallb
     public void openDialog(String uuid, Interface interfaces) {
         this.uuid = uuid;
         txtInterface.setText(interfaces.getName());
-        String ip = interfaces.getIPv4().get(0).getAddress();
+        String ip = interfaces.getIPList().get(0).getAddress().getHostAddress();
         setTitle("Configure device "+uuid);
         txtCurrentIp.setText(ip);
         buttons.clearSelection();
@@ -378,8 +378,8 @@ public class ReceiverFrame implements Observer {
                     table.setRowSelectionInterval(row, row);
                     ipmenu.removeAll();
                     int tablerow = table.convertRowIndexToModel(table.getSelectedRow());
-                    for(IPv4Entry entry : getInterfaceFromTable(tablerow).getIPv4()) {
-                        final String ip = entry.getAddress();
+                    for(IPEntry entry : getInterfaceFromTable(tablerow).getIPList()) {
+                        final String ip = entry.getAddress().getHostAddress();
                         JMenuItem menuitem = new JMenuItem(ip);
                         menuitem.addActionListener(new ActionListener() {
                             @Override

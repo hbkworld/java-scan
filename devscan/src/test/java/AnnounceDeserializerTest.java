@@ -27,10 +27,7 @@
  */
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -43,18 +40,22 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
-import com.hbm.devices.scan.announce.Announce;
 import com.hbm.devices.scan.announce.AnnounceParams;
 import com.hbm.devices.scan.announce.AnnounceDeserializer;
 import com.hbm.devices.scan.announce.Announce;
 import com.hbm.devices.scan.announce.DefaultGateway;
 import com.hbm.devices.scan.announce.Device;
-import com.hbm.devices.scan.announce.IPv4Entry;
-import com.hbm.devices.scan.announce.IPv6Entry;
+import com.hbm.devices.scan.announce.IPEntry;
 import com.hbm.devices.scan.announce.Interface;
 import com.hbm.devices.scan.announce.NetSettings;
 import com.hbm.devices.scan.announce.Router;
 import com.hbm.devices.scan.announce.ServiceEntry;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class AnnounceDeserializerTest {
 
@@ -68,6 +69,7 @@ public class AnnounceDeserializerTest {
         AnnounceDeserializer parser = new AnnounceDeserializer();
         fsmmr.addObserver(parser);
         parser.addObserver(new Observer() {
+            @Override
             public void update(Observable o, Object arg) {
                 if (arg instanceof Announce) {
                     announce = (Announce) arg;
@@ -165,7 +167,20 @@ public class AnnounceDeserializerTest {
         fsmmr.emitMissingMethodMessage();
         assertNull("Got Announce message without type", announce);
     }
+    
+        @Test
+    public void illegalIpv4AddressTest() {
+        fsmmr.emitIllegalIpv4();
+        assertNull("Got Announce object for illegal IPv4 address", announce);
+    }
 
+    
+    @Test
+    public void illegalIpv6AddressTest() {
+        fsmmr.emitIllegalIpv6();
+        assertNull("Got Announce object for illegal IPv6 address", announce);
+    }
+    
     @Test
     public void testGetters() {
         final String apiVersionString = "1.0";
@@ -279,14 +294,20 @@ public class AnnounceDeserializerTest {
         assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
         assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
         assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
-        Iterable<IPv4Entry> checkIPv4Entries = checkIface.getIPv4();
-        IPv4Entry checkIPv4 = checkIPv4Entries.iterator().next();
-        assertEquals("IPv4 address does not match", checkIPv4.getAddress(), ipv4Address);
-        assertEquals("IPv4 netmask does not match", checkIPv4.getNetmask(), ipv4Mask);
-        Iterable<IPv6Entry> checkIPv6Entries = checkIface.getIPv6();
-        IPv6Entry checkIPv6 = checkIPv6Entries.iterator().next();
-        assertEquals("IPv6 address does not match", checkIPv6.getAddress(), ipv6Address);
-        assertEquals("IPv6 prefix does not match", checkIPv6.getPrefix(), ipv6Prefix);
+        
+        Iterable<IPEntry> checkIPEntries = checkIface.getIPList();
+        IPEntry entry = findIpInList(checkIPEntries, ipv4Address);
+        assertNotNull("IPv4 address does not match", entry);
+        try {
+            assertEquals("IPv4 prefix does not match", entry.getPrefix(), calculatePrefix(InetAddress.getByName(ipv4Mask)));
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(AnnounceDeserializerTest.class.getName()).log(Level.SEVERE, "Could not convert netmask", ex);
+        }
+        
+        entry = findIpInList(checkIPEntries, ipv6Address);
+        assertNotNull("IPv6 address does not match", entry);
+
+        assertEquals("IPv6 prefix does not match", entry.getPrefix(), ipv6Prefix);
         
         Router checkRouter = checkAnnounceParams.getRouter();
         assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
@@ -302,5 +323,31 @@ public class AnnounceDeserializerTest {
                 assertEquals("streaming port does not match", port, streamPort);
             }
         }
+    }
+    
+    private static IPEntry findIpInList(Iterable<IPEntry> list, String ip) {
+        try {
+            InetAddress address = InetAddress.getByName(ip);
+            for (IPEntry entry : list) {
+                if (entry.getAddress().equals(address)) {
+                    return entry;
+                }
+            }
+            
+            return null;
+        } catch (UnknownHostException ex) {
+            return null;
+        }
+    }
+    
+    private static int calculatePrefix(InetAddress announceNetmask) {
+        final byte[] address = announceNetmask.getAddress();
+        final int length = address.length;
+        int prefix = 0;
+        for (int i = 0; i < length; i++) {
+            prefix += Integer.bitCount(address[i] & 0xff);
+        }
+    
+        return prefix;
     }
 }

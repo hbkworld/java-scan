@@ -68,7 +68,7 @@ public class ConnectionFinderTest {
             fsmmr.emitSingleCorrectMessage();
             assertNotNull("No Announce object after correct message", announce);
 
-            assertFalse("List of connectable addresses is empty", finder.getConnectableAddresses(announce).isEmpty());
+            assertFalse("List of connectable addresses is empty", finder.getSameNetworkAddresses(announce).isEmpty());
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }

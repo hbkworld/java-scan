@@ -33,6 +33,7 @@
 package com.hbm.devices.scan.announce;
 
 import java.net.Inet4Address;
+import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -47,22 +48,20 @@ import java.util.List;
  */
 public final class ConnectionFinder {
 
-    private final IPv4ConnectionFinder ipv4ConnectionFinder;
-    private final IPv6ConnectionFinder ipv6ConnectionFinder;
-
+    private final Collection<NetworkInterfaceAddress> ipv4AddressList;
+    private final Collection<NetworkInterfaceAddress> ipv6AddressList;
     /**
      * Constructs a new {@link ConnectionFinder} object.
      *
      * @param interfaces A {@link Collection} of {@link
      * NetworkInterface}s used to check {@link Announce} objects against
-     * in {@link #getConnectableAddresses(Announce)}.
+     * in {@link #getSameNetworkAddresses(Announce)}.
      *
      */
     public ConnectionFinder(Collection<NetworkInterface> interfaces) {
-
-        final List<NetworkInterfaceAddress> ipv4AddressList = new LinkedList<>();
-        final List<NetworkInterfaceAddress> ipv6AddressList = new LinkedList<>();
-
+        this.ipv4AddressList = new LinkedList<>();
+        this.ipv6AddressList = new LinkedList<>();
+        
         for (final NetworkInterface iface : interfaces) {
             final List<InterfaceAddress> niAddresses = iface.getInterfaceAddresses();
             for (final InterfaceAddress niAddress : niAddresses) {
@@ -76,13 +75,11 @@ public final class ConnectionFinder {
                 }
             }
         }
-        this.ipv4ConnectionFinder = new IPv4ConnectionFinder(ipv4AddressList);
-        this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6AddressList);
     }
 
     ConnectionFinder(Collection<NetworkInterfaceAddress> ipv4List, Collection<NetworkInterfaceAddress> ipv6List) {
-        this.ipv4ConnectionFinder = new IPv4ConnectionFinder(ipv4List);
-        this.ipv6ConnectionFinder = new IPv6ConnectionFinder(ipv6List);
+        this.ipv4AddressList = ipv4List;
+        this.ipv6AddressList = ipv6List;
     }
 
     /**
@@ -105,10 +102,76 @@ public final class ConnectionFinder {
      * @return An {@link InetAddress} if a connectable IP address was
      * found, null otherwise.
      */
-    public List<InetAddress> getConnectableAddresses(Announce announce) {
-        final List<InetAddress> list = ipv4ConnectionFinder.getConnectableAddresses(announce);
-        list.addAll(ipv6ConnectionFinder.getConnectableAddresses(announce));
+    public List<InetAddress> getSameNetworkAddresses(Announce announce) {
+        final Iterable<IPEntry> announceAddresses = announce.getParams().getNetSettings()
+            .getInterface().getIPList();
+        final List<InetAddress> list = new LinkedList<>();
+        
+        for (final Object ipEntry : announceAddresses) {
+            IPEntry entry = (IPEntry) ipEntry;
+            final InetAddress announceAddress = entry.getAddress();
+            final int announcePrefix = entry.getPrefix();
+            if ((announceAddress instanceof Inet4Address)) {
+                for (final NetworkInterfaceAddress iface : this.ipv4AddressList) {
+                    final InetAddress ifaceAddress = iface.getAddress();
+                    final int ifaceAddressPrefix = iface.getPrefix();
+                    if (sameIPv4Net(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
+                        list.add(announceAddress);
+                    } 
+                }
+            } else if (announceAddress instanceof Inet6Address) {
+                for (final NetworkInterfaceAddress iface : this.ipv6AddressList) {
+                    final InetAddress ifaceAddress = iface.getAddress();
+                    final int ifaceAddressPrefix = iface.getPrefix();
+                    if (sameIPv6Net(announceAddress, announcePrefix, ifaceAddress, ifaceAddressPrefix)) {
+                        list.add(announceAddress);
+                    } 
+                }
+            }
+        }
+
         return list;
+    }
+    
+    static boolean sameIPv4Net(InetAddress announceAddress, int announcePrefix,
+            InetAddress interfaceAddress, int interfacePrefix) {
+        final byte[] announceBytes = announceAddress.getAddress();
+        final byte[] interfaceBytes = interfaceAddress.getAddress();
+        int announceInteger = convertToInteger(announceBytes);
+        int interfaceInteger = convertToInteger(interfaceBytes);
+        announceInteger = announceInteger >>> (Integer.SIZE - announcePrefix);
+        interfaceInteger = interfaceInteger >>> (Integer.SIZE - interfacePrefix);
+        return announceInteger == interfaceInteger;
+    }
+    
+    private static int convertToInteger(byte... address) {
+        int value = 0;
+        for (final byte b: address) {
+            value = (value << Byte.SIZE) | (b & 0xff);
+        }
+        return value;
+    }
+    
+    static boolean sameIPv6Net(InetAddress announceAddress, int announcePrefixLength,
+            InetAddress interfaceAddress, int interfacePrefixLength) {
+        if (announcePrefixLength != interfacePrefixLength) {
+            return false;
+        }
+
+        if (!(announceAddress instanceof Inet6Address) || !(interfaceAddress instanceof Inet6Address)) {
+            return false;
+        }
+
+        final byte[] announceAddr = announceAddress.getAddress();
+        final byte[] interfaceAddr = interfaceAddress.getAddress();
+
+        for (int i = 0; i < (announcePrefixLength / Byte.SIZE); i++) {
+            if (announceAddr[i] != interfaceAddr[i]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
 

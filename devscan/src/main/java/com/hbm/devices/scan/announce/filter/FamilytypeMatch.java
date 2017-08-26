@@ -55,8 +55,8 @@ public final class FamilytypeMatch implements Matcher {
     @Override
     public boolean match(Announce announce) {
         final String familyType = announce.getParams().getDevice().getFamilyType();
-        for (int i = 0; i < familyTypes.length; i++) {
-            if (familyTypes[i].equals(familyType)) {
+        for (String familyType1 : familyTypes) {
+            if (familyType1.equals(familyType)) {
                 return true;
             }
         }

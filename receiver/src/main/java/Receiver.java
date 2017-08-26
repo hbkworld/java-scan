@@ -45,8 +45,7 @@ import com.hbm.devices.scan.announce.AnnounceReceiver;
 import com.hbm.devices.scan.announce.ConnectionFinder;
 import com.hbm.devices.scan.announce.Device;
 import com.hbm.devices.scan.announce.DeviceMonitor;
-import com.hbm.devices.scan.announce.IPv4Entry;
-import com.hbm.devices.scan.announce.IPv6Entry;
+import com.hbm.devices.scan.announce.IPEntry;
 import com.hbm.devices.scan.announce.Interface;
 import com.hbm.devices.scan.announce.LostDeviceEvent;
 import com.hbm.devices.scan.announce.NewDeviceEvent;
@@ -125,7 +124,7 @@ class EventLogger {
         Announce announce;
         if (event instanceof NewDeviceEvent) {
             announce = ((NewDeviceEvent)event).getAnnounce();
-            final List<InetAddress> connectAddress = connectionFinder.getConnectableAddresses(announce);
+            final List<InetAddress> connectAddress = connectionFinder.getSameNetworkAddresses(announce);
             logBuilder.append("New Device:\n");
             if (connectAddress != null) {
                 logBuilder.append("Connectable: ").append(connectAddress).append('\n');
@@ -176,24 +175,13 @@ class EventLogger {
         .append(iface.getName())
         .append('\n');
 
-        final Iterable<IPv4Entry> ipv4 = iface.getIPv4();
+        final Iterable<IPEntry> ipv4 = iface.getIPList();
         if (ipv4 != null) {
-            for (final IPv4Entry entry : ipv4) {
+            for (final IPEntry entry : ipv4) {
                 logBuilder.append("    ")
-                    .append(entry.getAddress())
+                    .append(entry.getAddress().getHostAddress())
                     .append('/')
-                    .append(entry.getNetmask())
-                    .append('\n');
-            }
-        }
-
-        final Iterable<IPv6Entry> ipv6 = iface.getIPv6();
-        if (ipv6 != null) {
-            for (final IPv6Entry e : ipv6) {
-                logBuilder.append("    ")
-                    .append(e.getAddress())
-                    .append('/')
-                    .append(e.getPrefix())
+                    .append(entry.getPrefix())
                     .append('\n');
             }
         }
