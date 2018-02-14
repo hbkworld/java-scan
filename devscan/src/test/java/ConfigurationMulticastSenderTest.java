@@ -73,7 +73,7 @@ public class ConfigurationMulticastSenderTest {
                     }
                 }
             };
-            final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
+            final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces(predicate).getInterfaces();
             for (NetworkInterface sendInterface : sendInterfaces) {
                 assertTrue("Predicate wasn't applied as expected", predicate.apply(sendInterface));
             }

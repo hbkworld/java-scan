@@ -37,6 +37,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.List;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.ImmutableList;
@@ -92,8 +93,7 @@ public final class ScanInterfaces {
     }
 
     private static Iterable<NetworkInterface> getAllNetworkInterfaces() throws SocketException {
-        final Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
-        return networkInterfaces == null ? Collections.<NetworkInterface>emptyList() : Collections.list(networkInterfaces);
+        return Collections.list(Optional.fromNullable(NetworkInterface.getNetworkInterfaces()).or(Collections.<NetworkInterface>emptyEnumeration()));
     }
 
     private static boolean willScan(NetworkInterface iface) throws SocketException {
