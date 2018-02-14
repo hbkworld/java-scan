@@ -63,20 +63,20 @@ public class ConfigurationMulticastSenderTest {
     @Test
     public void createWithFilter() {
         try {
-        	Predicate<NetworkInterface> predicate = new Predicate<NetworkInterface>() {
-				@Override
-				public boolean apply(NetworkInterface networkInterface) {
-					try {
-						return networkInterface.getHardwareAddress() != null;
-					} catch (SocketException e) {
-						return false;
-					}
-				}
-			};
+            Predicate<NetworkInterface> predicate = new Predicate<NetworkInterface>() {
+                @Override
+                public boolean apply(NetworkInterface networkInterface) {
+                    try {
+                        return networkInterface.getHardwareAddress() != null;
+                    } catch (SocketException e) {
+                        return false;
+                    }
+                }
+            };
             final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
             for (NetworkInterface sendInterface : sendInterfaces) {
-            	assertTrue("Predicate wasn't applied as expected", predicate.apply(sendInterface));
-			}
+                assertTrue("Predicate wasn't applied as expected", predicate.apply(sendInterface));
+            }
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object");
         }
@@ -84,14 +84,14 @@ public class ConfigurationMulticastSenderTest {
 
     @Test
     public void createAndClose() {
-    	try {
-    		final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
-    		ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
-    		sender.close();
-    		assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
-    	} catch (IOException e) {
-    		fail("Can't instantiate ConfigurationMulticastSender object");
-    	}
+        try {
+            final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
+            ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
+            sender.close();
+            assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+        } catch (IOException e) {
+            fail("Can't instantiate ConfigurationMulticastSender object");
+        }
     }
 
     @Test

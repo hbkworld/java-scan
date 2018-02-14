@@ -72,8 +72,7 @@ public final class ScanInterfaces {
      *             if an I/O error occurs.
      */
     public ScanInterfaces(Predicate<NetworkInterface> ifacePredicate) throws SocketException {
-    	
-        Builder<NetworkInterface> interfacesBuilder = ImmutableList.<NetworkInterface>builder();
+        Builder<NetworkInterface> interfacesBuilder = ImmutableList.<NetworkInterface> builder();
         for (NetworkInterface iface : Iterables.filter(getAllNetworkInterfaces(), ifacePredicate)) {
             if (willScan(iface)) {
                 interfacesBuilder.add(iface);
