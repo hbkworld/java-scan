@@ -36,7 +36,10 @@ import org.junit.rules.ExpectedException;
 
 import java.io.IOException;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.util.Collection;
+
+import com.google.common.base.Predicate;
 
 import com.hbm.devices.scan.configure.ConfigurationMulticastSender;
 import com.hbm.devices.scan.ScanInterfaces;
@@ -58,15 +61,37 @@ public class ConfigurationMulticastSenderTest {
     }
 
     @Test
-    public void createAndClose() {
+    public void createWithFilter() {
         try {
+        	Predicate<NetworkInterface> predicate = new Predicate<NetworkInterface>() {
+				@Override
+				public boolean apply(NetworkInterface networkInterface) {
+					try {
+						return networkInterface.getHardwareAddress() != null;
+					} catch (SocketException e) {
+						return false;
+					}
+				}
+			};
             final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
-            ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
-            sender.close();
-            assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+            for (NetworkInterface sendInterface : sendInterfaces) {
+            	assertTrue("Predicate wasn't applied as expected", predicate.apply(sendInterface));
+			}
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object");
         }
+    }
+
+    @Test
+    public void createAndClose() {
+    	try {
+    		final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
+    		ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
+    		sender.close();
+    		assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+    	} catch (IOException e) {
+    		fail("Can't instantiate ConfigurationMulticastSender object");
+    	}
     }
 
     @Test
