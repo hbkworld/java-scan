@@ -9,7 +9,7 @@ import org.junit.Test;
 public class DeviceScanTest {
     @Test
     public void utilityClassTest() {
-        TestCommons.assertUtilityClassWellDefined(DeviceScanTest.class);
+        TestCommons.assertUtilityClassWellDefined(DeviceScan.class);
     }
     
     @Test
