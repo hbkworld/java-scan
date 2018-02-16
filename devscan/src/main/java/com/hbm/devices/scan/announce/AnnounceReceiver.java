@@ -29,7 +29,9 @@
 package com.hbm.devices.scan.announce;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 
+import com.google.common.base.Predicate;
 import com.hbm.devices.scan.MulticastMessageReceiver;
 import com.hbm.devices.scan.ScanConstants;
 
@@ -52,5 +54,21 @@ public final class AnnounceReceiver extends MulticastMessageReceiver {
      */
     public AnnounceReceiver() throws IOException {
         super(ScanConstants.ANNOUNCE_ADDRESS, ScanConstants.ANNOUNCE_PORT);
+    }
+
+    /**
+     * Constructs an {@code AnnounceReceiver} object.
+     *
+     * @param ifacePredicate custom filter to be applied to each available network interface
+     *        before checking its multicast capability.
+     *
+     * @throws java.io.IOException if the AnnounceReceiver can't
+     * created. This might happen if the underlying socket can't be
+     * created or the multicast join was not successful.
+     *
+     * @since 1.0
+     */
+    public AnnounceReceiver(Predicate<NetworkInterface> ifacePredicate) throws IOException {
+        super(ScanConstants.ANNOUNCE_ADDRESS, ScanConstants.ANNOUNCE_PORT, ifacePredicate);
     }
 }

@@ -34,7 +34,9 @@ import static org.junit.Assert.assertNull;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.net.NetworkInterface;
 
+import com.google.common.base.Predicates;
 import com.hbm.devices.scan.announce.AnnounceReceiver;
 
 public class AnnounceReceiverTest {
@@ -42,6 +44,11 @@ public class AnnounceReceiverTest {
     @Test
     public void intantiation() {
         try (final AnnounceReceiver ar = new AnnounceReceiver()) {
+            assertNotNull("Could not instantiate AnnounceReceiver", ar);
+        } catch (IOException e) {
+            fail("Got IOException while instantiating AnnounceReceiver");
+        }
+        try (final AnnounceReceiver ar = new AnnounceReceiver(Predicates.<NetworkInterface>alwaysFalse())) {
             assertNotNull("Could not instantiate AnnounceReceiver", ar);
         } catch (IOException e) {
             fail("Got IOException while instantiating AnnounceReceiver");

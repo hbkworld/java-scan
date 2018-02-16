@@ -35,50 +35,65 @@ import java.net.SocketException;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
-import java.util.LinkedList;
 import java.util.List;
+
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
+import com.google.common.collect.Iterables;
 
 /**
  * Convenience class to gather all network interfaces eligible for multicast scanning &amp; sending.
- * 
+ *
  * @since 1.0
  */
 public final class ScanInterfaces {
-
     private final List<NetworkInterface> interfaces;
 
     /**
      * Constructs an object containing all network interfaces eligible
-     * for multicast scanning @amp; sending.
+     * for multicast scanning &amp; sending.
      *
      * @throws SocketException if an I/O error occurs.
      */
     public ScanInterfaces() throws SocketException {
-        interfaces = new LinkedList<>();
-        final Enumeration<NetworkInterface> ifs = NetworkInterface.getNetworkInterfaces();
-
-        if (ifs != null) {
-            while (ifs.hasMoreElements()) {
-                final NetworkInterface iface = ifs.nextElement();
-                if (willScan(iface)) {
-                    interfaces.add(iface);
-                }
-            }
-        }
+        this(Predicates.<NetworkInterface>alwaysTrue());
     }
 
     /**
-     * @return an {@link java.util.Collections#unmodifiableCollection(Collection c) unmodifiable Collection}
+     * Constructs an object containing all network interfaces eligible for multicast scanning &amp;
+     * sending and fullfilling the conditions specified by the given predicate.
+     *
+     * @param ifacePredicate
+     *            is called before doing checks on the interface reg. its awareness for multicast
+     *            scanning. So the caller may inject own filter criteria.
+     * @throws SocketException
+     *             if an I/O error occurs.
+     */
+    public ScanInterfaces(Predicate<NetworkInterface> ifacePredicate) throws SocketException {
+        Builder<NetworkInterface> interfacesBuilder = ImmutableList.<NetworkInterface> builder();
+        for (NetworkInterface iface : Iterables.filter(getAllNetworkInterfaces(), ifacePredicate)) {
+            if (willScan(iface)) {
+                interfacesBuilder.add(iface);
+            }
+        }
+        interfaces = interfacesBuilder.build();
+    }
+
+    /**
+     * @return an {@link ImmutableList immutable list}
      * of {@link java.net.NetworkInterface NetworkInterfaces} usable for
      * Multicast scanning. If no interface was found, an empty
-     * {@link java.util.Collection} is returned.
+     * {@link ImmutableList immutable list} is returned.
      */
     public Collection<NetworkInterface> getInterfaces() {
-        if (interfaces == null) {
-            return new LinkedList<>();
-        } else {
-            return Collections.unmodifiableCollection(interfaces);
-        }    
+        return interfaces;
+    }
+
+    private static Iterable<NetworkInterface> getAllNetworkInterfaces() throws SocketException {
+        return Collections.list(Optional.fromNullable(NetworkInterface.getNetworkInterfaces()).or(Collections.<NetworkInterface>emptyEnumeration()));
     }
 
     private static boolean willScan(NetworkInterface iface) throws SocketException {

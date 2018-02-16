@@ -39,7 +39,8 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.hbm.devices.scan.ScanInterfaces;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 
 /**
  * This class receives messages from a multicast UDP socket and converts them to a
@@ -60,10 +61,11 @@ import com.hbm.devices.scan.ScanInterfaces;
  */
 public class MulticastMessageReceiver extends AbstractMessageReceiver {
 
-    private InetAddress multicastIP;
-    private int port;
+    private final InetAddress multicastIP;
+    private final int port;
+    private final Predicate<NetworkInterface> ifacePredicate;
     private boolean shallRun = true;
-    private MulticastSocket socket;
+    private final MulticastSocket socket;
     private static final Logger LOGGER = Logger.getLogger(ScanConstants.LOGGER_NAME);
     private static final int MAX_UDP_SIZE = 65507;
 
@@ -73,7 +75,7 @@ public class MulticastMessageReceiver extends AbstractMessageReceiver {
      *
      * @param multicastIP The multicast IP the {@link MulticastMessageReceiver} will listen to.
      * @param port The port for listening to multicast packets.
-     * 
+     *
      * @throws IOException if creating the underlying socket fails.
      */
     public MulticastMessageReceiver(String multicastIP, int port) throws IOException {
@@ -86,14 +88,43 @@ public class MulticastMessageReceiver extends AbstractMessageReceiver {
      *
      * @param multicastIP The multicast IP the {@link MulticastMessageReceiver} will listen to.
      * @param port The port for listening to multicast packets.
-     * 
+     * @param ifacePredicate custom filter to be applied to all network interfaces before checking multicast capability.
+     *
+     * @throws IOException if creating the underlying socket fails.
+     */
+    public MulticastMessageReceiver(String multicastIP, int port, Predicate<NetworkInterface> ifacePredicate) throws IOException {
+        this(InetAddress.getByName(multicastIP), port, ifacePredicate);
+    }
+
+    /**
+     * Creates a {@link MulticastMessageReceiver} for receiving
+     * multicast messsages
+     *
+     * @param multicastIP The multicast IP the {@link MulticastMessageReceiver} will listen to.
+     * @param port The port for listening to multicast packets.
+     *
      * @throws IOException if creating the underlying socket fails.
      */
     public MulticastMessageReceiver(InetAddress multicastIP, int port) throws IOException {
-        super();
+        this(multicastIP, port, Predicates.<NetworkInterface>alwaysTrue());
+    }
 
+    /**
+     * Creates a {@link MulticastMessageReceiver} for receiving
+     * multicast messsages
+     *
+     * @param multicastIP The multicast IP the {@link MulticastMessageReceiver} will listen to.
+     * @param port The port for listening to multicast packets.
+     * @param ifacePredicate custom filter to be applied to each available network interface
+     *        before checking its multicast capability.
+     *
+     * @throws IOException if creating the underlying socket fails.
+     */
+    public MulticastMessageReceiver(InetAddress multicastIP, int port, Predicate<NetworkInterface> ifacePredicate) throws IOException {
+        super();
         this.multicastIP = multicastIP;
         this.port = port;
+        this.ifacePredicate = ifacePredicate;
         this.socket = setupMulticastSocket();
     }
 
@@ -157,14 +188,14 @@ public class MulticastMessageReceiver extends AbstractMessageReceiver {
 
     private void joinOnAllInterfaces(MulticastSocket socket) throws IOException {
         final InetSocketAddress socketAddress = new InetSocketAddress(multicastIP, port);
-        final Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
+        final Collection<NetworkInterface> interfaces = new ScanInterfaces(ifacePredicate).getInterfaces();
         for (final NetworkInterface ni : interfaces) {
             socket.joinGroup(socketAddress, ni);
         }
     }
 
     private void leaveOnAllInterfaces(MulticastSocket socket) throws IOException {
-        final Collection<NetworkInterface> interfaces = new ScanInterfaces().getInterfaces();
+        final Collection<NetworkInterface> interfaces = new ScanInterfaces(ifacePredicate).getInterfaces();
         final InetSocketAddress socketAddress = new InetSocketAddress(multicastIP, port);
         for (final NetworkInterface ni : interfaces) {
             socket.leaveGroup(socketAddress, ni);
