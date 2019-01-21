@@ -26,15 +26,14 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -49,7 +48,7 @@ public class ResponseDeserializerTest {
     private Response res;
     private FakeMessageReceiver fsmmr;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         ResponseDeserializer parser = new ResponseDeserializer();
@@ -66,43 +65,43 @@ public class ResponseDeserializerTest {
     @Test
     public void parseCorrectSuccessReponseMessage() {
         fsmmr.emitSingleCorrectSuccessResponseMessage("TEST-UUID");
-        assertNotNull("No result object after correct success response", res);
+        assertNotNull(res, "No result object after correct success response");
     }
 
     @Test
     public void parseCorrectErrorReponseMessage() {
         fsmmr.emitSingleCorrectErrorResponseMessage();
-        assertNotNull("No result object after correct error response", res);
+        assertNotNull(res, "No result object after correct error response");
     }
 
     @Test
     public void parseErrorAndResultResponseMessage() {
         fsmmr.emitErrorAndResultResponseMessage();
-        assertNull("Got result object from response with error and result", res);
+        assertNull(res, "Got result object from response with error and result");
     }
 
     @Test
     public void parseMissingIdMessage() {
         fsmmr.emitNoSuccessIdResponseMessage();
-        assertNull("Got result object from response without id", res);
+        assertNull(res, "Got result object from response without id");
     }
 
     @Test
     public void parseEmptyIdMessage() {
         fsmmr.emitEmtpySuccessIdResponseMessage();
-        assertNull("Got result object from response without id", res);
+        assertNull(res, "Got result object from response without id");
     }
 
     @Test
     public void parseMethodMessage() {
         fsmmr.emitMissingMethodMessage();
-        assertNull("Got result object from response without error and result", res);
+        assertNull(res, "Got result object from response without error and result");
     }
 
     @Test
     public void parseInvalidJsonMessage() {
         fsmmr.emitInvalidJsonMessage();
-        assertNull("Got result object after invalid message", res);
+        assertNull(res, "Got result object after invalid message");
     }
 
     @Test
@@ -125,14 +124,14 @@ public class ResponseDeserializerTest {
         final Gson gson = new Gson();
         fsmmr.emitString(gson.toJson(root));
 
-        assertNotNull("No result object after correct success response", res);
-        assertEquals("JSON-RPC versions not equal", res.getJsonrpc(), jsonRpcVersion);
-        assertEquals("Id's not equal", res.getId(), id);
+        assertNotNull(res, "No result object after correct success response");
+        assertEquals(res.getJsonrpc(), jsonRpcVersion, "JSON-RPC versions not equal");
+        assertEquals(res.getId(), id, "Id's not equal");
         ErrorObject checkError = res.getError();
-        assertNotNull("Expected error object", checkError);
-        assertNull("Unexpected result object", res.getResult());
-        assertEquals("error code not equal", checkError.getCode(), errorCode);
-        assertEquals("error message not equal", checkError.getMessage(), errorMessage);
-        assertEquals("error data not equal", checkError.getData(), errorData);
+        assertNotNull(checkError, "Expected error object");
+        assertNull(res.getResult(), "Unexpected result object");
+        assertEquals(checkError.getCode(), errorCode, "error code not equal");
+        assertEquals(checkError.getMessage(), errorMessage, "error message not equal");
+        assertEquals(checkError.getData(), errorData, "error data not equal");
     }
 }

@@ -28,18 +28,17 @@
 
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LRUCacheTest {
 
     private LRUCache<Integer, Integer> cache;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.cache = new LRUCache<Integer, Integer>(3);
     }
@@ -51,10 +50,10 @@ public class LRUCacheTest {
         cache.put(3, 3);
         cache.put(4, 4);
 
-        assertFalse("Eldest element still in cache", cache.containsKey(1));
-        assertTrue("New element not in cache", cache.containsKey(2));
-        assertTrue("New element not in cache", cache.containsKey(3));
-        assertTrue("New element not in cache", cache.containsKey(4));
+        assertFalse(cache.containsKey(1), "Eldest element still in cache");
+        assertTrue(cache.containsKey(2), "New element not in cache");
+        assertTrue(cache.containsKey(3), "New element not in cache");
+        assertTrue(cache.containsKey(4), "New element not in cache");
     }
 
     @Test
@@ -62,14 +61,14 @@ public class LRUCacheTest {
         cache.put(1, 1);
         cache.put(2, 2);
         cache.put(3, 3);
-        assertTrue("Element not in cache", cache.containsKey(1));
-        assertEquals("Value for key 1 not correct", cache.get(1).intValue(), 1);
+        assertTrue(cache.containsKey(1), "Element not in cache");
+        assertEquals(cache.get(1).intValue(), 1, "Value for key 1 not correct");
         cache.put(4, 4);
         
-        assertFalse("Eldest element still in cache", cache.containsKey(2));
-        assertTrue("Younger element not in cache", cache.containsKey(1));
-        assertTrue("Younger element not in cache", cache.containsKey(3));
-        assertTrue("Younger element not in cache", cache.containsKey(4));
+        assertFalse(cache.containsKey(2), "Eldest element still in cache");
+        assertTrue(cache.containsKey(1), "Younger element not in cache");
+        assertTrue(cache.containsKey(3), "Younger element not in cache");
+        assertTrue(cache.containsKey(4), "Younger element not in cache");
     }
 }
 

@@ -26,9 +26,8 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -39,10 +38,10 @@ public class ScanConstantsTest {
 
     @Test
     public void parseMissingFamilyTypeMessage() {
-        assertEquals("Announce address not correct", ScanConstants.ANNOUNCE_ADDRESS, "239.255.77.76");
-        assertEquals("Announce port not correct", ScanConstants.ANNOUNCE_PORT, 31416);
-        assertEquals("Configuration address not correct", ScanConstants.CONFIGURATION_ADDRESS, "239.255.77.77");
-        assertEquals("Configuration port not correct", ScanConstants.CONFIGURATION_PORT, 31417);
+        assertEquals(ScanConstants.ANNOUNCE_ADDRESS, "239.255.77.76", "Announce address not correct");
+        assertEquals(ScanConstants.ANNOUNCE_PORT, 31416, "Announce port not correct");
+        assertEquals(ScanConstants.CONFIGURATION_ADDRESS, "239.255.77.77", "Configuration address not correct");
+        assertEquals(ScanConstants.CONFIGURATION_PORT, 31417, "Configuration port not correct");
     }
 }
 

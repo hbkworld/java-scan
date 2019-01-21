@@ -26,13 +26,11 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.fail;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -48,7 +46,7 @@ public class AnnounceParamsTest {
     private Announce announce;
     private FakeMessageReceiver fsmmr;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
@@ -65,31 +63,31 @@ public class AnnounceParamsTest {
     @Test
     public void parseMissingDevice() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull("Got Announce object after message without device section", announce);
+        assertNull(announce, "Got Announce object after message without device section");
     }
 
     @Test
     public void parseMissingExpiration() {
         fsmmr.emitMissingExpiration();
-        assertNotNull("Got no Announce object after message without expiration", announce);
-        assertEquals("no expiration in announce does't lead to default expiration", announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S);
+        assertNotNull(announce, "Got no Announce object after message without expiration");
+        assertEquals(announce.getParams().getExpiration(), ScanConstants.DEFAULT_EXPIRATION_S, "no expiration in announce does't lead to default expiration");
     }
 
     @Test
     public void parseNegativeExpiration() {
         fsmmr.emitNegativeExpiration();
-        assertNull("Got no Announce object after message with negative expiration", announce);
+        assertNull(announce, "Got no Announce object after message with negative expiration");
     }
 
     @Test
     public void parseMissingVersion() {
         fsmmr.emitMissingVersion();
-        assertNull("Got Announce object after message without apiVersion", announce);
+        assertNull(announce, "Got Announce object after message without apiVersion");
     }
 
     @Test
     public void parseVersion2() {
         fsmmr.emitVersion2();
-        assertNull("Got Announce object form message version 2", announce);
+        assertNull(announce, "Got Announce object form message version 2");
     }
 }

@@ -119,7 +119,7 @@ public final class ConnectionFinder {
                         list.add(announceAddress);
                     } 
                 }
-            } else if (announceAddress instanceof Inet6Address) {
+            } else {
                 for (final NetworkInterfaceAddress iface : this.ipv6AddressList) {
                     final InetAddress ifaceAddress = iface.getAddress();
                     final int ifaceAddressPrefix = iface.getPrefix();

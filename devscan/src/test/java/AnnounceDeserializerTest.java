@@ -26,14 +26,15 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -54,15 +55,13 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 public class AnnounceDeserializerTest {
 
     private Announce announce;
     private FakeMessageReceiver fsmmr;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         announce = null;
         fsmmr = new FakeMessageReceiver();
@@ -81,104 +80,103 @@ public class AnnounceDeserializerTest {
     @Test
     public void parseCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("No Announce object after correct message", announce);
+        assertNotNull(announce, "No Announce object after correct message");
     }
 
     @Test
     public void parseInvalidJsonMessage() {
         fsmmr.emitInvalidJsonMessage();
-        assertNull("Got Announce object after invalid message", announce);
+        assertNull(announce, "Got Announce object after invalid message");
     }
 
     @Test
     public void parseNotAnnounceMethodMessage() {
         fsmmr.emitNotAnnounceMessage();
-        assertNull("Got Announce object from message with method that's not an announce", announce);
+        assertNull(announce, "Got Announce object from message with method that's not an announce");
     }
 
     @Test
     public void parseEmptyMessage() {
         fsmmr.emitEmptyString();
-        assertNull("Got Announce object after empty message", announce);
+        assertNull(announce, "Got Announce object after empty message");
     }
 
     @Test
     public void parseNullMessage() {
         fsmmr.emitNull();
-        assertNull("Got Announce object after null", announce);
+        assertNull(announce, "Got Announce object after null");
     }
 
     @Test
     public void parseMissingDeviceMessage() {
         fsmmr.emitMissingDeviceMessage();
-        assertNull("Got Announce from message without device", announce);
+        assertNull(announce, "Got Announce from message without device");
     }
 
     @Test
     public void parseEmptyDeviceUuidMessage() {
         fsmmr.emitEmptyDeviceUuidMessage();
-        assertNull("Got Announce from message with empty UUID", announce);
+        assertNull(announce, "Got Announce from message with empty UUID");
     }
 
     @Test
     public void parseMissingParamsMessage() {
         fsmmr.emitMissingParamsMessage();
-        assertNull("Got Announce from message without params", announce);
+        assertNull(announce, "Got Announce from message without params");
     }
 
     @Test
     public void parseNoInterfaceNameMessage() {
         fsmmr.emitNoInterfaceNameMessage();
-        assertNull("Got Announce from message without interface name", announce);
+        assertNull(announce, "Got Announce from message without interface name");
     }
 
     @Test
     public void parseEmptyInterfaceNameMessage() {
         fsmmr.emitEmptyInterfaceNameMessage();
-        assertNull("Got Announce from message with empty interface name", announce);
+        assertNull(announce, "Got Announce from message with empty interface name");
     }
 
     @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
-        assertNull("Got Announce from message without interface", announce);
+        assertNull(announce, "Got Announce from message without interface");
     }
 
     @Test
     public void parseNoNetSettingsMessage() {
         fsmmr.emitNoNetSettingsMessage();
-        assertNull("Got Announce from message without network settings", announce);
+        assertNull(announce, "Got Announce from message without network settings");
     }
 
     @Test
     public void parseMissingRouterUuidMessage() {
         fsmmr.emitMissingRouterUuidMessage();
-        assertNull("Got Announce from message without router UUID", announce);
+        assertNull(announce, "Got Announce from message without router UUID");
     }
 
     @Test
     public void parseEmptyRouterUuidMessage() {
         fsmmr.emitEmptyRouterUuidMessage();
-        assertNull("Got Announce from message with empty router UUID", announce);
+        assertNull(announce, "Got Announce from message with empty router UUID");
     }
 
     @Test
     public void parseMissingTypeMessage() {
         fsmmr.emitMissingMethodMessage();
-        assertNull("Got Announce message without type", announce);
+        assertNull(announce, "Got Announce message without type");
     }
     
-        @Test
+    @Test
     public void illegalIpv4AddressTest() {
         fsmmr.emitIllegalIpv4();
-        assertNull("Got Announce object for illegal IPv4 address", announce);
+        assertNull(announce, "Got Announce object for illegal IPv4 address");
     }
 
-    
     @Test
     public void illegalIpv6AddressTest() {
         fsmmr.emitIllegalIpv6();
-        assertNull("Got Announce object for illegal IPv6 address", announce);
+        assertNull(announce, "Got Announce object for illegal IPv6 address");
     }
     
     @Test
@@ -268,59 +266,58 @@ public class AnnounceDeserializerTest {
 
         final Gson gson = new Gson();
         fsmmr.emitString(gson.toJson(root));
-        assertNotNull("No Announce object after correct message", announce);
+        assertNotNull(announce, "No Announce object after correct message");
 
-        assertEquals("JSON-RPC versions not equal", announce.getJsonrpc(), jsonRpcVersion);
-        assertEquals("JSON-RPC methods not equal", announce.getMethod(), jsonRpcMethod);
+        assertEquals(announce.getJsonrpc(), jsonRpcVersion, "JSON-RPC versions not equal");
+        assertEquals(announce.getMethod(), jsonRpcMethod, "JSON-RPC methods not equal");
         AnnounceParams checkAnnounceParams = announce.getParams();
         
-        assertEquals("expiration does not match", checkAnnounceParams.getExpiration(), expire);
-        assertEquals("API version does not match", checkAnnounceParams.getApiVersion(), apiVersionString);
+        assertEquals(checkAnnounceParams.getExpiration(), expire, "expiration does not match");
+        assertEquals(checkAnnounceParams.getApiVersion(), apiVersionString, "API version does not match");
 
         Device checkDevice = checkAnnounceParams.getDevice();
-        assertEquals("family type does not match", checkDevice.getFamilyType(), familyTypeString);
-        assertEquals("firmware version does not match", checkDevice.getFirmwareVersion(), fwVersionString);
-        assertEquals("Hardware ID does not match", checkDevice.getHardwareId(), hwIdString);
-        assertEquals("device name does not match", checkDevice.getName(), nameString);
-        assertEquals("device type does not match", checkDevice.getType(), typeString);
-        assertEquals("device label does not match", checkDevice.getLabel(), labelString);
-        assertEquals("device uuid does not match", checkDevice.getUuid(), uuidString);
-        assertEquals("isRouter entry does not match", checkDevice.isRouter(), isRouter);
+        assertEquals(checkDevice.getFamilyType(), familyTypeString, "family type does not match");
+        assertEquals(checkDevice.getFirmwareVersion(), fwVersionString, "firmware version does not match");
+        assertEquals(checkDevice.getHardwareId(), hwIdString, "Hardware ID does not match");
+        assertEquals(checkDevice.getName(), nameString, "device name does not match");
+        assertEquals(checkDevice.getType(), typeString, "device type does not match");
+        assertEquals(checkDevice.getLabel(), labelString, "device label does not match");
+        assertEquals(checkDevice.getUuid(), uuidString, "device uuid does not match");
+        assertEquals(checkDevice.isRouter(), isRouter, "isRouter entry does not match");
 
         NetSettings checkNetSettings = checkAnnounceParams.getNetSettings();
         DefaultGateway checkDefaultGateway = checkNetSettings.getDefaultGateway();
-        assertEquals("Gateway addres does not match", checkDefaultGateway.getIpv4Address(), gwAddressString);
+        assertEquals(checkDefaultGateway.getIpv4Address(), gwAddressString, "Gateway addres does not match");
         Interface checkIface = checkNetSettings.getInterface();
-        assertEquals("Interface name does not match", checkIface.getName(), ifaceNameString);
-        assertEquals("Interface type does not match", checkIface.getType(), ifaceType);
-        assertEquals("Interface description does not match", checkIface.getDescription(), ifDescriptionString);
+        assertEquals(checkIface.getName(), ifaceNameString, "Interface name does not match");
+        assertEquals(checkIface.getType(), ifaceType, "Interface type does not match");
+        assertEquals(checkIface.getDescription(), ifDescriptionString, "Interface description does not match");
         
         Iterable<IPEntry> checkIPEntries = checkIface.getIPList();
         IPEntry entry = findIpInList(checkIPEntries, ipv4Address);
-        assertNotNull("IPv4 address does not match", entry);
+        assertNotNull(entry, "IPv4 address does not match");
         try {
-            assertEquals("IPv4 prefix does not match", entry.getPrefix(), calculatePrefix(InetAddress.getByName(ipv4Mask)));
+            assertEquals(entry.getPrefix(), calculatePrefix(InetAddress.getByName(ipv4Mask)), "IPv4 prefix does not match");
         } catch (UnknownHostException ex) {
             Logger.getLogger(AnnounceDeserializerTest.class.getName()).log(Level.SEVERE, "Could not convert netmask", ex);
         }
         
         entry = findIpInList(checkIPEntries, ipv6Address);
-        assertNotNull("IPv6 address does not match", entry);
+        assertNotNull(entry, "IPv6 address does not match");
 
-        assertEquals("IPv6 prefix does not match", entry.getPrefix(), ipv6Prefix);
+        assertEquals(entry.getPrefix(), ipv6Prefix, "IPv6 prefix does not match");
         
         Router checkRouter = checkAnnounceParams.getRouter();
-        assertEquals("router uuid entry does not match", checkRouter.getUuid(), routerUUID);
-
+        assertEquals(checkRouter.getUuid(), routerUUID, "router uuid entry does not match");
         Iterable<ServiceEntry> checkServices = checkAnnounceParams.getServices();
         for (ServiceEntry s : checkServices) {
             String serviceType = s.getType();
-            assertTrue("Service type neither http nor streaming", serviceType.equals(httpType) || serviceType.equals(streamType));
+            assertTrue(serviceType.equals(httpType) || serviceType.equals(streamType), "Service type neither http nor streaming");
             int port = s.getPort(); 
             if (serviceType.equals(httpType)) {
-                assertEquals("http port does not match", port, httpPort);
+                assertEquals(port, httpPort, "http port does not match");
             } else {
-                assertEquals("streaming port does not match", port, streamPort);
+                assertEquals(port, streamPort, "streaming port does not match");
             }
         }
     }

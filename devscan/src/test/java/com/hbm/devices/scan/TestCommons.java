@@ -1,9 +1,8 @@
 package com.hbm.devices.scan;
 
-
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -20,8 +19,8 @@ public class TestCommons
      *            utility class to verify.
      */
     public static void assertUtilityClassWellDefined(final Class<?> clazz) {
-        assertTrue("class must be final", Modifier.isFinal(clazz.getModifiers()));
-        assertEquals("There must be only one constructor", 1, clazz.getDeclaredConstructors().length);
+        assertTrue(Modifier.isFinal(clazz.getModifiers()), "class must be final");
+        assertEquals(1, clazz.getDeclaredConstructors().length, "There must be only one constructor");
         Constructor<?> constructor;
         try {
             constructor = clazz.getDeclaredConstructor();

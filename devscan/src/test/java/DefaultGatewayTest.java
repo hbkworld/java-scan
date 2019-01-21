@@ -26,12 +26,11 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -46,7 +45,7 @@ public class DefaultGatewayTest {
     private Announce announce;
     private FakeMessageReceiver fsmmr;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
@@ -63,11 +62,11 @@ public class DefaultGatewayTest {
     @Test
     public void getAddresses() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Go not Announce object", announce);
+        assertNotNull(announce, "Go not Announce object");
         DefaultGateway gateway = announce.getParams().getNetSettings().getDefaultGateway();
         String ipv4 = gateway.getIpv4Address();
-        assertNotNull("IPv4 address is not set", ipv4);
+        assertNotNull(ipv4, "IPv4 address is not set");
         String ipv6 = gateway.getIpv6Address();
-        assertNull("IPv6 address is set", ipv6);
+        assertNull(ipv6, "IPv6 address is set");
     }
 }

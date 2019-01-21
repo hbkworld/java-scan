@@ -26,11 +26,10 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
@@ -41,7 +40,7 @@ public class ConfigurationMessageReceiverTest {
     @Test
     public void intantiation() {
         try (final ConfigurationMessageReceiver cr = new ConfigurationMessageReceiver()) {
-            assertNotNull("Could not instantiate ConfigurationMessageReceiver", cr);
+            assertNotNull(cr, "Could not instantiate ConfigurationMessageReceiver");
         } catch (IOException e) {
             fail("Got IOException while instantiating ConfigurationMessageReceiver");
         }
@@ -51,13 +50,13 @@ public class ConfigurationMessageReceiverTest {
     public void runAndStop() {
         try {
             ConfigurationMessageReceiver cr = new ConfigurationMessageReceiver();
-            assertNotNull("Could not instantiate ConfigurationMessageReceiver", cr);
+            assertNotNull(cr, "Could not instantiate ConfigurationMessageReceiver");
             Thread crThread = new Thread(cr);
             crThread.start();
             Thread.sleep(10);
             cr.close();
             crThread.join(1000);
-            assertFalse("Thread still alive after close", crThread.isAlive());
+            assertFalse(crThread.isAlive(), "Thread still alive after close");
         } catch (IOException e) {
             fail("Got IOException while instantiating ConfigurationMessageReceiver");
         } catch (InterruptedException e) {

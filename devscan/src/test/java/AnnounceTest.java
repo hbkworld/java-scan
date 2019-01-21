@@ -26,15 +26,14 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotSame;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -48,7 +47,7 @@ public class AnnounceTest {
     private Announce announce;
     private FakeMessageReceiver fsmmr;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
@@ -65,24 +64,24 @@ public class AnnounceTest {
     @Test
     public void testEquals() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Got no Announce object", announce);
+        assertNotNull(announce, "Got no Announce object");
         Object object = new Object();
-        assertFalse("equals returns true for object !instanceof Announce", announce.equals(object));
-        assertEquals("equals with same object returns false", announce, announce);
+        assertFalse(announce.equals(object), "equals returns true for object !instanceof Announce");
+        assertEquals(announce, announce, "equals with same object returns false");
         Announce oldAnnounce = announce;
 
         fsmmr.emitCorrectMessageManual();
-        assertNotEquals("Both announce are different, but equals returns true", oldAnnounce, announce);
-        assertNotSame("Both announce are different, but hashCodes are the same", oldAnnounce.hashCode(), announce.hashCode());
+        assertNotEquals(oldAnnounce, announce, "Both announce are different, but equals returns true");
+        assertNotSame(oldAnnounce.hashCode(), announce.hashCode(), "Both announce are different, but hashCodes are the same");
     }
 
     @Test
     public void testCookie() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Got no Announce object", announce);
+        assertNotNull(announce, "Got no Announce object");
         Object object = new Object();
         announce.setCookie(object);
 
-        assertSame("Cookie object is not the same as before", object, announce.getCookie());
+        assertSame(object, announce.getCookie(), "Cookie object is not the same as before");
     }
 }

@@ -28,17 +28,15 @@
 
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.io.InputStream;
 import java.io.IOException;
 import java.util.Properties;
-import org.junit.Before;
-import org.junit.Test;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
 
@@ -51,7 +49,7 @@ public class AnnounceCacheTest {
     private FakeMessageReceiver fakeReceiver;
     private AnnounceDeserializer parser;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.fakeReceiver = new FakeMessageReceiver();
         this.parser = new AnnounceDeserializer();
@@ -61,29 +59,29 @@ public class AnnounceCacheTest {
     @Test
     public void addDeviceToCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
-        assertSame("Entries in cache != 1", parser.getCache().size(), 1);
-        assertSame("Paths in cache != 1", parser.getCache().lastAnnounceSize(), 1);
-        assertNotNull("JSON message not in cache", parser.getCache().get(CORRECT_MESSAGE));
+        assertSame(parser.getCache().size(), 1, "Entries in cache != 1");
+        assertSame(parser.getCache().lastAnnounceSize(), 1, "Paths in cache != 1");
+        assertNotNull(parser.getCache().get(CORRECT_MESSAGE), "JSON message not in cache");
 
         fakeReceiver.emitSingleCorrectMessageDifferentDevice();
-        assertSame("Entries in cache != 2", parser.getCache().size(), 2);
-        assertSame("Paths in cache != 2", parser.getCache().lastAnnounceSize(), 2);
-        assertNotNull("JSON message not in cache", parser.getCache().get(CORRECT_MESSAGE));
-        assertNotNull("JSON message not in cache", parser.getCache().get(CORRECT_MESSAGE_DIFFERENT_DEVICE));
+        assertSame(parser.getCache().size(), 2, "Entries in cache != 2");
+        assertSame(parser.getCache().lastAnnounceSize(), 2, "Paths in cache != 2");
+        assertNotNull(parser.getCache().get(CORRECT_MESSAGE), "JSON message not in cache");
+        assertNotNull(parser.getCache().get(CORRECT_MESSAGE_DIFFERENT_DEVICE), "JSON message not in cache");
     }
 
     @Test
     public void getFromCacheTest() {
         fakeReceiver.emitSingleCorrectMessage();
-        assertNotNull("Correct message not in cache", parser.getCache().get(CORRECT_MESSAGE));
+        assertNotNull(parser.getCache().get(CORRECT_MESSAGE), "Correct message not in cache");
     }
 
     @Test
     public void dontAddTwiceTest() {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessage();
-        assertSame("Message was added more than once", parser.getCache().size(), 1);
-        assertSame("Message was added more than once", parser.getCache().lastAnnounceSize(), 1);
+        assertSame(parser.getCache().size(), 1, "Message was added more than once");
+        assertSame(parser.getCache().lastAnnounceSize(), 1, "Message was added more than once");
     }
 
     @Test
@@ -91,10 +89,10 @@ public class AnnounceCacheTest {
         fakeReceiver.emitSingleCorrectMessage();
         fakeReceiver.emitSingleCorrectMessageDifferentServices();
 
-        assertSame("Correct message not in cache", parser.getCache().size(), 1);
-        assertSame("Correct message not in cache", parser.getCache().lastAnnounceSize(), 1);
-        assertNull("Original message still in cache", parser.getCache().get(CORRECT_MESSAGE));
-        assertNotNull("New message not in cache", parser.getCache().get(CORRECT_MESSAGE_DIFFERENT_SERVICES));
+        assertSame(parser.getCache().size(), 1, "Correct message not in cache");
+        assertSame(parser.getCache().lastAnnounceSize(), 1, "Correct message not in cache");
+        assertNull(parser.getCache().get(CORRECT_MESSAGE), "Original message still in cache");
+        assertNotNull(parser.getCache().get(CORRECT_MESSAGE_DIFFERENT_SERVICES), "New message not in cache");
     }
 
     static {

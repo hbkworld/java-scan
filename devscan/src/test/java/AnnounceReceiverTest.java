@@ -26,12 +26,10 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.fail;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.net.NetworkInterface;
@@ -44,12 +42,12 @@ public class AnnounceReceiverTest {
     @Test
     public void intantiation() {
         try (final AnnounceReceiver ar = new AnnounceReceiver()) {
-            assertNotNull("Could not instantiate AnnounceReceiver", ar);
+            assertNotNull(ar, "Could not instantiate AnnounceReceiver");
         } catch (IOException e) {
             fail("Got IOException while instantiating AnnounceReceiver");
         }
         try (final AnnounceReceiver ar = new AnnounceReceiver(Predicates.<NetworkInterface>alwaysFalse())) {
-            assertNotNull("Could not instantiate AnnounceReceiver", ar);
+            assertNotNull(ar, "Could not instantiate AnnounceReceiver");
         } catch (IOException e) {
             fail("Got IOException while instantiating AnnounceReceiver");
         }
@@ -59,13 +57,13 @@ public class AnnounceReceiverTest {
     public void runAndStop() {
         try {
             AnnounceReceiver ar = new AnnounceReceiver();
-            assertNotNull("Could not instantiate AnnounceReceiver", ar);
+            assertNotNull(ar, "Could not instantiate AnnounceReceiver");
             Thread arThread = new Thread(ar);
             arThread.start();
             Thread.sleep(10);
             ar.close();
             arThread.join(1000);
-            assertFalse("Thread still alive after stop", arThread.isAlive());
+            assertFalse(arThread.isAlive(), "Thread still alive after stop");
         } catch (IOException e) {
             fail("Got IOException while instantiating AnnounceReceiver");
         } catch (InterruptedException e) {

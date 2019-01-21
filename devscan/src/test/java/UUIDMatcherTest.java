@@ -26,12 +26,11 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -56,8 +55,8 @@ public class UUIDMatcherTest {
     public void checkUUIDs() {
         Matcher matcher = new UUIDMatch(uuids);
         filter = new Filter(matcher);
-        assertArrayEquals("filter strings for ServicetypeMatcher are not correct", uuids, matcher.getFilterStrings());
-        assertEquals("matchers are not equal", matcher, filter.getMatcher());
+        assertArrayEquals(uuids, matcher.getFilterStrings(), "filter strings for ServicetypeMatcher are not correct");
+        assertEquals(matcher, filter.getMatcher(), "matchers are not equal");
     }
 
     @Test
@@ -75,7 +74,7 @@ public class UUIDMatcherTest {
         });
 
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a Announce object", announce);
+        assertNotNull(announce, "Didn't got a Announce object");
     }
 
     @Test
@@ -93,7 +92,7 @@ public class UUIDMatcherTest {
         });
 
         fsmmr.emitSingleCorrectMessage();
-        assertNull("Got Announce object despite not matching", announce);
+        assertNull(announce, "Got Announce object despite not matching");
     }
 
     @Test
@@ -111,7 +110,7 @@ public class UUIDMatcherTest {
         });
 
         fsmmr.emitMissingDeviceUuidMessage();
-        assertNull("Got Announce object despite empty service section", announce);
+        assertNull(announce, "Got Announce object despite empty service section");
     }
 }
 
