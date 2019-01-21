@@ -26,13 +26,13 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-import org.junit.Rule;
-import org.junit.rules.ExpectedException;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import java.net.NetworkInterface;
@@ -46,18 +46,12 @@ import com.hbm.devices.scan.ScanInterfaces;
 
 public class ConfigurationMulticastSenderTest {
 
-    @Rule
-    public ExpectedException exception = ExpectedException.none();
-
     @Test
     public void createWithNoInterfaces() {
-        try {
-            exception.expect(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> {
             ConfigurationMulticastSender sender = new ConfigurationMulticastSender(null);
-            assertNotNull("Could not instantiate ConfigurationMulticastSender", sender);
-        } catch (IOException e) {
-            fail("Can't instantiate ConfigurationMulticastSender object");
-        }
+            assertNotNull(sender, "Could not instantiate ConfigurationMulticastSender");
+        });
     }
 
     @Test
@@ -75,7 +69,7 @@ public class ConfigurationMulticastSenderTest {
             };
             final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces(predicate).getInterfaces();
             for (NetworkInterface sendInterface : sendInterfaces) {
-                assertTrue("Predicate wasn't applied as expected", predicate.apply(sendInterface));
+                assertTrue(predicate.apply(sendInterface), "Predicate wasn't applied as expected");
             }
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object");
@@ -88,7 +82,7 @@ public class ConfigurationMulticastSenderTest {
             final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
             ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
             sender.close();
-            assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+            assertTrue(sender.isClosed(), "ConfigurationMulticastSender was not closed");
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object");
         }
@@ -100,9 +94,9 @@ public class ConfigurationMulticastSenderTest {
             final Collection<NetworkInterface> sendInterfaces = new ScanInterfaces().getInterfaces();
             ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
             sender.close();
-            assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+            assertTrue(sender.isClosed(), "ConfigurationMulticastSender was not closed");
             sender.close();
-            assertTrue("Sedonc close failed", sender.isClosed());
+            assertTrue(sender.isClosed(), "Second close failed");
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object");
         }
@@ -114,7 +108,7 @@ public class ConfigurationMulticastSenderTest {
             ConfigurationMulticastSender sender = new ConfigurationMulticastSender(sendInterfaces);
             sender.sendMessage("hello world");
             sender.close();
-            assertTrue("ConfigurationMulticastSender was not closed", sender.isClosed());
+            assertTrue(sender.isClosed(), "ConfigurationMulticastSender was not closed");
         } catch (IOException e) {
             fail("Can't instantiate ConfigurationMulticastSender object or send message");
         }

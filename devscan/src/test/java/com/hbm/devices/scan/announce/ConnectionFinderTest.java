@@ -1,12 +1,10 @@
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.InetAddress;
 import java.net.Inet4Address;
@@ -25,7 +23,7 @@ public class ConnectionFinderTest {
     private Announce announce;
     private FakeMessageReceiver fsmmr;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         announce = null;
         fsmmr = new FakeMessageReceiver();
@@ -45,7 +43,7 @@ public class ConnectionFinderTest {
         try {
             ScanInterfaces interfaces = new ScanInterfaces();
             ConnectionFinder finder = new ConnectionFinder(interfaces.getInterfaces());
-            assertNotNull("ConnectionFinder cannot be constructed", finder);
+            assertNotNull(finder, "ConnectionFinder cannot be constructed");
         } catch (SocketException e) {
             fail("Got SocketException while building list of scan interfaces");
         }
@@ -66,9 +64,9 @@ public class ConnectionFinderTest {
             ConnectionFinder finder = new ConnectionFinder(ipv4List, ipv6List);
 
             fsmmr.emitSingleCorrectMessage();
-            assertNotNull("No Announce object after correct message", announce);
+            assertNotNull(announce, "No Announce object after correct message");
 
-            assertFalse("List of connectable addresses is empty", finder.getSameNetworkAddresses(announce).isEmpty());
+            assertFalse(finder.getSameNetworkAddresses(announce).isEmpty(), "List of connectable addresses is empty");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }

@@ -26,13 +26,12 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -52,7 +51,7 @@ public class ServicetypeMatchTest {
     private final Matcher matcher = new ServicetypeMatch(serviceTypes);
     private Filter filter;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
@@ -69,32 +68,32 @@ public class ServicetypeMatchTest {
 
     @Test
     public void checkServiceTypes() {
-        assertArrayEquals("filter strings for ServicetypeMatcher are not correct", serviceTypes, matcher.getFilterStrings());
-        assertEquals("matchers are not equal", matcher, filter.getMatcher());
+        assertArrayEquals(serviceTypes, matcher.getFilterStrings(), "filter strings for ServicetypeMatcher are not correct");
+        assertEquals(matcher, filter.getMatcher(), "matchers are not equal");
     }
 
     @Test
     public void stFilterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a Announce object", announce);
+        assertNotNull(announce, "Didn't got a Announce object");
     }
 
     @Test
     public void stFilterEmptyServiceMessage() {
         fsmmr.emitEmptyServiceMessage();
-        assertNull("Got Announce object despite empty service section", announce);
+        assertNull(announce, "Got Announce object despite empty service section");
     }
 
     @Test
     public void stFilterMissingServiceMessage() {
         fsmmr.emitMissingServiceMessage();
-        assertNull("Got Announce object despite missing service section", announce);
+        assertNull(announce, "Got Announce object despite missing service section");
     }
 
     @Test
     public void stFilterMissingHttpMessage() {
         fsmmr.emitMissingHttpMessage();
-        assertNull("Got Announce object despite missing http entry", announce);
+        assertNull(announce, "Got Announce object despite missing http entry");
     }
 }
 

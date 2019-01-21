@@ -28,16 +28,16 @@
 
 package com.hbm.devices.scan.configure;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
+import static java.time.Duration.ofMillis;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTimeout;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import java.io.IOException;
 
 import com.google.gson.JsonElement;
@@ -54,7 +54,7 @@ public class ConfigurationServiceTest {
     private boolean error;
     private boolean timeout;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.messageParser = new ResponseDeserializer();
         this.parser = new JsonParser();
@@ -84,9 +84,6 @@ public class ConfigurationServiceTest {
         };
     }
 
-    @Rule 
-    public ExpectedException exception = ExpectedException.none(); 
-
     @Test
     public void sendingTest() {
         ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
@@ -104,7 +101,7 @@ public class ConfigurationServiceTest {
         String testString = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST_UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
         JsonElement testMessage = parser.parse(testString);
         JsonElement sent = parser.parse(fakeSender.getLastSent());
-        assertEquals("Sent message and test message are not equal", sent, testMessage);
+        assertEquals(sent, testMessage, "Sent message and test message are not equal");
     }
 
     @Test
@@ -113,7 +110,7 @@ public class ConfigurationServiceTest {
         ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
         ConfigurationService service = new ConfigurationService(sender, messageParser);
         service.close();
-        assertTrue("Service was not closed", service.isClosed());
+        assertTrue(service.isClosed(), "Service was not closed");
     }
 
     @Test
@@ -137,176 +134,180 @@ public class ConfigurationServiceTest {
             e.printStackTrace();
         }
 
-        assertTrue("No success response received", success && !error && !timeout);
-        assertFalse("Service is still waiting for responses", service.awaitingResponse());
+        assertTrue(success && !error && !timeout, "No success response received");
+        assertFalse(service.awaitingResponse(), "Service is still waiting for responses");
     }
 
-    @Test(timeout = 200)
-    public void checkTimeout() {
-
-        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
-        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
-        ConfigurationParams configParams = new ConfigurationParams(device, settings);
-
-        FakeMulticastSender fakeSender = new FakeMulticastSender();
-        ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
-        ConfigurationService service = new ConfigurationService(sender, messageParser);
-
-        try {
-            service.sendConfiguration(configParams, cb, 50);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        assertTrue("Service is not waiting for responses", service.awaitingResponse());
-        synchronized(cb) {
-            while (!timeout && !success && !error) {
-                try {
-                    cb.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+     public void checkTimeout() {
+         assertTimeout(ofMillis(200), () -> {
+            ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+            ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+            ConfigurationParams configParams = new ConfigurationParams(device, settings);
+ 
+            FakeMulticastSender fakeSender = new FakeMulticastSender();
+            ConfigurationSerializer sender = new ConfigurationSerializer(fakeSender);
+            ConfigurationService service = new ConfigurationService(sender, messageParser);
+ 
+            try {
+                service.sendConfiguration(configParams, cb, 50);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            assertTrue(service.awaitingResponse(), "Service is not waiting for responses");
+            synchronized(cb) {
+                while (!timeout && !success && !error) {
+                    try {
+                        cb.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
-        assertTrue("Haven't got timeout", !success && !error && timeout);
-        assertFalse("Service is still waiting for responses", service.awaitingResponse());
-    }
-
-    @Test(timeout=1000)
-    public void testWrongResponseID() {
-
-        final String queryID = "wrong-id";
-
-        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
-        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
-        
-        fakeDevice.addObserver(messageParser);
-        ConfigurationService service = new ConfigurationService(sender, messageParser);
-
-        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
-        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
-        ConfigurationParams configParams = new ConfigurationParams(device, settings);
-
-        synchronized(cb) {
+            assertTrue(!success && !error && timeout, "Haven't got timeout");
+            assertFalse(service.awaitingResponse(), "Service is still waiting for responses");
+         });
+     }
+ 
+     @Test
+     public void testWrongResponseID() {
+         assertTimeout(ofMillis(200), () -> {
+            final String queryID = "wrong-id";
+ 
+            FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+            ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+            
+            fakeDevice.addObserver(messageParser);
+            ConfigurationService service = new ConfigurationService(sender, messageParser);
+ 
+            ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+            ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+            ConfigurationParams configParams = new ConfigurationParams(device, settings);
+ 
+            synchronized(cb) {
+                try {
+                    service.sendConfiguration(configParams, queryID, cb, 100);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while (!timeout && !success && !error) {
+                    try {
+                        cb.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+ 
+            assertTrue(timeout && !success && !error, "Illegal response not ignored");
+            service.close();
+         });
+     }
+ 
+     @Test
+     public void testErrorResponse() {
+         assertTimeout(ofMillis(1000), () -> {
+            final String queryID = "error";
+ 
+            FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+            ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+            
+            fakeDevice.addObserver(messageParser);
+            ConfigurationService service = new ConfigurationService(sender, messageParser);
+ 
+            ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+            ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+            ConfigurationParams configParams = new ConfigurationParams(device, settings);
+ 
+            synchronized(cb) {
+                try {
+                    service.sendConfiguration(configParams, queryID, cb, 100);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                while (!timeout && !success && !error) {
+                    try {
+                        cb.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+ 
+            assertTrue(error && !timeout && !success, "Illegal response not ignored");
+            service.close();
+         });
+     }
+ 
+     @Test
+     public void testErrorResponseNoMessage() {
+         assertTimeout(ofMillis(1000), () -> {
+            final String queryID = "error-no-message";
+ 
+            FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+            ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+            
+            fakeDevice.addObserver(messageParser);
+            ConfigurationService service = new ConfigurationService(sender, messageParser);
+ 
+            ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+            ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+            ConfigurationParams configParams = new ConfigurationParams(device, settings);
+ 
             try {
                 service.sendConfiguration(configParams, queryID, cb, 100);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            while (!timeout && !success && !error) {
-                try {
-                    cb.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+ 
+            synchronized(cb) {
+                while (!timeout && !success && !error) {
+                    try {
+                        cb.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
-
-        assertTrue("Illegal response not ignored", timeout && !success && !error);
-        service.close();
-    }
-
-    @Test(timeout=1000)
-    public void testErrorResponse() {
-
-        final String queryID = "error";
-
-        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
-        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
-        
-        fakeDevice.addObserver(messageParser);
-        ConfigurationService service = new ConfigurationService(sender, messageParser);
-
-        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
-        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
-        ConfigurationParams configParams = new ConfigurationParams(device, settings);
-
-        synchronized(cb) {
-            try {
-                service.sendConfiguration(configParams, queryID, cb, 100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            while (!timeout && !success && !error) {
+ 
+            assertTrue(timeout && !error && !success, "Illegal response not ignored");
+            service.close();
+         });
+     }
+ 
+     @Test
+     public void testErrorResponseEmptyMessage() {
+         assertTimeout(ofMillis(1000), () -> {
+            final String queryID = "error-empty-message";
+ 
+            FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
+            ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
+            
+            fakeDevice.addObserver(messageParser);
+            ConfigurationService service = new ConfigurationService(sender, messageParser);
+ 
+            ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
+            ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
+            ConfigurationParams configParams = new ConfigurationParams(device, settings);
+ 
+            synchronized(cb) {
                 try {
-                    cb.wait();
-                } catch (InterruptedException e) {
+                    service.sendConfiguration(configParams, queryID, cb, 100);
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
-
-        assertTrue("Illegal response not ignored", error && !timeout && !success);
-        service.close();
-    }
-
-    @Test(timeout=1000)
-    public void testErrorResponseNoMessage() {
-
-        final String queryID = "error-no-message";
-
-        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
-        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
-        
-        fakeDevice.addObserver(messageParser);
-        ConfigurationService service = new ConfigurationService(sender, messageParser);
-
-        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
-        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
-        ConfigurationParams configParams = new ConfigurationParams(device, settings);
-
-        try {
-            service.sendConfiguration(configParams, queryID, cb, 100);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        synchronized(cb) {
-            while (!timeout && !success && !error) {
-                try {
-                    cb.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                while (!timeout && !success && !error) {
+                    try {
+                        cb.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
-
-        assertTrue("Illegal response not ignored", timeout && !error && !success);
-        service.close();
-    }
-
-    @Test(timeout=1000)
-    public void testErrorResponseEmptyMessage() {
-
-        final String queryID = "error-empty-message";
-
-        FakeDeviceEmulator fakeDevice = new FakeDeviceEmulator(queryID);
-        ConfigurationSerializer sender = new ConfigurationSerializer(fakeDevice);
-        
-        fakeDevice.addObserver(messageParser);
-        ConfigurationService service = new ConfigurationService(sender, messageParser);
-
-        ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
-        ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
-        ConfigurationParams configParams = new ConfigurationParams(device, settings);
-
-        synchronized(cb) {
-            try {
-                service.sendConfiguration(configParams, queryID, cb, 100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            while (!timeout && !success && !error) {
-                try {
-                    cb.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        assertTrue("Illegal response not ignored", timeout && !error && !success);
-        service.close();
-    }
+ 
+            assertTrue(timeout && !error && !success, "Illegal response not ignored");
+            service.close();
+         });
+     }
 
     @Test
     public void testNoConfigParams() {
@@ -322,15 +323,12 @@ public class ConfigurationServiceTest {
         ConfigurationDevice device = new ConfigurationDevice("0009E5001571");
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
 
-        try {
-            exception.expect(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> {
             service.sendConfiguration(null, queryID, cb, 100);
             fail("Not failed despite no config params given");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
-        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        assertTrue(!timeout && !error && !success, "Illegal response not ignored");
         service.close();
     }
 
@@ -349,15 +347,12 @@ public class ConfigurationServiceTest {
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
-        try {
-            exception.expect(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> {
             service.sendConfiguration(configParams, queryID, cb, 0);
             fail("Not failed despite no config params given");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
-        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        assertTrue(!timeout && !error && !success, "Illegal response not ignored");
         service.close();
     }
 
@@ -376,15 +371,12 @@ public class ConfigurationServiceTest {
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
-        try {
-            exception.expect(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> {
             service.sendConfiguration(configParams, queryID, null, 100);
             fail("Not failed despite no config params given");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
-        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        assertTrue(!timeout && !error && !success, "Illegal response not ignored");
         service.close();
     }
 
@@ -403,15 +395,12 @@ public class ConfigurationServiceTest {
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
-        try {
-            exception.expect(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> {
             service.sendConfiguration(configParams, null, cb, 100);
             fail("Not failed despite no config params given");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
-        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        assertTrue(!timeout && !error && !success, "Illegal response not ignored");
         service.close();
     }
 
@@ -430,15 +419,12 @@ public class ConfigurationServiceTest {
         ConfigurationNetSettings settings = new ConfigurationNetSettings(new ConfigurationInterface("eth0", Method.DHCP));
         ConfigurationParams configParams = new ConfigurationParams(device, settings);
 
-        try {
-            exception.expect(IllegalArgumentException.class);
+        assertThrows(IllegalArgumentException.class, () -> {
             service.sendConfiguration(configParams, "", cb, 100);
             fail("Not failed despite no config params given");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        });
 
-        assertTrue("Illegal response not ignored", !timeout && !error && !success);
+        assertTrue(!timeout && !error && !success, "Illegal response not ignored");
         service.close();
     }
 }

@@ -26,13 +26,12 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -52,7 +51,7 @@ public class FamilytypeMatchTest {
     private final Matcher matcher = new FamilytypeMatch(families);
     private Filter filter;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fsmmr = new FakeMessageReceiver();
         AnnounceDeserializer parser = new AnnounceDeserializer();
@@ -68,20 +67,20 @@ public class FamilytypeMatchTest {
 
     @Test
     public void checkFamilyTypes() {
-        assertArrayEquals("filter strings for FamilytypeMatcher are not correct", families, matcher.getFilterStrings());
-        assertEquals("matcher are not equal", matcher, filter.getMatcher());
+        assertArrayEquals(families, matcher.getFilterStrings(), "filter strings for FamilytypeMatcher are not correct");
+        assertEquals(matcher, filter.getMatcher(), "matcher are not equal");
     }
 
     @Test
     public void ftFilterCorrectMessage() {
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("Didn't got a Announce object", announce);
+        assertNotNull(announce, "Didn't got a Announce object");
     }
 
     @Test
     public void ftFilterMissingFamilyTypeMessage() {
         fsmmr.emitMissingFamilyTypeMessage();
-        assertNull("Got Announce object despite missing family type", announce);
+        assertNull(announce, "Got Announce object despite missing family type");
     }
 }
 

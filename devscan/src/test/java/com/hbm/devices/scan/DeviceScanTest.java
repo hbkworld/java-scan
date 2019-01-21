@@ -1,10 +1,9 @@
 package com.hbm.devices.scan;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class DeviceScanTest {
     @Test
@@ -16,8 +15,8 @@ public class DeviceScanTest {
     public void versionTest() {
         try {
             String version = DeviceScan.VERSION;
-            assertNotNull("Version string is null", version);
-            assertFalse("Version string is empty", version.isEmpty());
+            assertNotNull(version, "Version string is null");
+            assertFalse(version.isEmpty(), "Version string is empty");
         } catch (ExceptionInInitializerError e) {
             fail("Could not read version information");
         }

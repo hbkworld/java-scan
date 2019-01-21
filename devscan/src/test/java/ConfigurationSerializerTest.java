@@ -26,13 +26,12 @@
  * SOFTWARE.
  */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Rule;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 
@@ -53,7 +52,7 @@ public class ConfigurationSerializerTest {
     private ConfigurationSerializer cs;
     private JsonParser parser;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         fs = new FakeMulticastSender();
         cs = new ConfigurationSerializer(fs);
@@ -75,20 +74,22 @@ public class ConfigurationSerializerTest {
         String correctOutParsed = "{\"params\":{\"device\":{\"uuid\":\"0009E5001571\"},\"netSettings\":{\"interface\":{\"name\":\"eth0\",\"configurationMethod\":\"dhcp\"}},\"ttl\":1},\"id\":\"TEST-UUID\",\"jsonrpc\":\"2.0\",\"method\":\"configure\"}";
         JsonElement correct = parser.parse(correctOutParsed);
         JsonElement sent = parser.parse(fs.getLastSent());
-        assertEquals("Configuration request and check string are not equal", sent, correct);
+        assertEquals(sent, correct, "Configuration request and check string are not equal");
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test
     public void parseNullConfigure() {
-        try {
-            cs.sendConfiguration(null);
-        } catch (IOException e) {
-        }
+        assertThrows(IllegalArgumentException.class, () -> {
+            try {
+                cs.sendConfiguration(null);
+            } catch (IOException e) {
+            }
+        });
     }
 
     @Test
     public void closeTest() {
         cs.close();
-        assertTrue("Sender was not closed", cs.isClosed());
+        assertTrue(cs.isClosed(), "Sender was not closed");
     }
 }

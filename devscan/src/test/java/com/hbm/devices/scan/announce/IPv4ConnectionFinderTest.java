@@ -1,14 +1,12 @@
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -24,7 +22,7 @@ public class IPv4ConnectionFinderTest {
     private Announce announce;
     private FakeMessageReceiver fsmmr;
     
-    @Before
+    @BeforeEach
     public void setUp() {
         announce = null;
         fsmmr = new FakeMessageReceiver();
@@ -48,7 +46,7 @@ public class IPv4ConnectionFinderTest {
             InetAddress interfaceAddress = InetAddress.getByName("172.19.1.2");
             int interfacePrefix = 16;
 
-            assertTrue("Addresses should be in the same net", ConnectionFinder.sameIPv4Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
+            assertTrue(ConnectionFinder.sameIPv4Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix), "Addresses should be in the same net");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -62,7 +60,7 @@ public class IPv4ConnectionFinderTest {
             InetAddress interfaceAddress = InetAddress.getByName("172.19.1.2");
             int interfacePrefix = 15;
 
-            assertFalse("Addresses should not be in the same net", ConnectionFinder.sameIPv4Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix));
+            assertFalse(ConnectionFinder.sameIPv4Net(announceAddress, announcePrefix, interfaceAddress, interfacePrefix), "Addresses should not be in the same net");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -71,10 +69,10 @@ public class IPv4ConnectionFinderTest {
     @Test
     public void calculatePrefixTest() {
         try {
-            assertEquals("prefix conversion failed", AnnounceDeserializer.calculatePrefix(InetAddress.getByName("0.0.0.0")), 0);
-            assertEquals("prefix conversion failed", AnnounceDeserializer.calculatePrefix(InetAddress.getByName("255.255.255.255")), 32);
-            assertEquals("prefix conversion failed", AnnounceDeserializer.calculatePrefix(InetAddress.getByName("255.63.0.0")), 14);
-            assertEquals("prefix conversion failed", AnnounceDeserializer.calculatePrefix(InetAddress.getByName("127.0.0.0")), 7);
+            assertEquals(AnnounceDeserializer.calculatePrefix(InetAddress.getByName("0.0.0.0")), 0, "prefix conversion failed");
+            assertEquals(AnnounceDeserializer.calculatePrefix(InetAddress.getByName("255.255.255.255")), 32, "prefix conversion failed");
+            assertEquals(AnnounceDeserializer.calculatePrefix(InetAddress.getByName("255.63.0.0")), 14, "prefix conversion failed");
+            assertEquals(AnnounceDeserializer.calculatePrefix(InetAddress.getByName("127.0.0.0")), 7, "prefix conversion failed");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -90,9 +88,9 @@ public class IPv4ConnectionFinderTest {
             ConnectionFinder finder = new ConnectionFinder(list, new LinkedList<NetworkInterfaceAddress>());
 
             fsmmr.emitSingleCorrectMessage();
-            assertNotNull("No Announce object after correct message", announce);
+            assertNotNull(announce, "No Announce object after correct message");
             List<InetAddress> addresses = finder.getSameNetworkAddresses(announce);
-            assertFalse("Device not connectable", addresses.isEmpty());
+            assertFalse(addresses.isEmpty(), "Device not connectable");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -108,9 +106,9 @@ public class IPv4ConnectionFinderTest {
             ConnectionFinder finder = new ConnectionFinder(list, new LinkedList<NetworkInterfaceAddress>());
 
             fsmmr.emitSingleCorrectMessageNoIpv4();
-            assertNotNull("No Announce object after correct message", announce);
+            assertNotNull(announce, "No Announce object after correct message");
             List<InetAddress> addresses = finder.getSameNetworkAddresses(announce);
-            assertTrue("Device connectable", addresses.isEmpty());
+            assertTrue(addresses.isEmpty(), "Device connectable");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -126,8 +124,8 @@ public class IPv4ConnectionFinderTest {
             ConnectionFinder finder = new ConnectionFinder(list, new LinkedList<NetworkInterfaceAddress>());
 
             fsmmr.emitSingleMessageIpv6InIpv4();
-            assertNotNull("No Announce object after correct message", announce);
-            assertTrue("Device connectable", finder.getSameNetworkAddresses(announce).isEmpty());
+            assertNotNull(announce, "No Announce object after correct message");
+            assertTrue(finder.getSameNetworkAddresses(announce).isEmpty(), "Device connectable");
         } catch (UnknownHostException e) {
             fail("name resolution failed");
         }
@@ -139,7 +137,7 @@ public class IPv4ConnectionFinderTest {
         ConnectionFinder finder = new ConnectionFinder(list, new LinkedList<NetworkInterfaceAddress>());
 
         fsmmr.emitSingleCorrectMessage();
-        assertNotNull("No Announce object after correct message", announce);
-        assertTrue("Device not connectable", finder.getSameNetworkAddresses(announce).isEmpty());
+        assertNotNull(announce, "No Announce object after correct message");
+        assertTrue(finder.getSameNetworkAddresses(announce).isEmpty(), "Device not connectable");
     }
 }

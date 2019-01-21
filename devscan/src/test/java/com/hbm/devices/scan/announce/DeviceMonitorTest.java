@@ -28,14 +28,13 @@
 
 package com.hbm.devices.scan.announce;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Observable;
 import java.util.Observer;
-
-import org.junit.Before;
-import org.junit.Test;
 
 import com.hbm.devices.scan.FakeMessageReceiver;
 
@@ -49,7 +48,7 @@ public class DeviceMonitorTest {
     private Object event;
     private DeviceMonitor monitor;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         this.newDevice = false;
         this.updateDevice = false;
@@ -76,20 +75,20 @@ public class DeviceMonitorTest {
     @Test
     public void newDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue("No new device event fired", newDevice && !updateDevice && !lostDevice);
-        assertTrue("No anounce object in event", ((NewDeviceEvent)event).getAnnounce() instanceof Announce);
+        assertTrue(newDevice && !updateDevice && !lostDevice, "No new device event fired");
+        assertTrue(((NewDeviceEvent)event).getAnnounce() instanceof Announce, "No anounce object in event");
     }
 
     @Test
     public void updateDeviceEvent() {
         fsmmr.emitSingleCorrectMessage();
-        assertTrue("No new device event fired", newDevice && !updateDevice && !lostDevice);
+        assertTrue(newDevice && !updateDevice && !lostDevice, "No new device event fired");
         newDevice = false;
 
         fsmmr.emitSingleCorrentMessageDifferentIP();
-        assertTrue("No update device event fired", updateDevice && !newDevice && !lostDevice);
-        assertTrue("No old anounce object in event", ((UpdateDeviceEvent)event).getOldAnnounce() instanceof Announce);
-        assertTrue("No new anounce object in event", ((UpdateDeviceEvent)event).getNewAnnounce() instanceof Announce);
+        assertTrue(updateDevice && !newDevice && !lostDevice, "No update device event fired");
+        assertTrue(((UpdateDeviceEvent)event).getOldAnnounce() instanceof Announce, "No old anounce object in event");
+        assertTrue(((UpdateDeviceEvent)event).getNewAnnounce() instanceof Announce, "No new anounce object in event");
 
         updateDevice = false;
         newDevice = false;
@@ -97,7 +96,7 @@ public class DeviceMonitorTest {
 
         // Check if the event is not fired again
         fsmmr.emitSingleCorrentMessageDifferentIP();
-        assertFalse("Update device event fired twice", updateDevice || newDevice || lostDevice);
+        assertFalse(updateDevice || newDevice || lostDevice, "Update device event fired twice");
     }
 
     @Test
@@ -106,32 +105,32 @@ public class DeviceMonitorTest {
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {}
-        assertTrue("No lost device event fired", lostDevice && newDevice && !updateDevice);
-        assertTrue("No anounce object in event", ((LostDeviceEvent)event).getAnnounce() instanceof Announce);
+        assertTrue(lostDevice && newDevice && !updateDevice, "No lost device event fired");
+        assertTrue(((LostDeviceEvent)event).getAnnounce() instanceof Announce, "No anounce object in event");
     }
 
     @Test
     public void stopTestWithoutRunningTimer() {
-        assertFalse("monitor stopped after creation", monitor.isClosed());
+        assertFalse(monitor.isClosed(), "monitor stopped after creation");
         monitor.close();
-        assertTrue("monitor not stopped", monitor.isClosed());
+        assertTrue(monitor.isClosed(), "monitor not stopped");
     }
 
     @Test
     public void stopTestWithRunningTimer() {
-        assertFalse("monitor stopped after creation", monitor.isClosed());
+        assertFalse(monitor.isClosed(), "monitor stopped after creation");
         fsmmr.emitSingleCorrectMessage();
         monitor.close();
-        assertTrue("monitor not stopped", monitor.isClosed());
+        assertTrue(monitor.isClosed(), "monitor not stopped");
     }
 
     @Test
     public void messageAfterClose() {
-        assertFalse("monitor stopped after creation", monitor.isClosed());
+        assertFalse(monitor.isClosed(), "monitor stopped after creation");
         monitor.close();
-        assertTrue("monitor not stopped", monitor.isClosed());
+        assertTrue(monitor.isClosed(), "monitor not stopped");
 
         fsmmr.emitSingleCorrectMessage();
-        assertFalse("Got update after closed device monitor", updateDevice || newDevice || lostDevice);
+        assertFalse(updateDevice || newDevice || lostDevice, "Got update after closed device monitor");
     }
 }
