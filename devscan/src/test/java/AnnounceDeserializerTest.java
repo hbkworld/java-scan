@@ -144,6 +144,12 @@ public class AnnounceDeserializerTest {
     }
 
     @Test
+    public void parseInterfaceNameIsObjectMessage() {
+        fsmmr.emitInterfaceNameIsObjectMessage();
+        assertNull(announce, "Got Announce from message with interface name is an object");
+    }
+
+    @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
         assertNull(announce, "Got Announce from message without interface");
