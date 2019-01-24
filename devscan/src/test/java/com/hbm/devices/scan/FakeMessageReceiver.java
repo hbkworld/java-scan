@@ -70,7 +70,8 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String NO_INTERFACE_NAME_MESSAGE;
     private static final String EMPTY_INTERFACE_NAME_MESSAGE;
     private static final String INTERFACE_NAME_IS_NUMBER_MESSAGE;
-    private static final String INTERFACE_NAME_IS_ObJECT_MESSAGE;
+    private static final String INTERFACE_NAME_IS_OBJECT_MESSAGE;
+    private static final String NO_INTERFACE_DESCRIPTION_MESSAGE;
     private static final String NO_INTERFACE_MESSAGE;
     private static final String NO_NET_SETTINGS_MESSAGE;
     private static final String MISSING_ROUTER_UUID_MESSAGE;
@@ -242,8 +243,14 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
 
     public void emitInterfaceNameIsObjectMessage() {
         setChanged();
-        notifyObservers(INTERFACE_NAME_IS_ObJECT_MESSAGE);
+        notifyObservers(INTERFACE_NAME_IS_OBJECT_MESSAGE);
     }
+
+    public void emitNoInterfaceDescriptionMessage() {
+        setChanged();
+        notifyObservers(NO_INTERFACE_DESCRIPTION_MESSAGE);
+    }
+
 
     public void emitNoInterfaceMessage() {
         setChanged();
@@ -404,7 +411,8 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             NO_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.noInterfaceNameMessage");
             EMPTY_INTERFACE_NAME_MESSAGE = props.getProperty("scan.announce.emptyInterfaceNameMessage");
             INTERFACE_NAME_IS_NUMBER_MESSAGE = props.getProperty("scan.announce.interfaceNameIsNumber");
-            INTERFACE_NAME_IS_ObJECT_MESSAGE = props.getProperty("scan.announce.interfaceNameIsObject");
+            INTERFACE_NAME_IS_OBJECT_MESSAGE = props.getProperty("scan.announce.interfaceNameIsObject");
+            NO_INTERFACE_DESCRIPTION_MESSAGE = props.getProperty("scan.announce.correctMessageNoInterfaceDescription");
             NO_INTERFACE_MESSAGE = props.getProperty("scan.announce.noInterfaceMessage");
             NO_NET_SETTINGS_MESSAGE = props.getProperty("scan.announce.noNetSettingsMessage");
             MISSING_ROUTER_UUID_MESSAGE = props.getProperty("scan.announce.missingRouterUuidMessage");

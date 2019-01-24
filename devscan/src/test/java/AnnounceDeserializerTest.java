@@ -150,6 +150,12 @@ public class AnnounceDeserializerTest {
     }
 
     @Test
+    public void parseNoInterfaceDescriptionMessage() {
+        fsmmr.emitNoInterfaceDescriptionMessage();
+        assertNotNull(announce, "Got no Announce object from message with a mising (but optional) interface description");
+    }
+
+    @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
         assertNull(announce, "Got Announce from message without interface");
