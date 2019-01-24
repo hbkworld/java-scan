@@ -138,6 +138,30 @@ public class AnnounceDeserializerTest {
     }
 
     @Test
+    public void parseInterfaceNameIsNumberMessage() {
+        fsmmr.emitInterfaceNameIsNumberMessage();
+        assertNull(announce, "Got Announce from message with interface name is a number");
+    }
+
+    @Test
+    public void parseInterfaceNameIsObjectMessage() {
+        fsmmr.emitInterfaceNameIsObjectMessage();
+        assertNull(announce, "Got Announce from message with interface name is an object");
+    }
+
+    @Test
+    public void parseNoInterfaceDescriptionMessage() {
+        fsmmr.emitNoInterfaceDescriptionMessage();
+        assertNotNull(announce, "Got no Announce object from message with a missing (but optional) interface description");
+    }
+
+    @Test
+    public void parseNoInterfaceTypeMessage() {
+        fsmmr.emitNoInterfaceTypeMessage();
+        assertNotNull(announce, "Got no Announce object from message with a missing (but optional) interface type");
+    }
+
+    @Test
     public void parseNoInterfaceMessage() {
         fsmmr.emitNoInterfaceMessage();
         assertNull(announce, "Got Announce from message without interface");
