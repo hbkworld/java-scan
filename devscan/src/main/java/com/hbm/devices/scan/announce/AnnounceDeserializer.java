@@ -159,7 +159,7 @@ public final class AnnounceDeserializer extends Observable implements Observer {
             final JsonObject jsonObject = json.getAsJsonObject();
 
             JsonElement name = jsonObject.get("name");
-            if (name != null) {
+            if ((name != null) && name.isJsonPrimitive() && name.getAsJsonPrimitive().isString()) {
                 String interfaceName = name.getAsString();
                 if (interfaceName != null) {
                     Interface iface = new Interface();
