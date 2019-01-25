@@ -72,6 +72,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String INTERFACE_NAME_IS_NUMBER_MESSAGE;
     private static final String INTERFACE_NAME_IS_OBJECT_MESSAGE;
     private static final String NO_INTERFACE_DESCRIPTION_MESSAGE;
+    private static final String INTERFACE_DESCRIPTION_IS_NUMBER;
     private static final String NO_INTERFACE_TYPE_MESSAGE;
     private static final String NO_INTERFACE_MESSAGE;
     private static final String NO_NET_SETTINGS_MESSAGE;
@@ -252,6 +253,11 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(NO_INTERFACE_DESCRIPTION_MESSAGE);
     }
 
+    public void emitInterfaceDescriptionIsNumber() {
+        setChanged();
+        notifyObservers(INTERFACE_DESCRIPTION_IS_NUMBER);
+    }
+
     public void emitNoInterfaceTypeMessage() {
         setChanged();
         notifyObservers(NO_INTERFACE_TYPE_MESSAGE);
@@ -418,6 +424,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             INTERFACE_NAME_IS_NUMBER_MESSAGE = props.getProperty("scan.announce.interfaceNameIsNumber");
             INTERFACE_NAME_IS_OBJECT_MESSAGE = props.getProperty("scan.announce.interfaceNameIsObject");
             NO_INTERFACE_DESCRIPTION_MESSAGE = props.getProperty("scan.announce.correctMessageNoInterfaceDescription");
+            INTERFACE_DESCRIPTION_IS_NUMBER = props.getProperty("scan.announce.interfaceDescriptionIsNumber");
             NO_INTERFACE_TYPE_MESSAGE = props.getProperty("scan.announce.correctMessageNoInterfaceType");
             NO_INTERFACE_MESSAGE = props.getProperty("scan.announce.noInterfaceMessage");
             NO_NET_SETTINGS_MESSAGE = props.getProperty("scan.announce.noNetSettingsMessage");
