@@ -156,9 +156,21 @@ public class AnnounceDeserializerTest {
     }
 
     @Test
+    public void parseInterfaceDescriptionIsNumberMessage() {
+        fsmmr.emitInterfaceDescriptionIsNumber();
+        assertNull(announce, "Got an Announce object from message with a wrong interface description type (number)");
+    }
+
+    @Test
     public void parseNoInterfaceTypeMessage() {
         fsmmr.emitNoInterfaceTypeMessage();
         assertNotNull(announce, "Got no Announce object from message with a missing (but optional) interface type");
+    }
+
+    @Test
+    public void parseInterfaceTypeIsNumberMessage() {
+        fsmmr.emitInterfaceTypeIsNumberMessage();
+        assertNull(announce, "Got an Announce object from message with a wrong interface type (number)");
     }
 
     @Test
