@@ -237,7 +237,9 @@ public final class AnnounceDeserializer extends Observable implements Observer {
             if (json.isJsonArray()) {
                 vals = new ArrayList<>();
                 for (JsonElement e : json.getAsJsonArray()) {
-                    vals.add((ServiceEntry) context.deserialize(e, ServiceEntry.class));
+                    if (!e.isJsonNull()) {
+                        vals.add((ServiceEntry) context.deserialize(e, ServiceEntry.class));
+                    }
                 }
             }
 
