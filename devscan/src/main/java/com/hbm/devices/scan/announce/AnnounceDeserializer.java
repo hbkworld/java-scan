@@ -233,15 +233,17 @@ public final class AnnounceDeserializer extends Observable implements Observer {
 
         @Override
         public List<ServiceEntry> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            List<ServiceEntry> vals = null;
+            List<ServiceEntry> serviceEntries = null;
             if (json.isJsonArray()) {
-                vals = new ArrayList<>();
+                serviceEntries = new ArrayList<>();
                 for (JsonElement e : json.getAsJsonArray()) {
-                    vals.add((ServiceEntry) context.deserialize(e, ServiceEntry.class));
+                    if (!e.isJsonNull()) {
+                        serviceEntries.add((ServiceEntry) context.deserialize(e, ServiceEntry.class));
+                    }
                 }
             }
 
-            return vals;
+            return serviceEntries;
         }
     }
 
