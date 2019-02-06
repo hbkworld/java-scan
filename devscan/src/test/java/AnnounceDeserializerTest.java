@@ -357,6 +357,12 @@ public class AnnounceDeserializerTest {
             }
         }
     }
+
+    @Test
+    public void testNullMessage() {
+        fsmmr.emitNullMessage();
+        assertNull(announce, "Got Announce object for null message!");
+    }
     
     private static IPEntry findIpInList(Iterable<IPEntry> list, String ip) {
         try {

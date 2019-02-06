@@ -92,6 +92,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String MISSING_ERROR_MESSAGE_REPONSE_MESSAGE;
     private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE;
     private static final String ERROR_AND_RESULT_RESPONSE_MESSAGE;
+    private static final String NULL_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -361,6 +362,11 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(message);
     }
 
+    public void emitNullMessage() {
+        setChanged();
+        notifyObservers(NULL_MESSAGE);
+    }
+
     @Override
     public void run() {
         setChanged();
@@ -450,6 +456,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             MISSING_ERROR_MESSAGE_REPONSE_MESSAGE = props.getProperty("scan.configure.missingErrorMessageResponseMessage");
             NO_ERROR_MESSAGE_RESPONSE_MESSAGE = props.getProperty("scan.configure.noErrorMessageResponseMessage");
             ERROR_AND_RESULT_RESPONSE_MESSAGE = props.getProperty("scan.configure.errorAndResultResponseMessage");
+            NULL_MESSAGE = props.getProperty("scan.null");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
