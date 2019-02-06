@@ -363,6 +363,18 @@ public class AnnounceDeserializerTest {
         fsmmr.emitNullMessage();
         assertNull(announce, "Got Announce object for null message!");
     }
+
+    @Test
+    public void testParamsNullMessage() {
+        fsmmr.emitParamsNullMessage();
+        assertNull(announce, "Got Announce object for message where params is null!");
+    }
+
+    @Test
+    public void testDeviceNullMessage() {
+        fsmmr.emitDeviceNullMessage();
+        assertNull(announce, "Got Announce object for message where params is null!");
+    }
     
     private static IPEntry findIpInList(Iterable<IPEntry> list, String ip) {
         try {

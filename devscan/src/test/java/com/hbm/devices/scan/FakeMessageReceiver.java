@@ -93,6 +93,8 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String NO_ERROR_MESSAGE_RESPONSE_MESSAGE;
     private static final String ERROR_AND_RESULT_RESPONSE_MESSAGE;
     private static final String NULL_MESSAGE;
+    private static final String PARAMS_NULL_MESSAGE;
+    private static final String DEVICE_NULL_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -367,6 +369,16 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(NULL_MESSAGE);
     }
 
+    public void emitParamsNullMessage() {
+        setChanged();
+        notifyObservers(PARAMS_NULL_MESSAGE);
+    }
+
+    public void emitDeviceNullMessage() {
+        setChanged();
+        notifyObservers(DEVICE_NULL_MESSAGE);
+    }
+
     @Override
     public void run() {
         setChanged();
@@ -457,6 +469,8 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             NO_ERROR_MESSAGE_RESPONSE_MESSAGE = props.getProperty("scan.configure.noErrorMessageResponseMessage");
             ERROR_AND_RESULT_RESPONSE_MESSAGE = props.getProperty("scan.configure.errorAndResultResponseMessage");
             NULL_MESSAGE = props.getProperty("scan.null");
+            PARAMS_NULL_MESSAGE = props.getProperty("scan.params.null");
+            DEVICE_NULL_MESSAGE = props.getProperty("scan.device.null");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
