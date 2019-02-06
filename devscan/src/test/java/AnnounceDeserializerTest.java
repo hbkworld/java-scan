@@ -357,7 +357,77 @@ public class AnnounceDeserializerTest {
             }
         }
     }
-    
+
+    @Test
+    public void testNullMessage() {
+        fsmmr.emitNullMessage();
+        assertNull(announce, "Got Announce object for null message!");
+    }
+
+    @Test
+    public void testParamsNullMessage() {
+        fsmmr.emitParamsNullMessage();
+        assertNull(announce, "Got Announce object for message where params is null!");
+    }
+
+    @Test
+    public void testDeviceNullMessage() {
+        fsmmr.emitDeviceNullMessage();
+        assertNull(announce, "Got Announce object for message where device object is null!");
+    }
+
+    @Test
+    public void testUuidNullMessage() {
+        fsmmr.emitUuidNullMessage();
+        assertNull(announce, "Got Announce object for message when uuid object is null!");
+    }
+
+    @Test
+    public void testNetsettingsNullMessage() {
+        fsmmr.emitNetsettingNullMessage();
+        assertNull(announce, "Got Announce object for message when netsettings object is null!");
+    }
+
+    @Test
+    public void testInterfaceNullMessage() {
+        fsmmr.emitInterfaceNullMessage();
+        assertNull(announce, "Got Announce object for message when interface object is null!");
+    }
+
+    @Test
+    public void testInterfaceNameNullMessage() {
+        fsmmr.emitInterfaceNameNullMessage();
+        assertNull(announce, "Got Announce object for message when interface name object is null!");
+    }
+
+    @Test
+    public void testServiceNullMessage() {
+        fsmmr.emitServiceNullMessage();
+        assertNotNull(announce, "Got no announce object when receiving a null service object!");
+        assertTrue(announce.getParams().getServices().isEmpty(), "Service list is not empty when service object is null!");
+    }
+
+    @Test
+    public void testSingleServiceEntryNull() {
+        fsmmr.emitSingleNullServiceEntryMessage();
+        assertNotNull(announce, "Got no announce object when receiving a service object with a single null service entry!");
+        assertTrue(announce.getParams().getServices().isEmpty(), "Service list is not empty when receiving a service object with a single null service entry");
+    }
+
+    @Test
+    public void testServiceEntryNull() {
+        fsmmr.emitServiceEntryNullMessage();
+        assertNotNull(announce, "Got no announce object when receiving a service object with a null service entry!");
+        assertEquals(6, announce.getParams().getServices().size(), "Service list is not filled correctly when receiving a service object with a null service entry!");
+    }
+
+    @Test
+    public void testServiceString() {
+        fsmmr.emitServiceStringMessage();
+        assertNotNull(announce, "Got no announce object when receiving a string service object!");
+        assertTrue(announce.getParams().getServices().isEmpty(), "Service list is not empty when service object is string!");
+    }
+
     private static IPEntry findIpInList(Iterable<IPEntry> list, String ip) {
         try {
             InetAddress address = InetAddress.getByName(ip);
