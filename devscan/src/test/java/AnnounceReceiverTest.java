@@ -40,7 +40,7 @@ import com.hbm.devices.scan.announce.AnnounceReceiver;
 public class AnnounceReceiverTest {
 
     @Test
-    public void intantiation() {
+    public void instantiation() {
         try (final AnnounceReceiver ar = new AnnounceReceiver()) {
             assertNotNull(ar, "Could not instantiate AnnounceReceiver");
         } catch (IOException e) {
