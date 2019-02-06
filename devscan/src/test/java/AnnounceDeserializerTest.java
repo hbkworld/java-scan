@@ -379,7 +379,25 @@ public class AnnounceDeserializerTest {
     @Test
     public void testUuidNullMessage() {
         fsmmr.emitUuidNullMessage();
-        assertNull(announce, "Got Announce object for message where uuid object is null!");
+        assertNull(announce, "Got Announce object for message when uuid object is null!");
+    }
+
+    @Test
+    public void testNetsettingsNullMessage() {
+        fsmmr.emitNetsettingNullMessage();
+        assertNull(announce, "Got Announce object for message when netsettings object is null!");
+    }
+
+    @Test
+    public void testInterfaceNullMessage() {
+        fsmmr.emitInterfaceNullMessage();
+        assertNull(announce, "Got Announce object for message when interface object is null!");
+    }
+
+    @Test
+    public void testInterfaceNameNullMessage() {
+        fsmmr.emitInterfaceNameNullMessage();
+        assertNull(announce, "Got Announce object for message when interface name object is null!");
     }
     
     private static IPEntry findIpInList(Iterable<IPEntry> list, String ip) {

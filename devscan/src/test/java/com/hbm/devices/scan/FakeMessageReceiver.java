@@ -96,6 +96,9 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String PARAMS_NULL_MESSAGE;
     private static final String DEVICE_NULL_MESSAGE;
     private static final String UUID_NULL_MESSAGE;
+    private static final String NETSETTINGS_NULL_MESSAGE;
+    private static final String INTERFACE_NULL_MESSAGE;
+    private static final String INTERFACENAME_NULL_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -385,6 +388,21 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(UUID_NULL_MESSAGE);
     }
 
+    public void emitNetsettingNullMessage() {
+        setChanged();
+        notifyObservers(NETSETTINGS_NULL_MESSAGE);
+    }
+
+    public void emitInterfaceNullMessage() {
+        setChanged();
+        notifyObservers(INTERFACE_NULL_MESSAGE);
+    }
+
+    public void emitInterfaceNameNullMessage() {
+        setChanged();
+        notifyObservers(INTERFACENAME_NULL_MESSAGE);
+    }
+
     @Override
     public void run() {
         setChanged();
@@ -478,6 +496,9 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             PARAMS_NULL_MESSAGE = props.getProperty("scan.params.null");
             DEVICE_NULL_MESSAGE = props.getProperty("scan.device.null");
             UUID_NULL_MESSAGE = props.getProperty("scan.uuid.null");
+            NETSETTINGS_NULL_MESSAGE = props.getProperty("scan.netsettings.null");
+            INTERFACE_NULL_MESSAGE = props.getProperty("scan.interface.null");
+            INTERFACENAME_NULL_MESSAGE = props.getProperty("scan.interfacename.null");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
