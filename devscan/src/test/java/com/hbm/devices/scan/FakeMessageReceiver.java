@@ -95,6 +95,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String NULL_MESSAGE;
     private static final String PARAMS_NULL_MESSAGE;
     private static final String DEVICE_NULL_MESSAGE;
+    private static final String UUID_NULL_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -379,6 +380,11 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(DEVICE_NULL_MESSAGE);
     }
 
+    public void emitUuidNullMessage() {
+        setChanged();
+        notifyObservers(UUID_NULL_MESSAGE);
+    }
+
     @Override
     public void run() {
         setChanged();
@@ -471,6 +477,7 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             NULL_MESSAGE = props.getProperty("scan.null");
             PARAMS_NULL_MESSAGE = props.getProperty("scan.params.null");
             DEVICE_NULL_MESSAGE = props.getProperty("scan.device.null");
+            UUID_NULL_MESSAGE = props.getProperty("scan.uuid.null");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
