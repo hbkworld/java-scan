@@ -53,5 +53,5 @@ configure(subprojects.findAll {(it.name != 'devscan')}) {
 
 
 task createWrapper(type: Wrapper) {
-	gradleVersion = '4.8.1'
+	gradleVersion = '5.2'
 }
