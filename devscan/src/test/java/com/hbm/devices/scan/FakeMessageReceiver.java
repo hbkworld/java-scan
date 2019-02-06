@@ -99,6 +99,10 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
     private static final String NETSETTINGS_NULL_MESSAGE;
     private static final String INTERFACE_NULL_MESSAGE;
     private static final String INTERFACENAME_NULL_MESSAGE;
+    private static final String SERVICE_NULL_MESSAGE;
+    private static final String SINGLE_NULL_SERVICE_ENTRY;
+    private static final String SERVICE_ENTRY_NULL_MESSAGE;
+    private static final String SERVICE_STRING_MESSAGE;
 
     private static final String FAKE_DEVICE_1;
     private static final String FAKE_DEVICE_2;
@@ -403,6 +407,26 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
         notifyObservers(INTERFACENAME_NULL_MESSAGE);
     }
 
+    public void emitServiceNullMessage() {
+        setChanged();
+        notifyObservers(SERVICE_NULL_MESSAGE);
+    }
+
+    public void emitSingleNullServiceEntryMessage() {
+        setChanged();
+        notifyObservers(SINGLE_NULL_SERVICE_ENTRY);
+    }
+
+    public void emitServiceEntryNullMessage() {
+        setChanged();
+        notifyObservers(SERVICE_ENTRY_NULL_MESSAGE);
+    }
+
+    public void emitServiceStringMessage() {
+        setChanged();
+        notifyObservers(SERVICE_STRING_MESSAGE);
+    }
+
     @Override
     public void run() {
         setChanged();
@@ -499,6 +523,10 @@ public class FakeMessageReceiver extends AbstractMessageReceiver {
             NETSETTINGS_NULL_MESSAGE = props.getProperty("scan.netsettings.null");
             INTERFACE_NULL_MESSAGE = props.getProperty("scan.interface.null");
             INTERFACENAME_NULL_MESSAGE = props.getProperty("scan.interfacename.null");
+            SERVICE_NULL_MESSAGE = props.getProperty("scan.services.null");
+            SINGLE_NULL_SERVICE_ENTRY = props.getProperty("scan.singleServiceEntry.null");
+            SERVICE_ENTRY_NULL_MESSAGE = props.getProperty("scan.serviceEntry.null");
+            SERVICE_STRING_MESSAGE = props.getProperty("scan.service.string");
         } catch (IOException e) {
             throw new ExceptionInInitializerError(e);
         }
